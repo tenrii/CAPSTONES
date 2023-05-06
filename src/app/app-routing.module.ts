@@ -96,13 +96,6 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'verify-email2',
-    loadChildren: () =>
-      import('./verify-email2/verify-email2.module').then(
-        (m) => m.VerifyEmail2PageModule
-      ),
-  },
-  {
     path: 'ex',
     loadChildren: () => import('./ex/ex.module').then((m) => m.ExPageModule),
     ...canActivate(redirectUnauthorizedToLogin),
@@ -140,6 +133,10 @@ const routes: Routes = [
     path: 'tab1',
     loadChildren: () =>
       import('./components/tab1/tab1.module').then((m) => m.Tab1PageModule),
+  },
+  {
+    path: 'owner-log-reg',
+    loadChildren: () => import('./owner-log-reg/owner-log-reg.module').then( m => m.OwnerLogRegPageModule)
   },
 ];
 

@@ -13,11 +13,11 @@ export class RegistrationPage implements OnInit {
     public router: Router
   ) { }
   ngOnInit(){}
-  signUpTenant(email: any, password: any ){
+  /*signUpTenant(email: any, password: any ){
     this.authService.RegisterUserTenant(email.value, password.value)
     .then((res) => {
       // Do something here
-      this.authService.SendVerificationMailT()
+      this.authService.SendVerificationMail()
       this.router.navigate(['verify-email']);
     }).catch((error) => {
       window.alert(error.message)
@@ -33,7 +33,7 @@ signUpOwner(email: any, password: any ){
   }).catch((error) => {
     window.alert(error.message)
   })
-}
+}*/
 
 SendVerificationMailT() {
   return this.ngFireAuth.auth.currentUser.sendEmailVerification()

@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from '../services/firebase.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthenticationService } from '../shared/authentication-service';
 import 'firebase/firestore';
-import { lastValueFrom } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Observable, finalize } from 'rxjs';
 
 interface Seat {
   BedSpace: string;
@@ -18,16 +20,25 @@ interface Seat {
   styleUrls: ['room.page.scss'],
 })
 export class RoomPage implements OnInit {
+  selectedFiles: any = FileList;
   public data: any;
+  public owner: any;
   studentList: any;
+  reviewForm!: FormGroup;
   roomId: any;
-  rating: number = 0;
   collectionRoom = 'Room';
+  downloadURL!: Observable<string>;
   email = JSON.parse(localStorage.getItem('user') || '{}')['email'];
+
+  a = 'hello';
 
   seats: Seat[] = [];
 
+  public star: number = 0;
+
   constructor(
+    private storage: AngularFireStorage,
+    private fb: FormBuilder,
     public authService: AuthenticationService,
     private router: Router,
     private route: ActivatedRoute,
@@ -36,7 +47,22 @@ export class RoomPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.reviewForm = this.fb.group({
+      Rating: this.star,
+      Review: ['', [Validators.required]],
+    });
+
     this.load();
+    if (!this.firebaseService.loading) {
+      this.firebaseService.read_owner().subscribe(() => {
+        this.owner = this.firebaseService.getOwner(this.data.OwnerId);
+      });
+      return;
+    }
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFiles = event.target.files;
   }
 
   async load() {
@@ -50,18 +76,19 @@ export class RoomPage implements OnInit {
     this.roomId =
       this.route.snapshot.paramMap.get('id') ||
       window.location.pathname.split('/')[2];
+
     console.log('id', this.firebaseService.getRoom(this.roomId));
+
     this.data = this.firebaseService.getRoom(this.roomId);
 
     this.seats = [];
     if (!this.data['BedSpaces']) {
       for (let i = 1; i <= this.data['NumBedSpace']; i++) {
-        this.seats.push({ BedSpace: 'B' + i, Occupied: false , Occupant: ''});
+        this.seats.push({ BedSpace: 'B' + i, Occupied: false, Occupant: '' });
       }
     } else {
       const a = JSON.parse(this.data['BedSpaces']);
       this.seats.push(...[...a]);
-
     }
 
     console.log('c', this.email);
@@ -108,23 +135,47 @@ export class RoomPage implements OnInit {
     console.log('a', this.seats);
   }
 
-  bedSpaceEvent(){
-    for (let j = 1; j <= this.data['NumBedSpace']; j++){
-      if(this.seats[j].Occupant != null){
-
+  bedSpaceEvent() {
+    for (let j = 1; j <= this.data['NumBedSpace']; j++) {
+      if (this.seats[j].Occupant != null) {
       }
     }
   }
 
-  starIcon(index: number): string {
-    if (this.rating >= index) {
-      return 'star';
-    } else {
-      return 'star-outline';
-    }
+  async Rate(i: any) {
+    this.star = i;
+    this.reviewForm.get('Rating')?.setValue(i);
+    console.log('i', i);
   }
 
-  setRating(index: number): void {
-    this.rating = index;
+  addReview() {
+    this.firestore
+      .collection('Room')
+      .doc(this.roomId)
+      .collection('Review')
+      .doc(this.owner.id)
+      .set(this.reviewForm.value)
+      .then((docRef: any) => {
+        const filePath = `Room/${this.roomId}/${this.selectedFiles.name}`;
+        const fileRef = this.storage.ref(filePath);
+        const bp = this.storage.upload(filePath, this.selectedFiles);
+        bp.snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.downloadURL = fileRef.getDownloadURL();
+              this.downloadURL.subscribe((url) => {
+                this.firestore
+                  .collection('Room')
+                  .doc(this.roomId)
+                  .collection('Review')
+                  .doc(this.owner.id)
+                  .update({
+                    Images: url,
+                  });
+              });
+            })
+          )
+          .subscribe();
+      });
   }
 }

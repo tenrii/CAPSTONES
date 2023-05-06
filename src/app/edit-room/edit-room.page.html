@@ -1,86 +1,23 @@
 <ion-content>
+  <ion-item>
+    <ion-label>Rating:</ion-label>
+    <ion-icon *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= avgRating ? 'star' : 'star-outline'"
+      (click)="onStarClick(i)"></ion-icon>
+  </ion-item>
 
-  <div class="form-group">
-    <label for="image-upload" style="font-size: 15px;">Choose Image</label>
-    <div class="image-upload-box">
-      <input type="file" id="image-upload" accept="image/*" class="d-none" (change)="onFileSelected($event)" multiple>
-      <label for="image-upload" class="plus-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus"
-          viewBox="0 0 16 16">
-          <path
-            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-        </svg>
-      </label>
-      <div class="image-preview" *ngIf="images.length > 0">
-        <div *ngFor="let image of images; let i = index" class="image-item">
-          <img [src]="image.url" alt="{{image.name}}" id="image-preview">
-        </div>
-      </div>
-    </div>
-  </div>
+  <ion-item>
+    <ion-label position="floating">Your review:</ion-label>
+    <ion-textarea [(ngModel)]="review" rows="4"></ion-textarea>
+  </ion-item>
 
-    <div class="image-upload-box">
-      <input type="file" id="image-upload" accept="image/*" class="d-none" (change)="onFileSelected($event)" multiple>
-      <label for="image-upload" class="plus-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus"
-          viewBox="0 0 16 16">
-          <path
-            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-        </svg>
-      </label>
-      <div class="image-preview" *ngIf="images.length > 0">
-        <div *ngFor="let image of images; let i = index" class="image-item">
-          <img [src]="image.url" alt="{{image.name}}" id="image-preview">
-        </div>
-      </div>
-    </div>
+  <ion-button expand="block" (click)="onReviewSubmit()">Submit review</ion-button>
 
-    <div class="image-upload-box">
-      <input type="file" id="image-upload" accept="image/*" class="d-none" (change)="onFileSelected($event)" multiple>
-      <label for="image-upload" class="plus-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus"
-          viewBox="0 0 16 16">
-          <path
-            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-        </svg>
-      </label>
-      <div class="image-preview" *ngIf="images.length > 0">
-        <div *ngFor="let image of images; let i = index" class="image-item">
-          <img [src]="image.url" alt="{{image.name}}" id="image-preview">
-        </div>
-      </div>
-    </div>
+  <ion-list>
+    <ion-item *ngFor="let userReview of reviews">
+      <ion-icon *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= userReview.rating ? 'star' : 'star-outline'"></ion-icon>
+      <ion-label>{{ userReview.review }}</ion-label>
+    </ion-item>
+  </ion-list>
 
-    <div class="image-upload-box">
-      <input type="file" id="image-upload" accept="image/*" class="d-none" (change)="onFileSelected($event)" multiple>
-      <label for="image-upload" class="plus-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus"
-          viewBox="0 0 16 16">
-          <path
-            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-        </svg>
-      </label>
-      <div class="image-preview" *ngIf="images.length > 0">
-        <div *ngFor="let image of images; let i = index" class="image-item">
-          <img [src]="image.url" alt="{{image.name}}" id="image-preview">
-        </div>
-      </div>
-    </div>
-
-    <div class="image-upload-box">
-      <input type="file" id="image-upload" accept="image/*" class="d-none" (change)="onFileSelected($event)" multiple>
-      <label for="image-upload" class="plus-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus"
-          viewBox="0 0 16 16">
-          <path
-            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-        </svg>
-      </label>
-      <div class="image-preview" *ngIf="images.length > 0">
-        <div *ngFor="let image of images; let i = index" class="image-item">
-          <img [src]="image.url" alt="{{image.name}}" id="image-preview">
-        </div>
-      </div>
-    </div>
 
 </ion-content>

@@ -7,12 +7,15 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
+import { ModalController } from '@ionic/angular';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   userData: any;
+  uid: any;
   constructor(
+    public m: ModalController,
     public afStore: AngularFirestore,
     public ngFireAuth: AngularFireAuth,
     public router: Router,
@@ -34,33 +37,36 @@ export class AuthenticationService {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
   // Register user with email/password
-  async RegisterUserTenant(email: any, password: any) {
+  async RegisterUserTenant(email: any, password: any, record: any) {
     const credential = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
-    const uid = credential.user?.uid;
-
-    return this.afStore.doc(`Tenant/${uid}`).set({
-      uid,
-      email: credential.user?.email,
+    this.uid = credential.user?.uid;
+    this.SendVerificationMail().then((res) =>{
+      this.afStore.doc(`Tenant/${this.uid}`).set({
+      uid: this.uid,
+      Email: credential.user?.email,
     });
-  }
+    this.afStore.collection('Tenant').doc(this.uid).update(record);
+  })
+  return credential
+}
 
-  async RegisterUserOwner(email: any, password: any) {
+  async RegisterUserOwner(email: any, password: any, record: any) {
     const credential = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
-    const uid = credential.user?.uid;
-
-    return this.afStore.doc(`Owner/${uid}`).set({
-      uid,
-      email: credential.user?.email,
-    });
+    this.uid = credential.user?.uid;
+    this.SendVerificationMail().then((res) =>{
+        this.afStore.doc(`Owner/${this.uid}`).set({
+        uid: this.uid,
+        Email: credential.user?.email,
+      });
+      this.afStore.collection('Owner').doc(this.uid).update(record);
+    })
+    return credential
   }
   // Email verification when new user register
-  SendVerificationMailT() {
+  SendVerificationMail() {
     return this.ngFireAuth.currentUser.then((user: any) => {
       return user.sendEmailVerification().then(() => {
-        this.router.navigate(['dashboard'])
-        .then(() => {
-          window.location.reload();
-        });
+          this.m.dismiss()
       });
     });
   }

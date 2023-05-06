@@ -1,30 +1,40 @@
-
-.image-upload-box {
-  width: 300px;
-  max-width: auto;
-  min-height: 300px;
-  max-height: auto;
-  border: 2px dashed #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 20px;
+.background-radial-gradient {
+  background-color: hsl(218, 41%, 15%);
+  background-image: radial-gradient(650px circle at 0% 0%,
+      hsl(218, 41%, 35%) 15%,
+      hsl(218, 41%, 30%) 35%,
+      hsl(218, 41%, 20%) 75%,
+      hsl(218, 41%, 19%) 80%,
+      transparent 100%),
+    radial-gradient(1250px circle at 100% 100%,
+      hsl(218, 41%, 45%) 15%,
+      hsl(218, 41%, 30%) 35%,
+      hsl(218, 41%, 20%) 75%,
+      hsl(218, 41%, 19%) 80%,
+      transparent 100%);
+      height: 100%;
 }
 
-.plus-button {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  font-size: 32px;
-  color: #666;
-  cursor: pointer;
-  z-index: 1;
+#radius-shape-1 {
+  height: 220px;
+  width: 220px;
+  top: -60px;
+  left: -130px;
+  background: radial-gradient(#44006b, #ad1fff);
+  overflow: hidden;
 }
 
-.image-preview {
-  border: 2px dashed #ddd;
-  top: 0;
-  left: 0;
+#radius-shape-2 {
+  border-radius: 38% 62% 63% 37% / 70% 33% 67% 30%;
+  bottom: -60px;
+  right: -110px;
   width: 300px;
-  height: auto;
-  object-fit: cover;
+  height: 300px;
+  background: radial-gradient(#44006b, #ad1fff);
+  overflow: hidden;
+}
+
+.bg-glass {
+  background-color: hsla(0, 0%, 100%, 0.9) !important;
+  backdrop-filter: saturate(200%) blur(25px);
 }

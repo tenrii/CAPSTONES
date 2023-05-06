@@ -63,6 +63,7 @@ export class FirebaseService {
             return {
               id: e.payload.doc.id,
               isEdit: false,
+              OwnerId: localData.OwnerId,
               Rent: localData.Rent,
               RoomType: localData.RoomType,
               Street: localData.Street,
@@ -127,6 +128,7 @@ export class FirebaseService {
               FName: localData.FName,
               LName: localData.LName,
               Age: localData.Age,
+              Gender: localData.Gender,
               Address: localData.Address,
               Email: localData.Email,
               Accepted: localData.Accepted,

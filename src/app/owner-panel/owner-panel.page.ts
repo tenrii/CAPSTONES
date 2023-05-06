@@ -6,6 +6,7 @@ import { AnimationController, ModalController } from '@ionic/angular';
 import { CreateModalComponent } from './create-modal/create-modal.component';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 import { Modal1Component } from './modal/modal1/modal1.component';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 interface RoomData {
   Name: string;
@@ -27,11 +28,14 @@ export class OwnerPanelPage implements OnInit {
   roomForm!: FormGroup;
   nbs: any = 1;
   isModalOpen = false;
+  uid: any;
+  ownerId: any;
 
   constructor(
     private animationCtrl: AnimationController,
     private m: ModalController,
     private af: AngularFireStorage,
+    private firestore: AngularFirestore,
     private firebaseService: FirebaseService,
     public fb: FormBuilder
   ) {
@@ -39,18 +43,13 @@ export class OwnerPanelPage implements OnInit {
   }
 
   ngOnInit() {
-    this.roomForm = this.fb.group({
-      Name: ['', [Validators.required]],
-      Price: ['', [Validators.required]],
-      Address: ['', [Validators.required]],
-      NumBedSpace: ['', [Validators.required]],
-      Detail: ['', [Validators.required]],
-    });
-
     this.firebaseService.read_room().subscribe((data) => {
       this.roomList = data;
       console.log('stud list', this.roomList);
     });
+
+    this.ownerId = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
+    console.log('a', JSON.stringify(this.ownerId));
   }
 
   CreateRecord() {
@@ -72,22 +71,33 @@ export class OwnerPanelPage implements OnInit {
   }
 
   async gotoModal1() {
-    const modalInstance = await this.m.create({
-      component: Modal1Component,
-      backdropDismiss: false,
-    });
-    this.isModalOpen = true;
-    return await modalInstance.present();
+    this.firestore
+      .collection('Room')
+      .add({
+        OwnerId: JSON.stringify(this.ownerId),
+      })
+      .then(async (res) => {
+        this.uid = res.id;
+        const modalInstance = await this.m.create({
+          component: Modal1Component,
+          backdropDismiss: false,
+          componentProps: {
+            uid: this.uid,
+          },
+        });
+        this.isModalOpen = true;
+        return await modalInstance.present();
+      });
   }
 
-async gotoModal() {
+  async gotoModal() {
     const modalInstance = await this.m.create({
       component: CreateModalComponent,
       backdropDismiss: false,
     });
     this.isModalOpen = true;
     return await modalInstance.present();
-}
+  }
 
   async gotoEditModal(record: any) {
     const modalInstance = await this.m.create({

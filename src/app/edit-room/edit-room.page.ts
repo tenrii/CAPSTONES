@@ -1,33 +1,38 @@
-import { Component } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { finalize } from 'rxjs/operators';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import firebase from 'firebase/compat/app';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-edit-room',
   templateUrl: './edit-room.page.html',
   styleUrls: ['./edit-room.page.scss'],
 })
-export class EditRoomPage{
-  selectedFiles: any = FileList;
-  images: { name: any; url: any }[] = [];
-  uid: any;
-  q: any = 1;
+export class EditRoomPage {
+  @Input() movieId!: string;
+  @Input() reviews!: any[]; // Array of reviews to display
+  @Input() avgRating!: number; // Average rating of the movie
 
-  constructor(private storage: AngularFireStorage) {}
+  @Output() ratingChanged = new EventEmitter<number>(); // Emit the new rating
+  @Output() reviewSubmitted = new EventEmitter<string>(); // Emit the new review
 
-  onFileSelected(event: any) {
-    this.selectedFiles = event.target.files;
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      const file = this.selectedFiles.item(i);
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.images.push({ name: file.name, url: reader.result?.toString() });
-        for (let f = 0; i < this.q; f++) {
-          ++this.q;
-        }
-      };
-    }
+  review: string = '';
+
+  constructor(private firebaseService: FirebaseService) {}
+
+  onStarClick(rating: number) {
+    // Emit the new rating
+    this.ratingChanged.emit(rating);
+  }
+
+  onReviewSubmit() {
+    // Add the new review to Firebase
+    //this.firebaseService.addReview(this.movieId, this.review);
+
+    // Emit the new review
+    this.reviewSubmitted.emit(this.review);
+
+    // Clear the textarea
+    this.review = '';
   }
 }
-

@@ -42,6 +42,7 @@ export class HomePage implements OnInit {
     },
   };
   email = JSON.parse(localStorage.getItem('user') || '{}')['email'];
+  emails = JSON.stringify(this.email);
 
   constructor(
     public authService: AuthenticationService,
@@ -104,7 +105,7 @@ export class HomePage implements OnInit {
 
   filterEmail() {
     const filteredEList = this.emailList.filter((a) => {
-      return this.email === a.Email;
+      return this.email === a.Email || this.emails === a.Email;
     });
     this.listEmail.next(filteredEList);
   }

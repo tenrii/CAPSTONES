@@ -31,32 +31,14 @@ export class Modal2Component implements OnInit {
   }
 
   async gotoModal3() {
-    if(!this.uid){
-    this.firestore
-      .collection('Room')
-      .add(this.roomForm.value)
-      .then(async (res) => {
-        this.uid = res.id;
-        const modalInstance = await this.m.create({
-          component: Modal3Component,
-          componentProps: {
-            uid: this.uid,
-          },
-          backdropDismiss: false,
-        });
-        modalInstance.present();
-      });
-  }
-  else{
     this.firestore.collection('Room').doc(this.uid).update(this.roomForm.value);
-      const modalInstance = await this.m.create({
-        component: Modal3Component,
-        componentProps: {
-          uid: this.uid,
-        },
-        backdropDismiss: false,
-      });
-      modalInstance.present();
-    }
+    const modalInstance = await this.m.create({
+      component: Modal3Component,
+      componentProps: {
+        uid: this.uid,
+      },
+      backdropDismiss: false,
+    });
+    modalInstance.present();
   }
 }

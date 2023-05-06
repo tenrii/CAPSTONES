@@ -1,79 +1,92 @@
-
-.header{
-  margin-bottom: 10px;
-  border-bottom: solid rgb(172, 172, 172) 1px;
+.head {
+  background-color: rgb(100, 66, 34, 0.8);
+  height: 90px;
+  max-height: 90px;
 }
 
-.header .dropdown{
+.navbar {
+  background-color: rgb(0, 0, 0, 0.3);
+  height: 90px;
+  max-height: 90px;
+  margin-top: -90px;
+  padding: 0px;
+  position: sticky;
+}
+
+.navbar #logo {
+  background-color: rgb(255, 255, 255, 0.2);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.navbar .nav-link {
+  color: white;
+  font-size: 20px;
+  margin-left: 30px;
+}
+
+.navbar .dropdown {
   position: relative;
-  bottom: 10px;
   right: 50px;
+  bottom: 10px;
   float: right;
-	padding-top: 30px;
-	padding-right: 20px;
 }
 
-.header #logo{
-  position: relative;
-  left: 30px;
-  padding-top: 5px;
-  padding-left: 10px;
+.navbar .dropdown #dropdownMenu2 {
+  width: 100px;
+  height: 45px;
+  background-color: #be9874;
 }
 
-.header .dropdown #dropdownMenu2{
-	background-color: rgb(194, 123, 17);
+.navbar .dropdown .dropdown-item {
+  font-size: 10px;
 }
 
-.header .dropdown img{
-	height: 30px;
-	border-radius: 50%;
+.navbar .dropdown img {
+  height: 30px;
+  border-radius: 50%;
 }
 
-.label{
-  margin-left: 60px;
+.backgroud {
+  max-height: 400px;
+  overflow-y: hidden;
 }
 
-.label #name{
-  font-size: 35px;
-  font-weight: bold;
-}
-
-.label #place{
-  font-size: 15px;
-}
-
-#carouselExampleControls{
+#carouselExampleControls {
   margin-left: 60px;
   width: 60%;
 }
 
-#carouselExampleControls img{
+.carousel-inner {
+  max-height: 370px;
+}
+
+#carouselExampleControls #myImg {
   border-radius: 4px;
+  height: auto;
 }
 
-.price{
- position: sticky;
- float: right;
- bottom: 110px;
- min-width: 25%;
- margin-right: 65px;
- border: 1px inset rgb(0, 0, 0);
- max-width: 370px;
- max-height: 500px;
- height: 500px;
- box-shadow: 3px 4px #adadad;
- border-radius: 25px 0px 25px 0px;
+.price {
+  float: right;
+  min-width: 25%;
+  margin-right: 95px;
+  border: 1px inset rgb(0, 0, 0);
+  max-width: 370px;
+  max-height: 500px;
+  height: 500px;
+  box-shadow: 3px 4px #adadad;
+  border-radius: 10px;
 }
 
-.price ion-col{
+.price ion-col {
   width: 40px;
 }
 
-.price #pr{
+.price #pr {
   text-align: center;
 }
 
-.price #pr ion-select{
+.price #pr ion-select {
   margin-left: 15px;
   margin-top: 15px;
   width: 100px;
@@ -81,79 +94,108 @@
   border: 1px black solid;
 }
 
-.price #pr #p{
+.price #pr #p {
   margin-top: 10px;
   font-size: 20px;
   font-weight: bold;
 }
 
-.price #pr #priceBtn{
+.price #pr #priceBtn {
   background-color: rgb(194, 123, 17);
   padding-top: 15px;
   padding-bottom: 15px;
   width: 250px;
 }
 
-.desc{
-  margin-top: 5px;
-  margin-left: 65px;
+.detail {
+  margin-left: 60px;
 }
 
-.desc .button{
-  border-radius: 15px 15px 0px 0px;
-  width: 62%;
-  border: 2px solid rgb(0, 0, 0);
-  margin-bottom: 2px;
-}
-
-.desc .button #d{
+.detail .room {
   margin-left: 10px;
+  margin-top: 10px;
+  font-size: 35px;
+  font-weight: 700;
 }
 
-.desc .button div{
-  border-right: 2px solid rgb(0, 0, 0);
-  margin-right: 10px;
-  margin-left: 5px;
-  padding-right: 10px;
-  display: inline-block;
-  transition: all 0.5s;
-  cursor: pointer;
+.detail .rent {
+  margin-left: 10px;
+  font-size: 25px;
+  font-weight: 500;
 }
 
-.desc .button div span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
+.detail .details {
+  margin-left: 10px;
+  width: 60%;
+  margin-top: 25px;
 }
 
-.desc .button div span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
+.detail .amenities {
+  margin-left: 10px;
+  width: 60%;
+  max-width: 60%;
+  margin-top: 15px;
 }
 
-.desc .button div:hover span {
-  padding-right: 25px;
+.detail .amenities #amenities-header {
+  font-size: 20px;
+  font-weight: 600;
 }
 
-.desc .button div:hover span:after {
-  opacity: 1;
-  right: 0;
+.detail .amenities #amenities {
+  max-width: 180px;
+  min-width: 180px;
+  text-align: center;
+  padding: 10px;
+  border: rgb(194, 123, 17) solid 1px;
+  font-size: 20px;
+  margin-right: 20px;
+  margin-top: 10px;
 }
 
-.desc .content{
-  box-shadow: 3px 4px #adadad;
-  border-radius: 0px 0px 25px 25px;
-  width: 62%;
-  border:  2px solid rgb(0, 0, 0);
+.detail .amenities #amenities span {
+  color: rgb(100, 66, 34);
 }
 
-.desc .content div{
-  height: 350px;
+.detail .contact {
+  margin-top: 20px;
+}
+
+.detail .contact #contact {
+  max-width: 130px;
+  padding: 10px;
+  color: rgb(100, 66, 34);
+  border: rgb(194, 123, 17) solid 1px;
+  border-radius: 20px;
+}
+
+.detail .contact #contact:hover {
+  background-color: black;
+  color: white;
+  border: black solid 1px;
+}
+
+ion-icon {
+  font-size: 20px;
+  color: var(--ion-color-warning);
+}
+
+ion-icon:not(:last-child) {
+  margin-right: 4px;
+}
+
+:host(.read-only) ion-icon {
+  cursor: default;
+}
+
+.rating-review {
+  margin-top: 10px;
+  margin-left: 60px;
+  width: 60%;
+}
+
+.rating-review #review {
+  margin-bottom: 10px;
 }
 
 ///////////////////////
@@ -163,7 +205,9 @@
   transition: 0.3s;
 }
 
-#myImg:hover {opacity: 0.9;}
+#myImg:hover {
+  opacity: 0.9;
+}
 
 /* The Modal (background) */
 .modal {
@@ -176,8 +220,8 @@
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */
 }
 
 /* Modal Content (Image) */
@@ -201,14 +245,19 @@
 }
 
 /* Add Animation - Zoom in the Modal */
-.modal-content, #caption {
+.modal-content,
+#caption {
   animation-name: zoom;
   animation-duration: 0.6s;
 }
 
 @keyframes zoom {
-  from {transform:scale(0)}
-  to {transform:scale(1)}
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 /* The Close Button */
@@ -233,18 +282,17 @@
   opacity: 0.5;
 }
 
-.occupant{
+.occupant {
   pointer-events: none;
 }
 
-.seat-status{
+.seat-status {
   display: none;
 }
 
 /* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 700px){
+@media only screen and (max-width: 700px) {
   .modal-content {
     width: 100%;
   }
 }
-
