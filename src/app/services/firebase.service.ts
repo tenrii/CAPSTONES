@@ -174,4 +174,8 @@ export class FirebaseService {
   getOwner(owner: any) {
     return this.owners.value.find((a: any) => a.id == owner);
   }
+
+  getTenant(tenant: any) {
+    return this.tenants.value.find((a: any) => a.id == tenant);
+  }
 }

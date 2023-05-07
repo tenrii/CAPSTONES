@@ -1,9 +1,112 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>tenant-panel</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+<div class="header">
+  <ion-grid>
+    <ion-row>
+      <ion-col class="tenant-img">
+        <img src="assets/user2.png">
+      </ion-col>
+      <ion-col class="tenant-name">
+        Welcome {{tenant?.FName}} {{tenant?.LName}}
+      </ion-col>
+      <ion-col class="message">
+        <div type="button"><ion-icon name="mail-outline"></ion-icon>Messages</div>
+      </ion-col>
+      <ion-col class="logout">
+        <div type="button"><ion-icon name="arrow-undo-outline"></ion-icon>Log Out</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</div>
 
+<div class="body">
+<ion-grid class="top-btn">
+  <ion-row>
+
+    <ion-col type="button" onclick="
+    document.getElementById('pending').style.display='block';
+    document.getElementById('complete').style.display='none';
+    document.getElementById('bill').style.display='none';
+    document.getElementById('transaction').style.display='none';">
+      <ion-icon class="timer-outline" name="timer-outline"></ion-icon>
+      <br/>
+      <ion-label>Pending Reservation</ion-label>
+    </ion-col>
+
+    <ion-col type="button" onclick="
+    document.getElementById('pending').style.display='none';
+    document.getElementById('complete').style.display='block';
+    document.getElementById('bill').style.display='none';
+    document.getElementById('transaction').style.display='none';">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+      <br/>
+      <ion-label>Reservation Complete</ion-label>
+    </ion-col>
+
+    <ion-col type="button" onclick="
+    document.getElementById('pending').style.display='none';
+    document.getElementById('complete').style.display='none';
+    document.getElementById('bill').style.display='block';
+    document.getElementById('transaction').style.display='none';">
+      <ion-icon name="receipt-outline"></ion-icon>
+      <br/>
+      <ion-label>My Bills</ion-label>
+    </ion-col>
+
+    <ion-col type="button" onclick="
+    document.getElementById('pending').style.display='none';
+    document.getElementById('complete').style.display='none';
+    document.getElementById('bill').style.display='none';
+    document.getElementById('transaction').style.display='block';">
+      <ion-icon name="file-tray-full-outline"></ion-icon>
+      <br/>
+      <ion-label>Transaction Notification</ion-label>
+    </ion-col>
+
+  </ion-row>
+</ion-grid>
+
+<div id="pending" style="display:block;">
+<ion-card *ngIf="true">
+  <ion-icon name="search-outline"></ion-icon>
+  <p>You have no pending reservation yet</p>
+  <p>Go to the "Home Page" for room/bedspace reservation</p>
+</ion-card>
+</div>
+
+<div id="complete" style="display:none;">
+<ion-card *ngIf="true">
+  <ion-icon name="search-outline"></ion-icon>
+  <p>You have no complete reservation yet</p>
+  <p>Go to your "Pending Reservation" for the completion of your room/bedspace reservation</p>
+</ion-card>
+</div>
+
+<div id="bill" style="display:none;">
+
+  <div class="b">
+  <ion-header>Unpaid:</ion-header>
+<ion-card *ngIf="true">
+  <ion-icon name="search-outline"></ion-icon>
+  <p>You have no bills yet</p>
+</ion-card>
+  </div>
+
+  <div class="b">
+<ion-header>Paid:</ion-header>
+<ion-card *ngIf="true">
+  <ion-icon name="search-outline"></ion-icon>
+  <p>You have no bills yet</p>
+</ion-card>
+  </div>
+
+</div>
+
+<div id="transaction" style="display:none;">
+<ion-card *ngIf="true">
+  <ion-icon name="search-outline"></ion-icon>
+  <p>You have no reservation transaction yet</p>
+</ion-card>
+</div>
+
+</div>
 </ion-content>
