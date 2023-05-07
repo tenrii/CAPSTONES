@@ -38,35 +38,41 @@ export class AuthenticationService {
   }
   // Register user with email/password
   async RegisterUserTenant(email: any, password: any, record: any) {
-    const credential = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+    const credential = await this.ngFireAuth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
     this.uid = credential.user?.uid;
-    this.SendVerificationMail().then((res) =>{
+    this.SendVerificationMail().then((res) => {
       this.afStore.doc(`Tenant/${this.uid}`).set({
-      uid: this.uid,
-      Email: credential.user?.email,
+        uid: this.uid,
+        Email: credential.user?.email,
+      });
+      this.afStore.collection('Tenant').doc(this.uid).update(record);
     });
-    this.afStore.collection('Tenant').doc(this.uid).update(record);
-  })
-  return credential
-}
+    return credential;
+  }
 
   async RegisterUserOwner(email: any, password: any, record: any) {
-    const credential = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+    const credential = await this.ngFireAuth.createUserWithEmailAndPassword(
+      email,
+      password
+    );
     this.uid = credential.user?.uid;
-    this.SendVerificationMail().then((res) =>{
-        this.afStore.doc(`Owner/${this.uid}`).set({
+    this.SendVerificationMail().then((res) => {
+      this.afStore.doc(`Owner/${this.uid}`).set({
         uid: this.uid,
         Email: credential.user?.email,
       });
       this.afStore.collection('Owner').doc(this.uid).update(record);
-    })
-    return credential
+    });
+    return credential;
   }
   // Email verification when new user register
   SendVerificationMail() {
     return this.ngFireAuth.currentUser.then((user: any) => {
       return user.sendEmailVerification().then(() => {
-          this.m.dismiss()
+        this.m.dismiss();
       });
     });
   }
@@ -74,8 +80,7 @@ export class AuthenticationService {
   SendVerificationMailO() {
     return this.ngFireAuth.currentUser.then((user: any) => {
       return user.sendEmailVerification().then(() => {
-        this.router.navigate(['dashboard2'])
-        .then(() => {
+        this.router.navigate(['dashboard2']).then(() => {
           window.location.reload();
         });
       });
@@ -96,6 +101,7 @@ export class AuthenticationService {
   }
   // Returns true when user is looged in
   get isLoggedIn(): boolean {
+    console.log('zxca');
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user !== null && user.emailVerified !== false ? true : false;
   }
@@ -114,8 +120,7 @@ export class AuthenticationService {
       .signInWithPopup(provider)
       .then((result) => {
         this.ngZone.run(() => {
-          this.router.navigate(['home'])
-          .then(() => {
+          this.router.navigate(['home']).then(() => {
             window.location.reload();
           });
         });
@@ -145,8 +150,7 @@ export class AuthenticationService {
   SignOut() {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
-      this.router.navigate(['home'])
-      .then(() => {
+      this.router.navigate(['home']).then(() => {
         window.location.reload();
       });
     });

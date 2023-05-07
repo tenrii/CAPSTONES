@@ -30,7 +30,7 @@
         <li><button class="dropdown-item" (click)="authService.SignOut()">Logout</button></li>
         <li><button class="dropdown-item" [routerLink]="['/test']">Test</button></li>
         <li class="owner">
-          <button *ngIf="listEmail" class="dropdown-item" [routerLink]="['/owner-panel']">owner-panel</button>
+          <button class="dropdown-item" [routerLink]="['/owner-panel']">owner-panel</button>
         </li>
       </ul>
     </div>

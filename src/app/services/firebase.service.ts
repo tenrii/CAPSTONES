@@ -17,6 +17,7 @@ export class FirebaseService {
   collectionRoom = 'Room';
   collectionTenant = 'Tenant';
   collectionOwner = 'Owner';
+  public tenantUid: any[] = [];
   rooms: any = new BehaviorSubject([]);
   tenants: any = new BehaviorSubject([]);
   owners: any = new BehaviorSubject([]);
@@ -27,10 +28,14 @@ export class FirebaseService {
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth
   ) {
-    this.afAuth.onAuthStateChanged((user: any) => {
-      console.log('Change:', user);
-      this.currentUser = user;
-    });
+    this.firestore
+      .collection('Tenant')
+      .get()
+      .subscribe((querySnapshot) => {
+        querySnapshot.forEach((doc: any) => {
+          this.tenantUid.push(doc.id);
+        });
+      });
   }
 
   create_room(record: any) {
@@ -126,6 +131,7 @@ export class FirebaseService {
             return {
               id: e.payload.doc.id,
               isEdit: false,
+              uid: localData.uid,
               FName: localData.FName,
               LName: localData.LName,
               Age: localData.Age,

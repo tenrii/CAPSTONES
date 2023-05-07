@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication-service';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 interface RoomData {
   Id: any;
@@ -41,14 +42,13 @@ export class HomePage implements OnInit {
       disableOnInteraction: false,
     },
   };
-  email = JSON.parse(localStorage.getItem('user') || '{}')['email'];
-  emails = JSON.stringify(this.email);
 
   constructor(
     public authService: AuthenticationService,
     private router: Router,
     private firebaseService: FirebaseService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private afstore: AngularFirestore
   ) {
     this.roomData = {} as RoomData;
   }
@@ -70,12 +70,6 @@ export class HomePage implements OnInit {
 
       this.filter();
       console.log('a', this.list);
-    });
-
-    this.firebaseService.read_owner().subscribe((data) => {
-      this.emailList = data;
-      this.filterEmail();
-      console.log('b', this.listEmail);
     });
   }
 
@@ -101,12 +95,5 @@ export class HomePage implements OnInit {
       );
     });
     this.list.next(filteredList);
-  }
-
-  filterEmail() {
-    const filteredEList = this.emailList.filter((a) => {
-      return this.email === a.Email || this.emails === a.Email;
-    });
-    this.listEmail.next(filteredEList);
   }
 }

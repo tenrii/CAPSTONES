@@ -5,9 +5,9 @@ import {
   redirectUnauthorizedTo,
   redirectLoggedInTo,
 } from '@angular/fire/compat/auth-guard';
+import { AuthGuardService } from './shared/auth-guard.service';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
-
 const redirectLoggedInToChat = () => redirectLoggedInTo(['/chat']);
 
 const routes: Routes = [
@@ -82,18 +82,12 @@ const routes: Routes = [
       import('./owner-panel/owner-panel.module').then(
         (m) => m.OwnerPanelPageModule
       ),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminPageModule),
-  },
-  {
-    path: 'dashboard2',
-    loadChildren: () =>
-      import('./dashboard2/dashboard2.module').then(
-        (m) => m.Dashboard2PageModule
-      ),
   },
   {
     path: 'ex',
@@ -123,11 +117,13 @@ const routes: Routes = [
     path: 'chatroom',
     loadChildren: () =>
       import('./chatroom/chatroom.module').then((m) => m.ChatroomPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'chatroom/:id',
     loadChildren: () =>
       import('./chatroom/chatroom.module').then((m) => m.ChatroomPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'tab1',
@@ -136,8 +132,15 @@ const routes: Routes = [
   },
   {
     path: 'owner-log-reg',
-    loadChildren: () => import('./owner-log-reg/owner-log-reg.module').then( m => m.OwnerLogRegPageModule)
+    loadChildren: () =>
+      import('./owner-log-reg/owner-log-reg.module').then(
+        (m) => m.OwnerLogRegPageModule
+      ),
+  },  {
+    path: 'tenant-panel',
+    loadChildren: () => import('./tenant-panel/tenant-panel.module').then( m => m.TenantPanelPageModule)
   },
+
 ];
 
 @NgModule({
