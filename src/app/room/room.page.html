@@ -140,7 +140,7 @@
             [disabled]="(isReserving | async) || seat.occupied || this.pendingPayment"
             (click)="toggleSeat(seat)"
             >
-            <ion-icon [name]="seat.occupied && seat.occupied.email === email && seat.occupied.status === 'paidPayment' ? 'lock-closed-outline' :seat.occupied && seat.occupied.email === email && seat.occupied.status === 'pendingPayment' ? 'hourglass-outline' : seat.selected ? 'checkmark-circle' : 'checkmark-circle-outline'"></ion-icon>
+            <ion-icon [name]="seat.occupied && seat.occupied.status === 'paidPayment' ? 'lock-closed-outline' :seat.occupied && seat.occupied.email === email && seat.occupied.status === 'pendingPayment' ? 'hourglass-outline' : seat.selected ? 'checkmark-circle' : 'checkmark-circle-outline'"></ion-icon>
             {{ 'Bed' + seat?.id }}
           </ion-button>
         </ng-template>
