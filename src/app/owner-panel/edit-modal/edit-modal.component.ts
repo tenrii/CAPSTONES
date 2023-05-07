@@ -63,7 +63,7 @@ export class EditModalComponent implements OnInit {
   }
 
   updateRoom(){
-    this.firebaseService.update_room(this.record.id, this.roomForm);
+    this.firebaseService.update_room(this.record.id, this.roomForm.value);
   }
 
   close(){
