@@ -80,7 +80,7 @@ app.use('/',
 
       // make sure room or bed is not occupied
       if (type === 'bedspace-reservation' && room) {
-          room.Beds.forEach((bed: any) => {
+          room.Bed.forEach((bed: any) => {
             const bedFromLineItems = lineItems.find((item: any) => item.uid === bed.uid);
             if (bedFromLineItems && bedFromLineItems.occupied) {
               response.send({
@@ -169,8 +169,8 @@ app.use('/',
         checkoutSessionId,
         dateCreated: Date.now(),
       });
-
-      const tenantEmail = (await admin.firestore().collection(TENANT_COLLECTION).doc(userId).get()).data()?.email;
+      const tenantData = (await admin.firestore().collection(TENANT_COLLECTION).doc(userId).get()).data()
+      const tenantEmail = tenantData?.email || tenantData?.Email || '';
       if (type === 'bedspace-reservation' && room) {
         // update bedspace status to pending payment, occupied = status.
         const roomBeds = room.Bed;
