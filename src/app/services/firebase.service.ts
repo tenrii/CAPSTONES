@@ -77,6 +77,7 @@ export class FirebaseService {
               Title: localData.Title,
               Details: localData.Details,
               Price: localData.Price,
+              occupied: localData.occupied,
             };
           });
           return roomList;

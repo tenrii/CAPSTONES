@@ -7,11 +7,15 @@ import 'firebase/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, finalize } from 'rxjs';
+import { BehaviorSubject, lastValueFrom } from 'rxjs';
+import { PaymentService } from '../services/payment.service';
 
 interface Seat {
-  BedSpace: string;
-  Occupied: boolean;
-  Occupant: string;
+  id: number;
+  status: string;
+  uid: string;
+  selected?: boolean;
+  occupied?: any;
 }
 
 @Component({
@@ -29,6 +33,8 @@ export class RoomPage implements OnInit {
   collectionRoom = 'Room';
   downloadURL!: Observable<string>;
   email = JSON.parse(localStorage.getItem('user') || '{}')['email'];
+  isReserving = new BehaviorSubject(false);
+  public pendingPayment: any;
 
   a = 'hello';
 
@@ -43,7 +49,8 @@ export class RoomPage implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private firebaseService: FirebaseService,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private paymentService: PaymentService,
   ) {}
 
   ngOnInit() {
@@ -67,8 +74,9 @@ export class RoomPage implements OnInit {
 
   async load() {
     if (!this.firebaseService.loading) {
-      this.firebaseService.read_room().subscribe(() => {
+      const roomSub = this.firebaseService.read_room().subscribe(() => {
         this.load();
+        roomSub.unsubscribe();
       });
       return;
     }
@@ -80,66 +88,74 @@ export class RoomPage implements OnInit {
     console.log('id', this.firebaseService.getRoom(this.roomId));
 
     this.data = this.firebaseService.getRoom(this.roomId);
+    this.data.priceSub = parseFloat(this.data.Price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
     this.seats = [];
-    if (!this.data['BedSpaces']) {
-      for (let i = 1; i <= this.data['NumBedSpace']; i++) {
-        this.seats.push({ BedSpace: 'B' + i, Occupied: false, Occupant: '' });
-      }
+
+    // if (!this.data['BedSpaces']) {
+    //   for (let i = 1; i <= this.data['NumBedSpace']; i++) {
+    //     this.seats.push({ BedSpace: 'B' + i, Occupied: false , Occupant: ''});
+    //   }
+    // } else {
+    //   const a = JSON.parse(this.data['BedSpaces']);
+    //   this.seats.push(...[...a]);
+    // }
+    // console.log('c', this.email);
+
+    // check if user has pending payment
+    if (this.data.RoomType === 'Shared Room') {
+      this.pendingPayment = this.data.Bed.find((bed: any) => bed?.occupied?.email === this.email && bed?.occupied?.status === 'pendingPayment');
     } else {
-      const a = JSON.parse(this.data['BedSpaces']);
-      this.seats.push(...[...a]);
+      this.pendingPayment = this.data.occupied && this.data.occupied.email === this.email && this.data.occupied.status === 'pendingPayment' && this.data;
     }
-
-    console.log('c', this.email);
+    console.log('pending', this.pendingPayment);
   }
 
-  selectSeat(seat: Seat) {
-    if (!seat.Occupied) {
-      seat.Occupied = true;
-      seat.Occupant = this.email;
+  toggleSeat(seat: Seat) {
+    if (!seat.selected) {
+      seat.selected = true;
     } else {
-      seat.Occupied = false;
-      seat.Occupant = '';
+      seat.selected = false;
     }
   }
 
-  reserveBedspace() {
-    this.firestore
-      .collection(this.collectionRoom)
-      .doc(this.roomId)
-      .get()
-      .subscribe((doc) => {
-        if (doc.exists) {
-          const user = doc.data() as { BedSpaces: any };
+  async reserveBedspace() {
+    this.isReserving.next(true);
 
-          // Modify the favorites array locally
-          user.BedSpaces = this.seats;
-          const bs = JSON.stringify(user.BedSpaces);
+    let lineItems: any[] = [];
+    let paymentRequestType: 'bedspace-reservation' | 'room-reservation' = 'bedspace-reservation';
 
-          // Update the entire array back to Firestore
-          this.firestore
-            .collection(this.collectionRoom)
-            .doc(this.roomId)
-            .update({ BedSpaces: bs })
-            .then(() => {
-              console.log('Favorites updated successfully!');
-            })
-            .catch((error) => {
-              console.error('Error updating favorites:', error);
-            });
-        } else {
-          console.log('User document not found!');
-        }
-      });
-    console.log('a', this.seats);
-  }
-
-  bedSpaceEvent() {
-    for (let j = 1; j <= this.data['NumBedSpace']; j++) {
-      if (this.seats[j].Occupant != null) {
-      }
+    if (this.data.RoomType === 'Shared Room') {
+      lineItems = this.data?.Bed
+        .filter((b: any) => b.selected)
+        .map((b: any) => {
+          return {
+            uid: b.uid,
+            name: `Bed${b.id} (${b.status})`,
+            amount: this.data?.Price,
+          }
+        });
+      paymentRequestType = 'bedspace-reservation';
+    } else if (this.data.RoomType === 'Private Room') {
+      lineItems = [{
+        name: this.data.Title,
+        amount: this.data?.Price,
+      }];
+      paymentRequestType = 'room-reservation';
     }
+
+    if (lineItems.length === 0) {
+      this.isReserving.next(false);
+      return;
+    }
+
+    const response = await this.paymentService.createPaymentSession(
+      this.roomId,
+      paymentRequestType,
+      lineItems
+    );
+    console.log('res', response);
+    window.location.replace(response.checkoutUrl);
   }
 
   async Rate(i: any) {

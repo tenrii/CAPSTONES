@@ -52,10 +52,10 @@
   overflow-y: hidden;
 }
 
-#carouselExampleControls {
-  margin-left: 60px;
-  width: 60%;
-}
+// #carouselExampleControls {
+//   margin-left: 60px;
+//   width: 60%;
+// }
 
 .carousel-inner {
   max-height: 370px;
@@ -175,13 +175,13 @@
   border: black solid 1px;
 }
 
-ion-icon {
+.rating-star {
   font-size: 20px;
   color: var(--ion-color-warning);
-}
 
-ion-icon:not(:last-child) {
-  margin-right: 4px;
+  &:not(:last-child) {
+    margin-right: 4px;
+  }
 }
 
 :host(.read-only) ion-icon {
@@ -295,4 +295,60 @@ ion-icon:not(:last-child) {
   .modal-content {
     width: 100%;
   }
+}
+
+.price-card {
+  float: right;
+  padding: 1em;
+  padding-bottom: .5em;
+  border-radius: 5%;
+  color: #000;
+  // margin-right: 95px;
+
+  h2 {
+    font-weight: bolder;
+    font-size: 1.3em;
+  }
+
+  .payment-title {
+    font-weight: bolder;
+    font-size: 2em;
+  }
+
+  ion-card-content {
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .payment-col {
+    display: flex;
+    justify-content: center;
+  }
+
+  .payment-options {
+    img {
+      height: 50px;
+      border-radius: 5px;
+      margin-right: 1px;
+    }
+  }
+
+  .price-text {
+    padding-bottom: 20px;
+    border-bottom: 2px solid #c5c3c2;
+    font-weight: bolder;
+    // font-family: 'Gotham rounded';
+  }
+
+  ion-card-title {
+    --color: var(--ion-color-primary);
+  }
+
+  // .selected {
+  //   --background: #473C38;
+  //   --background-hover: #473C38;
+  //   --background-activated: #473C38;
+  //   --background-focused: #473C38;
+  // }
+
 }

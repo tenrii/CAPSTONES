@@ -41,28 +41,9 @@
     <img src="assets/bg2.jpg" style="width: 100%; height: 100%; object-fit: cover;">
   </div>
 
-  <div class="top">
-
-    <div class="price">
-      <ion-grid>
-        <ion-row>
-          <ion-col size="4" *ngFor="let seat of seats" (click)="selectSeat(seat)" [class.occupant]="seat.Occupant"
-            [class.occupied]="seat.Occupied">
-            <ion-button id="seat-number">{{ seat?.BedSpace }}</ion-button>
-            <ion-button class="seat-status">{{ seat?.Occupied ? 'Occupied' : 'Available' }}</ion-button>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-      <div id="pr">
-        <div id="p">
-          ₱{{data?.Price}}
-        </div>
-        <p>Monthly</p>
-        <button id="priceBtn" (click)="reserveBedspace()">Reserve</button>
-      </div>
-    </div>
-
-    <div class="body">
+  <ion-grid class="ion-padding">
+  <ion-row>
+    <ion-col>
       <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
           <button *ngFor="let pic of data?.Images; let i = index" type="button"
@@ -100,8 +81,113 @@
           <div id="caption"></div>
         </div>
       </div>
-    </div>
-  </div>
+    </ion-col>
+
+    <ion-col size="4" class="ion-no-padding">
+    <ion-card class="price-card">
+      <ion-card-header>
+        <ion-card-title class="ion-text-center payment-title">
+          {{ data?.RoomType === 'Shared Room' ? 'Reserve a BEDSPACE' : 'Reserve a ROOM'}}
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-row>
+          <ion-col>
+            <h1 class="ion-text-center price-text">₱{{data?.priceSub}}/month</h1>
+          </ion-col>
+        </ion-row>
+
+        <ng-container *ngIf="data?.RoomType === 'Shared Room'">
+          <ion-row>
+            <ion-col>
+              <h2 class="ion-text-center"><ion-icon color="#000" name="bed-outline"></ion-icon> CHOOSE BED PLACEMENT:</h2>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="ion-no-padding">
+              <h2>
+                TOP BUNK:
+              </h2>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ng-container *ngFor="let seat of data?.Bed" [class.occupied]="seat.selected || seat.occupied">
+              <ion-col *ngIf="seat.status === 'up'" size="3">
+                <ng-container *ngTemplateOutlet="bedButton; context: {seat: seat}"></ng-container>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+            <ion-col class="ion-no-padding">
+            <h2>
+              BOTTOM BUNK:
+            </h2>
+          </ion-col>
+          <ion-row>
+            <ng-container *ngFor="let seat of data?.Bed" [class.occupied]="seat.selected || seat.occupied">
+              <ion-col *ngIf="seat.status === 'down'" size="3">
+                <ng-container *ngTemplateOutlet="bedButton; context: {seat: seat}"></ng-container>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+        </ng-container>
+
+        <ng-template #bedButton let-seat="seat">
+          <ion-button
+            [color]="seat.occupied && seat.occupied.email === email && seat.occupied.status === 'paidPayment' ? 'success' : 'primary' "
+            size="small"
+            shape="round"
+            expand="full"
+            [disabled]="(isReserving | async) || seat.occupied || this.pendingPayment"
+            (click)="toggleSeat(seat)"
+            >
+            <ion-icon [name]="seat.occupied && seat.occupied.email === email && seat.occupied.status === 'paidPayment' ? 'lock-closed-outline' :seat.occupied && seat.occupied.email === email && seat.occupied.status === 'pendingPayment' ? 'hourglass-outline' : seat.selected ? 'checkmark-circle' : 'checkmark-circle-outline'"></ion-icon>
+            {{ 'Bed' + seat?.id }}
+          </ion-button>
+        </ng-template>
+
+        <ion-row>
+          <ion-col class="payment-col">
+            <ion-button
+              size="large"
+              shape="round"
+              strong="true"
+              class="reserve-button"
+              (click)="reserveBedspace()"
+              [disabled]="(this.isReserving | async) || this.pendingPayment || this.data?.occupied"
+              >
+              <ion-spinner *ngIf="this.isReserving | async"></ion-spinner>
+              Reserve
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+        <div *ngIf="pendingPayment" class="ion-padding-horizontal">
+          <span>Please click on <a [href]="pendingPayment.occupied.checkoutUrl">this link</a> to pay for your pending reservation.</span>
+        </div>
+
+        <ion-row>
+          <ion-col class="ion-no-padding">
+            <h2>
+              Payment methods:
+            </h2>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="payment-options">
+            <img src="/assets/payments/card.png" alt="Cards">
+            <img src="/assets/payments/gcash.png" alt="Gcash">
+            <img src="/assets/payments/maya.png" alt="Maya">
+            <img src="/assets/payments/grabpay.svg" alt="Grab pay">
+          </ion-col>
+        </ion-row>
+      <div class="ion-padding">
+        <span class="note">Note: If payment for the reservation is not made within 24hrs, the reservation will be automatically cancelled.</span>
+      </div>
+      </ion-card-content>
+    </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
 
   <div class="detail">
 
@@ -185,7 +271,7 @@
     <form [formGroup]="reviewForm">
 
 
-      <ion-icon *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= star ? 'star' : 'star-outline'"
+      <ion-icon class="rating-star" *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= star ? 'star' : 'star-outline'"
         (click)="Rate(i)"></ion-icon>
 
       <div class="form-group">
