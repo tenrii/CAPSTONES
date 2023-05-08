@@ -136,7 +136,8 @@ const routes: Routes = [
       import('./owner-log-reg/owner-log-reg.module').then(
         (m) => m.OwnerLogRegPageModule
       ),
-  },  {
+  },
+  {
     path: 'tenant-panel',
     loadChildren: () => import('./tenant-panel/tenant-panel.module').then( m => m.TenantPanelPageModule)
   },

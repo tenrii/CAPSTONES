@@ -29,7 +29,8 @@ export class OwnerPanelPage implements OnInit {
   nbs: any = 1;
   isModalOpen = false;
   uid: any;
-  ownerId: any;
+  ownerUid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
+  public owner: any;
 
   constructor(
     private animationCtrl: AnimationController,
@@ -48,8 +49,14 @@ export class OwnerPanelPage implements OnInit {
       console.log('stud list', this.roomList);
     });
 
-    this.ownerId = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
-    console.log('a', JSON.stringify(this.ownerId));
+    if (!this.firebaseService.loading) {
+      this.firebaseService.read_owner().subscribe(() => {
+        console.log('a',this.ownerUid)
+        this.owner = this.firebaseService.getOwner(this.ownerUid);
+        console.log('b',this.owner)
+      });
+      return;
+    }
   }
 
   CreateRecord() {
@@ -74,7 +81,7 @@ export class OwnerPanelPage implements OnInit {
     this.firestore
       .collection('Room')
       .add({
-        OwnerId: JSON.stringify(this.ownerId),
+        OwnerId: this.ownerUid,
       })
       .then(async (res) => {
         this.uid = res.id;
