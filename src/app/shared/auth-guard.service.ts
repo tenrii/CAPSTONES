@@ -20,9 +20,6 @@ export class AuthGuardService {
     private firebaseService: FirebaseService,
     private firestore: AngularFirestore
   ) {
-    this.firebaseService.read_owner().subscribe((data) => {
-      this.ownerList = data;
-    });
   }
 
   canActivate(route: any, state: any) {
@@ -32,7 +29,9 @@ export class AuthGuardService {
     if (!user) {
       this.router.navigate(['/login']);
       return false;
-    } else if (this.ownerUid.includes(user) && state.url.includes('/login')) {
+    } else if (
+      this.firebaseService.ownerUid.includes(user) &&
+      state.url.includes('/tenant-panel')) {
       this.router.navigate(['/home']);
       return false;
     } else if (
@@ -44,5 +43,6 @@ export class AuthGuardService {
     } else {
       return true;
     }
+    return user;
   }
 }

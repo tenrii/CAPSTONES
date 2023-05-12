@@ -1,38 +1,41 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import firebase from 'firebase/compat/app';
-import { FirebaseService } from '../services/firebase.service';
+import { Component, OnInit } from '@angular/core';
+import { AngularFireFunctions } from '@angular/fire/compat/functions';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-edit-room',
   templateUrl: './edit-room.page.html',
   styleUrls: ['./edit-room.page.scss'],
 })
-export class EditRoomPage {
-  @Input() movieId!: string;
-  @Input() reviews!: any[]; // Array of reviews to display
-  @Input() avgRating!: number; // Average rating of the movie
+export class EditRoomPage implements OnInit {
+  callable: any;
+  emailData!: FormGroup;
 
-  @Output() ratingChanged = new EventEmitter<number>(); // Emit the new rating
-  @Output() reviewSubmitted = new EventEmitter<string>(); // Emit the new review
+  constructor(
+    private fns: AngularFireFunctions,
+    public fb: FormBuilder,
+  ) {}
 
-  review: string = '';
+    ngOnInit(){
+        this.emailData = this.fb.group({
+          to: ['',[Validators.required]],
+          subject: ['',[Validators.required]],
+          text: ['',[Validators.required]],
+        })
+    }
 
-  constructor(private firebaseService: FirebaseService) {}
-
-  onStarClick(rating: number) {
-    // Emit the new rating
-    this.ratingChanged.emit(rating);
-  }
-
-  onReviewSubmit() {
-    // Add the new review to Firebase
-    //this.firebaseService.addReview(this.movieId, this.review);
-
-    // Emit the new review
-    this.reviewSubmitted.emit(this.review);
-
-    // Clear the textarea
-    this.review = '';
-  }
+  sendEmail() {
+    this.callable = this.fns.httpsCallable('sendEmail');
+    this.callable(this.emailData).subscribe(
+      (response:any) => {
+        console.log('Email sent successfully:', response);
+        // Reset the form after successful email sending
+        this.emailData.reset();
+      },
+      (error:any) => {
+        console.error('Error sending email:', error);
+      }
+    );
+}
 }

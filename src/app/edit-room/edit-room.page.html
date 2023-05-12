@@ -1,23 +1,17 @@
 <ion-content>
-  <ion-item>
-    <ion-label>Rating:</ion-label>
-    <ion-icon *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= avgRating ? 'star' : 'star-outline'"
-      (click)="onStarClick(i)"></ion-icon>
-  </ion-item>
-
-  <ion-item>
-    <ion-label position="floating">Your review:</ion-label>
-    <ion-textarea [(ngModel)]="review" rows="4"></ion-textarea>
-  </ion-item>
-
-  <ion-button expand="block" (click)="onReviewSubmit()">Submit review</ion-button>
-
-  <ion-list>
-    <ion-item *ngFor="let userReview of reviews">
-      <ion-icon *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= userReview.rating ? 'star' : 'star-outline'"></ion-icon>
-      <ion-label>{{ userReview.review }}</ion-label>
+  <form [formGroup]="emailData">
+    <ion-item>
+      <ion-label position="stacked">To:</ion-label>
+      <ion-input type="email" formControlName="to"></ion-input>
     </ion-item>
-  </ion-list>
-
-
+    <ion-item>
+      <ion-label position="stacked">Subject:</ion-label>
+      <ion-input type="text" formControlName="subject"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Message:</ion-label>
+      <ion-textarea formControlName="text"></ion-textarea>
+    </ion-item>
+    <ion-button type="submit" (click)="sendEmail()">Send Email</ion-button>
+  </form>
 </ion-content>

@@ -126,11 +126,6 @@ const routes: Routes = [
     canActivate: [AuthGuardService],
   },
   {
-    path: 'tab1',
-    loadChildren: () =>
-      import('./components/tab1/tab1.module').then((m) => m.Tab1PageModule),
-  },
-  {
     path: 'owner-log-reg',
     loadChildren: () =>
       import('./owner-log-reg/owner-log-reg.module').then(
@@ -139,7 +134,8 @@ const routes: Routes = [
   },
   {
     path: 'tenant-panel',
-    loadChildren: () => import('./tenant-panel/tenant-panel.module').then( m => m.TenantPanelPageModule)
+    loadChildren: () => import('./tenant-panel/tenant-panel.module').then( m => m.TenantPanelPageModule),
+    canActivate: [AuthGuardService],
   },
 
 ];

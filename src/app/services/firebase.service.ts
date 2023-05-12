@@ -18,9 +18,11 @@ export class FirebaseService {
   collectionTenant = 'Tenant';
   collectionOwner = 'Owner';
   public tenantUid: any[] = [];
+  public ownerUid: any[] = [];
   rooms: any = new BehaviorSubject([]);
   tenants: any = new BehaviorSubject([]);
   owners: any = new BehaviorSubject([]);
+  transactions: any = new BehaviorSubject([]);
   public loading: boolean = false;
   currentUser!: User;
 
@@ -34,6 +36,15 @@ export class FirebaseService {
       .subscribe((querySnapshot) => {
         querySnapshot.forEach((doc: any) => {
           this.tenantUid.push(doc.id);
+        });
+      });
+
+      this.firestore
+      .collection('Owner')
+      .get()
+      .subscribe((querySnapshot) => {
+        querySnapshot.forEach((doc: any) => {
+          this.ownerUid.push(doc.id);
         });
       });
   }
@@ -68,7 +79,7 @@ export class FirebaseService {
             return {
               id: e.payload.doc.id,
               isEdit: false,
-              OwnerId: localData.OwnerId,
+              ownerId: localData.ownerId,
               Rent: localData.Rent,
               RoomType: localData.RoomType,
               Street: localData.Street,
@@ -83,6 +94,7 @@ export class FirebaseService {
               Details: localData.Details,
               Price: localData.Price,
               occupied: localData.occupied,
+              isUnlisted: localData.isUnlisted,
             };
           });
           return roomList;
@@ -151,6 +163,34 @@ export class FirebaseService {
       );
   }
 
+  read_transaction(): Observable<any[]> {
+    return this.firestore
+      .collection('ActivePaymentSessions')
+      .snapshotChanges()
+      .pipe(
+        map((a) => {
+          this.loading = true;
+          const ownerList = a.map((e) => {
+            const localData: any = e.payload.doc.data();
+            return {
+              id: e.payload.doc.id,
+              isEdit: false,
+              dateCreated: localData.dateCreated,
+              lineItems: localData.lineItems,
+              roomId: localData.roomId,
+              status: localData.status,
+              userId: localData.userId,
+              type: localData.type,
+            };
+          });
+          return ownerList;
+        }),
+        tap((a) => {
+          this.transactions.next(a);
+        })
+      );
+  }
+
   update_room(recordID: any, record: any) {
     this.firestore.doc(this.collectionRoom + '/' + recordID).update(record);
   }
@@ -167,8 +207,12 @@ export class FirebaseService {
     this.firestore.doc(this.collectionOwner + '/' + record_id).delete();
   }
 
-  getRoom(room: any) {
-    return this.rooms.value.find((a: any) => a.id == room);
+  getRoom(data: any) {
+    return this.rooms.value.find((a: any) => a.id == data);
+  }
+
+  getOwnerRoom(data: any) {
+    return this.rooms.value.find((a: any) => a.ownerId == data);
   }
 
   getOwner(owner: any) {
@@ -177,5 +221,9 @@ export class FirebaseService {
 
   getTenant(tenant: any) {
     return this.tenants.value.find((a: any) => a.id == tenant);
+  }
+
+  getTransaction(transaction: any) {
+    return this.transactions.value.filter((a:any) => a.userId === transaction);
   }
 }

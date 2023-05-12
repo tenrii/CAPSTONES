@@ -8,29 +8,26 @@
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Features</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Pricing</a>
+          <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
         </li>
       </ul>
     </div>
-    <div class="dropdown">
+    <div class="dropdown" >
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
         aria-expanded="false">
         <img src="assets/user2.png">
       </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-        <li><button class="dropdown-item" [routerLink]="['/login']">Login</button></li>
-        <li><button class="dropdown-item" [routerLink]="['/registration']">Register</button></li>
-        <li><button class="dropdown-item" [routerLink]="['/admin']">Admin</button></li>
-        <li><button class="dropdown-item" (click)="authService.SignOut()">Logout</button></li>
-        <li><button class="dropdown-item" [routerLink]="['/test']">Test</button></li>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" >
+        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/login']">Login</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/owner-log-reg']">Owner Login</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/admin']">Admin</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/test']">Test</button></li>
         <li class="owner">
-          <button class="dropdown-item" [routerLink]="['/owner-panel']">owner-panel</button>
+          <button *ngIf="filterOwner() === true" style="font-size: 15px;" class="dropdown-item" [routerLink]="['/owner-panel']">Owner Panel</button>
+        </li>
+        <li>
+          <button *ngIf="filterTenant() === true" style="font-size: 15px;" class="dropdown-item" [routerLink]="['/tenant-panel']">Tenant Panel</button>
         </li>
       </ul>
     </div>
@@ -91,7 +88,8 @@
     </ion-item>
   </div>
 
-  <div *ngFor="let item of list | async" class="room">
+  <span *ngFor="let item of list | async">
+  <div *ngIf="!item.isUnlisted || item.isUnlisted==='false'"  class="room">
     <div>
       <div class="over">
         <img src="{{item.Images[1]}}" class="img">
@@ -114,4 +112,5 @@
     </div>
     <div style="text-align: center; color: white; opacity: 0;">/</div>
   </div>
+</span>
 </ion-content>

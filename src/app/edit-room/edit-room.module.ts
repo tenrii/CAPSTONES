@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { EditRoomPageRoutingModule } from './edit-room-routing.module';
 
 import { EditRoomPage } from './edit-room.page';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
 
 @NgModule({
   imports: [
@@ -18,6 +18,5 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
     EditRoomPageRoutingModule,
   ],
   declarations: [EditRoomPage],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA],
 })
 export class EditRoomPageModule {}

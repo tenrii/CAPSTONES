@@ -2,9 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { OwnerPanelPageRoutingModule } from './owner-panel-routing.module';
-
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { OwnerPanelPage } from './owner-panel.page';
 import { CreateModalComponent } from './create-modal/create-modal.component';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
