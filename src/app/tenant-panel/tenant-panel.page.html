@@ -1,5 +1,5 @@
 <ion-content>
- <div class="header">
+  <div class="header">
     <ion-grid>
       <ion-row>
 
@@ -35,105 +35,125 @@
           document.getElementById('transaction').style.display='none';">Bills</div>
         </ion-col>
 
-<ion-col class="notification">
-  <div type="button" id="top-center">Notification</div>
-    <ion-popover trigger="top-center" side="bottom" alignment="center">
-      <ng-template>
-        <ion-content class="ion-padding">
-          <div class="title"><ion-icon name="notifications"></ion-icon><span>Notification</span></div>
+        <ion-col class="notification">
+          <div type="button" id="top-center">Notification</div>
+          <ion-popover trigger="top-center" side="bottom" alignment="center">
+            <ng-template>
+              <ion-content class="ion-padding">
+                <div class="title"><ion-icon name="notifications"></ion-icon><span>Notification</span></div>
 
-            <ion-grid><ion-row style=" max-width: 155px;">
-              <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
+                <ion-grid><ion-row style=" max-width: 155px;">
+                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
               color: white; border-radius: 10px 10px 0px 0px;">
-                <div type="button" onclick="
+                      <div type="button" onclick="
                 document.getElementById('bedspace1').style.display='block';
-                document.getElementById('room1').style.display='none';">Bedspace</div></ion-col>
-              <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
+                document.getElementById('room1').style.display='none';">Bedspace</div>
+                    </ion-col>
+                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
               color: white; border-radius: 10px 10px 0px 0px;">
-                <div type="button" onclick="
+                      <div type="button" onclick="
                 document.getElementById('bedspace1').style.display='none';
-                document.getElementById('room1').style.display='block';">Room</div></ion-col>
-            </ion-row></ion-grid>
+                document.getElementById('room1').style.display='block';">Room</div>
+                    </ion-col>
+                  </ion-row></ion-grid>
 
-            <div id="bedspace1" style="display: block;">
-              <ion-grid>
-                <span *ngFor="let data of sortInBed; let i = index;" [attr.data-index]="i">
-                  <span *ngFor="let item of data.lineItems;">
-                <!--Paid-->
-                  <ion-row *ngIf="data.status === 'paid' && data.type === 'bedspace-reservation'">
-                    <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
-                    <ion-col style="border-bottom: gray solid 1px;">
-                      <div class="cardName">
-                        Your reservation in Room {{data.num}}
-                        Bed <span *ngFor="let bed of data.roomData.Bed"><span *ngIf="bed.uid === item.uid">{{bed.id}} -
-                        <span *ngIf="bed.status === 'up'"> Top Bunk</span><span *ngIf="bed.status === 'down'"> Bottom Bunk</span>
-                        </span></span>
-                        at
-                        {{data.roomData.Title}}
-                        is confirmed and payment received in full. Thank you!
-                          <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                <!--Pending-->
-                  <ion-row *ngIf="data.status === 'pending' && data.type === 'bedspace-reservation'">
-                    <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
-                    <ion-col style="border-bottom: gray solid 1px;">
-                      <div class="cardName">
-                      Your reservation in Room {{data.num}}
-                      Bed <span *ngFor="let bed of data.roomData.Bed"><span *ngIf="bed.uid === data.lineItems.uid">{{bed.id}} -
-                      <span *ngIf="bed.status === 'up'"> Top Bunk</span><span *ngIf="bed.status === 'down'"> Bottom Bunk</span>
-                      </span></span>
-                      at
-                      {{data.roomData.Title}}
-                      has received. Please note that your reservation will only be confirmed once we receive your full payment. Thank you!
-                      <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </span>
-                </span>
-              </ion-grid>
-            </div>
+                <div id="bedspace1" style="display: block;">
+                  <ion-grid>
+                    <span *ngFor="let data of sortInBed; let i = index;" [attr.data-index]="i">
+                      <span *ngFor="let item of data.lineItems;">
+                        <!--Paid-->
+                        <ion-row *ngIf="data.status === 'paid' && data.type === 'bedspace-reservation'">
+                          <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
+                                src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
+                            <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
+                                style="width: 50px;"></span></ion-col>
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                              Your reservation in Room {{data.num}}
+                              Bed <span *ngFor="let bed of data.roomData.Bed"><span
+                                  *ngIf="bed.uid === item.uid">{{bed.id}} -
+                                  <span *ngIf="bed.status === 'up'"> Top Bunk</span><span *ngIf="bed.status === 'down'">
+                                    Bottom Bunk</span>
+                                </span></span>
+                              at
+                              {{data.roomData.Title}}
+                              is confirmed and payment received in full. Thank you!
+                              <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                        <!--Pending-->
+                        <ion-row *ngIf="data.status === 'pending' && data.type === 'bedspace-reservation'">
+                          <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
+                                src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
+                            <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
+                                style="width: 50px;"></span></ion-col>
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                              Your reservation in Room {{data.num}}
+                              Bed <span *ngFor="let bed of data.roomData.Bed"><span
+                                  *ngIf="bed.uid === data.lineItems.uid">{{bed.id}} -
+                                  <span *ngIf="bed.status === 'up'"> Top Bunk</span><span *ngIf="bed.status === 'down'">
+                                    Bottom Bunk</span>
+                                </span></span>
+                              at
+                              {{data.roomData.Title}}
+                              has received. Please note that your reservation will only be confirmed once we receive
+                              your full payment. Thank you!
+                              <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                      </span>
+                    </span>
+                  </ion-grid>
+                </div>
 
-            <div id="room1" style="display: none;">
-              <ion-grid>
-                <span *ngFor="let data of sortInBed; let i = index;" [attr.data-index]="i">
-                <span *ngFor="let item of data.lineItems;">
-                <!--Paid-->
-                  <ion-row *ngIf="data.status === 'paid' && data.type === 'room-reservation'">
-                    <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
-                    <ion-col style="border-bottom: gray solid 1px;">
-                      <div class="cardName">
-                      Your reservation in Room {{data.num}}
-                      at
-                      {{data.roomData.Title}}
-                      is confirmed and payment received in full. Thank you!
-                      <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                <!--Pending-->
-                  <ion-row *ngIf="data.status === 'pending' && data.type === 'room-reservation'">
-                    <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
-                    <ion-col style="border-bottom: gray solid 1px;">
-                      <div class="cardName">
-                      Your reservation in Room {{data.num}}
-                      at
-                      {{data.roomData.Title}}
-                      has received. Please note that your reservation will only be confirmed once we receive your full payment. Thank you!
-                      <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
-                      </div>
-                    </ion-col>
-                  </ion-row>
-                </span>
-                </span>
-              </ion-grid>
-            </div>
-        </ion-content>
-      </ng-template>
-    </ion-popover>
-</ion-col>
+                <div id="room1" style="display: none;">
+                  <ion-grid>
+                    <span *ngFor="let data of sortInBed; let i = index;" [attr.data-index]="i">
+                      <span *ngFor="let item of data.lineItems;">
+                        <!--Paid-->
+                        <ion-row *ngIf="data.status === 'paid' && data.type === 'room-reservation'">
+                          <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
+                                src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
+                            <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
+                                style="width: 50px;"></span></ion-col>
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                              Your reservation in Room {{data.num}}
+                              at
+                              {{data.roomData.Title}}
+                              is confirmed and payment received in full. Thank you!
+                              <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                        <!--Pending-->
+                        <ion-row *ngIf="data.status === 'pending' && data.type === 'room-reservation'">
+                          <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
+                                src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
+                            <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
+                                style="width: 50px;"></span></ion-col>
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                              Your reservation in Room {{data.num}}
+                              at
+                              {{data.roomData.Title}}
+                              has received. Please note that your reservation will only be confirmed once we receive
+                              your full payment. Thank you!
+                              <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                      </span>
+                    </span>
+                  </ion-grid>
+                </div>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+        </ion-col>
 
 
         <ion-col class="transaction">
@@ -158,153 +178,153 @@
 
   <div class="center">
     <div>Hello, {{tenant?.FName}}</div>
-    <p>Lets help you live your perfect boarding <br/> house match</p>
+    <p>Lets help you live your perfect boarding <br /> house match</p>
   </div>
 
-<div class="body">
+  <div class="body">
 
-<div id="pending" style="display:block;">
-  <div class="room">
-    <ion-grid>
-      <ion-row class="row-header">
-        <ion-col>Title</ion-col>
-        <ion-col>Bedspace Placement</ion-col>
-        <ion-col>Payment Amount</ion-col>
-        <ion-col>Payment Status</ion-col>
-        <ion-col>Reference</ion-col>
-        <ion-col>Date of Payment</ion-col>
-      </ion-row>
-      <ion-card *ngIf="pending.length === 0">
-        <ion-icon name="search-outline"></ion-icon>
-        <p>You have no pending reservation yet</p>
-        <p>Go to the "Home Page" for room/bedspace reservation</p>
-      </ion-card>
-      <ion-row class="row-body" *ngFor="let td of pending">
-        <ion-col>{{td.roomData.Title}}</ion-col>
-        <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
-        <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
-        <ion-col>{{td.status}}</ion-col>
-        <ion-col>{{td.id}}</ion-col>
-        <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-</div>
+    <div id="pending" style="display:block;">
+      <div class="room">
+        <ion-grid>
+          <ion-row class="row-header">
+            <ion-col>Title</ion-col>
+            <ion-col>Bedspace Placement</ion-col>
+            <ion-col>Payment Amount</ion-col>
+            <ion-col>Payment Status</ion-col>
+            <ion-col>Reference</ion-col>
+            <ion-col>Date of Payment</ion-col>
+          </ion-row>
+          <ion-card *ngIf="pending.length === 0">
+            <ion-icon name="search-outline"></ion-icon>
+            <p>You have no pending reservation yet</p>
+            <p>Go to the "Home Page" for room/bedspace reservation</p>
+          </ion-card>
+          <ion-row class="row-body" *ngFor="let td of pending">
+            <ion-col>{{td.roomData.Title}}</ion-col>
+            <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
+            <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
+            <ion-col>{{td.status}}</ion-col>
+            <ion-col>{{td.id}}</ion-col>
+            <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
 
-<div id="complete" style="display:none;">
+    <div id="complete" style="display:none;">
 
-  <div class="room">
-    <ion-grid>
-      <ion-row class="row-header">
-        <ion-col>Title</ion-col>
-        <ion-col>Bedspace Placement</ion-col>
-        <ion-col>Payment Amount</ion-col>
-        <ion-col>Payment Status</ion-col>
-        <ion-col>Reference</ion-col>
-        <ion-col>Date of Payment</ion-col>
-      </ion-row>
-      <ion-card *ngIf="paid.length === 0">
-        <ion-icon name="search-outline"></ion-icon>
-        <p>You have no complete reservation yet</p>
-        <p>Go to your "Pending Reservation" for the completion of your room/bedspace reservation</p>
-      </ion-card>
-      <ion-row class="row-body" *ngFor="let td of paid">
-        <ion-col>{{td.roomData.Title}}</ion-col>
-        <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
-        <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
-        <ion-col>{{td.status}}</ion-col>
-        <ion-col>{{td.id}}</ion-col>
-        <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
-      </ion-row>
-    </ion-grid>
-  </div>
-</div>
+      <div class="room">
+        <ion-grid>
+          <ion-row class="row-header">
+            <ion-col>Title</ion-col>
+            <ion-col>Bedspace Placement</ion-col>
+            <ion-col>Payment Amount</ion-col>
+            <ion-col>Payment Status</ion-col>
+            <ion-col>Reference</ion-col>
+            <ion-col>Date of Payment</ion-col>
+          </ion-row>
+          <ion-card *ngIf="paid.length === 0">
+            <ion-icon name="search-outline"></ion-icon>
+            <p>You have no complete reservation yet</p>
+            <p>Go to your "Pending Reservation" for the completion of your room/bedspace reservation</p>
+          </ion-card>
+          <ion-row class="row-body" *ngFor="let td of paid">
+            <ion-col>{{td.roomData.Title}}</ion-col>
+            <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
+            <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
+            <ion-col>{{td.status}}</ion-col>
+            <ion-col>{{td.id}}</ion-col>
+            <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
 
-<div class="bill" id="bill" style="display:none;">
+    <div class="bill" id="bill" style="display:none;">
 
-<ion-grid >
-  <ion-row>
-    <ion-col class="btn">
-      <div type="button" onclick="
+      <ion-grid>
+        <ion-row>
+          <ion-col class="btn">
+            <div type="button" onclick="
       document.getElementById('unpaid').style.display='block';
       document.getElementById('paid').style.display='none';">Unpaid</div>
-    </ion-col>
-    <ion-col class="btn">
-      <div type="button" onclick="
+          </ion-col>
+          <ion-col class="btn">
+            <div type="button" onclick="
       document.getElementById('unpaid').style.display='none';
       document.getElementById('paid').style.display='block';">Paid</div>
-    </ion-col>
-  </ion-row>
-</ion-grid>
-  <div id="unpaid" style="display:block;">
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      Monthly Rent
-    </ion-col>
-    <ion-col>
-      Amount
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      unpaid
-    </ion-col>
-    <ion-col>
-      unpaid
-    </ion-col>
-  </ion-row>
-</ion-grid>
-</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div id="unpaid" style="display:block;">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Monthly Rent
+            </ion-col>
+            <ion-col>
+              Amount
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              unpaid
+            </ion-col>
+            <ion-col>
+              unpaid
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
 
-<div id="paid" style="display:none;">
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      Monthly Rent
-    </ion-col>
-    <ion-col>
-      Amount
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      paid
-    </ion-col>
-    <ion-col>
-      paid
-    </ion-col>
-  </ion-row>
-</ion-grid>
-</div>
-</div>
+      <div id="paid" style="display:none;">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              Monthly Rent
+            </ion-col>
+            <ion-col>
+              Amount
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              paid
+            </ion-col>
+            <ion-col>
+              paid
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
 
-<div id="transaction" style="display:none;">
-  <div class="room">
-    <ion-grid>
-      <ion-row class="row-header">
-        <ion-col>Title</ion-col>
-        <ion-col>Bedspace Placement</ion-col>
-        <ion-col>Payment Amount</ion-col>
-        <ion-col>Payment Status</ion-col>
-        <ion-col>Reference</ion-col>
-        <ion-col>Date of Payment</ion-col>
-      </ion-row>
-      <ion-card *ngIf="transaction.length === 0">
-        <ion-icon name="search-outline"></ion-icon>
-        <p>You have no reservation transaction yet</p>
-      </ion-card>
-      <ion-row class="row-body" *ngFor="let td of transaction">
-        <ion-col>{{td.roomData.Title}}</ion-col>
-        <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
-        <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
-        <ion-col>{{td.status}}</ion-col>
-        <ion-col>{{td.id}}</ion-col>
-        <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
-      </ion-row>
-    </ion-grid>
+    <div id="transaction" style="display:none;">
+      <div class="room">
+        <ion-grid>
+          <ion-row class="row-header">
+            <ion-col>Title</ion-col>
+            <ion-col>Bedspace Placement</ion-col>
+            <ion-col>Payment Amount</ion-col>
+            <ion-col>Payment Status</ion-col>
+            <ion-col>Reference</ion-col>
+            <ion-col>Date of Payment</ion-col>
+          </ion-row>
+          <ion-card *ngIf="transaction.length === 0">
+            <ion-icon name="search-outline"></ion-icon>
+            <p>You have no reservation transaction yet</p>
+          </ion-card>
+          <ion-row class="row-body" *ngFor="let td of transaction">
+            <ion-col>{{td.roomData.Title}}</ion-col>
+            <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
+            <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
+            <ion-col>{{td.status}}</ion-col>
+            <ion-col>{{td.id}}</ion-col>
+            <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
   </div>
-</div>
-
-</div>
 </ion-content>

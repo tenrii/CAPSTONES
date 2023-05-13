@@ -23,83 +23,91 @@
         </ion-col>
 
         <ion-col class="notification">
-            <div type="button" id="top-center">Notification</div>
-            <ion-popover trigger="top-center" side="bottom" alignment="center">
-              <ng-template>
-                <ion-content class="ion-padding">
-                  <div class="title"><ion-icon name="notifications"></ion-icon><span>Notification</span></div>
+          <div type="button" id="top-center">Notification</div>
+          <ion-popover trigger="top-center" side="bottom" alignment="center">
+            <ng-template>
+              <ion-content class="ion-padding">
+                <div class="title"><ion-icon name="notifications"></ion-icon><span>Notification</span></div>
 
-                  <ion-grid><ion-row style=" max-width: 155px;">
-                  <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
+                <ion-grid><ion-row style=" max-width: 155px;">
+                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
                   color: white; border-radius: 10px 10px 0px 0px;">
-                  <div type="button" onclick="
+                      <div type="button" onclick="
                   document.getElementById('bedspace1').style.display='block';
-                  document.getElementById('room1').style.display='none';">Bedspace</div></ion-col>
-                  <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
+                  document.getElementById('room1').style.display='none';">Bedspace</div>
+                    </ion-col>
+                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
                   color: white; border-radius: 10px 10px 0px 0px;">
-                  <div type="button" onclick="
+                      <div type="button" onclick="
                   document.getElementById('bedspace1').style.display='none';
-                  document.getElementById('room1').style.display='block';">Room</div></ion-col>
+                  document.getElementById('room1').style.display='block';">Room</div>
+                    </ion-col>
                   </ion-row></ion-grid>
 
-                  <div id="bedspace1" style="display: block;">
+                <div id="bedspace1" style="display: block;">
                   <ion-grid>
-                  <span *ngFor="let data of be; let i = index;" [attr.data-index]="i">
-                  <span *ngFor="let b of data.Bed;">
-                  <ion-row *ngIf="b.occupied">
-                    <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
-                    <ion-col style="border-bottom: gray solid 1px;">
-                    <div class="cardName">
-                      <span *ngFor="let tenant of data.tenantData">
-                        <span *ngIf="b.occupied?.userId === tenant.id">
-                          {{tenant.FName}} {{tenant.LName}} reserved a bedspace in <span style="font-weight: 600;">{{data.Title}} Bed-{{b.id}} {{b.status}}</span>
-                        </span>
+                    <span *ngFor="let data of be; let i = index;" [attr.data-index]="i">
+                      <span *ngFor="let b of data.Bed;">
+                        <ion-row *ngIf="b.occupied">
+                          <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                              <span *ngFor="let tenant of data.tenantDataBed">
+                                <span *ngIf="b.occupied?.userId === tenant.id">
+                                  {{tenant.FName}} {{tenant.LName}} reserved a bedspace in <span
+                                    style="font-weight: 600;">{{data.Title}} Bed - {{b.id}}
+                                    <span *ngIf="b.status === 'up'">Top Bunk</span><span
+                                      *ngIf="b.status === 'down'">Bottom Bunk</span></span>
+                                </span>
+                              </span>
+                            </div>
+
+                            <div class="cardPayment">
+                              <span *ngIf="b.occupied?.status === 'paidPayment'" style="color: green;">Paid in
+                                Full</span>
+                              <span *ngIf="b.occupied?.status === 'pendingPayment'" style="color: gray;">Pending</span>
+                            </div>
+
+                            <div class="time ion-text-right">
+                              {{b.occupied?.dateCreated | date:'short'}}
+                            </div>
+                          </ion-col>
+                        </ion-row>
                       </span>
-                    </div>
-
-                    <div class="cardPayment">
-                      <span *ngIf="b.occupied?.status === 'paidPayment'" style="color: goldenrod;">Paid in Full</span>
-                      <span *ngIf="b.occupied?.status === 'pendingPayment'" style="color: gray;">Pending</span>
-                    </div>
-
-                    <div class="time ion-text-right">
-                      {{b.occupied?.dateCreated | date:'short'}}
-                    </div>
-                  </ion-col>
-                  </ion-row>
                     </span>
-                    </span>
-                  </ion-grid></div>
+                  </ion-grid>
+                </div>
 
-                  <div id="room1" style="display: none;">
+                <div id="room1" style="display: none;">
                   <ion-grid>
                     <span *ngFor="let data of ro; let i = index;" [attr.data-index]="i">
-                    <ion-row *ngIf="data.occupied">
-                      <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
-                      <ion-col style="border-bottom: gray solid 1px;">
-                      <div class="cardName">
-                        <span *ngFor="let tenant of data.tenantData">
-                          <span *ngIf="data.occupied.userId === tenant.id">
-                            {{tenant.FName}} {{tenant.LName}} reserved a bedspace in <span style="font-weight: 600;">{{data.Title}} Bed-{{data.occupied.id}} {{data.occupied.status}}</span>
-                          </span>
-                        </span>
-                      </div>
+                      <ion-row *ngIf="data.occupied">
+                        <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
+                        <ion-col style="border-bottom: gray solid 1px;">
+                          <div class="cardName">
+                            <span *ngIf="data.occupied?.userId === data.tenantDataRoom.id">
+                              {{data.tenantDataRoom.FName}} {{data.tenantDataRoom.LName}} reserved a room in <span
+                                style="font-weight: 600;">{{data.Title}}</span>
+                            </span>
+                          </div>
 
-                      <div class="cardPayment">
-                        <span *ngIf="data.occupied?.status === 'paidPayment'" style="color: goldenrod;">Paid in Full</span>
-                        <span *ngIf="data.occupied?.status === 'pendingPayment'" style="color: gray;">Pending</span>
-                      </div>
+                          <div class="cardPayment">
+                            <span *ngIf="data.occupied?.status === 'paidPayment'" style="color: green;">Paid in
+                              Full</span>
+                            <span *ngIf="data.occupied?.status === 'pendingPayment'" style="color: gray;">Pending</span>
+                          </div>
 
-                      <div class="time ion-text-right">
-                        {{data.occupied?.dateCreated | date:'short'}}
-                      </div>
-                    </ion-col>
-                    </ion-row>
-                      </span>
-                    </ion-grid></div>
-                  </ion-content>
-              </ng-template>
-            </ion-popover>
+                          <div class="time ion-text-right">
+                            {{data.occupied?.dateCreated | date:'short'}}
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </span>
+                  </ion-grid>
+                </div>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
         </ion-col>
 
         <ion-col class="transaction">
@@ -122,141 +130,110 @@
 
   <div class="center">
     <div>Hello, {{owner?.FName}}</div>
-    <p>Lets help you live your perfect boarding <br/> house match</p>
+    <p>Lets help you live your perfect boarding <br /> house match</p>
   </div>
 
-<div class="body">
-  <div id="room" style="display:block;">
-    <ion-grid class="room-lister">
-      <ion-row>
-        <ion-col><div type="button" onclick="
+  <div class="body">
+    <div id="room" style="display:block;">
+      <ion-grid class="room-lister">
+        <ion-row>
+          <ion-col>
+            <div type="button" onclick="
           document.getElementById('listed').style.display='block';
-          document.getElementById('unlisted').style.display='none';">Listed Room</div></ion-col>
-        <ion-col><div type="button" onclick="
+          document.getElementById('unlisted').style.display='none';">Listed Room</div>
+          </ion-col>
+          <ion-col>
+            <div type="button" onclick="
           document.getElementById('listed').style.display='none';
-          document.getElementById('unlisted').style.display='block';">Unlisted Room</div></ion-col>
-      </ion-row>
-    </ion-grid>
-    <div id="listed" style="display:block;">
-    <div class="room">
-    <ion-grid>
-      <ion-row class="row-header">
-          <ion-col>Property</ion-col>
-          <ion-col>Room Type</ion-col>
-          <ion-col>Rent</ion-col>
-          <ion-col>Beds</ion-col>
-          <ion-col>Address</ion-col>
-          <ion-col>Price</ion-col>
-          <ion-col>Amenities</ion-col>
-          <ion-col>Images</ion-col>
-          <ion-col>Details</ion-col>
-        <ion-col>Action</ion-col>
-      </ion-row>
-      <span *ngFor="let data of filteredRoom" >
-      <ion-row class="row-body" *ngIf="!data.isUnlisted || data.isUnlisted === 'false'">
-        <ion-col>{{data.Title}}</ion-col>
-        <ion-col>{{data.RoomType}}</ion-col>
-        <ion-col>{{data.Rent}}</ion-col>
-        <ion-col><span *ngFor="let bed of data.Bed">B{{bed.id}}-{{bed.status}}<br/></span></ion-col>
-        <ion-col>{{data.Street}}, {{data.Barangay}}, {{data.City}}, {{data.Province}}, {{data.ZIP}}</ion-col>
-        <ion-col>{{data.Price}}</ion-col>
-        <ion-col><span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span></ion-col>
-        <ion-col><span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
-        </a><br /></span></ion-col>
-        <ion-col>{{data.Details}}</ion-col>
-        <ion-col>
-          <ion-button (click)="gotoEditModal(data)">
-            <ion-icon name="pencil"></ion-icon>
-          </ion-button >
-          <ion-button (click)="RemoveRecord(data.id)">
-            <ion-icon name="trash"></ion-icon>
-          </ion-button>
-          <ion-button (click)="UnlistRoom(data.id)">
-            <ion-icon name="eye-off"></ion-icon>
-          </ion-button>
-        </ion-col>
-      </ion-row>
-    </span>
-    </ion-grid>
-  </div>
-</div>
-<div id="unlisted" style="display:none;">
-  <div class="room">
-  <ion-grid>
-    <ion-row class="row-header">
-        <ion-col>Property</ion-col>
-        <ion-col>Room Type</ion-col>
-        <ion-col>Rent</ion-col>
-        <ion-col>Beds</ion-col>
-        <ion-col>Address</ion-col>
-        <ion-col>Price</ion-col>
-        <ion-col>Amenities</ion-col>
-        <ion-col>Images</ion-col>
-        <ion-col>Details</ion-col>
-      <ion-col>Action</ion-col>
-    </ion-row>
-    <span *ngFor="let data of filteredRoom" >
-      <ion-row class="row-body" *ngIf="data.isUnlisted === 'true'">
-      <ion-col>{{data.Title}}</ion-col>
-      <ion-col>{{data.RoomType}}</ion-col>
-      <ion-col>{{data.Rent}}</ion-col>
-      <ion-col><span *ngFor="let bed of data.Bed">B{{bed.id}}-{{bed.status}}<br/></span></ion-col>
-      <ion-col>{{data.Street}}, {{data.Barangay}}, {{data.City}}, {{data.Province}}, {{data.ZIP}}</ion-col>
-      <ion-col>{{data.Price}}</ion-col>
-      <ion-col><span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span></ion-col>
-      <ion-col><span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
-      </a><br /></span></ion-col>
-      <ion-col>{{data.Details}}</ion-col>
-      <ion-col>
-        <ion-button (click)="gotoEditModal(data)">
-          <ion-icon name="pencil"></ion-icon>
-        </ion-button >
-        <ion-button (click)="RemoveRecord(data.id)">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
-        <ion-button (click)="ListRoom(data.id)">
-          <ion-icon name="eye"></ion-icon>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    </span>
-  </ion-grid>
-</div>
-</div>
-  </div>
-
-    <div id="notification" style="display:none;">
-      <div class="room">
-        <div class="title">Notification</div>
-
-          <span *ngFor="let data of room; let i = index;" [attr.data-index]="i">
-          <span *ngFor="let b of data.Bed;">
-          <ion-card class="card" *ngIf="b.occupied">
-
-            <div class="cardName">
-              <span *ngFor="let tenant of data.tenantData">
-                <span *ngIf="b.occupied?.userId === tenant.id">
-                  {{tenant.FName}} {{tenant.LName}}
-                </span>
-              </span>
-            </div>
-
-            <div class="cardStatus">
-              Bed-{{b.id}} {{b.status}}
-            </div>
-
-            <div class="cardPayment">
-              <span *ngIf="b.occupied?.status === 'paidPayment'">Paid in Full</span>
-              <span *ngIf="b.occupied?.status === 'pendingPayment'">Pending</span>
-            </div>
-
-            <div class="time ion-text-right">
-              {{b.occupied?.dateCreated | date:'short'}}
-            </div>
-
-          </ion-card>
-        </span>
-        </span>
+          document.getElementById('unlisted').style.display='block';">Unlisted Room</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+      <div id="listed" style="display:block;">
+        <div class="room">
+          <ion-grid>
+            <ion-row class="row-header">
+              <ion-col>Property</ion-col>
+              <ion-col>Room Type</ion-col>
+              <ion-col>Rent</ion-col>
+              <ion-col>Beds</ion-col>
+              <ion-col>Address</ion-col>
+              <ion-col>Price</ion-col>
+              <ion-col>Amenities</ion-col>
+              <ion-col>Images</ion-col>
+              <ion-col>Details</ion-col>
+              <ion-col>Action</ion-col>
+            </ion-row>
+            <span *ngFor="let data of room">
+              <ion-row class="row-body" *ngIf="!data.isUnlisted || data.isUnlisted === 'false'">
+                <ion-col>{{data.Title}}</ion-col>
+                <ion-col>{{data.RoomType}}</ion-col>
+                <ion-col>{{data.Rent}}</ion-col>
+                <ion-col><span *ngFor="let bed of data.Bed">B{{bed.id}}-{{bed.status}}<br /></span></ion-col>
+                <ion-col>{{data.Street}}, {{data.Barangay}}, {{data.City}}, {{data.Province}}, {{data.ZIP}}</ion-col>
+                <ion-col>{{data.Price}}</ion-col>
+                <ion-col><span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span></ion-col>
+                <ion-col><span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
+                    </a><br /></span></ion-col>
+                <ion-col>{{data.Details}}</ion-col>
+                <ion-col>
+                  <ion-button (click)="gotoEditModal(data)">
+                    <ion-icon name="pencil"></ion-icon>
+                  </ion-button>
+                  <ion-button (click)="RemoveRecord(data.id)">
+                    <ion-icon name="trash"></ion-icon>
+                  </ion-button>
+                  <ion-button (click)="UnlistRoom(data.id)">
+                    <ion-icon name="eye-off"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </span>
+          </ion-grid>
+        </div>
+      </div>
+      <div id="unlisted" style="display:none;">
+        <div class="room">
+          <ion-grid>
+            <ion-row class="row-header">
+              <ion-col>Property</ion-col>
+              <ion-col>Room Type</ion-col>
+              <ion-col>Rent</ion-col>
+              <ion-col>Beds</ion-col>
+              <ion-col>Address</ion-col>
+              <ion-col>Price</ion-col>
+              <ion-col>Amenities</ion-col>
+              <ion-col>Images</ion-col>
+              <ion-col>Details</ion-col>
+              <ion-col>Action</ion-col>
+            </ion-row>
+            <span *ngFor="let data of room">
+              <ion-row class="row-body" *ngIf="data.isUnlisted === 'true'">
+                <ion-col>{{data.Title}}</ion-col>
+                <ion-col>{{data.RoomType}}</ion-col>
+                <ion-col>{{data.Rent}}</ion-col>
+                <ion-col><span *ngFor="let bed of data.Bed">B{{bed.id}}-{{bed.status}}<br /></span></ion-col>
+                <ion-col>{{data.Street}}, {{data.Barangay}}, {{data.City}}, {{data.Province}}, {{data.ZIP}}</ion-col>
+                <ion-col>{{data.Price}}</ion-col>
+                <ion-col><span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span></ion-col>
+                <ion-col><span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
+                    </a><br /></span></ion-col>
+                <ion-col>{{data.Details}}</ion-col>
+                <ion-col>
+                  <ion-button (click)="gotoEditModal(data)">
+                    <ion-icon name="pencil"></ion-icon>
+                  </ion-button>
+                  <ion-button (click)="RemoveRecord(data.id)">
+                    <ion-icon name="trash"></ion-icon>
+                  </ion-button>
+                  <ion-button (click)="ListRoom(data.id)">
+                    <ion-icon name="eye"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </span>
+          </ion-grid>
+        </div>
       </div>
     </div>
 
@@ -265,7 +242,7 @@
         <ion-grid>
           <ion-row class="top">
             <ion-col>
-            <div class="title">Records</div>
+              <div class="title">Records</div>
             </ion-col>
             <ion-col class="sort">
               <div type="button" (click)="toggleSortOrder()">
@@ -273,17 +250,17 @@
                 <span type="button" *ngIf="!isSortAscending"><ion-icon name="caret-down"></ion-icon></span>
               </div>
               <ion-item>
-              <ion-select interface="popover" placeholder="Sort By" [(ngModel)]="sortBy" (ionChange)="sortData()">
-                <ion-select-option value="name">Sort by Name</ion-select-option>
-                <ion-select-option value="dateCreated">Sort by Date</ion-select-option>
-              </ion-select>
-            </ion-item>
+                <ion-select interface="popover" placeholder="Sort By" [(ngModel)]="sortBy" (ionChange)="sortData()">
+                  <ion-select-option value="name">Sort by Name</ion-select-option>
+                  <ion-select-option value="date">Sort by Date</ion-select-option>
+                </ion-select>
+              </ion-item>
             </ion-col>
             <ion-col class="search">
               <ion-searchbar [(ngModel)]="searchText"></ion-searchbar>
             </ion-col>
           </ion-row>
-          </ion-grid>
+        </ion-grid>
         <ion-grid #grid>
           <ion-row class="row-header" style="text-align:center;">
             <ion-col>Tenant Name</ion-col>
@@ -291,37 +268,34 @@
             <ion-col>Payment Status</ion-col>
             <ion-col>Date of Payment</ion-col>
           </ion-row>
-          <span *ngFor="let data of filteredRoom; let i = index;" [attr.data-index]="i">
-            <span *ngFor="let b of data.Bed;">
-            <ion-row class="row-body" *ngIf="b.occupied && filterData(data, b)" style="text-align:center;">
-
+          <span *ngFor="let data of filteredRecord; let i = index;" [attr.data-index]="i">
+            <ion-row class="row-body" style="text-align:center;">
               <ion-col>
-                <span *ngFor="let tenant of data.tenantData">
-                  <span *ngIf="b.occupied?.userId === tenant.id">
+                <span *ngFor="let tenant of data.tenantDataBed">
+                  <span *ngIf="data.userId === tenant.id">
                     {{tenant.FName}} {{tenant.LName}}
                   </span>
                 </span>
               </ion-col>
 
               <ion-col>
-                Room{{i+1}}
-                <br/>
-                Bed{{b.id}} {{b.status}}
+                Room{{data.roomName}}
+                <br />
+                Bed{{data.id}} {{data.status}}
               </ion-col>
 
               <ion-col>
-                <span *ngIf="b.occupied?.status === 'paidPayment'">Paid in Full</span>
-                <span *ngIf="b.occupied?.status === 'pendingPayment'">Pending</span>
-                <br/>
+                <span *ngIf="data.status === 'paidPayment'">Paid in Full</span>
+                <span *ngIf="data.status === 'pendingPayment'">Pending</span>
+                <br />
                 {{data.Price}}
               </ion-col>
 
               <ion-col>
-                {{b.occupied?.dateCreated | date:'short'}}
+                {{data.date | date:'short'}}
               </ion-col>
 
             </ion-row>
-          </span>
           </span>
         </ion-grid>
       </div>
@@ -329,5 +303,5 @@
       <ion-button (click)="exportToCSV()">Export to CSV</ion-button>
 
     </div>
-</div>
+  </div>
 </ion-content>

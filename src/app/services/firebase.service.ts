@@ -39,7 +39,7 @@ export class FirebaseService {
         });
       });
 
-      this.firestore
+    this.firestore
       .collection('Owner')
       .get()
       .subscribe((querySnapshot) => {
@@ -153,6 +153,7 @@ export class FirebaseService {
               Accepted: localData.Accepted,
               Phone: localData.Phone,
               BusinessPermit: localData.BusinessPermit,
+              profpic: localData.profpic,
             };
           });
           return ownerList;
@@ -224,6 +225,6 @@ export class FirebaseService {
   }
 
   getTransaction(transaction: any) {
-    return this.transactions.value.filter((a:any) => a.userId === transaction);
+    return this.transactions.value.filter((a: any) => a.userId === transaction);
   }
 }

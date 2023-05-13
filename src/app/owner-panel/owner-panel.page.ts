@@ -13,7 +13,6 @@ import domtoimage from 'dom-to-image';
 import { jsPDF } from 'jspdf';
 import { saveAs } from 'file-saver';
 
-
 @Component({
   selector: 'app-owner-panel',
   templateUrl: './owner-panel.page.html',
@@ -25,21 +24,22 @@ export class OwnerPanelPage implements OnInit {
 
   roomList!: any[];
   roomForm!: FormGroup;
-  room: any[]=[];
-  transaction: any[]=[];
+  room: any[] = [];
+  filteredRecord: any[] = [];
+  transaction: any[] = [];
   isModalOpen = false;
   uid: any;
   ownerUid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   public owner: any;
-  be:any[]=[];
-  ro:any[]=[];
+  be: any[] = [];
+  ro: any[] = [];
+  name: any[] = [];
+  date: any[] = [];
   tenantName: any;
   currentSortColumn!: string;
   isSortAscending!: boolean;
   searchText!: string;
-  sortBy:any;
-  filteredRoom: any[]=[];
-
+  sortBy: any;
 
   constructor(
     public authService: AuthenticationService,
@@ -48,29 +48,61 @@ export class OwnerPanelPage implements OnInit {
     private firestore: AngularFirestore,
     private firebaseService: FirebaseService,
     public fb: FormBuilder
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-
-    combineLatest([this.firebaseService.read_tenant(),
-      this.firebaseService.read_room()]).pipe(
-        map(([tenants, rooms]) =>{
-        return rooms.filter((a: any) =>{
-          return a.ownerId === this.ownerUid
-        }).map((b:any)=>{
-          b.tenantData = tenants.filter((c:any) => {
-            return b.Bed?.some((z: any) => z.occupied?.userId == c.id)
-          })
-          return b
+    combineLatest([
+      this.firebaseService.read_tenant(),
+      this.firebaseService.read_room(),
+    ])
+      .pipe(
+        map(([tenants, rooms]) => {
+          return rooms
+            .filter((a: any) => {
+              return a.ownerId === this.ownerUid;
+            })
+            .map((b: any) => {
+              b.tenantDataBed = tenants.filter((c: any) => {
+                return b.Bed?.some((z: any) => z.occupied?.userId == c.id);
+              });
+              return b;
+            })
+            .map((d: any) => {
+              d.tenantDataRoom = tenants.find((e: any) => {
+                return d.occupied?.userId == e.id;
+              });
+              return d;
+            });
         })
-        })
-      ).subscribe((d:any) =>{
-        this.room = d
-        this.filteredRoom = this.room
+      )
+      .subscribe((f: any) => {
+        this.room = f;
+        this.room.map((a: any) => {
+          if (a.occupied) {
+            this.filteredRecord.push({
+              userId: a.occupied?.userId,
+              date: a.occupied?.dateCreated,
+              status: a.occupied?.status,
+            });
+          }
+          a.Bed?.map((b: any) => {
+            if (b.occupied) {
+              this.filteredRecord.push({
+                id: b.id,
+                userId: b.occupied?.userId,
+                date: b.occupied?.dateCreated,
+                status: b.occupied?.status,
+              });
+            }
+          });
+        });
+        this.filteredRecord = this.filteredRecord.sort(
+          (a: any, b: any) => (b.dateCreated || 0) - (a.dateCreated || 0)
+        );
+        console.log('ey', this.filteredRecord);
         this.sortedBed();
         this.sortedRoom();
-      })
+      });
 
     if (!this.firebaseService.loading) {
       this.firebaseService.read_owner().subscribe(() => {
@@ -80,37 +112,40 @@ export class OwnerPanelPage implements OnInit {
     }
   }
 
-  sortedBed():any{
-      const bed = this.room.map((z:any) => {z.Bed = z.Bed?.sort((a:any, b:any) =>
-        (b.occupied?.dateCreated || 0) - (a.occupied?.dateCreated || 0)
-    )
-    return z;
-  });
-      this.be = bed;
-      console.log('x',this.be)
-    }
+  sortedBed(): any {
+    const bed = this.room.map((z: any) => {
+      z.Bed = z.Bed?.sort(
+        (a: any, b: any) =>
+          (b.occupied?.dateCreated || 0) - (a.occupied?.dateCreated || 0)
+      );
+      return z;
+    });
+    this.be = bed;
+    console.log('bed', this.be);
+  }
 
-  sortedRoom(){
-    const room = this.room.sort((a, b) =>
-      b.occupied?.dateCreated - a.occupied?.dateCreated
+  sortedRoom() {
+    const room = this.room.sort(
+      (a, b) => b.occupied?.dateCreated - a.occupied?.dateCreated
     );
     this.ro = room;
+    console.log('room', this.ro);
   }
 
   RemoveRecord(rowID: any) {
     this.firebaseService.delete_room(rowID);
   }
 
-  UnlistRoom(id:any){
+  UnlistRoom(id: any) {
     this.firestore.collection('Room').doc(id).update({
       isUnlisted: 'true',
-    })
+    });
   }
 
-  ListRoom(id:any){
+  ListRoom(id: any) {
     this.firestore.collection('Room').doc(id).update({
       isUnlisted: 'false',
-    })
+    });
   }
 
   generatePDF() {
@@ -119,56 +154,68 @@ export class OwnerPanelPage implements OnInit {
     const contentElement = this.content.nativeElement;
 
     const options = {
-    width: contentElement.offsetWidth,
-    height: contentElement.offsetHeight,
-    style: {
-      margin: '20px' // Adjust the margin value as per your requirement
-    }
-  };
+      width: contentElement.offsetWidth,
+      height: contentElement.offsetHeight,
+      style: {
+        margin: '20px', // Adjust the margin value as per your requirement
+      },
+    };
 
-    domtoimage.toPng(contentElement,options).then((dataUrl) => {
+    domtoimage.toPng(contentElement, options).then((dataUrl) => {
       const imgWidth = doc.internal.pageSize.getWidth() - 40;
-      const imgHeight = (contentElement.offsetHeight / contentElement.offsetWidth) * imgWidth;
+      const imgHeight =
+        (contentElement.offsetHeight / contentElement.offsetWidth) * imgWidth;
 
       doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
       doc.save('Records.pdf');
     });
   }
 
-  exportToCSV(){
-
+  exportToCSV() {
     const csvContent = this.convertToCSV(this.room);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'data_export.csv');
   }
 
   convertToCSV(room: any[]): string {
-    const headers = ['Tenant Name', 'Room/Bedspace Placement', 'Payment Status', 'Date of Payment'];
+    const headers = [
+      'Tenant Name',
+      'Room/Bedspace Placement',
+      'Payment Status',
+      'Date of Payment',
+    ];
     const rows = [];
 
     for (const data of room) {
       let i = 0;
-      for(const b of data.Bed){
-      if (b.occupied) {
-        for(const tenant of data.tenantData){
-          if(b.occupied?.userId === tenant.id){
-            this.tenantName = `${tenant.FName} ${tenant.LName}`
+      for (const b of data.Bed) {
+        if (b.occupied) {
+          for (const tenant of data.tenantData) {
+            if (b.occupied?.userId === tenant.id) {
+              this.tenantName = `${tenant.FName} ${tenant.LName}`;
+            }
           }
+
+          const rowData = [
+            this.tenantName || '',
+            `Room${i + 1} / Bed${b.id} ${b.status}`,
+            b.occupied?.status === 'paidPayment'
+              ? `Paid in Full / ${data.Price}`
+              : `Pending / ${data.Price}`,
+            new Date(b.occupied?.dateCreated).toLocaleString('en-US', {
+              dateStyle: 'short',
+            }),
+          ];
+
+          rows.push(rowData);
         }
-
-        const rowData = [
-          this.tenantName || '',
-          `Room${i + 1} / Bed${b.id} ${b.status}`,
-          b.occupied?.status === 'paidPayment' ? `Paid in Full / ${data.Price}` : `Pending / ${data.Price}`,
-          new Date(b.occupied?.dateCreated).toLocaleString('en-US', { dateStyle: 'short' })
-        ];
-
-        rows.push(rowData);
       }
-    }
       i++;
     }
-    const csvContent = [headers.join(','), ...rows.map(row => row.join(','))].join('\n');
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
     return csvContent;
   }
 
@@ -216,54 +263,38 @@ export class OwnerPanelPage implements OnInit {
     this.m.dismiss();
   }
 
-  LogOut(){
+  LogOut() {}
+
+  toggleSortOrder() {
+    this.isSortAscending = !this.isSortAscending;
+    this.sortData();
   }
 
-toggleSortOrder() {
-  this.isSortAscending = !this.isSortAscending;
-  this.sortData();
-}
-
-sortData() {
-  if(this.sortBy === 'name'){
-  this.room.map((data: any) => {
-    data.tenantData = data.tenantData?.sort((a: any, b: any) => {
-      const nameA = a.FName + ' ' + a.LName;
-      const nameB = b.FName + ' ' + b.LName;
-      console.log(nameA)
-      console.log(nameB)
-      console.log(nameA.localeCompare(nameB))
-      console.log(nameB.localeCompare(nameA))
-      return this.isSortAscending ? nameA.localeCompare(nameB) : nameB.localeCompare(nameA);
-    });
-    return data;
-  })
-}
-else{
-  this.room.map((z: any) => {
-    z.Bed = z.Bed?.sort((a: any, b: any) => {
-      const dateA = a.occupied?.dateCreated || 0;
-      const dateB = b.occupied?.dateCreated || 0;
-      return this.isSortAscending ? dateA - dateB : dateB - dateA;
-    })
-    return z;
-  })
-}
+  sortData() {
+    console.log(this.sortBy);
+    if (this.sortBy === 'date') {
+      this.filteredRecord = this.filteredRecord.sort((a: any, b: any) => {
+        const dateA = a.date || 0;
+        const dateB = b.date || 0;
+        return this.isSortAscending ? dateA - dateB : dateB - dateA;
+      });
+      console.log('sort', this.filteredRecord);
+    }
   }
 
-  filterData(data: any, b: any):boolean {
-      if (!this.searchText) {
-        return true; // Display all rows when no search term is entered
-      }
+  filterData(data: any, b: any): boolean {
+    if (!this.searchText) {
+      return true; // Display all rows when no search term is entered
+    }
 
-      const searchTerm = this.searchText.toLowerCase();
-      const fullName = data.tenantData
-        .map((tenant: any) => tenant.FName + ' ' + tenant.LName)
-        .join(' ')
-        .toLowerCase();
+    const searchTerm = this.searchText.toLowerCase();
+    const fullName = data.tenantData
+      .map((tenant: any) => tenant.FName + ' ' + tenant.LName)
+      .join(' ')
+      .toLowerCase();
 
-      // Customize the conditions based on your specific filtering requirements
-      return fullName.includes(searchTerm);
+    // Customize the conditions based on your specific filtering requirements
+    return fullName.includes(searchTerm);
     /*if (this.searchText) {
       const searchTerm = this.searchText.toLowerCase();
       console.log('a',searchTerm)
