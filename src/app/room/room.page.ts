@@ -9,6 +9,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, finalize } from 'rxjs';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { PaymentService } from '../services/payment.service';
+import { ModalController } from '@ionic/angular';
+import { ChatModalComponent } from './chat-modal/chat-modal.component';
 
 interface Seat {
   id: number;
@@ -51,6 +53,7 @@ export class RoomPage implements OnInit {
     private firebaseService: FirebaseService,
     private firestore: AngularFirestore,
     private paymentService: PaymentService,
+    private modalController: ModalController,
   ) {}
 
   ngOnInit() {
@@ -156,6 +159,21 @@ export class RoomPage implements OnInit {
     );
     console.log('res', response);
     window.location.replace(response.checkoutUrl);
+  }
+
+  async contactOwner() {
+    const chatWithOwnerModal = await this.modalController.create({
+      component: ChatModalComponent,
+      cssClass: 'normal-modal',
+      componentProps: {
+        room: this.data
+      }
+    });
+    await chatWithOwnerModal.present();
+    const res = await chatWithOwnerModal.onWillDismiss();
+    // TODO remove this redirection. just added for testing.
+    // TODO Should not redirect as it is expected that the owner will not respond immediately
+    this.router.navigate(['/', 'chatroom', res.data]);
   }
 
   async Rate(i: any) {

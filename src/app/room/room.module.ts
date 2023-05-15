@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { RoomPageRoutingModule } from './room-routing.module';
 
 import { RoomPage } from './room.page';
+import { ChatModalComponent } from './chat-modal/chat-modal.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { RoomPage } from './room.page';
     ReactiveFormsModule,
     RoomPageRoutingModule,
   ],
-  declarations: [RoomPage],
+  declarations: [RoomPage, ChatModalComponent],
 })
 export class RoomPageModule {}

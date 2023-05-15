@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { TenantPanelPageRoutingModule } from './tenant-panel-routing.module';
 
 import { TenantPanelPage } from './tenant-panel.page';
+import { ChatlistModule } from '../components/chatlist/chatlist.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    TenantPanelPageRoutingModule
+    TenantPanelPageRoutingModule,
+    ChatlistModule
   ],
   declarations: [TenantPanelPage]
 })

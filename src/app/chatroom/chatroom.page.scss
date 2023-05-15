@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  flex-direction: row;
+}
+app-chat-section {
+  height: 100vh;
+}
+
+app-chatlist {
+  width: 400px;
+}

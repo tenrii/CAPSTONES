@@ -14,50 +14,43 @@ import { Observable } from 'rxjs';
 })
 export class ChatroomPage implements OnInit {
   @ViewChild(IonContent) content!: IonContent;
-  ownerId: any;
-  public data: any;
-  messages!: Observable<Message[]>;
+  public chatMateData: any;
+  public messages?: Observable<any>;
+  private conversationId = '';
   newMsg = '';
 
   constructor(
-    private firebaseService: FirebaseService,
     private chatService: Chat,
-    private router: Router,
     private route: ActivatedRoute,
-    ) { }
+  ) {}
 
   ngOnInit() {
-    this.ex();
-    this.messages = this.chatService.getChatMessage();
+    // this.load();
+    // TODO if no chat in param open first chat
   }
 
-  async ex(){
-    await this.load();
-    this.chatService.addConversation(this.ownerId);
-  }
+  // async load() {
+  //   const ownerId =
+  //     decodeURIComponent(this.route.snapshot.paramMap.get('id') ||
+  //     window.location.pathname.split('/')[2]);
 
-  async load() {
-    if (!this.firebaseService.loading) {
-      this.firebaseService.read_owner().subscribe(() => {
-        this.load();
-      });
-      return;
-    }
-    this.ownerId =
-      this.route.snapshot.paramMap.get('id') ||
-      window.location.pathname.split('/')[2];
-    console.log('id', this.firebaseService.getOwner(this.ownerId));
-    this.data = this.firebaseService.getOwner(this.ownerId);
+  //   if (ownerId.includes('#')) {
+  //     // access via convo list
+  //     const userId = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
+  //     const [realOwnerId, tenantId] = ownerId.split('#');
 
-}
+  //     if (userId === realOwnerId) {
+  //       this.chatMateData = await this.chatService.getUser('Tenant', tenantId);
+  //     } else {
+  //       this.chatMateData = await this.chatService.getUser('Owner', realOwnerId);
+  //     }
+  //   } else {
+  //     // tenant accessing via contact owner
+  //     this.chatMateData = await this.chatService.getUser('Owner', ownerId);
+  //     // this.chatMateData = this.firebaseService.getOwner(ownerId);
+  //   }
 
-sendMessage() {
-  this.chatService.addChatMessage(this.newMsg, this.data.id).then(() => {
-    this.newMsg = '';
-    this.content.scrollToBottom();
-  });
-}
-
-
+  //   [this.conversationId, this.messages] = await this.chatService.getConversation(ownerId) as [string, Observable<Message[]>];
+  // }
 
 }

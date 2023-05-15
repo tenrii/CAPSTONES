@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title color="light">
+      {{chatMateData?.FName}} {{chatMateData?.LName}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-grid>
+    <ng-container *ngFor="let messageGroup of messages | async">
+      <ion-row>
+        <ion-col class="ion-text-center"><small><strong>{{messageGroup.date}}</strong></small></ion-col>
+      </ion-row>
+      <ion-row *ngFor="let message of messageGroup.messages">
+        <ion-col *ngIf="message.type === 'system'; else normalMessage" size-lg="4" offset-lg="4" size-md="6" offset-md="3" size-sm="8" offset-sm="2" class="message system-message">
+          <small *ngIf="!isOwner; else ownerMessage">Your enquiry for {{message.roomName}} at {{message.propertyName}} has been sent. <a [routerLink]="['/room', message.linkedRoom]">Show listing</a></small>
+          <ng-template #ownerMessage>
+            <small>Your listing {{message.roomName}} at {{message.propertyName}} has an enquiry. <a [routerLink]="['/room', message.linkedRoom]">Show listing</a></small>
+          </ng-template>
+        </ion-col>
+        <ng-template #normalMessage>
+          <ion-col size="9" class="message" [offset]="message.myMsg ? 3 : 0" [class.my-message]="message.myMsg"
+            [class.other-message]="!message.myMsg">
+            <span>{{message.msg}}</span>
+            <div class="time ion-text-right"><br>{{message.createdAt | date:'hh:mm a'}}</div>
+          </ion-col>
+        </ng-template>
+      </ion-row>
+    </ng-container>
+  </ion-grid>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="light">
+    <ion-row>
+      <ion-col>
+        <ion-textarea autoGrow="true" class="message-input" rows="1" maxlength="500"
+          [(ngModel)]="newMsg"></ion-textarea>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button expand="block" fill="clear" color="primary" [disabled]="newMsg === ''" class="msg-btn"
+          (click)="sendMessage()">
+          <ion-icon name="send" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

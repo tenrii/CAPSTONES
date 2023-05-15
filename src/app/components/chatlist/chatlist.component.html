@@ -1,0 +1,21 @@
+<ion-header *ngIf="!isPopover">
+  <ion-toolbar color="dark">
+    <ion-title color="light">
+      Chats
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let conv of conversations$ | async" (click)="openChat(conv.conversation)" button>
+      <!--<ion-avatar slot="start">
+        <img [src]="conv.user.avatar">
+      </ion-avatar>-->
+      <ion-label>
+        <h2>{{conv.chatWith.FName}} - {{conv.chatWith.LName}}</h2>
+        <p>{{conv.lastChat}}</p>
+        <small>{{ conv.updatedAt | durationAgo }}</small>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

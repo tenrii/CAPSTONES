@@ -260,9 +260,12 @@
 
       <div>{{owner?.FName}} {{owner?.LName}}</div>
 
-      <div id="contact" type="button" [routerLink]="['/','chatroom',owner?.uid]">
+      <!--<div id="contact" type="button" [routerLink]="['/','chatroom',owner?.uid]">
         Contact Owner
-      </div>
+      </div>-->
+
+      <ion-button shape="round" fill="outline" size="large" (click)="contactOwner()">Contact Owner</ion-button>
+
     </div>
 
   </div>

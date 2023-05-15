@@ -116,6 +116,15 @@
           document.getElementById('record').style.display='block';">Records</div>
         </ion-col>
 
+        <ion-col class="notification">
+          <div type="button" id="chat-list">Chats</div>
+          <ion-popover trigger="chat-list" side="bottom" alignment="center" dismissOnSelect="true">
+            <ng-template>
+              <app-chatlist [isPopover]="true"></app-chatlist>
+            </ng-template>
+          </ion-popover>
+        </ion-col>
+
         <ion-col class="logout">
           <div type="button"><ion-icon name="arrow-undo-outline"></ion-icon>Log Out</div>
         </ion-col>

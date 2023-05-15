@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar color="light">
+    <ion-title>Contact owner</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="modalController.dismiss()">
+        <ion-icon name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-item lines="none">
+    <ion-label position="stacked">Your message</ion-label>
+    <ion-textarea
+      autoGrow="true"
+      autofocus="true"
+      spellcheck="true"
+      [disabled]="sending"
+      [(ngModel)]="message" placeholder="Enter your message here..."
+    ></ion-textarea>
+  </ion-item>
+</ion-content>
+<ion-footer>
+  <ion-button
+    size="large"
+    expand="block"
+    [disabled]="!message.trim() || sending"
+    (click)="sendMessage()"
+    >
+    <ion-spinner *ngIf="sending"></ion-spinner>
+    Send message</ion-button>
+</ion-footer>

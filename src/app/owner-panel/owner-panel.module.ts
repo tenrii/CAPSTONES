@@ -22,6 +22,7 @@ import { Modal11Component } from './modal/modal11/modal11.component';
 import { Modal12Component } from './modal/modal12/modal12.component';
 import { Modal13Component } from './modal/modal13/modal13.component';
 import { Modal14Component } from './modal/modal14/modal14.component';
+import { ChatlistModule } from '../components/chatlist/chatlist.module';
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import { Modal14Component } from './modal/modal14/modal14.component';
     IonicModule,
     OwnerPanelPageRoutingModule,
     Ng2SearchPipeModule,
+    ChatlistModule
   ],
   declarations: [
     OwnerPanelPage,

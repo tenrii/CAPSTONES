@@ -79,7 +79,7 @@ export class FirebaseService {
             return {
               id: e.payload.doc.id,
               isEdit: false,
-              ownerId: localData.ownerId,
+              OwnerId: localData.ownerId || localData.OwnerId, // TODO @tenrii OwnerId (with capital O) is has " in the string
               Rent: localData.Rent,
               RoomType: localData.RoomType,
               Street: localData.Street,

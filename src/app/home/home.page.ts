@@ -66,7 +66,7 @@ export class HomePage implements OnInit {
         const pb = parseInt(b.Price);
         return pa - pb;
       });
-      this.priceMax = sorted.pop().Price;
+      this.priceMax = sorted[sorted.length - 1].Price;
       this.price.upper = this.priceMax;
 
       this.filter();

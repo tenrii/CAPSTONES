@@ -36,6 +36,15 @@
         </ion-col>
 
         <ion-col class="notification">
+          <div type="button" id="chat-list">Chats</div>
+          <ion-popover trigger="chat-list" side="bottom" alignment="center" dismissOnSelect="true">
+            <ng-template>
+              <app-chatlist [isPopover]="true"></app-chatlist>
+            </ng-template>
+          </ion-popover>
+        </ion-col>
+
+        <ion-col class="notification">
           <div type="button" id="top-center">Notification</div>
           <ion-popover trigger="top-center" side="bottom" alignment="center">
             <ng-template>
