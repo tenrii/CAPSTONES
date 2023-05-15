@@ -21,7 +21,7 @@ import { saveAs } from 'file-saver';
 export class OwnerPanelPage implements OnInit {
   @ViewChild('content', { static: false }) content!: ElementRef;
   @ViewChild('grid', { static: false }) grid!: ElementRef;
-
+  isButtonDisabled = false;
   roomList!: any[];
   roomForm!: FormGroup;
   room: any[] = [];
@@ -59,7 +59,7 @@ export class OwnerPanelPage implements OnInit {
         map(([tenants, rooms]) => {
           return rooms
             .filter((a: any) => {
-              return a.ownerId === this.ownerUid;
+              return a.OwnerId === this.ownerUid;
             })
             .map((b: any) => {
               b.tenantDataBed = tenants.filter((c: any) => {
@@ -220,33 +220,18 @@ export class OwnerPanelPage implements OnInit {
   }
 
   async gotoModal1() {
-    this.firestore
-      .collection('Room')
-      .add({
-        ownerId: this.ownerUid,
-      })
-      .then(async (res) => {
-        this.uid = res.id;
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
         const modalInstance = await this.m.create({
           component: Modal1Component,
           backdropDismiss: false,
-          componentProps: {
-            uid: this.uid,
-          },
+          cssClass: 'create-modal',
         });
         this.isModalOpen = true;
         return await modalInstance.present();
-      });
-  }
-
-  async gotoModal() {
-    const modalInstance = await this.m.create({
-      component: CreateModalComponent,
-      backdropDismiss: false,
-    });
-    this.isModalOpen = true;
-    return await modalInstance.present();
-  }
+      }
 
   async gotoEditModal(record: any) {
     const modalInstance = await this.m.create({

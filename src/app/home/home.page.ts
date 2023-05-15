@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication-service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ModalController } from '@ionic/angular';
+import { LogComponent } from './log/log.component';
 
 interface RoomData {
   Id: any;
@@ -20,6 +22,7 @@ interface RoomData {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  isModalOpen:boolean = false;
   user: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   roomList: any[] = [];
   emailList: any[] = [];
@@ -49,7 +52,8 @@ export class HomePage implements OnInit {
     private router: Router,
     private firebaseService: FirebaseService,
     public fb: FormBuilder,
-    private afstore: AngularFirestore
+    private afstore: AngularFirestore,
+    private m: ModalController
   ) {
     this.roomData = {} as RoomData;
   }
@@ -115,4 +119,19 @@ export class HomePage implements OnInit {
       return false
     }
   }
+
+  async gotoLogModal() {
+    const modalInstance = await this.m.create({
+      component: LogComponent,
+      backdropDismiss: false,
+      cssClass: 'login-modal',
+    });
+    return await modalInstance.present();
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.m.dismiss();
+  }
+
 }

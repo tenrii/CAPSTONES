@@ -23,6 +23,8 @@ import { Modal12Component } from './modal/modal12/modal12.component';
 import { Modal13Component } from './modal/modal13/modal13.component';
 import { Modal14Component } from './modal/modal14/modal14.component';
 import { ChatlistModule } from '../components/chatlist/chatlist.module';
+import { NgxFileDropModule } from 'ngx-file-drop';
+
 
 @NgModule({
   imports: [
@@ -32,6 +34,7 @@ import { ChatlistModule } from '../components/chatlist/chatlist.module';
     IonicModule,
     OwnerPanelPageRoutingModule,
     Ng2SearchPipeModule,
+    NgxFileDropModule,
     ChatlistModule
   ],
   declarations: [

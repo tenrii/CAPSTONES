@@ -1,24 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title  style="color: white;">Creating a Room</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  style="color: white;" (click)="back()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <h1>Upload your room images</h1>
 
-  <div class="form-group">
-    <label for="image-upload" style="font-size: 15px;">Choose Image</label>
-    <div class="image-upload-box">
-      <input type="file" id="image-upload" accept="image/*" class="d-none" (change)="onFileSelected($event)" multiple>
-      <label for="image-upload" class="plus-button">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus"
-          viewBox="0 0 16 16">
-          <path
-            d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-        </svg>
-      </label>
-      <div class="image-preview" *ngIf="images.length > 0">
-        <div *ngFor="let image of images; let i = index" class="image-item">
-          <img [src]="image.url" alt="{{image.name}}" id="image-preview">
-        </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+      <div for="img_btn">
+        <input id="img_btn" type="file" multiple (change)="onFileSelected($event)" accept="image/*" class="d-none">
+        <label class="image_btn" type="button" for="img_btn">Choose Images
+        </label>
       </div>
-    </div>
-  </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col class="img" *ngFor="let img of images">
+        <img src="{{img.url}}">
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
 </ion-content>
 <ion-footer>
   <button class="modalbtnn" (click)="back()">

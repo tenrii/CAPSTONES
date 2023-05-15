@@ -8,23 +8,41 @@ import { Modal2Component } from '../modal2/modal2.component';
   styleUrls: ['./modal1.component.scss'],
 })
 export class Modal1Component implements OnInit {
-  uid: any;
+  isButtonDisabled = false;
   constructor(private m: ModalController) {}
 
   ngOnInit() {}
 
   back() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
     this.m.dismiss();
   }
 
   async gotoModal2() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
     const modalInstance = await this.m.create({
       component: Modal2Component,
+      cssClass: 'create-modal',
       backdropDismiss: false,
-      componentProps: {
-        uid: this.uid,
-      },
     });
-    modalInstance.present();
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 1 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 }

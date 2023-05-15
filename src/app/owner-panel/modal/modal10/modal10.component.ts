@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { Modal11Component } from '../modal11/modal11.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { Modal9Component } from '../modal9/modal9.component';
 
 @Component({
   selector: 'app-modal10',
@@ -10,9 +12,10 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
   styleUrls: ['./modal10.component.scss'],
 })
 export class Modal10Component implements OnInit {
-  uid: any;
+  isButtonDisabled = false;
   roomForm!: FormGroup;
   constructor(
+    private service: FirebaseService,
     private m: ModalController,
     private fb: FormBuilder,
     private afs: AngularFirestore
@@ -31,19 +34,57 @@ export class Modal10Component implements OnInit {
     });
   }
 
-  back() {
-    this.m.dismiss();
+  async back() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
+    const modalInstance = await this.m.create({
+
+      component: Modal9Component,
+      cssClass: 'create-modal',
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 
   async gotoModal11() {
-    this.afs.collection('Room').doc(this.uid).update(this.roomForm.value);
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
     const modalInstance = await this.m.create({
       component: Modal11Component,
-      componentProps: {
-        uid: this.uid,
-      },
+      cssClass: 'create-modal',
       backdropDismiss: false,
     });
-    modalInstance.present();
+
+    modalInstance.onDidDismiss().then(() => {
+      this.service.modalData = {
+        ...this.service.modalData,
+        Details: this.roomForm.get('Details')?.value,
+      }
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 }

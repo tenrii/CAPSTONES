@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { Modal13Component } from '../modal13/modal13.component';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { Modal11Component } from '../modal11/modal11.component';
 
 @Component({
   selector: 'app-modal12',
@@ -11,9 +13,10 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class Modal12Component implements OnInit {
   price = 1000;
-  uid: any;
   roomForm!: FormGroup;
+  isButtonDisabled = false;
   constructor(
+    private service: FirebaseService,
     private m: ModalController,
     private fb: FormBuilder,
     private afs: AngularFirestore
@@ -31,19 +34,57 @@ export class Modal12Component implements OnInit {
     }
   }
 
-  back() {
-    this.m.dismiss();
+  async back() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
+    const modalInstance = await this.m.create({
+
+      component: Modal11Component,
+      cssClass: 'create-modal',
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 
   async gotoModal13() {
-    this.afs.collection('Room').doc(this.uid).update({ Price: this.price });
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
     const modalInstance = await this.m.create({
       component: Modal13Component,
-      componentProps: {
-        uid: this.uid,
-      },
+      cssClass: 'create-modal',
       backdropDismiss: false,
     });
-    modalInstance.present();
+
+    modalInstance.onDidDismiss().then(() => {
+      this.service.modalData = {
+        ...this.service.modalData,
+        Price: this.price,
+      }
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 }

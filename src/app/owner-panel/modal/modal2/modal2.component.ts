@@ -3,6 +3,8 @@ import { ModalController } from '@ionic/angular';
 import { Modal3Component } from '../modal3/modal3.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Modal1Component } from '../modal1/modal1.component';
+import { FirebaseService } from 'src/app/services/firebase.service';
 
 @Component({
   selector: 'app-modal2',
@@ -10,11 +12,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./modal2.component.scss'],
 })
 export class Modal2Component implements OnInit {
-  isModalOpen = false;
+  isButtonDisabled = false;
   roomForm!: FormGroup;
-  public uid: any;
-
   constructor(
+    private service: FirebaseService,
     private m: ModalController,
     private fb: FormBuilder,
     private firestore: AngularFirestore
@@ -26,19 +27,55 @@ export class Modal2Component implements OnInit {
     });
   }
 
-  back() {
-    this.m.dismiss();
+  async back() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+    const modalInstance = await this.m.create({
+
+      component: Modal1Component,
+      cssClass: 'create-modal',
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 
   async gotoModal3() {
-    this.firestore.collection('Room').doc(this.uid).update(this.roomForm.value);
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
     const modalInstance = await this.m.create({
       component: Modal3Component,
-      componentProps: {
-        uid: this.uid,
-      },
+      cssClass: 'create-modal',
       backdropDismiss: false,
     });
-    modalInstance.present();
+    modalInstance.onDidDismiss().then(() => {
+      this.service.modalData = {
+        Rent: this.roomForm.get('Rent')?.value,
+      }
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 }

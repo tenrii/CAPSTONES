@@ -1,27 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title  style="color: white;">Creating a Room</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  style="color: white;" (click)="back()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
 
   <h1>What kind of room do you have?</h1>
 
-  <form [formGroup]="roomForm" (ngSubmit)="gotoModal4()">
+  <form [formGroup]="roomForm">
 
-    <div class="group">
-<div class="form">
-  <input type="radio" class="btn-check" name="RoomType" id="option1" autocomplete="off" formControlName="Rent"
-  value="Private Room" />
-    <label class="btn btn-dark" for="option1">
-    Private Room
-      <p>Only one tenant occupied the entire room</p>
-    </label>
-</div>
-<div class="form">
-  <input type="radio" class="btn-check" name="RoomType" id="option2" autocomplete="off" formControlName="Rent"
-  value="Shared Room" />
-    <label class="btn btn-dark" for="option2">
-    Shared Room
-      <p>Many tenant occupied and shared one room</p>
-    </label>
-</div>
-</div>
+    <div class="btn-group">
+      <input type="radio" class="btn-check" name="RoomType" id="option1" autocomplete="off" formControlName="RoomType"
+        value="Private Room" />
+      <label class="btn btn-dark" for="option1">Private Room
+        <p>Rent the entire room for the <br />tenant</p>
+        <ion-icon name="person" style="font-size: 30px;"></ion-icon>
+      </label>
+
+      <input type="radio" class="btn-check" name="RoomType" id="option2" autocomplete="off" formControlName="RoomType"
+        value="Shared Room" />
+      <label class="btn btn-dark" for="option2">Shared
+        <p>Rent all of the bed space<br />in the room for the tenant</p>
+        <ion-icon name="people" style="font-size: 30px;"></ion-icon>
+      </label>
+    </div>
   </form>
 
 </ion-content>

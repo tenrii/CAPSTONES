@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
-
+import { LogComponent } from './log/log.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AngularFireStorageModule } from '@angular/fire/compat/storage';
@@ -27,6 +27,6 @@ import { HomePageRoutingModule } from './home-routing.module';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
   ],
-  declarations: [HomePage]
+  declarations: [HomePage,LogComponent]
 })
 export class HomePageModule {}

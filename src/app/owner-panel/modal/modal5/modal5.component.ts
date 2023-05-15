@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { Modal6Component } from '../modal6/modal6.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FormBuilder } from '@angular/forms';
-
+import { Modal4Component } from '../modal4/modal4.component';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { Modal6Component } from '../modal6/modal6.component';
 interface Bed {
   uid: string;
   id: number;
@@ -16,12 +17,12 @@ interface Bed {
   styleUrls: ['./modal5.component.scss'],
 })
 export class Modal5Component implements OnInit {
-  uid: any;
-  roomForm!: any;
+  isButtonDisabled = false;
   beds: Bed[] = [];
   n: number = 15;
 
   constructor(
+    private service: FirebaseService,
     private m: ModalController,
     private fb: FormBuilder,
     private firestore: AngularFirestore
@@ -51,19 +52,57 @@ export class Modal5Component implements OnInit {
     console.log(`Bed ${bed.id} is now ${bed.status}.`);
   }
 
-  back() {
-    this.m.dismiss();
+  async back() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
+    const modalInstance = await this.m.create({
+
+      component: Modal4Component,
+      cssClass: 'create-modal',
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 
   async gotoModal6() {
-    this.firestore.collection('Room').doc(this.uid).update({ Bed: this.beds });
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
     const modalInstance = await this.m.create({
       component: Modal6Component,
-      componentProps: {
-        uid: this.uid,
-      },
+      cssClass: 'create-modal',
       backdropDismiss: false,
     });
-    modalInstance.present();
+
+    modalInstance.onDidDismiss().then(() => {
+      this.service.modalData = {
+        ...this.service.modalData,
+        Bed: this.beds
+      }
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 }

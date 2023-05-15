@@ -1,0 +1,12 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title  style="color: white;">Login As </ion-title>
+    <ion-buttons slot="end">
+      <ion-button  style="color: white;" (click)="closeModal()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-button (click)="closeModal()" [routerLink]="['/login']">Tenant</ion-button>
+  <ion-button (click)="closeModal()" [routerLink]="['/owner-log-reg']">Owner</ion-button>
+</ion-content>

@@ -17,35 +17,22 @@ h1 {
   font-size: 20px;
 }
 
-.image-upload-box {
-  display: inline-block;
-  width: 300px;
-  max-width: auto;
-  min-height: 300px;
-  max-height: auto;
-  border: 2px dashed #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.image_btn{
+  background-color:rgb(100, 66, 34);
+  padding: 10px;
+  border: white solid 1px;
+  color: white;
+  font-size: 18px;
+  border-radius: 10px;
 }
 
-.plus-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 32px;
-  color: #666;
-  cursor: pointer;
-  z-index: 1;
+ion-grid ion-row .img{
+  margin: 5px;
+  padding: 1px;
+  max-width: 150px;
+  border:rgb(100, 66, 34, 0.7) dashed 2px;
 }
 
-.image-preview {
-  display: block;
-  border: 2px dashed #ddd;
-  top: 0;
-  left: 0;
-  width: 300px;
-  height: auto;
-  object-fit: cover;
+ion-grid ion-row .img img{
+  max-width: 150px;
 }

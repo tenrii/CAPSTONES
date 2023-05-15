@@ -25,7 +25,7 @@ export class FirebaseService {
   transactions: any = new BehaviorSubject([]);
   public loading: boolean = false;
   currentUser!: User;
-
+  public modalData: any = {};
   constructor(
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth

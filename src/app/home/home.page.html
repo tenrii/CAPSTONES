@@ -18,8 +18,7 @@
         <img src="assets/user2.png">
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" >
-        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/login']">Login</button></li>
-        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/owner-log-reg']">Owner Login</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModal()">Login</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/admin']">Admin</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/test']">Test</button></li>

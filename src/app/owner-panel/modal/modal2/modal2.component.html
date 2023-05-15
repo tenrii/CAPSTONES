@@ -1,8 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title  style="color: white;">Creating a Room</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  style="color: white;" (click)="back()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
 
   <h1>What does your housing offer in terms of renting?</h1>
 
-  <form [formGroup]="roomForm" (ngSubmit)="gotoModal3()">
+  <form [formGroup]="roomForm">
 
     <div class="btn-group">
       <input type="radio" class="btn-check" name="Rent" id="option1" autocomplete="off" formControlName="Rent"

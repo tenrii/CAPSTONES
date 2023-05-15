@@ -5,6 +5,8 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { finalize } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import firebase from 'firebase/compat/app';
+import { FirebaseService } from 'src/app/services/firebase.service';
+import { Modal7Component } from '../modal7/modal7.component';
 
 @Component({
   selector: 'app-modal8',
@@ -12,17 +14,22 @@ import firebase from 'firebase/compat/app';
   styleUrls: ['./modal8.component.scss'],
 })
 export class Modal8Component implements OnInit {
+  uid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
+  isButtonDisabled = false;
   selectedFiles: any = FileList;
-  images: { name: any; url: any }[] = [];
-  uid: any;
+  images: { name: any; url: any }[] = [];;
+  img: any[]=[];
+
 
   constructor(
+    private service: FirebaseService,
     private m: ModalController,
     private storage: AngularFireStorage,
     private afs: AngularFirestore
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   onFileSelected(event: any) {
     this.selectedFiles = event.target.files;
@@ -38,14 +45,46 @@ export class Modal8Component implements OnInit {
 
   uploadImages() {}
 
-  back() {
-    this.m.dismiss();
+  async back() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
+    const modalInstance = await this.m.create({
+
+      component: Modal7Component,
+      cssClass: 'create-modal',
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 
   async gotoModal9() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
     for (let i = 0; i < this.selectedFiles.length; i++) {
       const file = this.selectedFiles.item(i);
-      const path = `${this.uid}/${Date.now()}_${file.name}`;
+      const path = `${this.uid}/Room/${Date.now()}_${file.name}`;
       const uploadTask = this.storage.upload(path, file);
       const ref = this.storage.ref(path);
       uploadTask
@@ -54,14 +93,9 @@ export class Modal8Component implements OnInit {
           finalize(() => {
             const downloadURL = ref.getDownloadURL();
             downloadURL.subscribe((url: any) => {
-              this.afs
-                .collection('Room')
-                .doc(this.uid)
-                .update({
-                  Images: firebase.firestore.FieldValue.arrayUnion(url),
-                });
+              this.img.push(url);
               console.log('Image uploaded successfully:', url);
-              alert('Image uploaded successfully!');
+              console.log(this.img);
             });
           })
         )
@@ -69,11 +103,19 @@ export class Modal8Component implements OnInit {
     }
     const modalInstance = await this.m.create({
       component: Modal9Component,
-      componentProps: {
-        uid: this.uid,
-      },
+      cssClass: 'create-modal',
       backdropDismiss: false,
     });
-    modalInstance.present();
+
+    modalInstance.onDidDismiss().then(() => {
+      this.service.modalData = {
+        ...this.service.modalData,
+        Images: this.img,
+      }
+      console.log('Modal 2 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 }
