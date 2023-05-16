@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
-import { IonContent } from '@ionic/angular';
+import { IonContent, IonGrid } from '@ionic/angular';
 import { Observable, filter } from 'rxjs';
 import { Chat, Message } from 'src/app/shared/chat';
 
@@ -9,10 +9,11 @@ import { Chat, Message } from 'src/app/shared/chat';
   templateUrl: './chat-section.component.html',
   styleUrls: ['./chat-section.component.scss'],
 })
-export class ChatSectionComponent implements OnInit {
-  @ViewChild(IonContent) content!: IonContent;
+export class ChatSectionComponent implements OnInit, AfterViewInit {
+  @ViewChild('content', {read: ElementRef, static: true}) content?: ElementRef;
   public chatMateData: any;
-  public messages?: Observable<any>;
+  public messages$?: Observable<any>;
+  public roomDetails$?: Observable<any>;
   public isOwner: boolean | undefined = false;
   private conversationId = '';
   newMsg = '';
@@ -30,6 +31,12 @@ export class ChatSectionComponent implements OnInit {
   }
 
   ngOnInit() {}
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.content?.nativeElement.scrollToBottom();
+    }, 3000);
+  }
 
   async load() {
     const ownerId =
@@ -52,14 +59,25 @@ export class ChatSectionComponent implements OnInit {
       // this.chatMateData = this.firebaseService.getOwner(ownerId);
     }
 
-    [this.conversationId, this.messages, this.isOwner] = await this.chatService.getConversation(ownerId) as [string, Observable<Message[]>, boolean];
+    [this.conversationId, this.messages$, this.isOwner] = await this.chatService.getConversation(ownerId) as [string, Observable<Message[]>, boolean];
+    this.roomDetails$ = this.chatService.getConversationLinkedRoom(this.conversationId);
   }
 
   sendMessage() {
+    setTimeout(() => 
+      this.content?.nativeElement.scrollToBottom()
+    , 200);
+    this.content?.nativeElement.scrollToBottom();
     this.chatService.addChatMessage(this.conversationId, this.newMsg).then(() => {
       this.newMsg = '';
-      this.content.scrollToBottom();
+      setTimeout(() => {
+        this.content?.nativeElement.scrollToBottom();
+      }, 100);
     });
+  }
+
+  trackByFn(index: any, item: any) {
+    return JSON.stringify(item);
   }
 }
 

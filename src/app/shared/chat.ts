@@ -2,10 +2,8 @@ import { formatDate } from '@angular/common';
 import { Inject, Injectable, LOCALE_ID } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { fork } from 'child_process';
 import firebase from 'firebase/compat/app';
-import { CollectionReference, getDocs, getDocsFromCache} from 'firebase/firestore';
-import { Observable, combineLatest, forkJoin, map, mergeMap, of, switchMap, take, tap } from 'rxjs';
+import { BehaviorSubject, Observable, asyncScheduler, combineLatest, distinctUntilChanged, filter, map, mergeMap, observeOn, switchMap, take, tap } from 'rxjs';
 
 export interface User {
   uid: string;
@@ -35,6 +33,8 @@ export interface Conversation{
 })
 export class Chat {
   currentUser!: User;
+  conversationSearchFilter$: Observable<string> = new BehaviorSubject('');
+  chatListLoading$: Observable<boolean> = new BehaviorSubject(true);
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -76,8 +76,9 @@ export class Chat {
     try {
       const tenant = (await this.afs.collection('Tenant').doc(userId).ref.get()).data();
       // const owner = (await this.afs.collection('Owner').doc(userId).ref.get()).data();
+      let listObservable: Observable<any>;
       if (tenant) {
-        return this.afs.collection('Tenant').doc(userId).collection('Conversations').valueChanges().pipe(
+        listObservable = this.afs.collection('Tenant').doc(userId).collection('Conversations').valueChanges().pipe(
           mergeMap((conversations: any) => {
             const convoOwner: Observable<any>[] = conversations.map((conversation: any) => {
               const ownerId = conversation.conversation.split('#')[0];
@@ -88,6 +89,8 @@ export class Chat {
               map((owners: any) => {
                 return conversations.map((conversation: any, index: number) => {
                   return { ...conversation, chatWith: owners[index] };
+                }).sort((a: any, b: any) => {
+                  return b.updatedAt - a.updatedAt;
                 });
               })
             ).pipe(
@@ -96,16 +99,18 @@ export class Chat {
           })
         );
       } else {
-        return this.afs.collection('Owner').doc(userId).collection('Conversations').valueChanges().pipe(
+        listObservable = this.afs.collection('Owner').doc(userId).collection('Conversations').valueChanges().pipe(
           mergeMap((conversations: any) => {
-            const convoOwner = conversations.map((conversation: any) => {
+            const convoTenant = conversations.map((conversation: any) => {
               const tenantId = conversation.conversation.split('#')[1];
               return this.afs.collection('Tenant').doc(tenantId).valueChanges();
             });
-            return combineLatest(convoOwner).pipe(
+            return combineLatest(convoTenant).pipe(
               map((owners: any) => {
                 return conversations.map((conversation: any, index: number) => {
                   return { ...conversation, chatWith: owners[index] };
+                }).sort((a: any, b: any) => {
+                  return b.updatedAt - a.updatedAt;
                 });
               })
             ).pipe(
@@ -114,6 +119,20 @@ export class Chat {
           })
         );
       }
+
+      return combineLatest([listObservable, this.conversationSearchFilter$]).pipe(
+        map(([conversations, filter]) => {
+          return conversations.filter((conversation: any) =>
+            filter === '' ||
+            (
+              conversation.chatWith !== undefined &&
+              `${conversation.chatWith.FName} ${conversation.chatWith.LName}`.toLowerCase().includes(filter.toLowerCase())
+            )
+          );
+        }),
+        tap(() => (this.chatListLoading$ as BehaviorSubject<boolean>).next(false)),
+      );
+
     } catch(e) {
       console.log(e);
     }
@@ -154,12 +173,13 @@ export class Chat {
     return [
       fuse,
       combineLatest([
-      this.afs.collection('Conversation').doc(fuse).valueChanges() as Observable<Conversation>,
-      this.afs.collection('Tenant').doc(tenantId).valueChanges() as Observable<User>,
-      this.afs.collection('Owner').doc(ownerId).valueChanges() as Observable<User>,
+        this.afs.collection('Conversation').doc(fuse).valueChanges() as Observable<Conversation>,
+        this.afs.collection('Tenant').doc(tenantId).valueChanges() as Observable<User>,
+        this.afs.collection('Owner').doc(ownerId).valueChanges() as Observable<User>,
       ])
         .pipe(
           map(([convo, tenant, owner]) => {
+            observeOn(asyncScheduler);
             const groupedMessages = convo.messages.map((m: any) => {
               m.fromName = m.from === tenant.uid ? tenant.FName : owner.FName;
               m.myMsg = m.from === this.currentUser.uid;
@@ -177,10 +197,16 @@ export class Chat {
               date: key,
               messages: groupedMessages[key]
             }));
-          })
+          }),
         ),
       ownerId === localUserId
     ];
+  }
+
+  getConversationLinkedRoom(conversationId: string) {
+    return this.afs.collection('Conversation').doc(conversationId).valueChanges().pipe(
+      mergeMap((conversation: any) => this.afs.collection('Room').doc(conversation.linkedRoom).valueChanges({ idField: 'id'})),
+    );
   }
 
   addRoomSystemMessage(conversationId: string, room: any) {

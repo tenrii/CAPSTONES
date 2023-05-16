@@ -1,21 +1,40 @@
 <ion-header *ngIf="!isPopover">
-  <ion-toolbar color="dark">
-    <ion-title color="light">
-      Chats
-    </ion-title>
+  <ion-title color="dark">
+    <div>Messages</div>
+  </ion-title>
+  <ion-toolbar color="light">
+    <ion-searchbar [debounce]="500"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content *ngIf="{conversations: conversations$ | async, loading: chatService.chatListLoading$ | async} as detail">
   <ion-list>
-    <ion-item *ngFor="let conv of conversations$ | async" (click)="openChat(conv.conversation)" button>
-      <!--<ion-avatar slot="start">
-        <img [src]="conv.user.avatar">
-      </ion-avatar>-->
+    <ion-item
+      *ngFor="let conv of detail.conversations"
+      (click)="openChat(conv.conversation)"
+      lines="full"
+      button
+      shape="round"
+      [color]="conv.conversation === conversationFromUrl ? 'light' : ''"
+    >
+      <ion-avatar slot="start">
+        <img *ngIf="conv.chatWith.profpic" [src]="conv.chatWith.profpic">
+        <img *ngIf="!conv.chatWith.profpic" alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+      </ion-avatar>
       <ion-label>
-        <h2>{{conv.chatWith.FName}} - {{conv.chatWith.LName}}</h2>
-        <p>{{conv.lastChat}}</p>
-        <small>{{ conv.updatedAt | durationAgo }}</small>
+        <h2>{{ conv.chatWith.FName }} {{ conv.chatWith.LName }}</h2>
+        <p>{{ conv.lastChat }}</p>
       </ion-label>
+      <small slot="end">{{ conv.updatedAt | durationAgo: timeNow }}</small>
     </ion-item>
   </ion-list>
+
+  <div class="ion-text-center"  *ngIf="detail.loading">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <div *ngIf="!detail.loading && !detail.conversations">
+    <ion-text color="medium" class="ion-text-center">
+      <h2>No conversations yet</h2>
+    </ion-text>
+  </div>
 </ion-content>

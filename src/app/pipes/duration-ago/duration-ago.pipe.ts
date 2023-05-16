@@ -4,9 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'durationAgo'
 })
 export class DurationAgoPipe implements PipeTransform {
-  transform(value: number): string {
+  transform(value: number, timeNow?: number): string {
     // Get the current time
-    const now = new Date().getTime();
+    const now = timeNow || new Date().getTime();
     // Get the difference in milliseconds
     const diff = now - value;
     // Get the difference in seconds
@@ -28,7 +28,7 @@ export class DurationAgoPipe implements PipeTransform {
         // Get the unit value
         const unitValue = Math.floor(seconds / unit.in_seconds);
         // Return the formatted string
-        return `${unitValue} ${unit.name}${unitValue > 1 ? 's' : ''} ago`;
+        return `${unitValue >= 0 ? unitValue : 0} ${unit.name}${unitValue > 1 ? 's' : ''} ago`;
       }
     }
     // Fallback to the original date

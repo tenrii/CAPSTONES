@@ -26,7 +26,7 @@ ion-content {
 }
 
 .my-message{
-  background: var(--ion-color-success);
+  background: var(--ion-color-primary);
   color: #fff;
 }
 
@@ -40,7 +40,7 @@ ion-content {
 }
 
 .other-message{
-  background: gray;
+  background: var(--ion-color-tertiary);
   color: #fff;
 }
 
@@ -48,4 +48,16 @@ ion-content {
   color: #dfdfdf;
   float: right;
   font-size: small;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 20px;
+  h2 {
+    margin-top: 0;
+  }
 }

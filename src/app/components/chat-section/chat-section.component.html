@@ -1,18 +1,30 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title color="light">
-      {{chatMateData?.FName}} {{chatMateData?.LName}}
-    </ion-title>
+  <div class="chat-header">
+    <ion-avatar slot="start">
+      <img *ngIf="chatMateData?.profpic" [src]="chatMateData?.profpic">
+      <img *ngIf="!chatMateData?.profpic" alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+    </ion-avatar>
+    <h2>{{chatMateData?.FName}} {{chatMateData?.LName}}</h2>
+  </div>
+
+  <ion-toolbar color="light" *ngIf="{roomDetails: roomDetails$ | async} as listingInfo">
+    <ng-container *ngIf="listingInfo.roomDetails">
+      <ion-title color="dark">
+        <h3>{{listingInfo.roomDetails?.Title}}</h3>
+        <h3>{{listingInfo.roomDetails?.Price}}</h3>
+      </ion-title>
+      <ion-button slot="end" shape="round" [routerLink]="['/room', listingInfo.roomDetails?.id]">Details</ion-button>
+    </ng-container>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding" #content>
   <ion-grid>
-    <ng-container *ngFor="let messageGroup of messages | async">
+    <ng-container *ngFor="let messageGroup of messages$ | async; trackBy: trackByFn">
       <ion-row>
         <ion-col class="ion-text-center"><small><strong>{{messageGroup.date}}</strong></small></ion-col>
       </ion-row>
-      <ion-row *ngFor="let message of messageGroup.messages">
+      <ion-row *ngFor="let message of messageGroup.messages; trackBy: trackByFn">
         <ion-col *ngIf="message.type === 'system'; else normalMessage" size-lg="4" offset-lg="4" size-md="6" offset-md="3" size-sm="8" offset-sm="2" class="message system-message">
           <small *ngIf="!isOwner; else ownerMessage">Your enquiry for {{message.roomName}} at {{message.propertyName}} has been sent. <a [routerLink]="['/room', message.linkedRoom]">Show listing</a></small>
           <ng-template #ownerMessage>
