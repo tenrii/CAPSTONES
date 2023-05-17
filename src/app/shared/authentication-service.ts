@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import * as auth from 'firebase/auth';
-import { User } from './user';
+import { User } from '../shared/user';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
@@ -33,8 +33,9 @@ export class AuthenticationService {
     });
   }
   // Login in with email/password
-  SignIn(email: string, password: string) {
-    return this.ngFireAuth.signInWithEmailAndPassword(email, password);
+  async SignIn(email: string, password: string) {
+   const signin = await this.ngFireAuth.signInWithEmailAndPassword(email, password);
+    return signin
   }
   // Register user with email/password
   async RegisterUserTenant(email: any, password: any, record: any) {
@@ -43,7 +44,7 @@ export class AuthenticationService {
       password
     );
     this.uid = credential.user?.uid;
-    this.SendVerificationMail().then((res) => {
+    this.SendVerificationMailT().then((res) => {
       this.afStore.doc(`Tenant/${this.uid}`).set({
         uid: this.uid,
         Email: credential.user?.email,
@@ -59,7 +60,7 @@ export class AuthenticationService {
       password
     );
     this.uid = credential.user?.uid;
-    this.SendVerificationMail().then((res) => {
+    this.SendVerificationMailO().then((res) => {
       this.afStore.doc(`Owner/${this.uid}`).set({
         uid: this.uid,
         Email: credential.user?.email,
@@ -69,10 +70,15 @@ export class AuthenticationService {
     return credential;
   }
   // Email verification when new user register
-  SendVerificationMail() {
+  SendVerificationMailT() {
     return this.ngFireAuth.currentUser.then((user: any) => {
       return user.sendEmailVerification().then(() => {
-        this.m.dismiss();
+        window.location.reload()
+        this.router.navigate(['tenant-panel']).then(() => {
+          this.m.dismiss().then(()=>{
+            window.location.reload();
+          });
+        });
       });
     });
   }
@@ -80,8 +86,10 @@ export class AuthenticationService {
   SendVerificationMailO() {
     return this.ngFireAuth.currentUser.then((user: any) => {
       return user.sendEmailVerification().then(() => {
-        this.router.navigate(['dashboard2']).then(() => {
-          window.location.reload();
+        this.router.navigate(['owner-panel']).then(() => {
+          this.m.dismiss().then(()=>{
+            window.location.reload();
+          });
         });
       });
     });

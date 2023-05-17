@@ -24,6 +24,7 @@ export class Modal3Component implements OnInit {
     this.roomForm = this.fb.group({
       RoomType: ['', [Validators.required]],
     });
+    console.log('a',this.service.modalData)
   }
 
   async back() {

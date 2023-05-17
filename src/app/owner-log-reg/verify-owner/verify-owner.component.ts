@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from 'src/app/shared/authentication-service';
 
 @Component({
   selector: 'app-verify-owner',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VerifyOwnerComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public authService: AuthenticationService,
+  ) { }
 
   ngOnInit() {}
 

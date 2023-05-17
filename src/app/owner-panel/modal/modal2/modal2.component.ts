@@ -12,6 +12,7 @@ import { FirebaseService } from 'src/app/services/firebase.service';
   styleUrls: ['./modal2.component.scss'],
 })
 export class Modal2Component implements OnInit {
+  user = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   isButtonDisabled = false;
   roomForm!: FormGroup;
   constructor(
@@ -70,6 +71,7 @@ export class Modal2Component implements OnInit {
     });
     modalInstance.onDidDismiss().then(() => {
       this.service.modalData = {
+        ownerId: this.user,
         Rent: this.roomForm.get('Rent')?.value,
       }
       console.log('Modal 2 dismissed');

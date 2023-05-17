@@ -22,7 +22,9 @@ export class Modal12Component implements OnInit {
     private afs: AngularFirestore
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.price)
+  }
 
   pricePlus() {
     this.price++;

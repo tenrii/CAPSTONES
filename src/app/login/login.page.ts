@@ -11,6 +11,7 @@ import { VerifyComponent } from './verify/verify.component';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  user = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   tenantRegister!: FormGroup;
   isModalOpen = false;
 
@@ -35,10 +36,12 @@ export class LoginPage implements OnInit {
     this.authService
       .SignIn(email.value, password.value)
       .then((res) => {
+        window.location.reload()
         if (this.authService.isEmailVerified) {
           this.router.navigate(['tenant-panel']).then(() => {
             window.location.reload();
           });
+
         } else {
           window.alert('Email is not verified');
           return false;
@@ -76,30 +79,4 @@ export class LoginPage implements OnInit {
     this.isModalOpen = true;
     return await modalInstance.present();
   }
-
-  logInOwner(email: any, password: any) {
-    this.authService
-      .SignIn(email.value, password.value)
-      .then((res) => {
-        if (this.authService.isEmailVerified) {
-          this.router.navigate(['home']).then(() => {
-            window.location.reload();
-          });
-        } else {
-          window.alert('Email is not verified');
-          return false;
-        }
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
-  }
-  //switchClick(){
-  //  const v = document.querySelector('.img__btn');
-  //  const x = document.querySelector('.cont');
-
-  //  v?.addEventListener('click', () => {
-  //    x?.classList.toggle('s--signup');
-  //  });
-  //}
 }

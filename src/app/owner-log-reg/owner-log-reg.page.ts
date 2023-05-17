@@ -58,7 +58,7 @@ export class OwnerLogRegPage implements OnInit {
       .SignIn(email.value, password.value)
       .then((res) => {
         if (this.authService.isEmailVerified) {
-          this.router.navigate(['home']).then(() => {
+          this.router.navigate(['owner-panel']).then(() => {
             window.location.reload();
           });
         } else {
@@ -75,7 +75,7 @@ export class OwnerLogRegPage implements OnInit {
     this.authService
       .RegisterUserOwner(email.value, password.value, this.ownerRegister.value)
       .then((res) => {
-        this.authService.SendVerificationMail();
+        this.authService.SendVerificationMailO();
         this.verify().then((a) => {
           const filePathBP = `Owner/${this.authService.uid}/${this.selectedBP.name}`;
           const fileRefBP = this.storage.ref(filePathBP);

@@ -8,6 +8,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 @Injectable({
   providedIn: 'root',
 })
+
 export class AuthGuardService {
   ownerList!: any[];
   ownerUid: any[] = [];
@@ -45,4 +46,5 @@ export class AuthGuardService {
     }
     return user;
   }
+
 }

@@ -136,7 +136,8 @@ const routes: Routes = [
     path: 'tenant-panel',
     loadChildren: () => import('./tenant-panel/tenant-panel.module').then( m => m.TenantPanelPageModule),
     canActivate: [AuthGuardService],
-  },  {
+  },
+  {
     path: 'about-us',
     loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
   },
