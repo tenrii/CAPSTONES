@@ -1,6 +1,6 @@
 <ion-content class="auth-form">
   <nav class="navbar navbar-expand-sm sticky-top">
-    <img src="assets/spotAhome3.png" width=150 id="logo">
+    <img src="assets/real logo.png" width=150 id="logo">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
       aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -10,23 +10,34 @@
         <li class="nav-item active">
           <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
         </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/about-us']">About<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/contact-us']">Contact<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/terms-condition']">Terms & Condition<span class="sr-only"></span></a>
+        </li>
       </ul>
     </div>
-    <div class="dropdown" >
+    <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
         aria-expanded="false">
         <img src="assets/user2.png">
       </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" >
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModal()">Login</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/admin']">Admin</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/test']">Test</button></li>
         <li class="owner">
-          <button *ngIf="filterOwner() === true" style="font-size: 15px;" class="dropdown-item" [routerLink]="['/owner-panel']">Owner Panel</button>
+          <button *ngIf="filterOwner() === true" style="font-size: 15px;" class="dropdown-item"
+            [routerLink]="['/owner-panel']">Owner Panel</button>
         </li>
         <li>
-          <button *ngIf="filterTenant() === true" style="font-size: 15px;" class="dropdown-item" [routerLink]="['/tenant-panel']">Tenant Panel</button>
+          <button *ngIf="filterTenant() === true" style="font-size: 15px;" class="dropdown-item"
+            [routerLink]="['/tenant-panel']">Tenant Panel</button>
         </li>
       </ul>
     </div>
@@ -56,7 +67,13 @@
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="assets/1.jpg" class="d-block w-100" alt="...">
+        <img src="assets/homebanner3.jpg" class="d-block w-100" alt="...">
+        <div class="text-content">
+          <h2>SPOT-A-HOME</h2>
+          <h1>Boarding House Search & Reservation</h1>
+          <p>Discover, Reserve, and Settle In: Your Perfect Boarding House Awaits!</p>
+          <button>BOOK NOW</button>
+        </div>
       </div>
       <div class="carousel-item">
         <img src="assets/2.jpg" class="d-block w-100" alt="...">
@@ -88,28 +105,128 @@
   </div>
 
   <span *ngFor="let item of list | async">
-  <div *ngIf="!item.isUnlisted || item.isUnlisted==='false'"  class="room">
-    <div>
-      <div class="over">
-        <img src="{{item.Images[1]}}" class="img">
-      </div>
+    <div *ngIf="!item.isUnlisted || item.isUnlisted==='false'" class="room">
+      <div>
+        <div class="over">
+          <img src="{{item.Images[1]}}" class="img">
+        </div>
 
-      <div class="price">
-        <p id="p2" value="pr">₱{{item.Price}} /
-          <a type="button" [routerLink]="['/','room',item.id]" style="color: #be9874;">
-            <p style="color: #be9874;">Reserve Now</p>
-          </a>
-        </p>
-      </div>
+        <div class="price">
+          <p id="p2" value="pr">₱{{item.Price}} /
+            <a type="button" [routerLink]="['/','room',item.id]" style="color: #be9874;">
+              <p style="color: #be9874;">Reserve Now</p>
+            </a>
+          </p>
+        </div>
 
-      <div class="details">
-        <p id="p1" value="na">{{item.Title}}</p>
-        <p id="p3" value="ad"><a style="font-weight: 700;">Address:</a>
-          {{item.Street}}, {{item.Barangay}}, {{item.City}}, {{item.Province}}</p>
-        <p id="p4" value="re"><a style="font-weight: 700;">Renting: </a>{{item.Rent}}</p>
+        <div class="details">
+          <p id="p1" value="na">{{item.Title}}</p>
+          <p id="p3" value="ad"><a style="font-weight: 700;">Address:</a>
+            {{item.Street}}, {{item.Barangay}}, {{item.City}}, {{item.Province}}</p>
+          <p id="p4" value="re"><a style="font-weight: 700;">Renting: </a>{{item.Rent}}</p>
+        </div>
+      </div>
+      <div style="text-align: center; color: white; opacity: 0;">/</div>
+    </div>
+  </span>
+
+  <section class="video-section">
+    <div class="video-container">
+      <img src="assets/video.jpg" alt="Background Image">
+      <button class="play-icon" type="button" data-toggle="modal" data-target="#videoModal">
+        <ion-icon name="play"></ion-icon>
+      </button>
+      <a class="play-text" href="#" data-toggle="modal" data-target="#videoModal">Play Video</a>
+    </div>
+    <div class="video-overlay">
+      <h2>Watch Our Video</h2>
+      <a class="button" href="#">Learn More</a>
+    </div>
+  </section>
+
+  <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/0etCKCAsImI"
+              allowfullscreen></iframe>
+          </div>
+        </div>
       </div>
     </div>
-    <div style="text-align: center; color: white; opacity: 0;">/</div>
   </div>
-</span>
+
+
+
+  <div class="brands">
+    <h1>Some of Our Clients</h1>
+  </div>
+  <div class="logo-brands">
+    <img src="assets/ourhome.png" alt="Brand 1">
+    <img src="assets/dxb.png" alt="Brand 2">
+    <img src="assets/nelis.png" alt="Brand 3">
+    <img src="assets/M2LC.png" alt="Brand 3">
+    <img src="assets/angeles place.png" alt="Brand 3">
+  </div>
+
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <img src="assets/footer logo.png" alt="Logo">
+          <p>It is a long established fact that a reader will be distracted the readable layout.</p>
+          <ul class="social-icons">
+            <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+            <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+            <a href="#"><ion-icon name="logo-linkedin"></ion-icon></a>
+            <a href="#"><ion-icon name="mail"></ion-icon></a>
+            <a href="#"><ion-icon name="logo-dribbble"></ion-icon></a>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>ABOUT SPOT-A-HOME</h6>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>TERMS & POLICY</h6>
+          <ul class="footer-links">
+            <li><a href="#">Terms & Condition</a></li>
+            <li><a href="#">Payment Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Return Policy</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>NEWSLETTER</h6>
+          <p>Subscribe to our newsletter to stay updated.</p>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter your email." aria-label="Recipient's username"
+              aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">SUBSCRIBE</button>
+            </div>
+          </div>
+          <img src="assets/p1.png">
+          <img src="assets/p2.png">
+          <img src="assets/p3.png">
+          <img src="assets/p4.png">
+          <img src="assets/p5.png">
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <footer class="bottom-footer">
+    <div class="bottom-footer-center">
+      Copyright <span>&copy;</span> 2023 SPOT-A-HOME By CJL
+    </div>
+  </footer>
 </ion-content>

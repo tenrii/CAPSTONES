@@ -1,0 +1,237 @@
+<ion-content>
+  <nav class="navbar navbar-expand-sm sticky-top">
+    <img src="assets/real logo.png" width=150 id="logo">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/about-us']">About<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/contact-us']">Contact<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" [routerLink]="['/terms-condition']">Terms & Condition<span class="sr-only"></span></a>
+        </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
+        aria-expanded="false">
+        <img src="assets/user2.png">
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+        <li><button class="dropdown-item" style="font-size: 15px;">Login</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/admin']">Admin</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;">Logout</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/test']">Test</button></li>
+        <li class="owner">
+          <button style="font-size: 15px;" class="dropdown-item" [routerLink]="['/owner-panel']">Owner Panel</button>
+        </li>
+        <li>
+          <button style="font-size: 15px;" class="dropdown-item" [routerLink]="['/tenant-panel']">Tenant Panel</button>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="custom-banner">
+    <div class="banner-block">
+      <img src="assets/about banner.jpg" alt="Banner Image">
+      <div class="text-content">
+        <h2>SPOT-A-HOME</h2>
+        <h1>Boarding House Search & Reservation</h1>
+        <p>Discover, Reserve, and Settle In: Your Perfect Boarding House Awaits!</p>
+        <button>BOOK NOW</button>
+      </div>
+    </div>
+  </div>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
+    integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+
+
+  <div class="team">
+    <h1>Meet Our Team</h1>
+  </div>
+  <div class="container">
+    <div class="row mt-n1-9">
+      <div class="col-md-6 col-xl-3 mt-1-9 wow fadeInUp" data-wow-delay=".2s"
+        style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+        <div class="team-style07">
+          <div class="team-thumb mb-1-9">
+            <div class="thumb"><img src="assets/Jaziel.jpg" class="rounded-circle" alt="..."></div>
+            <div class="team-social">
+              <ul class="styled-icons">
+                <li><a class="styled-icons-item" href="https://www.facebook.com/jazzyrdc/"><i
+                      class="fab fa-facebook-f"></i></a></li>
+                <li><a class="styled-icons-item" href="#!"><i class="fab fa-twitter"></i></a></li>
+                <li><a class="styled-icons-item" href="#!"><i class="fab fa-linkedin-in"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <h3 class="h5 mb-1"><a href="#!">Jaziel Dela Cruz</a></h3>
+          <p class="mb-0">Front-End Developer</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-3 mt-1-9 wow fadeInUp" data-wow-delay=".3s"
+        style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+        <div class="team-style07">
+          <div class="team-thumb mb-1-9">
+            <div class="thumb"><img src="assets/Lemuel.png" class="rounded-circle" alt="..."></div>
+            <div class="team-social">
+              <ul class="styled-icons">
+                <li><a class="styled-icons-item" href="https://www.facebook.com/lemuel.ferrer.967"><i
+                      class="fab fa-facebook-f"></i></a></li>
+                <li><a class="styled-icons-item" href="#!"><i class="fab fa-twitter"></i></a></li>
+                <li><a class="styled-icons-item" href="#!"><i class="fab fa-linkedin-in"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <h3 class="h5 mb-1"><a href="#!">Lemuel Ferrer</a></h3>
+          <p class="mb-0">Programmer</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-3 mt-1-9 wow fadeInUp" data-wow-delay=".4s"
+        style="visibility: visible; animation-delay: 0.4s; animation-name: fadeInUp;">
+        <div class="team-style07">
+          <div class="team-thumb mb-1-9">
+            <div class="thumb"><img src="assets/Cathleen.png" class="rounded-circle" alt="..."></div>
+            <div class="team-social">
+              <ul class="styled-icons">
+                <li><a class="styled-icons-item" href="https://www.facebook.com/hazelnutsss03"><i
+                      class="fab fa-facebook-f"></i></a></li>
+                <li><a class="styled-icons-item" href="#!"><i class="fab fa-twitter"></i></a></li>
+                <li><a class="styled-icons-item" href="#!"><i class="fab fa-linkedin-in"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <h3 class="h5 mb-1"> <a href="#!">Cathleen Hazel Avila</a></h3>
+          <p class="mb-0">Kain Tulog</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-xl-3 mt-1-9 wow fadeInUp" data-wow-delay=".5s"
+        style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+        <div class="team-style07">
+          <div class="team-thumb mb-1-9">
+            <div class="thumb"><img src="assets/Karlo.jpg" class="rounded-circle" alt="..."></div>
+            <div class="team-social">
+              <ul class="styled-icons">
+                <li><a class="styled-icons-item" href="https://www.facebook.com/kurisudesu08"><i
+                      class="fab fa-facebook-f"></i></a></li>
+                <li><a class="styled-icons-item" href="#!"><i class="fab fa-twitter"></i></a></li>
+                <li><a class="styled-icons-item" href="#!"><i class="fab fa-linkedin-in"></i></a></li>
+              </ul>
+            </div>
+          </div>
+          <h3 class="h5 mb-1"> <a href="#!">Karlo Cris Bolisay</a></h3>
+          <p class="mb-0">Adviser</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Gallery -->
+  <div class="gallery">
+    <h1>Our Gallery</h1>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <img src="assets/livingroom6.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
+
+        <img src="assets/livingroom2.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Wintry Mountain Landscape" />
+      </div>
+
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <img src="assets/livingroom3.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Mountains in the Clouds" />
+
+        <img src="assets/livingroom4.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Boat on Calm Water" />
+      </div>
+
+      <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+        <img src="assets/livingroom8.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Waves at Sea" />
+
+        <img src="assets/livingroom1.jpg" class="w-100 shadow-1-strong rounded mb-4" alt="Yosemite National Park" />
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="brands">
+    <h1>Our Beloved Clients</h1>
+  </div>
+  <div class="logo-brands">
+    <img src="assets/ourhome.png" alt="Brand 1">
+    <img src="assets/dxb.png" alt="Brand 2">
+    <img src="assets/nelis.png" alt="Brand 3">
+    <img src="assets/M2LC.png" alt="Brand 3">
+    <img src="assets/angeles place.png" alt="Brand 3">
+  </div>
+
+
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <img src="assets/footer logo.png" alt="Logo">
+          <p>It is a long established fact that a reader will be distracted the readable layout.</p>
+          <ul class="social-icons">
+            <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+            <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+            <a href="#"><ion-icon name="logo-linkedin"></ion-icon></a>
+            <a href="#"><ion-icon name="mail"></ion-icon></a>
+            <a href="#"><ion-icon name="logo-dribbble"></ion-icon></a>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>ABOUT SPOT-A-HOME</h6>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Blog</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>TERMS & POLICY</h6>
+          <ul class="footer-links">
+            <li><a href="#">Terms & Condition</a></li>
+            <li><a href="#">Payment Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Return Policy</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6>NEWSLETTER</h6>
+          <p>Subscribe to our newsletter to stay updated.</p>
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter your email." aria-label="Recipient's username"
+              aria-describedby="basic-addon2">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary" type="button">SUBSCRIBE</button>
+            </div>
+          </div>
+          <img src="assets/p1.png">
+          <img src="assets/p2.png">
+          <img src="assets/p3.png">
+          <img src="assets/p4.png">
+          <img src="assets/p5.png">
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <footer class="bottom-footer">
+    <div class="bottom-footer-center">
+      Copyright <span>&copy;</span> 2023 SPOT-A-HOME By CJL
+    </div>
+  </footer>
+
+</ion-content>

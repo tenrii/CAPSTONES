@@ -22,7 +22,7 @@ interface RoomData {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
-  isModalOpen:boolean = false;
+  isModalOpen: boolean = false;
   user: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   roomList: any[] = [];
   emailList: any[] = [];
@@ -102,21 +102,19 @@ export class HomePage implements OnInit {
     this.list.next(filteredList);
   }
 
-  filterTenant(){
-    if(this.firebaseService.tenantUid.includes(this.user)){
-      return true
-    }
-    else{
-      return false
+  filterTenant() {
+    if (this.firebaseService.tenantUid.includes(this.user)) {
+      return true;
+    } else {
+      return false;
     }
   }
 
-  filterOwner(){
-    if(this.firebaseService.ownerUid.includes(this.user)){
-      return true
-    }
-    else{
-      return false
+  filterOwner() {
+    if (this.firebaseService.ownerUid.includes(this.user)) {
+      return true;
+    } else {
+      return false;
     }
   }
 
@@ -133,5 +131,4 @@ export class HomePage implements OnInit {
     this.isModalOpen = false;
     this.m.dismiss();
   }
-
 }

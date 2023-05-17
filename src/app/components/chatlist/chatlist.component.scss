@@ -1,0 +1,86 @@
+/* Styling for the header */
+ion-header {
+  border-bottom: 1px solid #ccc;
+}
+
+ion-title div {
+  padding-top: 78px;
+  font-size: 30px;
+  font-family: DM Sans;
+  font-weight: 700;
+}
+
+/* Styling for the toolbar */
+ion-toolbar {
+  background-color: #fff;
+  padding: 10px;
+}
+
+ion-searchbar {
+  width: 100%;
+}
+
+/* Styling for the content */
+ion-content {
+  padding: 10px;
+}
+
+/* Styling for the list items */
+ion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 20px;
+  width: 100%;
+}
+
+ion-item:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+  width: 100%;
+}
+
+ion-avatar img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+ion-label {
+  margin-left: 10px;
+}
+
+h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+p {
+  font-size: 14px;
+  color: #888;
+}
+
+small {
+  font-size: 12px;
+  color: #888;
+  margin-left: auto;
+}
+
+/* Styling for the loading spinner */
+.ion-text-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+
+ion-spinner {
+  --ion-color-primary: #488aff;
+}
+
+/* Styling for no conversations message */
+ion-text.ion-text-center {
+  margin-top: 100px;
+}

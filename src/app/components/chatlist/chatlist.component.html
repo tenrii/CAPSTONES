@@ -8,17 +8,12 @@
 </ion-header>
 <ion-content *ngIf="{conversations: conversations$ | async, loading: chatService.chatListLoading$ | async} as detail">
   <ion-list>
-    <ion-item
-      *ngFor="let conv of detail.conversations"
-      (click)="openChat(conv.conversation)"
-      lines="full"
-      button
-      shape="round"
-      [color]="conv.conversation === conversationFromUrl ? 'light' : ''"
-    >
+    <ion-item *ngFor="let conv of detail.conversations" (click)="openChat(conv.conversation)" lines="full" button
+      shape="round" [color]="conv.conversation === conversationFromUrl ? 'light' : ''">
       <ion-avatar slot="start">
         <img *ngIf="conv.chatWith.profpic" [src]="conv.chatWith.profpic">
-        <img *ngIf="!conv.chatWith.profpic" alt="Silhouette of a person's head" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+        <img *ngIf="!conv.chatWith.profpic" alt="Silhouette of a person's head"
+          src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
       <ion-label>
         <h2>{{ conv.chatWith.FName }} {{ conv.chatWith.LName }}</h2>
@@ -28,7 +23,7 @@
     </ion-item>
   </ion-list>
 
-  <div class="ion-text-center"  *ngIf="detail.loading">
+  <div class="ion-text-center" *ngIf="detail.loading">
     <ion-spinner></ion-spinner>
   </div>
 
