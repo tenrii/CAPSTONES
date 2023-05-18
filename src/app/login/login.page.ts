@@ -14,6 +14,7 @@ export class LoginPage implements OnInit {
   user = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   tenantRegister!: FormGroup;
   isModalOpen = false;
+  isRegister = true;
 
   constructor(
     private m: ModalController,
@@ -36,12 +37,11 @@ export class LoginPage implements OnInit {
     this.authService
       .SignIn(email.value, password.value)
       .then((res) => {
-        window.location.reload()
+        window.location.reload();
         if (this.authService.isEmailVerified) {
           this.router.navigate(['tenant-panel']).then(() => {
             window.location.reload();
           });
-
         } else {
           window.alert('Email is not verified');
           return false;

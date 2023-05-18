@@ -1,23 +1,23 @@
 /* Styling for the header */
 ion-header {
-  border-bottom: 1px solid #ccc;
+  padding: 5px;
 }
 
 ion-title div {
-  padding-top: 78px;
-  font-size: 30px;
-  font-family: DM Sans;
-  font-weight: 700;
+  margin-top: 78px;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 /* Styling for the toolbar */
 ion-toolbar {
-  background-color: #fff;
-  padding: 10px;
+  padding: 5px;
 }
 
 ion-searchbar {
   width: 100%;
+  --background: transparent !important; /* Remove background color */
+  --border-radius: 10px; /* Apply border radius */
 }
 
 /* Styling for the content */
@@ -30,8 +30,6 @@ ion-item {
   display: flex;
   align-items: center;
   padding: 10px;
-  border-radius: 20px;
-  width: 100%;
 }
 
 ion-item:hover {
@@ -42,7 +40,7 @@ ion-item:hover {
 
 ion-avatar img {
   width: 50px;
-  height: 50px;
+  height: 40px;
   border-radius: 50%;
   object-fit: cover;
 }

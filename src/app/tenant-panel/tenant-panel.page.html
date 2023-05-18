@@ -11,22 +11,6 @@
           <div type="button" [routerLink]="['/home']">Home</div>
         </ion-col>
 
-        <ion-col class="pending">
-          <div type="button" onclick="
-          document.getElementById('pending').style.display='block';
-          document.getElementById('complete').style.display='none';
-          document.getElementById('bill').style.display='none';
-          document.getElementById('transaction').style.display='none';">Pending</div>
-        </ion-col>
-
-        <ion-col class="complete">
-          <div type="button" onclick="
-          document.getElementById('pending').style.display='none';
-          document.getElementById('complete').style.display='block';
-          document.getElementById('bill').style.display='none';
-          document.getElementById('transaction').style.display='none';">Complete</div>
-        </ion-col>
-
         <ion-col class="bill">
           <div type="button" onclick="
           document.getElementById('pending').style.display='none';
@@ -171,10 +155,6 @@
           document.getElementById('complete').style.display='none';
           document.getElementById('bill').style.display='none';
           document.getElementById('transaction').style.display='block';">Records</div>
-        </ion-col>
-
-        <ion-col class="logout">
-          <div type="button"><ion-icon name="arrow-undo-outline"></ion-icon>Log Out</div>
         </ion-col>
 
       </ion-row>

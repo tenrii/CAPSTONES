@@ -1,152 +1,89 @@
 <ion-content>
+  <!DOCTYPE html>
+  <html>
+
+  <head>
+    <title>Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  </head>
+
   <body>
-    <aside>
-    <div class="left-nav">
+    <div class="container">
+      <h1>Admin Dashboard</h1>
 
-      <div type="button" id="pending"onclick="document.getElementById('pen').style.display='block'
-      document.getElementById('acc').style.display='none'
-      document.getElementById('ten').style.display='none'">Pending</div>
+      <!-- Pending Registrations -->
+      <h2>Pending Registrations</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Owner Name</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>john@example.com</td>
+            <td>
+              <button class="btn btn-success">Accept</button>
+              <button class="btn btn-danger">Reject</button>
+            </td>
+          </tr>
+          <!-- Add more pending registrations as needed -->
+        </tbody>
+      </table>
 
-      <div type="button" id="approved" onclick="document.getElementById('pen').style.display='none'
-      document.getElementById('acc').style.display='block'
-      document.getElementById('ten').style.display='none'">Approved</div>
+      <!-- Approved Owner Room Posts -->
+      <h2>Approved Owner Room Posts</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Owner Name</th>
+            <th>Room Details</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>Room 101</td>
+            <td>
+              <button class="btn btn-success">Accept</button>
+              <button class="btn btn-danger">Decline</button>
+            </td>
+          </tr>
+          <!-- Add more approved owner room posts as needed -->
+        </tbody>
+      </table>
 
-      <div type="button" id="approved" onclick="document.getElementById('pen').style.display='none'
-      document.getElementById('acc').style.display='none'
-      document.getElementById('ten').style.display='block'">Tenant</div>
+      <!-- Reviews -->
+      <h2>Reviews</h2>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Review</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+            <td>
+              <button class="btn btn-danger">Delete</button>
+            </td>
+          </tr>
+          <!-- Add more reviews as needed -->
+        </tbody>
+      </table>
 
     </div>
-  </aside>
 
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
 
-  <div class="container-xl">
-    <div class="table-responsive" id="pen" style="display: block">
-      <div class="table-wrapper">
-        <div class="table-title">
-          <div class="row">
-            <div class="col-sm-6">
-              <h2>Manage <b>Owner</b></h2>
-            </div>
-          </div>
-        </div>
-<table class="table table-striped table-hover">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Age</th>
-      <th>Address</th>
-      <th>Phone</th>
-      <th>Business Permit</th>
-      <th>Valid ID</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-<tbody *ngFor="let item of falselist | async">
-    <tr>
-      <td>{{item.FName}} {{item.LName}}</td>
-      <td>{{item.Email}}</td>
-      <td>{{item.Age}}</td>
-      <td>{{item.Address}}</td>
-      <td>{{item.Phone}}</td>
-      <td>{{item.BusinessPermit}}</td>
-      <td>{{item.ValidID}}</td>
-      <td>
-        <ion-button (click)="Approve(item.id)">Approve</ion-button>
-        <ion-button (click)="Reject(item.id)">Reject</ion-button>
-      </td>
-    </tr>
-</tbody>
-</table>
-      </div>
-    </div>
-  </div>
+  </html>
 
-
-
-
-  <div class="container-xl">
-    <div class="table-responsive" id="acc" style="display: none">
-      <div class="table-wrapper">
-        <div class="table-title">
-          <div class="row">
-            <div class="col-sm-6">
-              <h2>Manage <b>Owner</b></h2>
-            </div>
-          </div>
-        </div>
-<table class="table table-striped table-hover">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Age</th>
-      <th>Address</th>
-      <th>Phone</th>
-      <th>Business Permit</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-<tbody *ngFor="let item of truelist | async">
-    <tr>
-      <td>{{item.FName}} {{item.LName}}</td>
-      <td>{{item.Email}}</td>
-      <td>{{item.Age}}</td>
-      <td>{{item.Address}}</td>
-      <td>{{item.Phone}}</td>
-      <td>{{item.BusinessPermit}}</td>
-      <td>
-        <ion-button (click)="Reject(item.id)">Reject</ion-button>
-      </td>
-    </tr>
-</tbody>
-</table>
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="container-xl">
-    <div class="table-responsive" id="ten" style="display: none">
-      <div class="table-wrapper">
-        <div class="table-title">
-          <div class="row">
-            <div class="col-sm-6">
-              <h2>Manage <b>Owner</b></h2>
-            </div>
-          </div>
-        </div>
-<table class="table table-striped table-hover">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Age</th>
-      <th>Address</th>
-      <th>Phone</th>
-      <th>Business Permit</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-<tbody *ngFor="let item of tenantList">
-    <tr>
-      <td>{{item.FName}} {{item.LName}}</td>
-      <td>{{item.Email}}</td>
-      <td>{{item.Age}}</td>
-      <td>{{item.Address}}</td>
-      <td>{{item.Phone}}</td>
-      <td>
-        <ion-button>Approve</ion-button>
-        <ion-button>Reject</ion-button>
-      </td>
-    </tr>
-</tbody>
-</table>
-      </div>
-    </div>
-  </div>
-
-
-</body>
 </ion-content>

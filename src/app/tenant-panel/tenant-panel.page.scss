@@ -1,7 +1,12 @@
 .header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: rgba(84, 69, 65, 0.8);
-  color: white;
+  position: sticky;
   height: 80px;
+  margin-bottom: -107px;
+  padding: 0px;
 }
 
 .header .logo {
@@ -12,7 +17,7 @@
   width: 100px;
   height: auto;
   padding: 0;
-  margin-left: 150px;
+  margin-left: 50px;
 }
 
 .header .home,
@@ -22,23 +27,27 @@
 .header .notification,
 .header .transaction,
 .header .logout {
-  margin: auto;
-  max-width: 120px;
-  font-family: Neue Einstellung;
+  display: flex;
+  color: white;
+  font-size: 20px;
+  margin-left: 100px;
+  font-family: DM Sans;
+  margin: 20px;
+  height: 80px;
+  text-align: center;
+  display: inline-block;
 }
 
-.header .home div,
-.header .pending div,
-.header .complete div,
-.header .bill div,
-.header .notification div,
-.header .transaction div,
-.header .logout div::after:hover {
+.header .home:hover,
+.header .pending:hover,
+.header .complete:hover,
+.header .bill:hover,
+.header .notification:hover,
+.header .transaction:hover {
   background-color: #ddd;
-  height: 72%;
+  height: 100%;
   color: #544541;
 }
-
 .header .logout div {
   text-align: center;
   width: 100px;

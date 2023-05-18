@@ -1,146 +1,153 @@
+<section class="background-radial-gradient overflow-hidden">
+  <div class="container px-4 py-4 px-md-5 text-center text-lg-start my-5">
+    <div class="row gx-lg-5 align-items-center mb-5">
+      <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10; padding-bottom: 60px; ">
+        <h1 class="my-5 display-5 fw-bold ls-tight" style="color: #544541;
+          font-size: 40px; text-align: center; font-weight: 300;margin-bottom: 50px;">
+          Hello! Ready to find your perfect home away from home? <br />
+          <span *ngIf="isRegister">
+            <span style="color: #544541;font-size: 20px; font-family: DM Sans; font-style: italic;">
+              Log in now to discover, book, and secure your spot at our
+              exquisite
+              boarding houses.</span>
+          </span>
+          <span *ngIf="isRegister === false">
+            <span style="color: #544541;font-size: 20px; font-family: DM Sans; font-style: italic;">
+              Start your journey of finding the boarding house by creating an account today.</span>
+          </span>
+        </h1>
+      </div>
 
-  <section class="background-radial-gradient overflow-hidden">
-    <div class="container px-4 py-4 px-md-5 text-center text-lg-start my-5">
-      <div class="row gx-lg-5 align-items-center mb-5">
-        <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10; padding-bottom: 60px;">
-          <h1 class="my-5 display-5 fw-bold ls-tight" style="color: #6d3705;
-          font-size: 45px;">
-            LOG IN <br />
-            <span style="color: #644222;font-size: 40px;">
-              to find and get your wanted home</span>
-          </h1>
-          <p class="mb-4 opacity-70" style="color: hsl(0, 0%, 0%); font-size: 20px;">
-            Hello! Ready to find your home? Log in to make your reservation now
-          </p>
-        </div>
-
-        <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
-          <!--<div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+      <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+        <!--<div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
           <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>-->
-          <div id="login" style="display: block;">
-          <div class="card bg-glass" style="height: 550px;">
+        <div id="login" style="display: block;">
+          <div class="card bg-glass" style="height: 600px; margin-top: 50px;">
             <div class="card-body px-4 py-4 px-md-5">
-<span>
+              <span>
 
-  <img src="assets/spotAhome3.png" width=150 id="logo" style="margin-bottom: 30px;
-  margin-top: 0px; margin-left: 125px;">
+                <img src="assets/logo.png" width=150 id="logo" style="margin-bottom: 30px;
+                margin-top: 0; margin-left: 165px;">
 
-        <div class="form-outline mb-4">
-          <label class="form-label" for="form3Example3" style="font-size:18px; float: left;">
-          Email Address: </label>
-            <input type="email" #email id="form3Example3" class="form-control" />
-        </div>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example3" style="font-size:18px; float: left;">
+                    Email Address: </label>
+                  <input type="email" #email id="form3Example3" class="form-control" />
+                </div>
 
-          <div class="form-outline mb-4">
-            <label class="form-label" for="form3Example4" style="font-size:18px; float: left;">
-            Password: </label>
-              <input type="password" #password id="form3Example4" class="form-control" />
-              <small id="passwordHelp" class="form-text text-muted">
-                We'll never share your password with anyone else
-              </small>
+                <div class="form-outline mb-4">
+                  <label class="form-label" for="form3Example4" style="font-size:18px; float: left;">
+                    Password: </label>
+                  <input type="password" #password id="form3Example4" class="form-control" />
+                  <small id="passwordHelp" class="form-text text-muted">
+                    We'll never share your password with anyone else
+                  </small>
+                </div>
+
+                <button type="submit" (click)="logIn(email,password)" class="btn btn-primary btn-block mb-4" style="font-size: 17px; padding: 5px; height: 45px; border-radius: 21px;
+            width: 110px; margin-left: 190px; background-color:#544541; font-family: Dm Sans;">
+                  Sign in
+                </button>
+
+                <div class="text-center" style="margin: 0; padding: 0;">
+                  <p style="font-size: 13px;">or sign up with:</p>
+                  <button type="button" class="btn btn-link btn-floating mx-1"
+                    style="color: #544541; margin: 0; padding: 0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                      class="bi bi-facebook" viewBox="0 0 16 16">
+                      <path
+                        d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
+                    </svg>
+                  </button>
+
+                  <button type="button" class="btn btn-link btn-floating mx-1"
+                    style="color: #544541; margin: 0; padding: 0;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                      class="bi bi-google" viewBox="0 0 16 16">
+                      <path
+                        d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div style="margin-top: 10px; font-size: 15px; text-align: center;">
+                  Are you new here? <div type="button" (click)="isRegister = false" onclick="document.getElementById('login').style.display='none';
+            document.getElementById('register').style.display='block';" style="color: #544541; font-weight: 500;">
+                    Register</div>
+                </div>
+              </span>
+            </div>
           </div>
-
-            <button type="submit" (click)="logIn(email,password)" class="btn btn-primary btn-block mb-4"
-            style="font-size: 17px; padding: 5px; height: 45px; border-radius: 21px;
-            width: 110px; margin-left: 140px; background-color:#644222;">
-            Sign in
-            </button>
-
-          <div class="text-center" style="margin: 0; padding: 0;">
-            <p style="font-size: 13px;">or sign up with:</p>
-              <button type="button" class="btn btn-link btn-floating mx-1" style="color: #644222; margin: 0; padding: 0;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-                  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                </svg>
-              </button>
-
-              <button type="button" class="btn btn-link btn-floating mx-1" style="color: #644222; margin: 0; padding: 0;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-                    <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
-                  </svg>
-              </button>
-          </div>
-
-          <div style="margin-top: 10px; font-size: 15px; text-align: center;">
-            Are you new here? <div type="button"
-            onclick="document.getElementById('login').style.display='none';
-            document.getElementById('register').style.display='block';"
-            style="color:#644222; font-weight: 500;">Register</div>
-          </div>
-        </span>
         </div>
-        </div>
-        </div>
-<!---->
+        <!---->
 
-<div id="register" style="display: none;">
-  <div class="card bg-glass" style="height: 550px; overflow-y: scroll;">
-    <div class="card-body px-4 py-4 px-md-5">
-<span>
-  <div type="button" class="back" style="float: left;"
-    onclick="document.getElementById('login').style.display='block';
+        <div id="register" style="display: none;">
+          <div class="card bg-glass" style="height: 550px; overflow-y: scroll;">
+            <div class="card-body px-4 py-4 px-md-5">
+              <span>
+                <div type="button" (click)="isRegister = true" class="back" style="float: left;" onclick="document.getElementById('login').style.display='block';
     document.getElementById('register').style.display='none';">
-    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-    </svg>
-  </div>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                    class="bi bi-arrow-left" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                  </svg>
+                </div>
 
-  <h2 style="margin-left: 150px;">Register</h2>
-  <form [formGroup]="tenantRegister">
+                <h2 style="margin-left: 190px; font-family: DM Sans;">Register</h2>
+                <form [formGroup]="tenantRegister">
 
-    <div class="form-outline mb-4">
-      <label class="form-label" for="form3Example6" style="font-size:15px; float: left;">
-      First Name: </label>
-        <input type="text" formControlName="FName" id="form3Example6"
-        class="form-control"/>
-</div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example6" style="font-size:15px; float: left;">
+                      First Name: </label>
+                    <input type="text" formControlName="FName" id="form3Example6" class="form-control" />
+                  </div>
 
-<div class="form-outline mb-4">
-  <label class="form-label" for="form3Example5" style="font-size:15px; float: left;">
-  Last Name: </label>
-    <input type="text" formControlName="LName" id="form3Example5"
-    class="form-control"/>
-</div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example5" style="font-size:15px; float: left;">
+                      Last Name: </label>
+                    <input type="text" formControlName="LName" id="form3Example5" class="form-control" />
+                  </div>
 
-    <div class="form-outline mb-4">
-      <label class="form-label" for="form3Example7" style="font-size:15px; float: left;">
-      Age: </label>
-        <input type="text" formControlName="Age" class="form-control" />
-    </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example7" style="font-size:15px; float: left;">
+                      Age: </label>
+                    <input type="text" formControlName="Age" class="form-control" />
+                  </div>
 
-    <div class="form-outline mb-4">
-      <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
-      Address: </label>
-        <input type="text" formControlName="Address" class="form-control" />
-    </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
+                      Address: </label>
+                    <input type="text" formControlName="Address" class="form-control" />
+                  </div>
 
-    <div class="form-outline mb-4">
-      <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
-      Email Address: </label>
-        <input type="email" formControlName="Email" #emails class="form-control" />
-    </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
+                      Email Address: </label>
+                    <input type="email" formControlName="Email" #emails class="form-control" />
+                  </div>
 
-    <div class="form-outline mb-4">
-      <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
-      Password: </label>
-        <input type="password" #passwords class="form-control" />
-        <small id="passwordHelp" class="form-text text-muted">
-          We'll never share your password with anyone else
-        </small>
-    </div>
+                  <div class="form-outline mb-4">
+                    <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
+                      Password: </label>
+                    <input type="password" #passwords class="form-control" />
+                    <small id="passwordHelp" class="form-text text-muted">
+                      We'll never share your password with anyone else
+                    </small>
+                  </div>
 
-    <button type="submit" (click)="register(emails,passwords)"
-    class="btn btn-primary btn-block mb-4" style="font-size: 17px;
-    padding: 5px; height: 45px; border-radius: 21px; width: 110px; margin-left: 140px;
-    background-color:#644222;"> Register
-    </button>
-  </form>
+                  <button type="submit" (click)="register(emails,passwords)" class="btn btn-primary btn-block mb-4"
+                    style="font-size: 17px;
+    padding: 5px; height: 45px; border-radius: 21px; width: 110px; margin-left: 190px;
+    background-color:#544541;"> Register
+                  </button>
+                </form>
 
-</span>
-</div>
+              </span>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
