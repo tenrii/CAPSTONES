@@ -162,39 +162,24 @@
   width: 250px;
 }
 
-.detail {
-  margin-left: 60px;
-}
-
 .detail .room {
-  margin-left: 10px;
-  margin-top: 10px;
   font-size: 35px;
   font-weight: 500;
   font-family: "Poppins", sans-serif;
 }
 
 .detail .rent {
-  margin-left: 10px;
-  font-size: 25px;
   font-weight: 400;
   font-family: "Poppins", sans-serif;
   color: #c38f32;
 }
 
 .detail .details {
-  margin-left: 10px;
-  width: 60%;
-  margin-top: 25px;
   font-family: DM Sans;
   font-size: 18px;
 }
 
 .detail .amenities {
-  margin-left: 10px;
-  width: 60%;
-  max-width: 60%;
-  margin-top: 15px;
   font-family: "Poppins", sans-serif;
   color: #c38f32;
 }
@@ -205,7 +190,6 @@
 }
 
 .detail .amenities #amenities {
-  max-width: 180px;
   min-width: 180px;
   text-align: center;
   padding: 10px;
@@ -224,8 +208,6 @@
 }
 
 .detail .contact #contact {
-  max-width: 130px;
-  padding: 10px;
   color: rgb(100, 66, 34);
   border: rgb(194, 123, 17) solid 1px;
   border-radius: 20px;
@@ -379,7 +361,6 @@
 }
 
 .price-card {
-  float: right;
   padding: 1em;
   padding-bottom: 0.5em;
   border-radius: 5%;
