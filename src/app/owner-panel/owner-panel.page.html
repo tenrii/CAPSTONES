@@ -280,11 +280,6 @@
           <span *ngFor="let data of filteredRecord; let i = index;" [attr.data-index]="i">
             <ion-row class="row-body" style="text-align:center;">
               <ion-col>
-                <span *ngFor="let tenant of data.tenantDataBed">
-                  <span *ngIf="data.userId === tenant.id">
-                    {{tenant.FName}} {{tenant.LName}}
-                  </span>
-                </span>
               </ion-col>
 
               <ion-col>

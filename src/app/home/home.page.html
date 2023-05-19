@@ -20,6 +20,12 @@
         <li class="nav-item active">
           <a class="nav-link" [routerLink]="['/terms-condition']">Terms & Condition<span class="sr-only"></span></a>
         </li>
+        <li class="nav-item active" *ngIf="filterOwner() === true">
+          <a class="nav-link" [routerLink]="['/owner-panel']">Owner Panel<span class="sr-only"></span></a>
+        </li>
+        <li class="nav-item active" *ngIf="filterTenant() === true">
+          <a class="nav-link" [routerLink]="['/tenant-panel']">Tenant Panel<span class="sr-only"></span></a>
+        </li>
       </ul>
 
     </div>
@@ -30,17 +36,7 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModal()">Login</button></li>
-        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/admin']">Admin</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
-        <li><button class="dropdown-item" style="font-size: 15px;" [routerLink]="['/test']">Test</button></li>
-        <li class="owner">
-          <button *ngIf="filterOwner() === true" style="font-size: 15px;" class="dropdown-item"
-            [routerLink]="['/owner-panel']">Owner Panel</button>
-        </li>
-        <li>
-          <button *ngIf="filterTenant() === true" style="font-size: 15px;" class="dropdown-item"
-            [routerLink]="['/tenant-panel']">Tenant Panel</button>
-        </li>
       </ul>
     </div>
   </nav>

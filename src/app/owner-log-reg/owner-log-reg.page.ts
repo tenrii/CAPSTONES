@@ -35,7 +35,6 @@ export class OwnerLogRegPage implements OnInit {
       FName: ['', [Validators.required]],
       LName: ['', [Validators.required]],
       Age: ['', [Validators.required]],
-      Gender: ['', [Validators.required]],
       Address: ['', [Validators.required]],
       Email: ['', [Validators.required]],
     });

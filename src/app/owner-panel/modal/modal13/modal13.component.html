@@ -2,58 +2,80 @@
   <ion-toolbar>
     <ion-title  style="color: white;">Creating a Room</ion-title>
     <ion-buttons slot="end">
-      <ion-button  style="color: white;" (click)="back()"><ion-icon name="close"></ion-icon></ion-button>
+      <ion-button  style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
 
-<div class="collumn1">
-<div class="title">
-  <div>{{data?.Title}}</div>
-</div>
+  <ion-grid>
 
-<div class="rent">
-  <div>{{data?.Rent}}</div>
-</div>
+    <ion-row>
+      <ion-col>
+        <span style="font-weight: 600;">Property Name:</span> {{data?.Title}}
+      </ion-col>
+    </ion-row>
 
-<div class="roomtype">
-  <div>{{data?.RoomType}}</div>
-</div>
+    <ion-row>
+      <ion-col>
+        <span style="font-weight: 600;">Renting:</span> {{data?.Rent}}
+      </ion-col>
+    </ion-row>
 
-<div class="price">
-  <div>{{data?.Price}}</div>
-</div>
+    <ion-row>
+      <ion-col>
+        <span style="font-weight: 600;">Room Type:</span> {{data?.RoomType}}
+      </ion-col>
+    </ion-row>
 
-<div class="address">
-  <div>{{data?.Street}}{{data?.Barangay}}{{data?.City}}{{data?.Province}}{{data?.ZIP}}</div>
-</div>
-</div>
+<ion-row>
+  <ion-col>
+    <span style="font-weight: 600;">Price:</span> {{data?.Price}}
+  </ion-col>
+</ion-row>
 
-<div class="collumn2">
-<div class="image">
-  <div *ngFor="let item of data?.Images"><img [src]="item"></div>
-</div>
+<ion-row>
+  <ion-col>
+    <span style="font-weight: 600;">Address:</span> {{data?.Street}}, {{data?.Barangay}},
+    {{data?.City}}, {{data?.Province}}, {{data?.ZIP}}
+  </ion-col>
+</ion-row>
 
-<div class="amenities">
-  <div *ngFor="let items of data?.Amenities">
-    <div>{{items}}</div>
-  </div>
-</div>
+<ion-row>
+  <ion-label style="font-weight: 600;">Images</ion-label>
+  <span *ngFor="let item of data?.Images">
+    <ion-col>
+      <img [src]="item" width="200">
+    </ion-col>
+  </span>
+</ion-row>
 
-<div class="bed">
-  <div *ngFor="let itemss of data?.Bed">
-    <div>B:{{itemss.id}} - Status:{{itemss.status}}</div>
-  </div>
-</div>
-</div>
+<ion-row>
+  <ion-label style="font-weight: 600;">Amenties</ion-label>
+  <span *ngFor="let items of data?.Amenities">
+    <ion-col>
+  {{items}},
+    </ion-col>
+  </span>
+</ion-row>
 
-<div>
-<div class="detail">
-  <div>{{data?.Details}}</div>
-</div>
-</div>
+<ion-row>
+  <ion-label style="font-weight: 600;">Beds: </ion-label>
+  <span *ngFor="let itemss of data?.Bed">
+    <ion-col>
+      <span style="font-weight: 600;">B:</span> {{itemss.id}} - <span style="font-weight: 600;">Status:</span> {{itemss.status}}
+    </ion-col>
+  </span>
+</ion-row>
 
+<ion-row>
+  <ion-label style="font-weight: 600;">Details: </ion-label>
+  <ion-col>
+    {{data?.Details}}
+  </ion-col>
+</ion-row>
+
+</ion-grid>
 </ion-content>
 <ion-footer>
   <button class="modalbtnn" (click)="back()">

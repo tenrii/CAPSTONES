@@ -40,6 +40,8 @@ export class OwnerPanelPage implements OnInit {
   isSortAscending!: boolean;
   searchText!: string;
   sortBy: any;
+  fname:any;
+  lname: any;
 
   constructor(
     public authService: AuthenticationService,
@@ -62,17 +64,11 @@ export class OwnerPanelPage implements OnInit {
               return a.OwnerId === this.ownerUid;
             })
             .map((b: any) => {
-              b.tenantDataBed = tenants.filter((c: any) => {
-                return b.Bed?.some((z: any) => z.occupied?.userId == c.id);
+              b.tenantData = tenants.filter((c: any) => {
+                return b.occupied?.userId == c.uid || b.Bed?.some((z: any) => z.occupied?.userId == c.uid);
               });
               return b;
             })
-            .map((d: any) => {
-              d.tenantDataRoom = tenants.find((e: any) => {
-                return d.occupied?.userId == e.id;
-              });
-              return d;
-            });
         })
       )
       .subscribe((f: any) => {
@@ -80,6 +76,10 @@ export class OwnerPanelPage implements OnInit {
         this.room.map((a: any) => {
           if (a.occupied) {
             this.filteredRecord.push({
+              FName: this.fname,
+              LName: this.lname,
+              RoomName: a.RoomName,
+              a:'',
               userId: a.occupied?.userId,
               date: a.occupied?.dateCreated,
               status: a.occupied?.status,
@@ -88,7 +88,11 @@ export class OwnerPanelPage implements OnInit {
           a.Bed?.map((b: any) => {
             if (b.occupied) {
               this.filteredRecord.push({
+                FName: this.fname,
+                LName: this.lname,
+                RoomName: a.RoomName,
                 id: b.id,
+                b:'',
                 userId: b.occupied?.userId,
                 date: b.occupied?.dateCreated,
                 status: b.occupied?.status,

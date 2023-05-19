@@ -1,17 +1,25 @@
-h1 {
+ion-toolbar{
+  --background:#544541;
+}
+
+h1{
   text-align: center;
+}
+
+.btn-dark:hover {
+  background-color: #544541;
 }
 
 .modalbtn{
   float: right;
-  background-color:rgb(100, 66, 34);
+  background-color:#544541;
   color:white;
   padding: 15px;
   font-size: 20px;
 }
 
 .modalbtnn{
-  background-color:rgb(100, 66, 34);
+  background-color:#544541;
   color:rgb(252, 211, 211);
   padding: 15px;
   font-size: 20px;
@@ -32,8 +40,7 @@ label{
   min-width: 250px;
   min-height: 250px;
   background-color: white;
-  color:rgb(100, 66, 34);
-  border: rgb(100, 66, 34) solid 1px;
+  color: rgb(100, 66, 34);
   font-size: 15px;
   padding: 10px;
   margin-top: 20px;

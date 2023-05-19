@@ -34,6 +34,14 @@ export class Modal7Component implements OnInit {
     });
   }
 
+  exit() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+    this.m.dismiss();
+  }
+
   onChange(event: any) {
     if (event.target.checked) {
       const am = this.amenities.findIndex((a: any) => a === event.target.value);

@@ -132,10 +132,29 @@
   </ion-grid>
 
 
+  <div id="review" style="display: none;">
+
+    <div class="all_review">
+      <span *ngFor="let data of review">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{data?.Name}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <img [src]="data?.profpic" />
+            </ion-thumbnail>
+            <ion-label>{{data?.Review}}</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </span>
+    </div>
+
   <div class="rating-review">
     <form [formGroup]="reviewForm">
-
-
       <ion-icon class="rating-star" *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= star ? 'star' : 'star-outline'"
         (click)="Rate(i)"></ion-icon>
 
@@ -144,14 +163,11 @@
         <textarea class="form-control" id="review" rows="3" placeholder="Review" formControlName="Review"></textarea>
       </div>
 
-      <div>
-        <input type="file" (change)="onFileSelected($event)">
-      </div>
-
       <button class="reviewBTN" (click)="addReview()">Submit</button>
 
     </form>
   </div>
+</div>
 
   <footer>
     <div class="container">

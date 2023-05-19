@@ -31,6 +31,14 @@ export class Modal8Component implements OnInit {
   ngOnInit() {
   }
 
+  exit() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+    this.m.dismiss();
+  }
+
   onFileSelected(event: any) {
     this.selectedFiles = event.target.files;
     for (let i = 0; i < this.selectedFiles.length; i++) {

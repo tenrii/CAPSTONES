@@ -35,6 +35,14 @@ export class Modal9Component implements OnInit {
     });
   }
 
+  exit() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+    this.m.dismiss();
+  }
+
   async back() {
     if (this.isButtonDisabled) {
       return;

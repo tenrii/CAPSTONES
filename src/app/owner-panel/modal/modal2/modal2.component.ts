@@ -24,8 +24,18 @@ export class Modal2Component implements OnInit {
 
   ngOnInit() {
     this.roomForm = this.fb.group({
-      Rent: ['', [Validators.required]],
+      RoomName: ['', [Validators.required]],
+      RoomType: ['', [Validators.required]],
     });
+
+  }
+
+  exit() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+    this.m.dismiss();
   }
 
   async back() {
@@ -72,7 +82,8 @@ export class Modal2Component implements OnInit {
     modalInstance.onDidDismiss().then(() => {
       this.service.modalData = {
         ownerId: this.user,
-        Rent: this.roomForm.get('Rent')?.value,
+        RoomName: this.roomForm.get('RoomName')?.value,
+        RoomType: this.roomForm.get('RoomType')?.value,
       }
       console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;

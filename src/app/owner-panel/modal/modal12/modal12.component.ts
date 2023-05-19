@@ -26,6 +26,14 @@ export class Modal12Component implements OnInit {
     console.log(this.price)
   }
 
+  exit() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+    this.m.dismiss();
+  }
+
   pricePlus() {
     this.price++;
   }

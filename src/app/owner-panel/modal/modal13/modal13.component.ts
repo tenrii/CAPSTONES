@@ -26,6 +26,14 @@ export class Modal13Component implements OnInit {
     console.log('a',this.firebaseService.modalData)
   }
 
+  exit() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+    this.m.dismiss();
+  }
+
   async back() {
     if (this.isButtonDisabled) {
       return;

@@ -22,9 +22,17 @@ export class Modal3Component implements OnInit {
 
   ngOnInit() {
     this.roomForm = this.fb.group({
-      RoomType: ['', [Validators.required]],
+      Rent: ['', [Validators.required]],
     });
     console.log('a',this.service.modalData)
+  }
+
+  exit() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+    this.m.dismiss();
   }
 
   async back() {
@@ -72,7 +80,7 @@ export class Modal3Component implements OnInit {
     modalInstance.onDidDismiss().then(() => {
       this.service.modalData = {
         ...this.service.modalData,
-        RoomType: this.roomForm.get('RoomType')?.value,
+        Rent: this.roomForm.get('Rent')?.value,
       }
       console.log('a',this.service.modalData);
       this.isButtonDisabled = false;

@@ -28,7 +28,17 @@ export class Modal5Component implements OnInit {
     private firestore: AngularFirestore
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('a',this.service.modalData)
+  }
+
+  exit() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+    this.m.dismiss();
+  }
 
   addBed() {
     const characters =

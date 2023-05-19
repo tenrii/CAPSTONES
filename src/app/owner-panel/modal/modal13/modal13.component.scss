@@ -1,59 +1,23 @@
-.title{
-
+ion-toolbar{
+  --background:#544541;
 }
 
-.rent{
-
-}
-
-.roomtype{
-
-}
-
-.price{
-
-}
-
-.address{
-
-}
-
-.image{
-
-}
-
-.amenities{
-
-}
-
-.bed{
-
-}
-
-.detail{
-
-}
-
-.collumn1{
-float: left;
-width: 50%;
-}
-
-.collumn2{
-float: right;
-width: 50%;
+ion-grid ion-row{
+  border-bottom: #544541 solid 1px;
+  padding-bottom: 15px;
+  margin-top: 5px;
 }
 
 .modalbtn{
   float: right;
-  background-color:black;
+  background-color:#544541;
   color:white;
   padding: 15px;
   font-size: 20px;
 }
 
 .modalbtnn{
-  background-color:black;
+  background-color:#544541;
   color:white;
   padding: 15px;
   font-size: 20px;

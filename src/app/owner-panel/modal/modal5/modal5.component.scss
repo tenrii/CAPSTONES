@@ -14,16 +14,20 @@ h1{
   margin: 20px;
 }
 
+ion-toolbar{
+  --background:#544541;
+}
+
 .modalbtn{
   float: right;
-  background-color:black;
+  background-color:#544541;
   color:white;
   padding: 15px;
   font-size: 20px;
 }
 
 .modalbtnn{
-  background-color:black;
+  background-color:#544541;
   color:white;
   padding: 15px;
   font-size: 20px;

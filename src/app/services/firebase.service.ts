@@ -22,6 +22,7 @@ export class FirebaseService {
   rooms: any = new BehaviorSubject([]);
   tenants: any = new BehaviorSubject([]);
   owners: any = new BehaviorSubject([]);
+  reviews: any = new BehaviorSubject([]);
   transactions: any = new BehaviorSubject([]);
   public loading: boolean = false;
   currentUser!: User;
@@ -81,6 +82,7 @@ export class FirebaseService {
               isEdit: false,
               OwnerId: localData.ownerId || localData.OwnerId, // TODO @tenrii OwnerId (with capital O) is has " in the string
               Rent: localData.Rent,
+              RoomName: localData.RoomName,
               RoomType: localData.RoomType,
               Street: localData.Street,
               Barangay: localData.Barangay,
@@ -116,11 +118,14 @@ export class FirebaseService {
             return {
               id: e.payload.doc.id,
               isEdit: false,
+              uid: localData.uid,
               FName: localData.FName,
               LName: localData.LName,
               Age: localData.Age,
+              Gender: localData.Gender,
               Address: localData.Address,
               Email: localData.Email,
+              profpic: localData.profpic,
             };
           });
           return tenantList;
@@ -147,7 +152,6 @@ export class FirebaseService {
               FName: localData.FName,
               LName: localData.LName,
               Age: localData.Age,
-              Gender: localData.Gender,
               Address: localData.Address,
               Email: localData.Email,
               Accepted: localData.Accepted,
@@ -188,6 +192,31 @@ export class FirebaseService {
         }),
         tap((a) => {
           this.transactions.next(a);
+        })
+      );
+  }
+
+  read_review(id:any): Observable<any[]> {
+    return this.firestore
+      .collection('Room').doc(id).collection('Review')
+      .snapshotChanges()
+      .pipe(
+        map((a) => {
+          const ownerList = a.map((e) => {
+            const localData: any = e.payload.doc.data();
+            return {
+              id: e.payload.doc.id,
+              isEdit: false,
+              Name: localData.Name,
+              profpic: localData.profpic,
+              Rating: localData.Rating,
+              Review: localData.Review,
+            };
+          });
+          return ownerList;
+        }),
+        tap((a) => {
+          this.reviews.next(a);
         })
       );
   }

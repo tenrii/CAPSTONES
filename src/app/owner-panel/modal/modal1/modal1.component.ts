@@ -13,7 +13,7 @@ export class Modal1Component implements OnInit {
 
   ngOnInit() {}
 
-  back() {
+  exit() {
     if (this.isButtonDisabled) {
       return;
     }

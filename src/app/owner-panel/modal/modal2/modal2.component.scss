@@ -1,18 +1,34 @@
+.new-background-color{
+  --background:#544541;
+}
 
-h1{
+h1 {
   text-align: center;
+}
+
+.input{
+  border-radius: 10px;
+  border: #544541 solid 2px;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.btn-dark:hover {
+  background-color: #544541;
 }
 
 .modalbtn{
   float: right;
-  background-color:rgb(100, 66, 34);
+  background-color:#544541;
   color:white;
   padding: 15px;
   font-size: 20px;
 }
 
 .modalbtnn{
-  background-color:rgb(100, 66, 34);
+  background-color:#544541;
   color:white;
   padding: 15px;
   font-size: 20px;
@@ -22,7 +38,7 @@ h1{
 .btn-group{
   margin-bottom: 0;
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -34,7 +50,8 @@ label{
   min-width: 250px;
   min-height: 250px;
   background-color: white;
-  color: black;
+  color:rgb(100, 66, 34);
+  border: rgb(100, 66, 34) solid 1px;
   font-size: 15px;
   padding: 10px;
   margin-top: 20px;
