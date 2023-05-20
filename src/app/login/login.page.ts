@@ -58,7 +58,7 @@ export class LoginPage implements OnInit {
       .RegisterUserTenant(
         email.value,
         password.value,
-        this.tenantRegister.value
+        this.tenantRegister.value,
       )
       .then((res) => {
         this.verify();

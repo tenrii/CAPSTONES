@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title  style="color: white;">Creating a Room</ion-title>
+    <ion-buttons slot="end">
+      <ion-button  style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <div *ngIf="data?.profpic">
+        <img [src]="data?.profpic" alt="Current Profile Picture" width="70px"/>
+      </div>
+      <label for="fileInput" class="upload-button">
+        <input id="fileInput" type="file" (change)="onFileChange($event)" />
+        <span *ngIf="!selectedFile" class="upload-text">Upload Picture</span>
+        <span *ngIf="selectedFile" class="file-name">{{ selectedFile.name }}</span>
+      </label>
+    </ion-card-content>
+  </ion-card>
+<form [formGroup]="updateForm">
+
+  <div class="form-group">
+    <ion-label>First Name: </ion-label>
+      <ion-item>
+        <ion-input formControlName="FName"></ion-input>
+      </ion-item>
+  </div>
+
+  <div class="form-group">
+    <ion-label>Last Name:</ion-label>
+      <ion-item>
+        <ion-input formControlName="LName"></ion-input>
+      </ion-item>
+  </div>
+
+  <div class="form-group">
+    <ion-label>Age:</ion-label>
+      <ion-item>
+        <ion-input formControlName="Age"></ion-input>
+      </ion-item>
+  </div>
+
+  <div class="form-group">
+    <ion-label>Gender</ion-label>
+      <ion-radio-group class="gender" formControlName="Gender">
+        <ion-item>
+          <ion-label>Male</ion-label>
+          <ion-radio slot="end" value="Male"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Female</ion-label>
+          <ion-radio slot="end" value="Female"></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Other</ion-label>
+          <ion-radio slot="end" value="Other"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+  </div>
+
+  <div class="form-group">
+    <ion-label>Address:</ion-label>
+      <ion-item>
+        <ion-input formControlName="Address"></ion-input>
+      </ion-item>
+  </div>
+</form>
+  </ion-content>
+  <ion-footer>
+    <button class="modalbtn" (click)="updateRoom()">
+      Update
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+    </svg>
+  </button>
+  </ion-footer>

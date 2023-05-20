@@ -6,7 +6,7 @@ import { AuthenticationService } from '../shared/authentication-service';
 import 'firebase/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, combineLatest, finalize, map } from 'rxjs';
+import { Observable, combineLatest, finalize, map, tap } from 'rxjs';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { PaymentService } from '../services/payment.service';
 import { ModalController } from '@ionic/angular';
@@ -30,9 +30,9 @@ export class RoomPage implements OnInit {
   public data: any;
   public owner: any;
   public review: any[] = [];
-  public tenant:any;
+  tenant:any={};
   studentList: any;
-  reviewForm!: FormGroup;
+  reviewForm:any=FormGroup;
   roomId: any;
   allData: any = {};
   collectionRoom = 'Room';
@@ -41,7 +41,6 @@ export class RoomPage implements OnInit {
   email = JSON.parse(localStorage.getItem('user') || '{}')['email'];
   isReserving = new BehaviorSubject(false);
   public pendingPayment: any;
-
   a = 'hello';
 
   seats: Seat[] = [];
@@ -58,26 +57,32 @@ export class RoomPage implements OnInit {
     private firestore: AngularFirestore,
     private paymentService: PaymentService,
     private modalController: ModalController,
-  ) {}
+  ) {
+
+  }
 
   ngOnInit() {
 
-    this.reviewForm = this.fb.group({
-      Rating: this.star,
-      Review: ['', [Validators.required]],
-    });
+  this.reviewForm = this.fb.group({
+    Rating: this.star,
+    Review: ['', [Validators.required]],
+});
 
     this.load();
-
-    this.firebaseService.read_tenant().subscribe(() =>{
-      this.tenant = this.firebaseService.getTenant(this.tenantId);
-      console.log('tenant',this.tenant)
-    })
 
   }
 
   onFileSelected(event: any) {
     this.selectedFiles = event.target.files;
+  }
+
+  async reviews(){
+    if (!this.firebaseService.loading) {
+    this.firebaseService.read_review(this.roomId).subscribe((data) =>{
+      this.review = data;
+    });
+    return;
+  }
   }
 
   async load() {
@@ -101,10 +106,6 @@ export class RoomPage implements OnInit {
       this.owner = this.firebaseService.getOwner(this.data.OwnerId);
 
     });
-
-    this.firebaseService.read_review(this.roomId).subscribe((data) =>{
-      this.review = data;
-    })
 
     this.data.priceSub = parseFloat(this.data.Price).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     this.seats = [];
@@ -203,7 +204,20 @@ export class RoomPage implements OnInit {
       .doc(this.roomId)
       .collection('Review')
       .doc(this.tenantId)
-      .set(this.reviewForm.value)
+      .set(this.reviewForm.value).then(()=>{
+        this.firebaseService.read_tenant().subscribe(()=>{
+          const tenantData:any = this.firebaseService.getTenant(this.tenantId)
+        this.firestore
+        .collection('Room')
+        .doc(this.roomId)
+        .collection('Review')
+        .doc(this.tenantId)
+        .update({
+          Name: tenantData?.FName + ' ' + tenantData?.LName,
+          profpic: tenantData?.profpic,
+        })
+        })
+      })
       /*.then((docRef: any) => {
         const filePath = `Room/${this.roomId}/${this.selectedFiles.name}`;
         const fileRef = this.storage.ref(filePath);

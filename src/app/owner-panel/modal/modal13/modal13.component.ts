@@ -11,7 +11,7 @@ import { Modal12Component } from '../modal12/modal12.component';
   styleUrls: ['./modal13.component.scss'],
 })
 export class Modal13Component implements OnInit {
-  data: any = {};
+  public data: any = {};
   roomId: any;
   isButtonDisabled = false;
   constructor(
@@ -22,7 +22,7 @@ export class Modal13Component implements OnInit {
 
   ngOnInit() {
     this.data = this.firebaseService.modalData;
-    console.log('a',this.data)
+    console.log('a',this.data.value)
     console.log('a',this.firebaseService.modalData)
   }
 

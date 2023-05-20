@@ -49,12 +49,13 @@
       </div>
     </div>
   </div>-->
+
+
   <ion-grid class="ion-padding">
     <ion-row>
       <ion-col size="12">
         <ng-container *ngTemplateOutlet="carousel"></ng-container>
       </ion-col>
-
       <ion-col size-lg="8" size-md="12" size-sm="12" class="ion-padding-horizontal">
         <div class="detail">
           <div class="room">{{data?.RoomType}}</div>
@@ -127,12 +128,8 @@
       <ion-col size-lg="4" size-md="12" size-sm="12" class="ion-no-padding">
         <ng-container *ngTemplateOutlet="reservation"></ng-container>
       </ion-col>
-
     </ion-row>
   </ion-grid>
-
-
-  <div id="review" style="display: none;">
 
     <div class="all_review">
       <span *ngFor="let data of review">
@@ -155,6 +152,7 @@
 
   <div class="rating-review">
     <form [formGroup]="reviewForm">
+
       <ion-icon class="rating-star" *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= star ? 'star' : 'star-outline'"
         (click)="Rate(i)"></ion-icon>
 
@@ -167,7 +165,6 @@
 
     </form>
   </div>
-</div>
 
   <footer>
     <div class="container">

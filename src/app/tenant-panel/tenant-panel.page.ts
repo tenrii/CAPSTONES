@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FirebaseService } from '../services/firebase.service';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import { AuthenticationService } from '../shared/authentication-service';
+import { ModalController } from '@ionic/angular';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @Component({
   selector: 'app-tenant-panel',
@@ -15,10 +18,15 @@ export class TenantPanelPage implements OnInit {
   pending: any[] = [];
   transaction: any[] = [];
   sortInBed: any[] = [];
+  isButtonDisabled: boolean = false;
+
   constructor(
+    public authService: AuthenticationService,
     private firestore: AngularFirestore,
-    private firebaseService: FirebaseService
-  ) {}
+    private firebaseService: FirebaseService,
+    private m: ModalController,
+  ) {
+  }
 
   ngOnInit() {
     this.getTenant();
@@ -38,7 +46,7 @@ export class TenantPanelPage implements OnInit {
               return b;
             })
             .map((d: any) => {
-              d.ownerData = owners.find((e: any) => e.id == d.roomData.ownerId);
+              d.ownerData = owners.find((e: any) => e.id == d.roomData?.ownerId);
               return d;
             });
         })
@@ -90,6 +98,7 @@ export class TenantPanelPage implements OnInit {
         this.paid = d;
         console.log('a', d);
       });
+
   }
 
   async getTenant() {
@@ -100,7 +109,7 @@ export class TenantPanelPage implements OnInit {
 
   sortedBed(): any {
     const bed = this.transaction.map((a: any) => {
-      a.roomData.Bed = a.roomData.Bed?.sort(
+      a.roomData.Bed = a.roomData?.Bed?.sort(
         (a: any, b: any) =>
           (b.occupied?.dateCreated || 0) - (a.occupied?.dateCreated || 0)
       );
@@ -108,5 +117,33 @@ export class TenantPanelPage implements OnInit {
     });
     this.sortInBed = bed;
     console.log('x', this.sortInBed);
+  }
+
+  async gotoEditProfile() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
+    const modalInstance = await this.m.create({
+      component: EditProfileComponent,
+      cssClass: 'create-modal',
+      componentProps: {
+        data: this.tenant,
+      },
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 1 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 }

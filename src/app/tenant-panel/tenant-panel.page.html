@@ -157,6 +157,18 @@
           document.getElementById('transaction').style.display='block';">Records</div>
         </ion-col>
 
+        <ion-col>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
+              aria-expanded="false">
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditProfile()">Edit</button></li>
+              <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
+            </ul>
+          </div>
+        </ion-col>
+
       </ion-row>
     </ion-grid>
   </div>
@@ -189,7 +201,7 @@
             <p>Go to the "Home Page" for room/bedspace reservation</p>
           </ion-card>
           <ion-row class="row-body" *ngFor="let td of pending">
-            <ion-col>{{td.roomData.Title}}</ion-col>
+            <ion-col>{{td.roomData?.Title}}</ion-col>
             <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
             <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
             <ion-col>{{td.status}}</ion-col>
@@ -218,7 +230,7 @@
             <p>Go to your "Pending Reservation" for the completion of your room/bedspace reservation</p>
           </ion-card>
           <ion-row class="row-body" *ngFor="let td of paid">
-            <ion-col>{{td.roomData.Title}}</ion-col>
+            <ion-col>{{td.roomData?.Title}}</ion-col>
             <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
             <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
             <ion-col>{{td.status}}</ion-col>
@@ -304,7 +316,7 @@
             <p>You have no reservation transaction yet</p>
           </ion-card>
           <ion-row class="row-body" *ngFor="let td of transaction">
-            <ion-col>{{td.roomData.Title}}</ion-col>
+            <ion-col>{{td.roomData?.Title}}</ion-col>
             <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
             <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
             <ion-col>{{td.status}}</ion-col>

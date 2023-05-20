@@ -1,9 +1,10 @@
 // firebase.service.ts
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { BehaviorSubject, finalize, map, Observable, tap } from 'rxjs';
 import { doc, getDocFromCache, getFirestore } from 'firebase/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 
 export interface User {
   uid: string;
@@ -14,6 +15,7 @@ export interface User {
   providedIn: 'root',
 })
 export class FirebaseService {
+  downloadURL!: Observable<string>;
   collectionRoom = 'Room';
   collectionTenant = 'Tenant';
   collectionOwner = 'Owner';
@@ -29,7 +31,8 @@ export class FirebaseService {
   public modalData: any = {};
   constructor(
     private firestore: AngularFirestore,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private storage: AngularFireStorage,
   ) {
     this.firestore
       .collection('Tenant')
@@ -202,6 +205,7 @@ export class FirebaseService {
       .snapshotChanges()
       .pipe(
         map((a) => {
+          this.loading = true;
           const ownerList = a.map((e) => {
             const localData: any = e.payload.doc.data();
             return {
@@ -227,6 +231,29 @@ export class FirebaseService {
 
   update_owner(ownerID: any, record: any) {
     this.firestore.doc(this.collectionOwner + '/' + ownerID).update(record);
+  }
+
+  update_tenant(tenantID: any, record: any, image:any) {
+    this.firestore.doc(this.collectionTenant + '/' + tenantID).update(record).then(()=>{
+      const filePathBP = `Tenant/${tenantID}/${image.name}`;
+      const fileRefBP = this.storage.ref(filePathBP);
+      const bp = this.storage.upload(filePathBP, image);
+      bp.snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.downloadURL = fileRefBP.getDownloadURL();
+            this.downloadURL.subscribe((url) => {
+              this.firestore
+                .collection('Tenant')
+                .doc(tenantID)
+                .update({
+                  profpic: url,
+                });
+            });
+          })
+        )
+        .subscribe();
+    })
   }
 
   delete_room(record_id: any) {

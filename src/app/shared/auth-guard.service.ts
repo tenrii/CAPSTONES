@@ -28,7 +28,7 @@ export class AuthGuardService {
     console.log('user', state.url);
 
     if (!user) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/home']);
       return false;
     } else if (
       this.firebaseService.ownerUid.includes(user) &&

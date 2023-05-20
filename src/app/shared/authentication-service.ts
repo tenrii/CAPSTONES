@@ -31,6 +31,7 @@ export class AuthenticationService {
         JSON.parse(localStorage.getItem('user') || '{}');
       }
     });
+
   }
   // Login in with email/password
   async SignIn(email: string, password: string) {
