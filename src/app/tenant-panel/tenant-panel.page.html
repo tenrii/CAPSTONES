@@ -12,11 +12,7 @@
         </ion-col>
 
         <ion-col class="bill">
-          <div type="button" onclick="
-          document.getElementById('pending').style.display='none';
-          document.getElementById('complete').style.display='none';
-          document.getElementById('bill').style.display='block';
-          document.getElementById('transaction').style.display='none';">Bills</div>
+          <div type="button" (click)="page.next('bills')">Bills</div>
         </ion-col>
 
         <ion-col class="notification">
@@ -148,13 +144,8 @@
           </ion-popover>
         </ion-col>
 
-
         <ion-col class="transaction">
-          <div type="button" onclick="
-          document.getElementById('pending').style.display='none';
-          document.getElementById('complete').style.display='none';
-          document.getElementById('bill').style.display='none';
-          document.getElementById('transaction').style.display='block';">Records</div>
+          <div type="button" (click)="page.next('records')">Records</div>
         </ion-col>
 
         <ion-col>
@@ -184,123 +175,80 @@
 
   <div class="body">
 
-    <div id="pending" style="display:block;">
-      <div class="room">
-        <ion-grid>
-          <ion-row class="row-header">
-            <ion-col>Title</ion-col>
-            <ion-col>Bedspace Placement</ion-col>
-            <ion-col>Payment Amount</ion-col>
-            <ion-col>Payment Status</ion-col>
-            <ion-col>Reference</ion-col>
-            <ion-col>Date of Payment</ion-col>
-          </ion-row>
-          <ion-card *ngIf="pending.length === 0">
-            <ion-icon name="search-outline"></ion-icon>
-            <p>You have no pending reservation yet</p>
-            <p>Go to the "Home Page" for room/bedspace reservation</p>
-          </ion-card>
-          <ion-row class="row-body" *ngFor="let td of pending">
-            <ion-col>{{td.roomData?.Title}}</ion-col>
-            <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
-            <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
-            <ion-col>{{td.status}}</ion-col>
-            <ion-col>{{td.id}}</ion-col>
-            <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </div>
-
-    <div id="complete" style="display:none;">
-
-      <div class="room">
-        <ion-grid>
-          <ion-row class="row-header">
-            <ion-col>Title</ion-col>
-            <ion-col>Bedspace Placement</ion-col>
-            <ion-col>Payment Amount</ion-col>
-            <ion-col>Payment Status</ion-col>
-            <ion-col>Reference</ion-col>
-            <ion-col>Date of Payment</ion-col>
-          </ion-row>
-          <ion-card *ngIf="paid.length === 0">
-            <ion-icon name="search-outline"></ion-icon>
-            <p>You have no complete reservation yet</p>
-            <p>Go to your "Pending Reservation" for the completion of your room/bedspace reservation</p>
-          </ion-card>
-          <ion-row class="row-body" *ngFor="let td of paid">
-            <ion-col>{{td.roomData?.Title}}</ion-col>
-            <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
-            <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
-            <ion-col>{{td.status}}</ion-col>
-            <ion-col>{{td.id}}</ion-col>
-            <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </div>
-
-    <div class="bill" id="bill" style="display:none;">
-
-      <ion-grid>
+    <div *ngIf="(page | async) === 'bills'" class="bill" id="bill">
+      <ion-grid class="bills-header">
         <ion-row>
-          <ion-col class="btn">
-            <div type="button" onclick="
-      document.getElementById('unpaid').style.display='block';
-      document.getElementById('paid').style.display='none';">Unpaid</div>
+          <ion-col class="btn" size="3" [class.active]="(billsPage | async) === 'unpaid'">
+            <div type="button" (click)="billsPage.next('unpaid')">Unpaid</div>
           </ion-col>
-          <ion-col class="btn">
-            <div type="button" onclick="
-      document.getElementById('unpaid').style.display='none';
-      document.getElementById('paid').style.display='block';">Paid</div>
+          <ion-col class="btn" size="3" [class.active]="(billsPage | async) === 'paid'">
+            <div type="button" (click)="billsPage.next('paid')">Paid</div>
           </ion-col>
         </ion-row>
       </ion-grid>
-      <div id="unpaid" style="display:block;">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              Monthly Rent
-            </ion-col>
-            <ion-col>
-              Amount
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              unpaid
-            </ion-col>
-            <ion-col>
-              unpaid
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
 
-      <div id="paid" style="display:none;">
-        <ion-grid>
-          <ion-row>
-            <ion-col>
-              Monthly Rent
-            </ion-col>
-            <ion-col>
-              Amount
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col>
-              paid
-            </ion-col>
-            <ion-col>
-              paid
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+      <div class="bills-body">
+        <div id="unpaid" *ngIf="(billsPage | async) === 'unpaid'">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-center">
+                <h1>Monthly Rent</h1>
+              </ion-col>
+              <ion-col class="ion-text-center">
+                <h1>Amount</h1>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let bill of bills">
+              <ion-col>
+                <h1>{{bill.roomData.Title}}:{{bill.roomData.RoomName || 'Room'}}</h1>
+                <div>Due date: {{bill.nextPaymentMonth | date}}</div>
+              </ion-col>
+              <ion-col class="ion-text-center">
+                <div>
+                  <h1>{{bill.amount | currency:'Php'}}</h1>
+                  <ion-button
+                    [disabled]="isPayButtonLoading | async"
+                    (click)="payBill(bill)"
+                  >
+                    <ion-spinner *ngIf="isPayButtonLoading | async"></ion-spinner>Pay now
+                </ion-button>
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
+
+        <div id="paid" *ngIf="(billsPage | async) === 'paid'">
+          <ion-grid>
+            <ion-row>
+              <ion-col class="ion-text-center">
+                <h1>Paid</h1>
+              </ion-col>
+              <ion-col class="ion-text-center">
+                <h1>Amount</h1>
+              </ion-col>
+              <ion-col class="ion-text-center">
+                <h1>Date</h1>
+              </ion-col>
+            </ion-row>
+            <ion-row *ngFor="let paidBill of paidBills">
+              <ion-col>
+                <h1>{{paidBill.roomData.Title}}:{{paidBill.roomData.RoomName || 'Room'}}</h1>
+                <p>{{paidBill.monthDate | date:'MMMM YYYY'}}</p>
+              </ion-col>
+              <ion-col class="ion-text-center">
+                <h2>{{paidBill.amount | currency: 'Php'}}</h2>
+              </ion-col>
+              <ion-col class="ion-text-center">
+                <h2>{{paidBill.dateCreated | date}}</h2>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </div>
       </div>
     </div>
 
-    <div id="transaction" style="display:none;">
+    <div *ngIf="(page | async) === 'records'" id="transaction">
       <div class="room">
         <ion-grid>
           <ion-row class="row-header">
