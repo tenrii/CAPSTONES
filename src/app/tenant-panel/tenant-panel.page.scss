@@ -157,8 +157,7 @@ ion-card ion-icon {
 }
 
 #bill .btn {
-  background-color: #544541;
-  margin-bottom: 5px;
+  background-color: #c3afaa;
   color: white;
   margin-left: 5px;
   border-radius: 10px 10px 0px 0px;
@@ -191,4 +190,32 @@ ion-popover {
 .card .cardStatus,
 .card .cardPayment {
   font-size: 16px;
+}
+
+.bill {
+  .bills-header {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    ion-col {
+      margin-bottom: 0;
+      &.active {
+        background-color: var(--ion-color-primary) !important;
+      }
+    }
+  }
+  .bills-body {
+    margin-top: 0;
+    padding-top: 0;
+    ion-grid {
+      margin-top: 0;
+      padding-top: 0;
+      ion-row:first-child {
+        margin-top: 0 !important;
+        ion-col {
+          margin-top: 0;
+          padding-top: 0;
+        }
+      }
+    }
+  }
 }
