@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title  style="color: white;">Creating a Room</ion-title>
+    <ion-title style="color: white; font-family: Montserrat;">Creating a Room</ion-title>
     <ion-buttons slot="end">
-      <ion-button  style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
+      <ion-button style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -14,26 +14,30 @@
   <div class="form">
     <form [formGroup]="roomForm" (ngSubmit)="gotoModal5()">
 
-      <ion-label style="font-size: 25px; margin-bottom: 10px;">Address</ion-label>
+      <ion-label style="font-size: 25px; margin-bottom: 10px; font-family: Montserrat;">Address</ion-label>
 
       <ion-item>
-        <ion-input placeholder="Street" name="Street" formControlName="Street"></ion-input>
+        <ion-input placeholder="Street" name="Street" formControlName="Street"
+          style="font-family: Montserrat;"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input placeholder="Barangay" name="Barangay" formControlName="Barangay"></ion-input>
+        <ion-input placeholder="Barangay" name="Barangay" formControlName="Barangay"
+          style="font-family: Montserrat;"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input placeholder="City/Municipality" name="City" formControlName="City"></ion-input>
+        <ion-input placeholder="City/Municipality" name="City" formControlName="City"
+          style="font-family: Montserrat;"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input placeholder="Province" name="Province" formControlName="Province"></ion-input>
+        <ion-input placeholder="Province" name="Province" formControlName="Province"
+          style="font-family: Montserrat;"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-input placeholder="ZIP Code" name="ZIP" formControlName="ZIP"></ion-input>
+        <ion-input placeholder="ZIP Code" name="ZIP" formControlName="ZIP" style="font-family: Montserrat;"></ion-input>
       </ion-item>
     </form>
   </div>
@@ -43,16 +47,20 @@
 </ion-content>
 
 <ion-footer>
-  <button class="modalbtnn" (click)="back()">
+  <button class="modalbtnn" (click)="back()" style="font-family: Montserrat;">
     Back
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+      viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
     </svg>
-</button>
-  <button class="modalbtn" (click)="gotoModal5()">
+  </button>
+  <button class="modalbtn" (click)="gotoModal5()" style="font-family: Montserrat;">
     Next
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-  </svg>
-</button>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
+      viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+    </svg>
+  </button>
 </ion-footer>

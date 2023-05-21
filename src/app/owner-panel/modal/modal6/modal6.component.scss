@@ -1,23 +1,25 @@
-ion-toolbar{
-  --background:#544541;
+ion-toolbar {
+  --background: #544541;
 }
 
-.modalbtn{
+.modalbtn {
   float: right;
-  background-color:#544541;
-  color:white;
+  background-color: #544541;
+  color: white;
   padding: 15px;
   font-size: 20px;
+  font-family: Montserrat;
 }
 
-.modalbtnn{
-  background-color:#544541;
-  color:white;
+.modalbtnn {
+  background-color: #544541;
+  color: white;
   padding: 15px;
   font-size: 20px;
+  font-family: Montserrat;
 }
 
-.image{
+.image {
   float: right;
   width: 350px;
   height: 350px;
@@ -26,11 +28,13 @@ ion-toolbar{
   margin-bottom: 50px;
 }
 
-h2{
+h2 {
   margin-top: 70px;
+  font-family: Montserrat;
 }
 
-.text{
+.text {
   margin-top: 35px;
   margin-left: 50px;
+  font-family: Montserrat;
 }

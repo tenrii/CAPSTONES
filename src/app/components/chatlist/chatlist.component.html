@@ -1,6 +1,6 @@
 <ion-header *ngIf="!isPopover">
   <ion-title color="dark">
-    <div>Messages</div>
+    <div style="font-family: Montserrat;">Messages</div>
   </ion-title>
   <ion-toolbar color="light">
     <ion-searchbar [debounce]="500"></ion-searchbar>
@@ -16,8 +16,8 @@
           src="https://ionicframework.com/docs/img/demos/avatar.svg" />
       </ion-avatar>
       <ion-label>
-        <h2>{{ conv.chatWith.FName }} {{ conv.chatWith.LName }}</h2>
-        <p>{{ conv.lastChat }}</p>
+        <h2 style="font-family: Montserrat;">{{ conv.chatWith.FName }} {{ conv.chatWith.LName }}</h2>
+        <p style="font-family: Montserrat;">{{ conv.lastChat }}</p>
       </ion-label>
       <small slot="end">{{ conv.updatedAt | durationAgo: timeNow }}</small>
     </ion-item>
@@ -29,7 +29,7 @@
 
   <div *ngIf="!detail.loading && !detail.conversations">
     <ion-text color="medium" class="ion-text-center">
-      <h2>No conversations yet</h2>
+      <h2 style="font-family: Montserrat;">No conversations yet</h2>
     </ion-text>
   </div>
 </ion-content>

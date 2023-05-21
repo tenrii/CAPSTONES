@@ -8,6 +8,7 @@ import { RoomPageRoutingModule } from './room-routing.module';
 
 import { RoomPage } from './room.page';
 import { ChatModalComponent } from './chat-modal/chat-modal.component';
+import { SiteHeaderModule } from '../components/site-header/site-header.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { ChatModalComponent } from './chat-modal/chat-modal.component';
     IonicModule,
     ReactiveFormsModule,
     RoomPageRoutingModule,
+    SiteHeaderModule,
   ],
   declarations: [RoomPage, ChatModalComponent],
 })

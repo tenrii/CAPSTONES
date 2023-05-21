@@ -5,7 +5,7 @@
       <ion-row>
 
         <ion-col class="logo">
-          <img src="assets/spotAhome3.png">
+          <img src="assets/real logo.png">
         </ion-col>
 
         <ion-col class="home">
@@ -125,21 +125,18 @@
           </ion-popover>
         </ion-col>
 
-        <ion-col class="logout">
-          <div type="button"><ion-icon name="arrow-undo-outline"></ion-icon>Log Out</div>
-        </ion-col>
 
       </ion-row>
     </ion-grid>
   </div>
 
   <div class="container-img">
-    <img src="assets/1.jpg">
+    <img src="assets/logo2.jpg">
   </div>
 
   <div class="center">
-    <div>Hello, {{owner?.FName}}</div>
-    <p>Lets help you live your perfect boarding <br /> house match</p>
+    <div>Hello, {{owner?.FName}} !</div>
+    <p>Expand Your Reach, Fill Your Space: <br> List Your Room with Spot-A-Home.</p>
   </div>
 
   <div class="body">
@@ -147,12 +144,12 @@
       <ion-grid class="room-lister">
         <ion-row>
           <ion-col>
-            <div type="button" onclick="
+            <div type="button-list" onclick="
           document.getElementById('listed').style.display='block';
           document.getElementById('unlisted').style.display='none';">Listed Room</div>
           </ion-col>
           <ion-col>
-            <div type="button" onclick="
+            <div type="button-list" onclick="
           document.getElementById('listed').style.display='none';
           document.getElementById('unlisted').style.display='block';">Unlisted Room</div>
           </ion-col>

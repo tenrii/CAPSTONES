@@ -1,38 +1,50 @@
-h1{
+h1 {
   text-align: center;
+  font-family: Montserrat;
 }
 
-.add{
+.add {
   margin-left: 10px;
-  background-color:black;
-  color:white;
+  background-color: black;
+  color: white;
   padding: 15px;
   font-size: 15px;
+  font-family: Montserrat;
 }
 
-.bed{
+.bed {
   margin: 20px;
 }
 
-ion-toolbar{
-  --background:#544541;
+ion-toolbar {
+  --background: #544541;
 }
 
-.modalbtn{
+.modalbtn {
   float: right;
-  background-color:#544541;
-  color:white;
+  background-color: #544541;
+  color: white;
   padding: 15px;
   font-size: 20px;
+  font-family: Montserrat;
 }
 
-.modalbtnn{
-  background-color:#544541;
-  color:white;
+.modalbtnn {
+  background-color: #544541;
+  color: white;
   padding: 15px;
   font-size: 20px;
+  font-family: Montserrat;
 }
 
-.form{
+.form {
   margin-top: 60px;
+  width: 50%;
+}
+
+.image {
+  float: right;
+  width: 500px;
+  height: 100px;
+  margin-right: 95px;
 }

@@ -9,6 +9,7 @@ body {
 h2 {
   font-family: "Montserrat" !important;
   margin-bottom: 10px;
+  margin-top: 80px;
 }
 
 .banner-content h1 {
@@ -171,7 +172,7 @@ footer {
 }
 p {
   color: #000;
-  font-family: DM Sans, sans-serif;
+  font-family: Montserrat;
   font-size: 16px;
   margin-top: 40px;
   line-height: 1.6;
@@ -231,10 +232,11 @@ p {
 }
 
 .footer-column .newsletter input[type="email"] {
-  width: 50%;
+  width: 300px;
   border-radius: 0;
   border: none;
   padding: 10px;
+  margin-bottom: 10px;
 }
 
 .input-group-append .btn-outline-secondary {
@@ -296,5 +298,537 @@ li a:hover {
 
 .bottom-footer-center {
   font-size: 14px;
+}
+
+/*VIDEO VIDEO SECTION*/
+.video-section {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  margin: 50px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
   font-family: Montserrat;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  font-family: Montserrat;
+  text-align: justify;
+}
+
+/*LOGO BRANDS*/
+/*logo*/
+.brands {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.brands h1 {
+  text-align: center;
+  font-size: 50px;
+  font-family: Crimson Pro;
+  font-weight: 500;
+  color: #544541;
+}
+
+.logo-brands {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+.logo-brands img {
+  width: 200px;
+  height: 150px;
+  margin: 0 30px;
+  background-color: white;
+  mix-blend-mode: luminosity;
+  filter: grayscale(1);
+  opacity: 0.5;
+  transition: filter 0.2s ease-in-out, opacity 0.2s ease-in-out;
+}
+
+.logo-brands img:hover {
+  filter: none;
+  opacity: 1;
+}
+
+/* Adjust margins and paddings for smaller screens */
+@media (max-width: 767px) {
+  .navbar {
+    height: auto;
+    margin-bottom: 0;
+  }
+
+  .navbar .nav-link {
+    font-size: 16px;
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .navbar .dropdown {
+    position: static;
+    float: none;
+  }
+
+  .navbar .dropdown .dropdown-item {
+    font-size: 12px;
+  }
+
+  .navbar .navbar-toggler {
+    margin: 10px;
+  }
+
+  .navbar .navbar-collapse {
+    position: static;
+    background-color: transparent;
+    padding: 0;
+    text-align: left;
+  }
+
+  .navbar .navbar-collapse .nav-link {
+    margin: 5px;
+  }
+
+  .navbar .navbar-collapse.collapsed {
+    display: none;
+  }
+}
+
+/* Specific Styles for Mobile Devices */
+@media (max-width: 767px) {
+  /* Adjust the logo size and margins */
+  #logo {
+    width: 80px;
+    margin: 10px;
+  }
+
+  /* Center the navbar items */
+  .navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Reduce the font size of the navbar items */
+  .navbar .nav-link {
+    font-size: 14px;
+  }
+
+  /* Reduce the size of the dropdown button */
+  .navbar .dropdown #dropdownMenu2 {
+    width: 80px;
+    height: 35px;
+  }
+
+  /* Adjust the margins and paddings for the rooms */
+  .room {
+    width: 100%;
+    margin: 10px 0;
+    height: 300px;
+    max-height: 300px;
+  }
+
+  .room .over {
+    height: 150px;
+  }
+
+  .room .price {
+    bottom: 20px;
+  }
+
+  .room .price {
+    max-width: 150px;
+    bottom: 30px;
+  }
+
+  .room .price p {
+    font-size: 14px;
+  }
+
+  .room .details #p1 {
+    font-size: 16px;
+  }
+
+  .room .details #p3,
+  .room .details #p4 {
+    font-size: 12px;
+  }
+
+  /* Adjust the styles for the video section */
+  .video-section {
+    height: 300px;
+  }
+
+  .video-container img {
+    height: 100%;
+  }
+  .video-overlay h2 {
+    color: white;
+    font-size: 18px;
+    margin-top: -100%;
+    margin-bottom: 50px;
+  }
+  .button {
+    display: inline-block;
+    padding: 15px 15px;
+    background-color: #cd9452;
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    border: none; /* remove button border */
+    margin-top: -20px;
+  }
+
+  .play-icon {
+    height: 50px;
+    width: 50px;
+    margin-top: -20px;
+  }
+
+  .play-icon i {
+    font-size: 1.5em;
+  }
+
+  .play-text {
+    top: calc(50% + 50px);
+    font-size: 1em;
+  }
+}
+
+/* Specific Styles for Mobile Devices */
+@media (max-width: 767px) {
+  /* Adjust the size and margins for the brand logos */
+  .logo-brands {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo-brands img {
+    width: 100px;
+    height: 75px;
+    margin: 15px 0;
+  }
+}
+
+/* Specific Styles for Tablet Devices */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Adjust the size and margins for the brand logos */
+  .logo-brands {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .logo-brands img {
+    width: 200px;
+    height: 112.5px;
+    margin: 30px 0;
+  }
+}
+
+/* Media Queries */
+@media only screen and (max-width: 768px) {
+  .team h1 {
+    padding-top: 20px;
+    font-size: 24px;
+  }
+
+  .container {
+    margin-top: 20px;
+  }
+
+  .carousel-inner .carousel-item {
+    height: 300px; /* Adjust the height as needed */
+  }
+
+  .carousel-inner .carousel-item img {
+    height: 100%; /* Reset the height to 100% */
+  }
+
+  .carousel-inner .carousel-item .text-content {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+    text-align: center;
+    width: 100%;
+    color: #544541;
+  }
+
+  .carousel-inner .carousel-item .text-content h1 {
+    font-size: 28px;
+  }
+
+  .carousel-inner .carousel-item .text-content h2 {
+    font-size: 12px;
+    margin-top: -80px;
+  }
+
+  .carousel-inner .carousel-item .text-content p {
+    font-size: 10px;
+    max-width: 100%;
+    margin-top: 10px;
+    line-height: 15px;
+    text-align: center;
+  }
+
+  .carousel-inner .carousel-item .text-content button {
+    padding: 8px 16px;
+    font-size: 0.8em;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  #filter {
+    float: none;
+    margin: 10px;
+  }
+
+  .filters {
+    position: static;
+    left: auto;
+    top: auto;
+  }
+
+  #filter ion-select,
+  #filter ion-range {
+    min-width: 100%;
+  }
+}
+
+/* Media Queries */
+@media only screen and (max-width: 430px) {
+  .room {
+    width: 90%;
+    margin: 20px;
+    margin-bottom: 20px;
+    height: auto;
+    max-height: none;
+  }
+
+  .room .over {
+    height: 200px;
+  }
+
+  .room .details {
+    margin-top: -30px;
+  }
+
+  .room .details #p1 {
+    font-size: 16px;
+  }
+
+  .room .price {
+    bottom: 30px;
+  }
+
+  .room .price p {
+    font-size: 16px;
+  }
+
+  .room .details #p3,
+  .room .details #p4 {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  footer {
+    padding: 50px 0;
+    color: #000;
+    margin: 0 !important;
+    background-color: #f5f5dc;
+  }
+
+  .footer-column {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: center; /* Center align the text */
+  }
+
+  .footer-column h6 {
+    font-size: 24px;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    line-height: normal;
+    font-family: Crimson Pro;
+    text-transform: uppercase;
+    text-align: center; /* Center align the text */
+  }
+  p {
+    color: #000;
+    font-family: DM Sans, sans-serif;
+    font-size: 16px;
+    margin-top: 40px;
+    line-height: 1.6;
+    text-align: center; /* Center align the text */
+  }
+
+  .social-icons {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center align the social icons */
+  }
+
+  .social-icons a {
+    display: block;
+    margin-right: 10px;
+    color: #544541;
+  }
+
+  .social-icons a:hover .fab.fa-facebook,
+  .social-icons a:hover .fab.fa-twitter,
+  .social-icons a:hover .fab.fa-linkedin {
+    color: #0077b5;
+  }
+
+  .social-icons a:hover .fab.fa-instagram,
+  .social-icons a:hover .fab.fa-pinterest {
+    color: #e60023;
+  }
+
+  .social-icons i {
+    font-size: 20px;
+  }
+
+  .footer-column ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center; /* Center align the text */
+  }
+
+  .footer-column ul li {
+    margin-bottom: 10px;
+  }
+
+  .footer-column ul li a {
+    color: #000;
+    text-decoration: none;
+    display: inline-block; /* Display the link as inline-block */
+  }
+
+  .footer-column ul li a:hover {
+    color: #544541;
+    text-decoration: none;
+  }
+
+  .footer-column .newsletter {
+    margin-top: 20px;
+  }
+
+  .footer-column .newsletter input[type="email"] {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 0;
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .input-group-append .btn-outline-secondary {
+    background-color: #544541;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 0;
+    cursor: pointer;
+    border: none;
+    height: 40px;
+  }
+
+  .input-group-append .btn-outline-secondary:hover {
+    background-color: black;
+    color: #fff;
+    border-color: black;
+  }
+
+  .footer-column .payment-options {
+    margin-top: 20px;
+  }
+
+  .footer-column .payment-options img {
+    height: 20px;
+    margin-right: 10px;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  li a {
+    color: black;
+    text-decoration: none;
+  }
+
+  li a:hover {
+    color: #544541;
+    text-decoration: none;
+  }
+
+  .bottom-footer {
+    display: flex;
+    height: 40px;
+    width: 100%;
+    background-color: #544541;
+    color: #fff;
+    padding: 5px 20px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bottom-footer-center {
+    font-size: 14px;
+  }
 }
