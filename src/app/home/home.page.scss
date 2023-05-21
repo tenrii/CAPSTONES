@@ -448,93 +448,43 @@ li a:hover {
   overflow: hidden;
 }
 
-.video-container {
-  position: relative;
-  height: 100%;
-  width: 100%;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
 }
 
-.video-container img {
-  height: 120%;
-  width: 100%;
-  object-fit: cover;
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 
-.play-icon {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: block;
-  height: 80px;
-  width: 80px;
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 50%;
-  text-align: center;
-  z-index: 2;
+.col img {
+  width: 80%;
+  height: 80%;
 }
 
-.play-icon i {
-  color: white;
-  font-size: 2em;
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin: 50px;
 }
 
-.play-text {
-  position: absolute;
-  top: 30%;
-  left: calc(50% + 70px);
-  transform: translateY(-50%);
-  color: white;
-  font-size: 1.5em;
-  text-decoration: underline;
-  z-index: 2;
-  cursor: pointer;
-  text-decoration: none;
-}
-.play-text:hover {
-  color: #333;
-  text-decoration: none;
-}
-.video-player {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1;
+h1 {
+  font-size: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
 }
 
-.video-overlay {
-  position: absolute;
-  top: calc(50% + 100px);
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 2;
-}
-
-.video-overlay h2 {
-  color: white;
-  font-size: 3em;
-  margin-top: -30%;
-  margin-bottom: 50px;
-}
-
-.button {
-  display: inline-block;
-  padding: 15px 30px;
-  background-color: #cd9452;
-  color: white;
-  text-decoration: none;
-  font-size: 1.2em;
-  border: none; /* remove button border */
-  margin-top: -50px;
-}
-
-.button:hover {
-  background-color: #333;
-  color: white;
-  text-decoration: none;
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
 }
 
 /*LOGO BRANDS*/
@@ -1021,4 +971,41 @@ li a:hover {
   .bottom-footer-center {
     font-size: 14px;
   }
+}
+
+/*service*/
+
+.service-box {
+  text-align: center;
+  margin-bottom: 30px;
+  align-items: center;
+}
+
+.service-box i {
+  font-size: 50px;
+  color: #544541;
+  margin-bottom: 10px;
+  text-align: center;
+  align-content: center;
+}
+
+.service-box h3 {
+  font-size: 24px;
+  font-weight: 600;
+  font-family: Montserrat;
+  text-transform: capitalize;
+  margin-top: 10px;
+  text-align: center;
+  align-content: center;
+}
+
+.service-box p {
+  color: #222;
+  letter-spacing: normal;
+  font-family: Montserrat;
+  font-weight: 400;
+  font-size: 14px;
+  margin-left: 25px;
+  text-align: center;
+  margin-top: -5px;
 }

@@ -37,7 +37,8 @@
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModal()">Login</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditProfile()">Edit Profile</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditProfile()">Edit Profile</button>
+        </li>
       </ul>
     </div>
   </nav>
@@ -109,14 +110,6 @@
           <img src="{{item.Images[1]}}" class="img">
         </div>
 
-        <div class="price">
-          <p id="p2" value="pr">₱{{item.Price}} /
-            <a type="button" [routerLink]="['/','room',item.id]" style="color: #be9874; text-decoration: none;">
-              <p style="color: #be9874;">Reserve Now</p>
-            </a>
-          </p>
-        </div>
-
         <div class="details">
           <p id="p1" value="na">{{item.Title}}</p>
           <p id="p3" value="ad"><a style="font-weight: 600; color: #bb995c">Address:</a>
@@ -126,18 +119,39 @@
       </div>
       <div style="text-align: center; color: white; opacity: 0;">/</div>
     </div>
+
+    <div class="price">
+      <p id="p2" value="pr">₱{{item.Price}} /
+        <a type="button" [routerLink]="['/','room',item.id]" style="color: #be9874; text-decoration: none;">
+          <p style="color: #be9874;">Reserve Now</p>
+        </a>
+      </p>
+    </div>
   </span>
 
   <section class="video-section">
-    <div class="video-container">
-      <img src="assets/video.jpg" alt="Background Image">
-      <button class="play-icon" type="button" data-toggle="modal" data-target="#videoModal">
-        <ion-icon name="play"></ion-icon>
-      </button>
-    </div>
-    <div class="video-overlay">
-      <h2>Watch Our Video</h2>
-      <a class="button" href="#">Learn More</a>
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <img src="assets/home2.jpg">
+        </div>
+        <div class="col">
+          <h1>SPOT-A-HOME</h1>
+          <p>Introducing Spot-A-Home, your ultimate solution for finding and reserving boarding houses in the Science
+            City of Muñoz.
+            With a user-friendly platform tailored to your preferences, finding the perfect accommodation is just a few
+            clicks away.
+            Enjoy a seamless reservation process and cashless payments, eliminating the hassle of coordinating with
+            landlords and
+            handling cash transactions. Rest assured, all listed properties meet quality standards, providing detailed
+            descriptions
+            and amenities for an informed decision. Experience the convenience of Spot-A-Home today and unlock a
+            stress-free,
+            cashless solution for your boarding house needs. Join our platform now for a seamless housing search and
+            reservation
+            experience.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -154,9 +168,42 @@
       </div>
     </div>
   </div>
-
-
-
+  <section class="services-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="service-box">
+            <i class="bi bi-credit-card"></i>
+            <h3>Cashless Payments</h3>
+            <p>Discover, book, and pay with ease: Experience hassle-free boarding house search and reservation with
+              cashless payments.</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="service-box">
+            <i class="bi bi-chat-right-dots"></i>
+            <h3>In-app Chat</h3>
+            <p>Chat your way to a perfect stay: Enjoy in-app communication for hassle-free boarding house search and
+              reservation</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="service-box">
+            <i class="bi bi-geo-alt"></i>
+            <h3>Map</h3>
+            <p>Navigate your way to the perfect stay: Discover and book with ease using our interactive map.</p>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="service-box">
+            <i class="bi bi-house-heart"></i>
+            <h3>Reservation</h3>
+            <p>Secure your spot with a simple tap: Reserve your dream boarding house effortlessly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
   <div class="brands">
     <h1>Some of Our Clients</h1>
   </div>

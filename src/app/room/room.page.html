@@ -59,7 +59,7 @@
       <ion-col size-lg="8" size-md="12" size-sm="12" class="ion-padding-horizontal">
         <div class="detail">
           <div class="room">{{data?.RoomType}}</div>
-          <div class="rent">Space Type: <a style="font-weight: 600;">{{data?.Rent}}</a></div>
+          <div class="rent">Space Type: <a style="">{{data?.Rent}}</a></div>
           <div class="details">
             {{data?.Details}}
           </div>
@@ -70,8 +70,8 @@
               <ion-row>
                 <ion-col size-lg="3" size-sm="2" id="amenities" *ngFor="let ame of data?.Amenities">
                   <span *ngIf="ame === 'WiFi'">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19 " fill="currentColor" class="bi bi-wifi"
-                      viewBox="0 0 16 16">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19 " fill="currentColor"
+                      class="bi bi-wifi" viewBox="0 0 16 16">
                       <path
                         d="M15.384 6.115a.485.485 0 0 0-.047-.736A12.444 12.444 0 0 0 8 3C5.259 3 2.723 3.882.663 5.379a.485.485 0 0 0-.048.736.518.518 0 0 0 .668.05A11.448 11.448 0 0 1 8 4c2.507 0 4.827.802 6.716 2.164.205.148.49.13.668-.049z" />
                       <path
@@ -131,8 +131,8 @@
     </ion-row>
   </ion-grid>
 
-    <div class="all_review">
-      <span *ngFor="let data of review">
+  <div class="all_review">
+    <span *ngFor="let data of review">
       <ion-card>
         <ion-card-header>
           <ion-card-title>{{data?.Name}}</ion-card-title>
@@ -148,9 +148,13 @@
         </ion-card-content>
       </ion-card>
     </span>
-    </div>
+  </div>
+
 
   <div class="rating-review">
+    <div class="review-title">
+      <h2>Leave a Review</h2>
+    </div>
     <form [formGroup]="reviewForm">
 
       <ion-icon class="rating-star" *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= star ? 'star' : 'star-outline'"
@@ -326,9 +330,8 @@
 <ng-template #carousel>
   <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
-      <button *ngFor="let pic of data?.Images; let i = index" type="button"
-        data-bs-target="#carouselExampleControls" [attr.data-bs-slide-to]="i" aria-current="true" aria-label="..."
-        [ngClass]="{'active': i === 0}">
+      <button *ngFor="let pic of data?.Images; let i = index" type="button" data-bs-target="#carouselExampleControls"
+        [attr.data-bs-slide-to]="i" aria-current="true" aria-label="..." [ngClass]="{'active': i === 0}">
       </button>
     </div>
     <div class="carousel-inner">
@@ -336,13 +339,11 @@
         <img [src]="pic" class="d-block w-100" alt="...">
       </div>
     </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-      data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-      data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>

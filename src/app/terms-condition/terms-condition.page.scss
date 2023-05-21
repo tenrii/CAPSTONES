@@ -21,7 +21,7 @@
   color: white;
   font-size: 20px;
   margin-left: 100px;
-  font-family: Neue Einstellung;
+  font-family: Montserrat;
   margin: 20px;
   padding: 20px;
   text-align: center;
@@ -62,15 +62,24 @@ body {
   font-family: "Montserrat";
 }
 
+h2 {
+  font-family: Montserrat;
+  margin-bottom: -5px;
+}
 h1 {
   font-family: Crimson Pro;
   font-weight: 800;
   font-size: 70px;
-  color: #544541;
+  color: #fff;
+  margin-bottom: -30px;
 }
 
-p {
+.banner-content p {
   font-family: "Montserrat";
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .image-wrap {

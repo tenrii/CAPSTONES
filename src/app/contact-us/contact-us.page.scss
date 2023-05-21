@@ -21,7 +21,7 @@
   color: white;
   font-size: 20px;
   margin-left: 100px;
-  font-family: Neue Einstellung;
+  font-family: "Montserrat" !important;
   margin: 20px;
   padding: 20px;
   text-align: center;
@@ -62,18 +62,26 @@ body {
   font-family: "Montserrat";
 }
 
-.banner-content h2 {
-  font-family: Montserrat;
+h2 {
+  font-family: "Montserrat" !important;
+  margin-bottom: 10px;
 }
-h1 {
+
+.banner-content h1 {
   font-family: Crimson Pro;
   font-weight: 800;
   font-size: 70px;
   color: #fff;
+  margin-bottom: 10px;
 }
 
 .banner-content p {
   font-family: "Montserrat";
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 10px;
 }
 
 .image-wrap {
@@ -220,7 +228,7 @@ input[type="submit"]:hover {
 }
 .p {
   color: #000;
-  font-family: DM Sans, sans-serif;
+  font-family: Montserrat;
   font-size: 16px;
   margin-top: 40px;
   line-height: 1.6;
