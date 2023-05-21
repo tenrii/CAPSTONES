@@ -68,6 +68,14 @@
           <img src="{{item.Images[1]}}" class="img">
         </div>
 
+        <div class="price">
+          <p id="p2" value="pr">₱{{item.Price}} /
+            <a type="button" [routerLink]="['/','room',item.id]" style="color: #be9874; text-decoration: none;">
+              <p style="color: #be9874;">Reserve Now</p>
+            </a>
+          </p>
+        </div>
+
         <div class="details">
           <p id="p1" value="na">{{item.Title}}</p>
           <p id="p3" value="ad"><a style="font-weight: 600; color: #bb995c">Address:</a>
@@ -76,14 +84,6 @@
         </div>
       </div>
       <div style="text-align: center; color: white; opacity: 0;">/</div>
-    </div>
-
-    <div class="price">
-      <p id="p2" value="pr">₱{{item.Price}} /
-        <a type="button" [routerLink]="['/','room',item.id]" style="color: #be9874; text-decoration: none;">
-          <p style="color: #be9874;">Reserve Now</p>
-        </a>
-      </p>
     </div>
   </span>
 
@@ -101,7 +101,8 @@
             clicks away.
             Enjoy a seamless reservation process and cashless payments, eliminating the hassle of coordinating with
             landlords and
-            handling cash transactions. Rest assured, all listed properties meet quality standards, providing detailed
+            handling cash transactions. <br><br> Rest assured, all listed properties meet quality standards, providing
+            detailed
             descriptions
             and amenities for an informed decision. Experience the convenience of Spot-A-Home today and unlock a
             stress-free,
