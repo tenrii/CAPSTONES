@@ -7,6 +7,7 @@ import { AuthenticationService } from '../shared/authentication-service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { ModalController } from '@ionic/angular';
 import { LogComponent } from './log/log.component';
+import { EditProfileComponent } from '../tenant-panel/edit-profile/edit-profile.component';
 
 interface RoomData {
   Id: any;
@@ -47,6 +48,10 @@ export class HomePage implements OnInit {
     },
   };
 
+  isButtonDisabled: boolean = false;
+  tenantUid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
+  public tenant: any;
+
   constructor(
     public authService: AuthenticationService,
     private router: Router,
@@ -59,6 +64,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
+    this.getTenant();
     this.firebaseService.read_room().subscribe((data) => {
       this.roomList = data;
 
@@ -130,5 +136,39 @@ export class HomePage implements OnInit {
   closeModal() {
     this.isModalOpen = false;
     this.m.dismiss();
+  }
+
+  async getTenant() {
+    this.firebaseService.read_tenant().subscribe(() => {
+      this.tenant = this.firebaseService.getTenant(this.tenantUid);
+    });
+  }
+
+  async gotoEditProfile() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
+    const modalInstance = await this.m.create({
+      component: EditProfileComponent,
+      cssClass: 'create-modal',
+      componentProps: {
+        data: this.tenant,
+      },
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 1 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 }
