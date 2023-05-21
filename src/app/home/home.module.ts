@@ -13,6 +13,7 @@ import { environment } from '../../environments/environment';
 
 import { HomePageRoutingModule } from './home-routing.module';
 import { EditProfileComponent } from '../tenant-panel/edit-profile/edit-profile.component';
+import { SiteHeaderModule } from '../components/site-header/site-header.module';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { EditProfileComponent } from '../tenant-panel/edit-profile/edit-profile.
     AngularFirestoreModule,
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+    SiteHeaderModule
   ],
   declarations: [HomePage,LogComponent,EditProfileComponent]
 })
