@@ -18,6 +18,6 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     TenantPanelPageRoutingModule,
     ChatlistModule
   ],
-  declarations: [TenantPanelPage,EditProfileComponent]
+  declarations: [TenantPanelPage]
 })
 export class TenantPanelPageModule {}

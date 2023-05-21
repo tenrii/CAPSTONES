@@ -12,6 +12,7 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../../environments/environment';
 
 import { HomePageRoutingModule } from './home-routing.module';
+import { EditProfileComponent } from '../tenant-panel/edit-profile/edit-profile.component';
 
 
 @NgModule({
@@ -27,6 +28,6 @@ import { HomePageRoutingModule } from './home-routing.module';
     AngularFireStorageModule,
     AngularFireDatabaseModule,
   ],
-  declarations: [HomePage,LogComponent]
+  declarations: [HomePage,LogComponent,EditProfileComponent]
 })
 export class HomePageModule {}
