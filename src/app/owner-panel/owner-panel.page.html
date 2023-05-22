@@ -47,58 +47,53 @@
                 <div id="bedspace1" style="display: block;">
                   <ion-grid>
                     <span *ngFor="let data of be; let i = index;" [attr.data-index]="i">
-                      <span *ngFor="let b of data.Bed;">
-                        <ion-row *ngIf="b.occupied">
-                          <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
+                        <ion-row>
+                          <ion-col style="max-width: 60px;">
+                            <span *ngIf="!data.profpic || data.profpic === 'null' || data.profpic === null"><img src="assets/user2.png" style="width: 50px;"></span>
+                            <span *ngIf="data.profpic"><img src="{{data.profpic}}" style="width: 50px;"></span>
+                          </ion-col>
                           <ion-col style="border-bottom: gray solid 1px;">
                             <div class="cardName">
-                              <span *ngFor="let tenant of data.tenantDataBed">
-                                <span *ngIf="b.occupied?.userId === tenant.id">
-                                  {{tenant.FName}} {{tenant.LName}} reserved a bedspace in <span
-                                    style="font-weight: 600;">{{data.Title}} Bed - {{b.id}}
-                                    <span *ngIf="b.status === 'up'">Top Bunk</span><span
-                                      *ngIf="b.status === 'down'">Bottom Bunk</span></span>
-                                </span>
-                              </span>
+                                  {{data.FName}} {{data.LName}} reserved a bedspace in <span
+                                    style="font-weight: 600;">{{data.Title}} Bed - {{data.RoomName}}
+                                    <span *ngIf="data.bed === 'up'">Top Bunk</span><span
+                                      *ngIf="data.bed === 'down'">Bottom Bunk</span></span>
                             </div>
 
                             <div class="cardPayment">
-                              <span *ngIf="b.occupied?.status === 'paidPayment'" style="color: green;">Paid in
+                              <span *ngIf="data.status === 'paidPayment'" style="color: green;">Paid in
                                 Full</span>
-                              <span *ngIf="b.occupied?.status === 'pendingPayment'" style="color: gray;">Pending</span>
+                              <span *ngIf="data.status === 'pendingPayment'" style="color: gray;">Pending</span>
                             </div>
 
                             <div class="time ion-text-right">
-                              {{b.occupied?.dateCreated | date:'short'}}
+                              {{data.date | date:'short'}}
                             </div>
                           </ion-col>
                         </ion-row>
                       </span>
-                    </span>
                   </ion-grid>
                 </div>
 
                 <div id="room1" style="display: none;">
                   <ion-grid>
                     <span *ngFor="let data of ro; let i = index;" [attr.data-index]="i">
-                      <ion-row *ngIf="data.occupied">
+                      <ion-row>
                         <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
                         <ion-col style="border-bottom: gray solid 1px;">
                           <div class="cardName">
-                            <span *ngIf="data.occupied?.userId === data.tenantDataRoom.id">
-                              {{data.tenantDataRoom.FName}} {{data.tenantDataRoom.LName}} reserved a room in <span
+                              {{data.FName}} {{data.LName}} reserved a room in <span
                                 style="font-weight: 600;">{{data.Title}}</span>
-                            </span>
                           </div>
 
                           <div class="cardPayment">
-                            <span *ngIf="data.occupied?.status === 'paidPayment'" style="color: green;">Paid in
+                            <span *ngIf="data.status === 'paidPayment'" style="color: green;">Paid in
                               Full</span>
-                            <span *ngIf="data.occupied?.status === 'pendingPayment'" style="color: gray;">Pending</span>
+                            <span *ngIf="data.status === 'pendingPayment'" style="color: gray;">Pending</span>
                           </div>
 
                           <div class="time ion-text-right">
-                            {{data.occupied?.dateCreated | date:'short'}}
+                            {{data.date | date:'short'}}
                           </div>
                         </ion-col>
                       </ion-row>
@@ -280,6 +275,7 @@
           <span *ngFor="let data of filteredRecord; let i = index;" [attr.data-index]="i">
             <ion-row class="row-body" style="text-align:center;">
               <ion-col>
+                {{data.FName}} {{data.LName}}
               </ion-col>
 
               <ion-col>

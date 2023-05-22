@@ -3,7 +3,6 @@ import { FirebaseService } from '../services/firebase.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { ModalController } from '@ionic/angular';
-import { CreateModalComponent } from './create-modal/create-modal.component';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 import { Modal1Component } from './modal/modal1/modal1.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -40,8 +39,6 @@ export class OwnerPanelPage implements OnInit {
   isSortAscending!: boolean;
   searchText!: string;
   sortBy: any;
-  fname:any;
-  lname: any;
 
   constructor(
     public authService: AuthenticationService,
@@ -73,11 +70,15 @@ export class OwnerPanelPage implements OnInit {
       )
       .subscribe((f: any) => {
         this.room = f;
+        console.log('all',this.room);
         this.room.map((a: any) => {
           if (a.occupied) {
+            const room = a.tenantData.filter((z:any)=>{
+              return a.occupied?.userId === z.uid;
+            });
             this.filteredRecord.push({
-              FName: this.fname,
-              LName: this.lname,
+              FName: room.map((data:any) => data.FName),
+              LName: room.map((data:any) => data.FName),
               RoomName: a.RoomName,
               a:'',
               userId: a.occupied?.userId,
@@ -87,16 +88,21 @@ export class OwnerPanelPage implements OnInit {
           }
           a.Bed?.map((b: any) => {
             if (b.occupied) {
+            const bed = a.tenantData.filter((z:any)=>{
+              return b.occupied?.userId === z.uid;
+            });
               this.filteredRecord.push({
-                FName: this.fname,
-                LName: this.lname,
+                FName: bed.map((data:any) => data.FName),
+                LName: bed.map((data:any) => data.LName),
                 RoomName: a.RoomName,
                 id: b.id,
                 b:'',
+                bed: b.status,
                 userId: b.occupied?.userId,
                 date: b.occupied?.dateCreated,
                 status: b.occupied?.status,
               });
+              return bed;
             }
           });
         });
@@ -117,22 +123,51 @@ export class OwnerPanelPage implements OnInit {
   }
 
   sortedBed(): any {
-    const bed = this.room.map((z: any) => {
-      z.Bed = z.Bed?.sort(
-        (a: any, b: any) =>
-          (b.occupied?.dateCreated || 0) - (a.occupied?.dateCreated || 0)
-      );
-      return z;
-    });
-    this.be = bed;
+    this.room.map((a: any) => {
+      a.Bed?.map((b:any) =>{
+      if (b.occupied) {
+        const bed = a.tenantData.filter((z:any)=>{
+          return b.occupied?.userId === z.uid;
+        });
+          this.be.push({
+            FName: bed.map((data:any) => data.FName),
+            LName: bed.map((data:any) => data.LName),
+            Title: a.Title,
+            RoomName: a.RoomName,
+            profpic: bed.map((data:any) => data.profpic),
+            id: b.id,
+            bed: b.status,
+            userId: b.occupied?.userId,
+            date: b.occupied?.dateCreated,
+            status: b.occupied?.status,
+          });
+          return bed;
+        }
+      })
+      })
     console.log('bed', this.be);
   }
 
   sortedRoom() {
-    const room = this.room.sort(
-      (a, b) => b.occupied?.dateCreated - a.occupied?.dateCreated
-    );
-    this.ro = room;
+    this.room.map((a: any) => {
+      if (a.occupied) {
+        const room = a.tenantData.filter((z:any)=>{
+          return a.occupied?.userId === z.uid;
+        });
+          this.ro.push({
+            FName: room.map((data:any) => data.FName),
+            LName: room.map((data:any) => data.LName),
+            Title: a.Title,
+            RoomName: a.RoomName,
+            profpic: room.map((data:any) => data.profpic),
+            id: a.id,
+            userId: a.occupied?.userId,
+            date: a.occupied?.dateCreated,
+            status: a.occupied?.status,
+          });
+          return room;
+        }
+      })
     console.log('room', this.ro);
   }
 
@@ -268,6 +303,21 @@ export class OwnerPanelPage implements OnInit {
         return this.isSortAscending ? dateA - dateB : dateB - dateA;
       });
       console.log('sort', this.filteredRecord);
+    }
+    else if(this.sortBy === 'name'){
+      this.filteredRecord = this.filteredRecord.sort((a:any, b:any)=>{
+        const nameA = a.FName + ' ' + a.LName;
+        const nameB = b.FName + ' ' + b.LName;
+        if (nameA < nameB) {
+          return this.isSortAscending ? -1 : 1;
+        }
+
+        if (nameA > nameB) {
+          return this.isSortAscending ? 1 : -1;
+        }
+
+        return 0;
+      });
     }
   }
 

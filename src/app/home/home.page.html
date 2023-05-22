@@ -117,16 +117,11 @@
           <p id="p4" value="re"><a style="font-weight: 700; color: #bb995c">Space Type: </a>{{item.Rent}}</p>
         </div>
       </div>
-      <div style="text-align: center; color: white; opacity: 0;">/</div>
-    </div>
-
-    <div class="price">
-      <p id="p2" value="pr">₱{{item.Price}} /
-        <a type="button" [routerLink]="['/','room',item.id]" style="color: #be9874; text-decoration: none;">
-          <p style="color: #be9874;">Reserve Now</p>
-        </a>
-      </p>
-    </div>
+      <div class="footer">
+        <div id="p2" value="pr">₱{{item.Price}}</div>
+        <div class="button" type="button" [routerLink]="['/','room',item.id]">Reserve Now</div>
+      </div>
+      </div>
   </span>
 
   <section class="video-section">

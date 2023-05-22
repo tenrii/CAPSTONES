@@ -2,13 +2,8 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {
   canActivate,
-  redirectUnauthorizedTo,
-  redirectLoggedInTo,
 } from '@angular/fire/compat/auth-guard';
 import { AuthGuardService } from './shared/auth-guard.service';
-
-const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['/login']);
-const redirectLoggedInToChat = () => redirectLoggedInTo(['/chat']);
 
 const routes: Routes = [
   {
@@ -26,24 +21,11 @@ const routes: Routes = [
   },
 
   {
-    path: 'verify-email',
-    loadChildren: () =>
-      import('./verify-email/verify-email.module').then(
-        (m) => m.VerifyEmailPageModule
-      ),
-  },
-
-  {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginPageModule),
   },
 
-  {
-    path: 'dashboard',
-    loadChildren: () =>
-      import('./dashboard/dashboard.module').then((m) => m.DashboardPageModule),
-  },
 
   {
     path: 'password-reset',
@@ -51,12 +33,6 @@ const routes: Routes = [
       import('./password-reset/password-reset.module').then(
         (m) => m.PasswordResetPageModule
       ),
-  },
-
-  {
-    path: 'test',
-    loadChildren: () =>
-      import('./test/test.module').then((m) => m.TestPageModule),
   },
 
   {
@@ -88,30 +64,6 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminPageModule),
-  },
-  {
-    path: 'ex',
-    loadChildren: () => import('./ex/ex.module').then((m) => m.ExPageModule),
-    ...canActivate(redirectUnauthorizedToLogin),
-  },
-  {
-    path: 'ex2',
-    loadChildren: () => import('./ex2/ex2.module').then((m) => m.Ex2PageModule),
-    ...canActivate(redirectLoggedInToChat),
-  },
-  {
-    path: 'ex3',
-    loadChildren: () => import('./ex3/ex3.module').then((m) => m.Ex3PageModule),
-  },
-  {
-    path: 'edit-room',
-    loadChildren: () =>
-      import('./edit-room/edit-room.module').then((m) => m.EditRoomPageModule),
-  },
-  {
-    path: 'edit-room/:id',
-    loadChildren: () =>
-      import('./edit-room/edit-room.module').then((m) => m.EditRoomPageModule),
   },
   {
     path: 'chatroom',

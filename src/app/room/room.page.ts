@@ -62,7 +62,6 @@ export class RoomPage implements OnInit {
   }
 
   ngOnInit() {
-
   this.reviewForm = this.fb.group({
     Rating: this.star,
     Review: ['', [Validators.required]],
@@ -74,15 +73,6 @@ export class RoomPage implements OnInit {
 
   onFileSelected(event: any) {
     this.selectedFiles = event.target.files;
-  }
-
-  async reviews(){
-    if (!this.firebaseService.loading) {
-    this.firebaseService.read_review(this.roomId).subscribe((data) =>{
-      this.review = data;
-    });
-    return;
-  }
   }
 
   async load() {
@@ -97,6 +87,11 @@ export class RoomPage implements OnInit {
     this.roomId =
       this.route.snapshot.paramMap.get('id') ||
       window.location.pathname.split('/')[2];
+
+      this.firebaseService.read_review(this.roomId).subscribe((data) =>{
+        this.review = data;
+        console.log('review',this.review)
+      })
 
     console.log('id', this.firebaseService.getRoom(this.roomId));
 

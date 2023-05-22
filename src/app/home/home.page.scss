@@ -219,22 +219,7 @@ ion-content {
   padding: 5px;
 }
 
-.room .price {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: rgba(84, 69, 65, 0.9);
-  margin-top: -10px;
-  margin-right: auto;
-  margin-left: auto;
-  max-width: 230px;
-  position: relative;
-  bottom: 50px;
-  border-radius: 10px;
-}
-
 .room .details {
-  margin-top: -50px;
   margin-left: 10px;
   margin-right: 10px;
 }
@@ -247,11 +232,26 @@ ion-content {
   font-family: Crimson Pro;
 }
 
-.room .price p {
-  padding-bottom: 10px;
-  font-size: 20px;
-  align-content: center;
-  text-align: center;
+.footer{
+  border: white;
+  background-color: white;
+}
+
+.footer #p2{
+  float: left;
+  font-weight: 600;
+}
+
+.footer .button{
+  border-radius: 10px;
+  padding: 5px;
+  color: white;
+  background-color: #544541;
+  float: right;
+}
+
+.footer #p2
+.footer .button{
   font-family: DM Sans;
 }
 
@@ -798,8 +798,12 @@ p {
     font-size: 16px;
   }
 
-  .room .price {
+  .room .footer {
     bottom: 30px;
+  }
+
+  .footer .button{
+    margin-top: 1px;
   }
 
   .room .price p {

@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OwnerPanelPageRoutingModule } from './owner-panel-routing.module';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { OwnerPanelPage } from './owner-panel.page';
-import { CreateModalComponent } from './create-modal/create-modal.component';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 
 import { Modal1Component } from './modal/modal1/modal1.component';
@@ -24,6 +23,7 @@ import { Modal13Component } from './modal/modal13/modal13.component';
 import { Modal14Component } from './modal/modal14/modal14.component';
 import { ChatlistModule } from '../components/chatlist/chatlist.module';
 import { NgxFileDropModule } from 'ngx-file-drop';
+import { EditOwnerProfileComponent } from './edit-owner-profile/edit-owner-profile.component';
 
 
 @NgModule({
@@ -39,7 +39,6 @@ import { NgxFileDropModule } from 'ngx-file-drop';
   ],
   declarations: [
     OwnerPanelPage,
-    CreateModalComponent,
     EditModalComponent,
     Modal1Component,
     Modal2Component,
@@ -55,6 +54,7 @@ import { NgxFileDropModule } from 'ngx-file-drop';
     Modal12Component,
     Modal13Component,
     Modal14Component,
+    EditOwnerProfileComponent,
   ],
 })
 export class OwnerPanelPageModule {}
