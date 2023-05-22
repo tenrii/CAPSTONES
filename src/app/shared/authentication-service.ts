@@ -39,20 +39,20 @@ export class AuthenticationService {
     return signin
   }
   // Register user with email/password
-  async RegisterUserTenant(email: any, password: any, record: any) {
-    const credential = await this.ngFireAuth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
-    this.uid = credential.user?.uid;
-    this.SendVerificationMailT().then((res) => {
-      this.afStore.doc(`Tenant/${this.uid}`).set({
-        uid: this.uid,
-        Email: credential.user?.email,
-      });
-      this.afStore.collection('Tenant').doc(this.uid).update(record);
-    });
-    return credential;
+  RegisterUserTenant(email: any, password: any, record: any) {
+    const register = this.ngFireAuth.createUserWithEmailAndPassword(email, password).then((data)=>{
+      const uid = data.user?.uid;
+      this.afStore.doc('Tenant/'+ uid).set({
+        uid: uid,
+        Email: record.Email,
+        FName: record.FName,
+        LName: record.LName,
+        Age: record.Age,
+        Gender: record.Gender,
+        Address: record.Address,
+      })
+    })
+    return register;
   }
 
   async RegisterUserOwner(email: any, password: any, record: any) {

@@ -53,14 +53,15 @@ export class LoginPage implements OnInit {
       });
   }
 
-  async register(email: any, password: any) {
-    const a = await this.authService
+  register(email: any, password: any) {
+    const a = this.authService
       .RegisterUserTenant(
         email.value,
         password.value,
         this.tenantRegister.value,
       )
       .then((res) => {
+        this.authService.SendVerificationMailT()
         this.verify();
       })
       .catch((error) => {

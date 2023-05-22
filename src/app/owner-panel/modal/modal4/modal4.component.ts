@@ -27,6 +27,7 @@ export class Modal4Component implements OnInit {
   searchAddress:any;
   map:any;
   markers: Marker[] = [];
+  private currentMarker:any = google.maps.event.Marker;
   mark:any = {};
   constructor(
     private service: FirebaseService,
@@ -108,11 +109,9 @@ export class Modal4Component implements OnInit {
   }
 
 markLocation(event: any) {
-  let marker = google.maps.event.Marker
-
-    if (marker) {
-      marker.setMap(null);
-    }
+  if (this.currentMarker) {
+    this.currentMarker.setMap(null);
+  }
 
     const newMarker: Marker = {
       position: {
@@ -123,7 +122,7 @@ markLocation(event: any) {
     };
 
     // Add the new marker
-    marker = this.addMarker(newMarker);
+    this.currentMarker = this.addMarker(newMarker);
   }
 
 
