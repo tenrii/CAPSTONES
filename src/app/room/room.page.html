@@ -247,7 +247,7 @@
           <ion-button size="large" shape="round" strong="true" class="reserve-button" (click)="reserveBedspace()"
             [disabled]="(this.isReserving | async) || this.pendingPayment || this.data?.occupied">
             <ion-spinner *ngIf="this.isReserving | async"></ion-spinner>
-            Reserve
+            {{ (this.isReserving | async) || this.pendingPayment || this.data?.occupied ? 'Reserved' : 'Reserve' }}
           </ion-button>
         </ion-col>
       </ion-row>
