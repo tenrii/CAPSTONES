@@ -4,5 +4,49 @@
 }
 
 .form-group ion-label {
-  font-size: 15px;
+  font-size: 16px;
+  font-family: Montserrat;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+.modal-footer input[type="button"],
+.modal-footer input[type="submit"] {
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-left: 10px;
+}
+
+.modal-footer input[type="button"] {
+  background-color: gray;
+  color: #fff;
+  border: none;
+}
+
+.modal-footer input[type="submit"] {
+  background-color: #544541;
+  color: #fff;
+  border: none;
+}
+
+h1 {
+  margin-left: 10px;
+}
+
+.close {
+  font-size: 25px;
+  padding: 10px;
+  line-height: 1;
+  margin-right: 20px;
+  margin-top: 5px;
+  background-color: #544541;
+  color: #fff;
+  border-radius: 5px;
 }

@@ -1,8 +1,8 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title  style="color: white;">Creating a Room</ion-title>
+    <ion-title style="color: white; font-family: Montserrat;">Creating a Room</ion-title>
     <ion-buttons slot="end">
-      <ion-button  style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
+      <ion-button style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -11,83 +11,90 @@
   <ion-grid>
 
     <ion-row>
-      <ion-col>
-        <span style="font-weight: 600;">Property Name:</span> {{data?.Title}}
+      <ion-col style="font-family: Montserrat;">
+        <span style="font-weight: 600; font-family: Montserrat; font-size: 18px;">Property Name:</span> {{data?.Title}}
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col>
-        <span style="font-weight: 600;">Renting:</span> {{data?.Rent}}
+      <ion-col style="font-family: Montserrat;">
+        <span style="font-weight: 600; font-family: Montserrat;font-size: 18px; ">Renting:</span> {{data?.Rent}}
       </ion-col>
     </ion-row>
 
     <ion-row>
-      <ion-col>
-        <span style="font-weight: 600;">Room Type:</span> {{data?.RoomType}}
+      <ion-col style="font-family: Montserrat;">
+        <span style="font-weight: 600; font-family: Montserrat; font-size: 18px;">Room Type:</span> {{data?.RoomType}}
       </ion-col>
     </ion-row>
 
-<ion-row>
-  <ion-col>
-    <span style="font-weight: 600;">Price:</span> {{data?.Price}}
-  </ion-col>
-</ion-row>
+    <ion-row>
+      <ion-col style="font-family: Montserrat;">
+        <span style="font-weight: 600; font-family: Montserrat; font-size: 18px;">Price:</span> {{data?.Price}}
+      </ion-col>
+    </ion-row>
 
-<ion-row>
-  <ion-col>
-    <span style="font-weight: 600;">Address:</span> {{data?.Street}}, {{data?.Barangay}},
-    {{data?.City}}, {{data?.Province}}, {{data?.ZIP}}
-  </ion-col>
-</ion-row>
+    <ion-row>
+      <ion-col style="font-family: Montserrat;">
+        <span style="font-weight: 600; font-family: Montserrat; font-size: 18px;">Address:</span> {{data?.Street}},
+        {{data?.Barangay}},
+        {{data?.City}}, {{data?.Province}}, {{data?.ZIP}}
+      </ion-col>
+    </ion-row>
 
-<ion-row>
-  <ion-label style="font-weight: 600;">Images</ion-label>
-  <span *ngFor="let item of data?.Images">
-    <ion-col>
-      <img [src]="item" width="200">
-    </ion-col>
-  </span>
-</ion-row>
+    <ion-row>
+      <ion-label style="font-weight: 600; font-family: Montserrat; font-size: 18px;">Images:</ion-label>
+      <span *ngFor="let item of data?.Images">
+        <ion-col>
+          <img [src]="item" width="200">
+        </ion-col>
+      </span>
+    </ion-row>
 
-<ion-row>
-  <ion-label style="font-weight: 600;">Amenties</ion-label>
-  <span *ngFor="let items of data?.Amenities">
-    <ion-col>
-  {{items}},
-    </ion-col>
-  </span>
-</ion-row>
+    <ion-row>
+      <ion-label style="font-weight: 600; font-family: Montserrat; font-size: 18px;">Amenties:</ion-label>
+      <span *ngFor="let items of data?.Amenities">
+        <ion-col style="font-family: Montserrat;">
+          {{items}},
+        </ion-col>
+      </span>
+    </ion-row>
 
-<ion-row>
-  <ion-label style="font-weight: 600;">Beds: </ion-label>
-  <span *ngFor="let itemss of data?.Bed">
-    <ion-col>
-      <span style="font-weight: 600;">B:</span> {{itemss.id}} - <span style="font-weight: 600;">Status:</span> {{itemss.status}}
-    </ion-col>
-  </span>
-</ion-row>
+    <ion-row>
+      <ion-label style="font-weight: 600; font-family: Montserrat; font-size: 18px;">Beds:</ion-label>
+      <span *ngFor="let itemss of data?.Bed">
+        <ion-col>
+          <span style="font-weight: 600; font-family: Montserrat; font-size: 18px;">B:</span> {{itemss.id}} - <span
+            style="font-weight: 600; font-family: Montserrat; font-size: 18px;">Status:</span>
+          {{itemss.status}}
+        </ion-col>
+      </span>
+    </ion-row>
 
-<ion-row>
-  <ion-label style="font-weight: 600;">Details: </ion-label>
-  <ion-col>
-    {{data?.Details}}
-  </ion-col>
-</ion-row>
+    <ion-row>
+      <ion-label style="font-weight: 600; font-family: Montserrat; font-size: 18px;">Details: </ion-label>
+      <ion-col style="font-family: Montserrat; font-size: 18px;">
+        {{data?.Details}}
+      </ion-col>
+    </ion-row>
 
-</ion-grid>
+  </ion-grid>
 </ion-content>
 <ion-footer>
-  <button class="modalbtnn" (click)="back()">
+  <button class="modalbtnn" (click)="back()" style="font-family: Montserrat;">
     Back
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+      viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
     </svg>
-</button>
-  <button class="modalbtn" (click)="gotoModal14()">
+  </button>
+  <button class="modalbtn" (click)="gotoModal14()" style="font-family: Montserrat;">
     Next
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-  </svg>
-</button>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
+      viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+    </svg>
+  </button>
 </ion-footer>

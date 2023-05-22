@@ -32,17 +32,17 @@
                 <div class="title"><ion-icon name="notifications"></ion-icon><span>Notification</span></div>
 
                 <ion-grid><ion-row style=" max-width: 155px;">
-                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
+                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #544541;
               color: white; border-radius: 10px 10px 0px 0px;">
                       <div type="button" onclick="
                 document.getElementById('bedspace1').style.display='block';
-                document.getElementById('room1').style.display='none';">Bedspace</div>
+                document.getElementById('room1').style.display='none';" style="font-family: Montserrat">Bedspace</div>
                     </ion-col>
-                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #644222;
+                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #544541;
               color: white; border-radius: 10px 10px 0px 0px;">
                       <div type="button" onclick="
                 document.getElementById('bedspace1').style.display='none';
-                document.getElementById('room1').style.display='block';">Room</div>
+                document.getElementById('room1').style.display='block';" style="font-family: Montserrat">Room</div>
                     </ion-col>
                   </ion-row></ion-grid>
 
@@ -53,7 +53,8 @@
                         <!--Paid-->
                         <ion-row *ngIf="data.status === 'paid' && data.type === 'bedspace-reservation'">
                           <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
-                                src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
+                                src="{{data.ownerData.profpic}}"
+                                style="width: 50px; font-family: Montserrat; font-size: 18px;"></span>
                             <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
                                 style="width: 50px;"></span></ion-col>
                           <ion-col style="border-bottom: gray solid 1px;">
@@ -74,8 +75,9 @@
                         <!--Pending-->
                         <ion-row *ngIf="data.status === 'pending' && data.type === 'bedspace-reservation'">
                           <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
-                                src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
-                            <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
+                                src="{{data.ownerData.profpic}}"
+                                style="width: 50px; font-family: Montserrat; font-size: 18px;"></span>
+                            <span *ngIf=" !data.ownerData.profpic"><img src="assets/user2.png"
                                 style="width: 50px;"></span></ion-col>
                           <ion-col style="border-bottom: gray solid 1px;">
                             <div class="cardName">
@@ -155,7 +157,8 @@
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
               <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditProfile()">Edit</button></li>
-              <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
+              <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button>
+              </li>
             </ul>
           </div>
         </ion-col>
@@ -165,11 +168,11 @@
   </div>
 
   <div class="container-img">
-    <img src="assets/banner3.jpg">
+    <img src="assets/logo2.jpg">
   </div>
 
   <div class="center">
-    <div>Hello, {{tenant?.FName}}</div>
+    <div>Hello, {{tenant?.FName}}!</div>
     <p>Lets help you live your perfect boarding <br /> house match</p>
   </div>
 
@@ -179,10 +182,12 @@
       <ion-grid class="bills-header">
         <ion-row>
           <ion-col class="btn" size="3" [class.active]="(billsPage | async) === 'unpaid'">
-            <div type="button" (click)="billsPage.next('unpaid')">Unpaid</div>
+            <div type="button" (click)="billsPage.next('unpaid')" style="font-family: Montserrat; font-size: 18px;">
+              Unpaid</div>
           </ion-col>
           <ion-col class="btn" size="3" [class.active]="(billsPage | async) === 'paid'">
-            <div type="button" (click)="billsPage.next('paid')">Paid</div>
+            <div type="button" (click)="billsPage.next('paid')" style="font-family: Montserrat; font-size: 18px;">Paid
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -192,26 +197,25 @@
           <ion-grid>
             <ion-row>
               <ion-col class="ion-text-center">
-                <h1>Monthly Rent</h1>
+                <h1 style="font-weight: bold;">Monthly Rent</h1>
               </ion-col>
               <ion-col class="ion-text-center">
-                <h1>Amount</h1>
+                <h1 style="font-weight: bold;">Amount</h1>
               </ion-col>
             </ion-row>
             <ion-row *ngFor="let bill of bills">
               <ion-col>
-                <h1>{{bill.roomData.Title}}:{{bill.roomData.RoomName || 'Room'}}</h1>
-                <div>Due date: {{bill.nextPaymentMonth | date}}</div>
+                <h1 style="font-family: Montserrat; font-size: 18px;">{{bill.roomData.Title}}:{{bill.roomData.RoomName
+                  || 'Room'}}</h1>
+                <div style="font-family: Montserrat; font-size: 18px;">Due date: {{bill.nextPaymentMonth | date}}</div>
               </ion-col>
               <ion-col class="ion-text-center">
                 <div>
-                  <h1>{{bill.amount | currency:'Php'}}</h1>
-                  <ion-button
-                    [disabled]="isPayButtonLoading | async"
-                    (click)="payBill(bill)"
-                  >
+                  <h1 style="font-family: Montserrat; font-size: 18px;">{{bill.amount | currency:'Php'}}</h1>
+                  <ion-button [disabled]="isPayButtonLoading | async" (click)="payBill(bill)"
+                    style="font-family: Montserrat; font-size: 18px;">
                     <ion-spinner *ngIf="isPayButtonLoading | async"></ion-spinner>Pay now
-                </ion-button>
+                  </ion-button>
                 </div>
               </ion-col>
             </ion-row>
@@ -222,25 +226,26 @@
           <ion-grid>
             <ion-row>
               <ion-col class="ion-text-center">
-                <h1>Paid</h1>
+                <h1 style="font-weight: bold;">Paid</h1>
               </ion-col>
               <ion-col class="ion-text-center">
-                <h1>Amount</h1>
+                <h1 style="font-weight: bold;">Amount</h1>
               </ion-col>
               <ion-col class="ion-text-center">
-                <h1>Date</h1>
+                <h1 style="font-weight: bold;">Date</h1>
               </ion-col>
             </ion-row>
             <ion-row *ngFor="let paidBill of paidBills">
-              <ion-col>
-                <h1>{{paidBill.roomData.Title}}:{{paidBill.roomData.RoomName || 'Room'}}</h1>
-                <p>{{paidBill.monthDate | date:'MMMM YYYY'}}</p>
+              <ion-col style="font-family: Montserrat; font-size: 18px;">
+                <h1 style="font-family: Montserrat; font-size: 18px;">
+                  {{paidBill.roomData.Title}}:{{paidBill.roomData.RoomName || 'Room'}}</h1>
+                <p style="font-family: Montserrat; font-size: 18px;">{{paidBill.monthDate | date:'MMMM YYYY'}}</p>
               </ion-col>
               <ion-col class="ion-text-center">
-                <h2>{{paidBill.amount | currency: 'Php'}}</h2>
+                <h2 style="font-family: Montserrat; font-size: 18px;">{{paidBill.amount | currency: 'Php'}}</h2>
               </ion-col>
-              <ion-col class="ion-text-center">
-                <h2>{{paidBill.dateCreated | date}}</h2>
+              <ion-col class="ion-text-center" style="font-family: Montserrat; font-size: 18px;">
+                <h2 style="font-family: Montserrat; font-size: 18px;">{{paidBill.dateCreated | date}}</h2>
               </ion-col>
             </ion-row>
           </ion-grid>
@@ -252,7 +257,7 @@
       <div class="room">
         <ion-grid>
           <ion-row class="row-header">
-            <ion-col>Title</ion-col>
+            <ion-col>Boarding House Name</ion-col>
             <ion-col>Bedspace Placement</ion-col>
             <ion-col>Payment Amount</ion-col>
             <ion-col>Payment Status</ion-col>

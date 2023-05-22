@@ -1,34 +1,41 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title  style="color: white;">Creating a Room</ion-title>
+    <ion-title style="color: white; font-family: Montserrat;">Creating a Room</ion-title>
     <ion-buttons slot="end">
-      <ion-button  style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
+      <ion-button style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <h1>Add the price of your rent</h1>
+  <h1>Now, set your price</h1>
 
   <ion-item class="price">
     <ion-label class="p">Price</ion-label>
-    <ion-button (click)="priceMinus()" style="width: 30px; height: 30px;">-</ion-button>
+    <ion-button (click)="priceMinus()" style="width: 30px; height: 30px; font-size: 25px ;">-</ion-button>
     <div class="p">₱</div><ion-input class="p" [(ngModel)]="price"></ion-input>
-    <ion-button (click)="pricePlus()" style="width: 30px; height: 30px;">+</ion-button>
+    <ion-button (click)="pricePlus()" style="width: 30px; height: 30px; font-size: 25px ;">+</ion-button>
   </ion-item>
-  <h3>per Month</h3>
+  <h3>per month</h3>
+  <h2><i>Places like yours in your area usually
+      range from ₱1000 to
+      ₱6000</i></h2>
 
 </ion-content>
 <ion-footer>
   <button class="modalbtnn" (click)="back()">
     Back
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+      viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
     </svg>
-</button>
+  </button>
   <button class="modalbtn" (click)="gotoModal13()">
     Next
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-  </svg>
-</button>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
+      viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+    </svg>
+  </button>
 </ion-footer>

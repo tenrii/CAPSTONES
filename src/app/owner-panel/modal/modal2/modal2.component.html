@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content>
 
-  <h1 style="font-family: Montserrat;">What is your room name and what kind of space do you have?</h1>
+  <h1 style="font-family: Montserrat;">What is your room name and<br />What type of place will tenants have?</h1>
 
   <form [formGroup]="roomForm">
 
@@ -20,16 +20,17 @@
     <div class="btn-group">
       <input type="radio" class="btn-check" name="RoomType" id="option1" autocomplete="off" formControlName="RoomType"
         value="Private Room" />
-      <label class="btn btn-dark" for="option1" style="font-family: Montserrat;">Private Room
-        <p style="font-family: Montserrat;">Rent the entire room for the <br />tenant</p>
-        <ion-icon name="person" style="font-size: 30px;"></ion-icon>
+      <label class="btn btn-dark" for="option1" style="font-family: Montserrat;">A Room
+        <p style="font-family: Montserrat;">Tenants have their own room in your place,<br />plus access to shared
+          spaces.</p>
+        <i class="bi bi-door-open" style="font-size: 30px;"></i>
       </label>
 
       <input type="radio" class="btn-check" name="RoomType" id="option2" autocomplete="off" formControlName="RoomType"
         value="Shared Room" />
-      <label class="btn btn-dark" style="font-family: Montserrat;" for="option2">Shared Room
-        <p style="font-family: Montserrat;">Rent the bed space<br />in the room for the tenant</p>
-        <ion-icon name="people" style="font-size: 30px; font-family: Montserrat;"></ion-icon>
+      <label class="btn btn-dark" style="font-family: Montserrat;" for="option2">A Shared Room
+        <p style="font-family: Montserrat;">Tenants sleep in a room<br />that maybe shared with you or others.</p>
+        <i class="bi bi-people" style="font-size: 30px; font-family: Montserrat;"></i>
       </label>
     </div>
 

@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <h1>How many bed space and bathroom does the room have?</h1>
+  <h1>How many bed space does the room have?</h1>
   <div class="image">
     <img src="assets/modal2.png">
   </div>
@@ -18,10 +18,10 @@
 
     <ion-list class="bed">
       <ion-item *ngFor="let bed of beds">
-        <ion-label>Bed {{bed.id}}</ion-label>
+        <ion-label style="font-family: Montserrat;">Bed {{bed.id}}</ion-label>
         <ion-select [(ngModel)]="bed.status" (ionChange)="onBedChange(bed)">
-          <ion-select-option value="up">Up</ion-select-option>
-          <ion-select-option value="down">Down</ion-select-option>
+          <ion-select-option value="up" style="font-family: Montserrat;">Up</ion-select-option>
+          <ion-select-option value="down" style="font-family: Montserrat;">Down</ion-select-option>
         </ion-select>
       </ion-item>
     </ion-list>

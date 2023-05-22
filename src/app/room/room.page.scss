@@ -99,7 +99,6 @@
 .price #pr #p {
   margin-top: 10px;
   font-size: 20px;
-  font-weight: bold;
 }
 
 .price #pr #priceBtn {
@@ -131,12 +130,12 @@
   font-family: Montserrat;
   color: #c38f32;
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .detail .amenities #amenities-header {
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .detail .amenities #amenities {
@@ -150,7 +149,7 @@
 }
 
 .detail .amenities #amenities span {
-  color: rgb(100, 66, 34);
+  color: #c38f32;
 }
 
 .detail .contact {
@@ -433,7 +432,7 @@ footer {
   padding: 0;
   font-weight: 600;
   line-height: normal;
-  font-family: Montserrat;
+  font-family: Crimson Pro;
   text-transform: uppercase;
 }
 p {
@@ -564,4 +563,51 @@ li a:hover {
 
 .bottom-footer-center {
   font-size: 14px;
+}
+
+/*VIDEO VIDEO SECTION*/
+.video-section {
+  position: relative;
+  height: 500px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.container {
+  max-width: 1200px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.col {
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  margin: 50px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-family: Montserrat;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
+  font-family: Montserrat;
+  text-align: justify;
 }
