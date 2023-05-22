@@ -669,7 +669,7 @@ export const sendBillingReminders = functions
   .timeZone(timezone)
   .onRun(async (context) => {
     functions.logger.log('start sendBillingReminders');
-    const appHost = 'http://localhost:8100'; // TODO replace with actual app host
+    const appHost = 'https://cpstn-acb50.web.app'; // APP HOST
     const activeReservations = (await admin.firestore().collectionGroup(TENANT_RESERVATION_COLLECTION).where('status', '==', 'active').get());
     functions.logger.log('activeReservations', activeReservations.docs.length);
 
