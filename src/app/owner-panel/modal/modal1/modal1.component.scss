@@ -1,32 +1,41 @@
-ion-toolbar{
-  --background:#544541;
+ion-toolbar {
+  --background: #544541;
 }
 
-.modalbtn{
+.modalbtn {
   float: right;
-  background-color:#544541;
-  color:white;
+  background-color: #544541;
+  color: white;
   padding: 15px;
   font-size: 20px;
+  font-family: Montserrat;
 }
 
-h1{
-  font-weight: 900;
+h1 {
+  font-weight: 700;
+  font-family: Montserrat;
 }
 
-.text{
+.text {
   margin-top: 35px;
   margin-left: 50px;
+  font-family: Montserrat;
 }
 
-h2{
+h2 {
   margin-top: 70px;
+  font-family: Montserrat;
 }
 
-.image{
+.image {
   float: right;
-  width: 300px;
+  width: 500px;
   height: 300px;
-  margin-top: 40px;
+  margin-top: 10px;
   margin-right: 95px;
+}
+
+p {
+  font-family: Montserrat;
+  font-size: 18px;
 }

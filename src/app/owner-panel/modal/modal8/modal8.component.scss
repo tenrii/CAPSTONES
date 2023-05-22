@@ -1,42 +1,53 @@
-ion-toolbar{
-  --background:#544541;
+ion-toolbar {
+  --background: #544541;
 }
 
 h1 {
   text-align: center;
+  font-family: Montserrat;
 }
 
-.modalbtn{
+p {
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 18px;
+}
+
+.modalbtn {
   float: right;
-  background-color:#544541;
-  color:white;
+  background-color: #544541;
+  color: white;
   padding: 15px;
   font-size: 20px;
+  font-family: Montserrat;
 }
 
-.modalbtnn{
-  background-color:#544541;
-  color:white;
+.modalbtnn {
+  background-color: #544541;
+  color: white;
   padding: 15px;
   font-size: 20px;
+  font-family: Montserrat;
 }
 
-.image_btn{
-  background-color:rgb(100, 66, 34);
+.image_btn {
+  background-color: #544541;
   padding: 10px;
   border: white solid 1px;
   color: white;
   font-size: 18px;
   border-radius: 10px;
+  font-family: Montserrat;
 }
 
-ion-grid ion-row .img{
-  margin: 5px;
+ion-grid ion-row .img {
+  margin: 0 5px;
   padding: 1px;
-  max-width: 150px;
-  border:rgb(100, 66, 34, 0.7) dashed 2px;
+  max-width: 190px;
+  border: #544541 dashed 2px;
 }
 
-ion-grid ion-row .img img{
-  max-width: 150px;
+ion-grid ion-row .img img {
+  max-width: 180px;
+  justify-content: center;
 }

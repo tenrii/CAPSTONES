@@ -31,7 +31,7 @@ export class Modal9Component implements OnInit {
 
     messageTextarea.addEventListener('input', function () {
       const length = messageTextarea.value.length;
-      messageCounter.textContent = length + ' / 50 characters';
+      messageCounter.textContent = length + ' / 100 characters';
     });
   }
 
@@ -55,7 +55,6 @@ export class Modal9Component implements OnInit {
     }
 
     const modalInstance = await this.m.create({
-
       component: Modal8Component,
       cssClass: 'create-modal',
       backdropDismiss: false,
@@ -89,7 +88,7 @@ export class Modal9Component implements OnInit {
       this.service.modalData = {
         ...this.service.modalData,
         Title: this.roomForm.get('Title')?.value,
-      }
+      };
       console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });

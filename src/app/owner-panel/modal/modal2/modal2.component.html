@@ -1,34 +1,36 @@
 <ion-header>
   <ion-toolbar class="new-background-color">
-    <ion-title  style="color: white;">Creating a Room</ion-title>
+    <ion-title style="color: white; font-family: Montserrat;">Creating a Room</ion-title>
     <ion-buttons slot="end">
-      <ion-button  style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
+      <ion-button style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 <ion-content>
 
-  <h1>What is your room name and what kind of room do you have?</h1>
+  <h1 style="font-family: Montserrat;">What is your room name and<br />What type of place will tenants have?</h1>
 
   <form [formGroup]="roomForm">
 
     <div class="input">
-      <ion-input placeholder="Room Name" name="RoomName" formControlName="RoomName"></ion-input>
-      </div>
+      <ion-input placeholder="Room Name" name="RoomName" formControlName="RoomName"
+        style="font-family: Montserrat;"></ion-input>
+    </div>
 
     <div class="btn-group">
       <input type="radio" class="btn-check" name="RoomType" id="option1" autocomplete="off" formControlName="RoomType"
         value="Private Room" />
-      <label class="btn btn-dark" for="option1">Private Room
-        <p>Rent the entire room for the <br />tenant</p>
-        <ion-icon name="person" style="font-size: 30px;"></ion-icon>
+      <label class="btn btn-dark" for="option1" style="font-family: Montserrat;">A Room
+        <p style="font-family: Montserrat;">Tenants have their own room in your place,<br />plus access to shared
+          spaces.</p>
+        <i class="bi bi-door-open" style="font-size: 30px;"></i>
       </label>
 
       <input type="radio" class="btn-check" name="RoomType" id="option2" autocomplete="off" formControlName="RoomType"
         value="Shared Room" />
-      <label class="btn btn-dark" for="option2">Shared Room
-        <p>Rent all of the bed space<br />in the room for the tenant</p>
-        <ion-icon name="people" style="font-size: 30px;"></ion-icon>
+      <label class="btn btn-dark" style="font-family: Montserrat;" for="option2">A Shared Room
+        <p style="font-family: Montserrat;">Tenants sleep in a room<br />that maybe shared with you or others.</p>
+        <i class="bi bi-people" style="font-size: 30px; font-family: Montserrat;"></i>
       </label>
     </div>
 
@@ -37,14 +39,18 @@
 <ion-footer>
   <button class="modalbtnn" (click)="back()">
     Back
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+      viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
     </svg>
-</button>
+  </button>
   <button class="modalbtn" (click)="gotoModal3()">
     Next
-    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-  </svg>
-</button>
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right"
+      viewBox="0 0 16 16">
+      <path fill-rule="evenodd"
+        d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+    </svg>
+  </button>
 </ion-footer>

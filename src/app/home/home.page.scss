@@ -7,62 +7,11 @@ ion-content {
   margin: 100px;
 }
 
-.navbar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(84, 69, 65, 0.8);
-  position: sticky;
-  height: 80px;
-  margin-bottom: -107px;
-  padding: 0px;
-}
-
-.navbar .nav-link {
-  display: flex;
-  color: white;
-  font-size: 20px;
-  margin-left: 100px;
-  font-family: DM Sans;
-  margin: 20px;
-  padding: 20px;
-  text-align: center;
-  display: inline-block;
-}
-
-.navbar .nav-link:hover {
-  background-color: #ddd;
-  height: 72%;
-  color: #544541;
-}
-.navbar .dropdown {
-  position: relative;
-  right: 50px;
-  bottom: 10px;
-  float: right;
-}
-
-.navbar .dropdown #dropdownMenu2 {
-  width: 100px;
-  height: 45px;
-  background-color: #be9874;
-}
-
-.navbar .dropdown .dropdown-item {
-  font-size: 10px;
-}
-
-.navbar .dropdown img {
-  height: 30px;
-  border-radius: 50%;
-}
-
 /*banner*/
 .team h1 {
   padding-top: 50px;
   text-align: center;
   margin: 0 auto;
-  font-family: Lilita One;
   font-size: 50px;
   color: #544541;
   max-width: 400px; /* adjust the max-width value as needed */
@@ -312,7 +261,7 @@ footer {
 }
 p {
   color: #000;
-  font-family: DM Sans, sans-serif;
+  font-family: Montserrat;
   font-size: 16px;
   margin-top: 40px;
   line-height: 1.6;
@@ -450,8 +399,6 @@ li a:hover {
 
 .container {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
 }
 
 .row {
@@ -462,16 +409,15 @@ li a:hover {
 }
 
 .col img {
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 }
 
 .col {
   flex-basis: 0;
   flex-grow: 1;
   max-width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
   margin: 50px;
 }
 
@@ -479,12 +425,15 @@ h1 {
   font-size: 2.5rem;
   margin-top: 0;
   margin-bottom: 1rem;
+  font-family: Montserrat;
 }
 
 p {
   font-size: 1rem;
   line-height: 1.5;
   margin: 0 0 1rem;
+  font-family: Montserrat;
+  text-align: justify;
 }
 
 /*LOGO BRANDS*/

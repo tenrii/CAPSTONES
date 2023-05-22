@@ -1,114 +1,118 @@
-.header{
+.header {
   margin: 0;
   padding: 0;
   background-color: rgb(84, 69, 65, 0.5);
   color: white;
- }
+}
 
- .header .logo{
+.header .logo {
   padding: 0;
   max-width: 600px;
- }
+}
 
- .header .logo img{
-  width: 150px;
- }
-
- .header .home{
-  margin: auto;
-  max-width: 75px;
- }
-
- .header .myroom{
-  margin: auto;
-  max-width: 90px;
- }
-
- .header .create,
- .header .notification,
- .header .transaction,
- .header .logout{
-  margin: auto;
-  max-width: 120px;
- }
-
- .header .logout div{
-  text-align: center;
+.header .logo img {
   width: 100px;
-  background-color: #be9874;
-  border: solid 1px white;
-  border-radius: 15px;
-  padding: 4px;
- }
-
-.container-img{
-margin-top: -93px;
-max-height: 330px;
-overflow: hidden;
+  margin-left: 150px;
 }
 
-.container-img img{
-width: 100%;
-height: 100%;
+.header .home {
+  max-width: 75px;
+  margin-left: 20px;
+  max-width: 150px;
+  font-family: Montserrat;
+  font-size: 20px;
 }
 
-.body{
+.header .myroom {
+  margin-left: 20px;
+  max-width: 150px;
+  font-family: Montserrat;
+  font-size: 20px;
+}
+
+.header .create,
+.header .notification,
+.header .transaction,
+.header .logout {
+  text-align: center;
+  margin-left: 20px;
+  max-width: 150px;
+  font-family: Montserrat;
+  font-size: 20px;
+}
+
+.container-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 400px;
+  overflow: hidden;
+}
+
+.container-img img {
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.body {
   margin-top: 50px;
   margin-left: 10px;
   margin-right: 10px;
   margin-bottom: 10px;
   padding: 15px;
- }
+  text-align: center;
+  font-family: Montserrat;
+}
 
- .top{
+.top {
   margin-left: 10px;
   margin-right: 10px;
   font-size: 25px;
   color: #000000;
   border-bottom: #000000 solid 2px;
- }
+  font-family: Montserrat;
+}
 
- .top .sort{
+.top .sort {
   font-size: 15px;
   display: flex;
   justify-content: end;
   max-width: 250px;
   margin-right: -10px;
- }
+}
 
- .top .sort ion-icon{
+.top .sort ion-icon {
   margin-bottom: -19px;
- }
+}
 
- .top .search{
+.top .search {
   max-width: 250px;
   margin-top: -5px;
- }
+}
 
- //Room//
- .body .room-lister ion-row ion-col{
+//Room//
+.body .room-lister ion-row ion-col {
   justify-content: start;
   max-width: 150px;
-  border: #000000 2px solid;
   margin-left: 5px;
   border-radius: 10px;
- }
+}
 
-.room ion-grid ion-row ion-col{
+.room ion-grid ion-row ion-col {
   padding: 10px;
 }
 
-.room ion-grid .row-header{
-background-color: #644222;
-margin-bottom: 5px;
-color: white;
-border-radius: 10px 10px 0px 0px;
+.room ion-grid .row-header {
+  background-color: #544541;
+  margin-bottom: 5px;
+  color: white;
+  border-radius: 10px 10px 0px 0px;
 }
 
-
-.room ion-grid .row-body ion-col{
+.room ion-grid .row-body ion-col {
   background-color: rgb(226, 226, 226);
-  color:#644222;
+  color: #544541;
   margin: 5px 2px 5px 2px;
   max-height: 170px;
   overflow-y: auto;
@@ -117,69 +121,89 @@ border-radius: 10px 10px 0px 0px;
 //Room//
 
 //Record//
-.record ion-grid ion-row ion-col{
+.record ion-grid ion-row ion-col {
   padding: 10px;
 }
 
-.record ion-grid .row-header{
+.record ion-grid .row-header {
   text-align: center;
-  background-color: #644222;
+  background-color: #544541;
   color: white;
   margin-bottom: 5px;
   border-radius: 10px 10px 0px 0px;
 }
 
-
-.record ion-grid .row-body ion-col{
+.record ion-grid .row-body ion-col {
   text-align: center;
   background-color: rgb(226, 226, 226);
-  color:#644222;
+  color: #544541;
   margin: 5px 2px 5px 2px;
   max-height: 170px;
   overflow-y: auto;
 }
 
-.record ion-grid .row-body ion-col:first-child{
+.record ion-grid .row-body ion-col:first-child {
   margin-left: 0px;
 }
 
-.record ion-grid .row-body ion-col:last-child{
+.record ion-grid .row-body ion-col:last-child {
   margin-right: 0px;
 }
 
-.center{
-  margin-top: -180px;
-  color: white;
+.center {
+  margin-top: -300px;
+  color: #544541;
   text-align: center;
- }
+  margin-bottom: 200px;
+  font-weight: 600;
+}
 
- .center div{
-   font-size: 35px;
-   font-weight: 600;
- }
+.center div {
+  font-size: 60px;
+  font-weight: 600;
+  font-family: Crimson Pro;
+}
 
- .center p{
-   font-size: 25px;
- }
+.center p {
+  font-size: 25px;
+  font-family: Montserrat;
+  font-style: italic;
+}
 
- ion-popover {
+ion-popover {
   --width: 500px;
- }
+}
 
- .card{
-  background-color:  rgb(226, 226, 226);
+.card {
+  background-color: rgb(226, 226, 226);
   max-width: 430px;
   padding: 10px;
-  color:#644222;
- }
+  color: #544541;
+}
 
- .card .cardName{
+.card .cardName {
   font-size: 20px;
   font-weight: 600;
- }
+}
 
- .card .cardStatus,
- .card .cardPayment{
+.card .cardStatus,
+.card .cardPayment {
   font-size: 16px;
- }
+}
+
+div[type="button-list"] {
+  padding: 10px 10px;
+  background-color: #544541;
+  color: #ffffff;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  border-radius: 10px;
+  width: 100%;
+  font-family: Montserrat;
+}
+
+div[type="button-list"]:hover {
+  background-color: #a06f4a;
+}
 //Record//

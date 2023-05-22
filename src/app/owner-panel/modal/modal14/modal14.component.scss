@@ -1,18 +1,43 @@
-ion-toolbar{
-  --background:#544541;
+ion-toolbar {
+  --background: #544541;
 }
 
-.modalbtn{
+.modalbtn {
   float: right;
-  background-color:black;
-  color:white;
+  background-color: black;
+  color: white;
   padding: 15px;
   font-size: 20px;
 }
 
-.modalbtnn{
-  background-color:black;
-  color:white;
+.modalbtnn {
+  background-color: black;
+  color: white;
   padding: 15px;
   font-size: 20px;
+}
+
+.image {
+  float: right;
+  width: 400px;
+  height: 450px;
+  margin-top: 50px;
+  margin-right: 85px;
+  margin-bottom: 50px;
+}
+
+.text {
+  margin-top: 100px;
+  margin-left: 50px;
+  font-family: Montserrat;
+  line-height: 1.5;
+}
+
+h1 {
+  font-size: 40px;
+}
+
+p {
+  text-align: justify;
+  line-height: 2;
 }
