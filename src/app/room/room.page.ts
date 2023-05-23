@@ -252,8 +252,8 @@ export class RoomPage implements OnInit {
       });*/
   }
 
-  filterOwner() {
-    if (this.firebaseService.ownerUid.includes(this.user)) {
+  filterTenant() {
+    if (this.firebaseService.tenantUid.includes(this.user)) {
       return true;
     } else {
       return false;
