@@ -31,6 +31,10 @@
   height: 72%;
   color: #544541;
 }
+
+.navbar .dropdown .dropdown-menu {
+  width: 100%; /* Adjust the width value as needed */
+}
 .navbar .dropdown {
   position: relative;
   right: 50px;
@@ -38,19 +42,20 @@
   float: right;
 }
 
-.navbar .dropdown #dropdownMenu2 {
-  width: 100px;
-  height: 45px;
-  background-color: #be9874;
-}
-
 .navbar .dropdown .dropdown-item {
   font-size: 10px;
 }
 
 .navbar .dropdown img {
-  height: 30px;
+  height: 50px;
   border-radius: 50%;
+}
+
+.dropdown-toggle {
+  color: white;
+  height: 50px;
+  background-color: transparent;
+  border: none;
 }
 
 .login-modal {

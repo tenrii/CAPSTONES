@@ -93,19 +93,21 @@
               <div class="col-lg-4 mb-4">
                 <div class="profile-pic-container">
                   <div class="profile-pic-wrapper">
-                    <img [src]="data?.profpic" class="rounded-circle img-fluid shadow-1 profile-pic" alt="Profile Picture" />
+                    <img [src]="data?.profpic" class="rounded-circle img-fluid shadow-1 profile-pic"
+                      alt="Profile Picture" />
                   </div>
                 </div>
               </div>
               <div class="col-lg-8">
                 <div class="rating-container">
-                  <ion-icon class="rating-star" *ngFor="let i of [1,2,3,4,5]" [name]="i <= data.Rating ? 'star' : 'star-outline'"></ion-icon>
+                  <ion-icon class="rating-star" *ngFor="let i of [1,2,3,4,5]"
+                    [name]="i <= data.Rating ? 'star' : 'star-outline'"></ion-icon>
                 </div>
                 <p class="text-muted fw-light mb-4 review-text">
                   {{ data?.Review }}
                 </p>
-                <p class="fw-bold lead mb-2 reviewer-name">{{ data?.Name }}</p>
-                <p class="fw-bold text-muted mb-0 role">Tenant</p>
+                <p class="lead mb-2 reviewer-name">{{ data?.Name }}</p>
+                <p class="text-muted mb-0 role">Tenant</p>
               </div>
             </div>
           </div>
@@ -120,18 +122,20 @@
     </div>
     <form [formGroup]="reviewForm">
 
-      <ion-icon class="rating-star" *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= star ? 'star' : 'star-outline'"
-        (click)="Rate(i)"></ion-icon>
-
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1"></label>
-        <textarea class="form-control" id="review" rows="3" placeholder="Review" formControlName="Review"></textarea>
+      <div class="rating-container">
+        <ion-icon class="rating-star" *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= star ? 'star' : 'star-outline'"
+          (click)="Rate(i)"></ion-icon>
       </div>
 
-      <button class="reviewBTN" (click)="addReview()">Submit</button>
+      <div class="form-group">
+        <textarea class="form-control" id="review" rows="3" formControlName="Review"></textarea>
+      </div>
+
+      <button class="reviewBTN btn btn-primary" (click)="addReview()">Submit</button>
 
     </form>
   </div>
+
 
 
   <footer>
