@@ -83,7 +83,7 @@ export class RoomPage implements OnInit {
 });
 
     this.load();
-    this.loadMap();
+
   }
 
   onFileSelected(event: any) {
@@ -111,7 +111,7 @@ export class RoomPage implements OnInit {
     console.log('id', this.firebaseService.getRoom(this.roomId));
 
     this.data = this.firebaseService.getRoom(this.roomId);
-
+    this.loadMap();
     this.firebaseService.read_owner().subscribe(() => {
       this.owner = this.firebaseService.getOwner(this.data.OwnerId);
 
@@ -260,9 +260,10 @@ export class RoomPage implements OnInit {
     }
   }
 
-  loadMap() {
+  async loadMap() {
     const mapEle: any = document.getElementById('map');
-    const myLatLng = { lat: 37.7749, lng: -122.4194 }; // Example coordinates for San Francisco
+    if(this.data?.Marker){
+    const myLatLng = this.data?.Marker; // Example coordinates for San Francisco
     this.map = new google.maps.Map(mapEle, {
       center: myLatLng,
       zoom:20
@@ -273,6 +274,7 @@ export class RoomPage implements OnInit {
       this.addMarker(marker);
       mapEle.classList.add('show-map');
     });
+  }
   }
 
   renderMarkers() {
