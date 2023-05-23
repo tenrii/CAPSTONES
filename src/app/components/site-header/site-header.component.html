@@ -30,12 +30,19 @@
     <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
         aria-expanded="false">
-        <img src="{{tenant?.profpic}}">
+        <span><img src="{{tenant?.profpic}}"></span>
+        <span><img src="{{owner?.profpic}}"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
         <span *ngIf="isLogin()===false">
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModalL()">Login</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModalR()">Register</button></li>
+      </span>
+      <span *ngIf="filterTenant() === true">
+        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditProfile()">Edit Profile</button></li>
+      </span>
+      <span *ngIf="filterOwner() === true">
+        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditOwnerProfile()">Edit Profile</button></li>
       </span>
         <span *ngIf="isLogin()===true">
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>

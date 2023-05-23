@@ -96,4 +96,5 @@ export class HomePage implements OnInit {
     });
     this.list.next(filteredList);
   }
+
 }
