@@ -1,52 +1,65 @@
-  <nav class="navbar navbar-expand-sm sticky-top">
-    <img src="assets/real logo.png" width=150 id="logo">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-      <ul class="navbar-nav">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/about-us']">About<span class="sr-only"></span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/contact-us']">Contact<span class="sr-only"></span></a>
-        </li>
-        <li class="nav-item active">
-          <a class="nav-link" [routerLink]="['/terms-condition']">Terms & Condition<span class="sr-only"></span></a>
-        </li>
-        <li class="nav-item active" *ngIf="filterOwner() === true">
-          <a class="nav-link" [routerLink]="['/owner-panel']">Owner Panel<span class="sr-only"></span></a>
-        </li>
-        <li class="nav-item active" *ngIf="filterTenant() === true">
-          <a class="nav-link" [routerLink]="['/tenant-panel']">Tenant Panel<span class="sr-only"></span></a>
-        </li>
-      </ul>
+<nav class="navbar navbar-expand-sm sticky-top">
+  <img src="assets/real logo.png" width=150 id="logo">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+    aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/about-us']">About<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/contact-us']">Contact<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" [routerLink]="['/terms-condition']">Terms & Condition<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active" *ngIf="filterOwner() === true">
+        <a class="nav-link" [routerLink]="['/owner-panel']">Owner Panel<span class="sr-only"></span></a>
+      </li>
+      <li class="nav-item active" *ngIf="filterTenant() === true">
+        <a class="nav-link" [routerLink]="['/tenant-panel']">Tenant Panel<span class="sr-only"></span></a>
+      </li>
+    </ul>
 
-    </div>
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
-        aria-expanded="false">
-        <span><img src="{{tenant?.profpic}}"></span>
-        <span><img src="{{owner?.profpic}}"></span>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-        <span *ngIf="isLogin()===false">
+  </div>
+  <div class="dropdown">
+    <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
+      aria-expanded="false">
+      <span><img src="{{tenant?.profpic}}"></span>
+      <span><img src="{{owner?.profpic}}"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+      <span *ngIf="isLogin()===false">
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModalL()">Login</button></li>
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModalR()">Register</button></li>
       </span>
       <span *ngIf="filterTenant() === true">
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditProfile()">Edit Profile</button></li>
+        <div>
+          <span><img src="{{tenant?.profpic}}">
+            <div>{{tenant?.FName}} {{tenant?.LName}}</div>
+          </span>
+        </div>
+        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditProfile()"><i
+              class="bi bi-person-circle"></i>Edit Profile</button>
+        </li>
       </span>
       <span *ngIf="filterOwner() === true">
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditOwnerProfile()">Edit Profile</button></li>
+        <div>
+          <span><img src="{{owner?.profpic}}">
+            <div>{{owner?.FName}} {{owner?.LName}}</div>
+          </span>
+        </div>
+        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditOwnerProfile()">Edit
+            Profile</button></li>
       </span>
-        <span *ngIf="isLogin()===true">
+      <span *ngIf="isLogin()===true">
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
       </span>
-      </ul>
-    </div>
-  </nav>
+    </ul>
+  </div>
+</nav>

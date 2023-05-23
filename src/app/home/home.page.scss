@@ -209,6 +209,8 @@ ion-content {
 
 .footer #p2 .footer .button {
   font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 .room .details #p3 {
@@ -428,6 +430,7 @@ li a:hover {
   flex-basis: 0;
   flex-grow: 1;
   max-width: 100%;
+  height: auto;
   margin: 50px;
 }
 
