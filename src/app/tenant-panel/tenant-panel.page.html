@@ -50,7 +50,7 @@
                   <ion-grid>
                     <span *ngFor="let data of be">
                         <!--Paid-->
-                        <ion-row *ngIf="data.Status === 'paid'">
+                        <ion-row *ngIf="data.Status === 'paid' || data.Status === 'paidPayment'">
                           <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
                                 src="{{data.ownerData.profpic}}"
                                 style="width: 50px; font-family: Montserrat; font-size: 18px;"></span>
@@ -70,7 +70,7 @@
                           </ion-col>
                         </ion-row>
                         <!--Pending-->
-                        <ion-row *ngIf="data.Status === 'pending'">
+                        <ion-row *ngIf="data.Status === 'pending' || data.Status === 'pendingPayment'">
                           <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
                                 src="{{data.ownerData.profpic}}"
                                 style="width: 50px; font-family: Montserrat; font-size: 18px;"></span>
