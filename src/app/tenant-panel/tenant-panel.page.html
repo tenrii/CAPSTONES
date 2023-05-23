@@ -48,97 +48,87 @@
 
                 <div id="bedspace1" style="display: block;">
                   <ion-grid>
-                    <span *ngFor="let data of sortInBed; let i = index;" [attr.data-index]="i">
-                      <span *ngFor="let item of data.lineItems;">
+                    <span *ngFor="let data of be">
                         <!--Paid-->
-                        <ion-row *ngIf="data.status === 'paid' && data.type === 'bedspace-reservation'">
-                          <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
+                        <ion-row *ngIf="data.Status === 'paid'">
+                          <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
                                 src="{{data.ownerData.profpic}}"
                                 style="width: 50px; font-family: Montserrat; font-size: 18px;"></span>
                             <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
-                                style="width: 50px;"></span></ion-col>
+                                style="width: 50px;"></span></ion-col>-->
                           <ion-col style="border-bottom: gray solid 1px;">
                             <div class="cardName">
-                              Your reservation in Room {{data.num}}
-                              Bed <span *ngFor="let bed of data.roomData.Bed"><span
-                                  *ngIf="bed.uid === item.uid">{{bed.id}} -
-                                  <span *ngIf="bed.status === 'up'"> Top Bunk</span><span *ngIf="bed.status === 'down'">
-                                    Bottom Bunk</span>
-                                </span></span>
+                              Your reservation in {{data.RoomName}} -
+                              Bed {{data.Id}}
+                              <span *ngIf="data.Bed === 'up'">TOP BUNK</span>
+                              <span *ngIf="data.Bed === 'down'">BOTTOM BUNK</span>
                               at
-                              {{data.roomData.Title}}
+                              {{data.Title}}
                               is confirmed and payment received in full. Thank you!
-                              <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
+                              <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
                             </div>
                           </ion-col>
                         </ion-row>
                         <!--Pending-->
-                        <ion-row *ngIf="data.status === 'pending' && data.type === 'bedspace-reservation'">
-                          <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
+                        <ion-row *ngIf="data.Status === 'pending'">
+                          <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
                                 src="{{data.ownerData.profpic}}"
                                 style="width: 50px; font-family: Montserrat; font-size: 18px;"></span>
-                            <span *ngIf=" !data.ownerData.profpic"><img src="assets/user2.png"
-                                style="width: 50px;"></span></ion-col>
+                            <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
+                                style="width: 50px;"></span></ion-col>-->
                           <ion-col style="border-bottom: gray solid 1px;">
                             <div class="cardName">
-                              Your reservation in Room {{data.num}}
-                              Bed <span *ngFor="let bed of data.roomData.Bed"><span
-                                  *ngIf="bed.uid === data.lineItems.uid">{{bed.id}} -
-                                  <span *ngIf="bed.status === 'up'"> Top Bunk</span><span *ngIf="bed.status === 'down'">
-                                    Bottom Bunk</span>
-                                </span></span>
+                              Your reservation in {{data.RoomName}} -
+                              Bed {{data.Id}}
+                              <span *ngIf="data.Bed === 'up'">TOP BUNK</span>
+                              <span *ngIf="data.Bed === 'down'">BOTTOM BUNK</span>
                               at
-                              {{data.roomData.Title}}
-                              has received. Please note that your reservation will only be confirmed once we receive
-                              your full payment. Thank you!
-                              <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
+                              {{data.Title}}
+                              is confirmed and payment received in full. Thank you!
+                              <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
                             </div>
                           </ion-col>
                         </ion-row>
                       </span>
-                    </span>
                   </ion-grid>
                 </div>
 
                 <div id="room1" style="display: none;">
                   <ion-grid>
-                    <span *ngFor="let data of sortInBed; let i = index;" [attr.data-index]="i">
-                      <span *ngFor="let item of data.lineItems;">
+                    <span *ngFor="let data of ro">
                         <!--Paid-->
-                        <ion-row *ngIf="data.status === 'paid' && data.type === 'room-reservation'">
-                          <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
+                        <ion-row *ngIf="data.status === 'paid'">
+                           <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
                                 src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
                             <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
-                                style="width: 50px;"></span></ion-col>
+                                style="width: 50px;"></span></ion-col>-->
                           <ion-col style="border-bottom: gray solid 1px;">
                             <div class="cardName">
-                              Your reservation in Room {{data.num}}
+                              Your reservation in {{data.RoomName}}
                               at
-                              {{data.roomData.Title}}
+                              {{data.Title}}
                               is confirmed and payment received in full. Thank you!
-                              <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
+                              <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
                             </div>
                           </ion-col>
                         </ion-row>
                         <!--Pending-->
-                        <ion-row *ngIf="data.status === 'pending' && data.type === 'room-reservation'">
-                          <ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
-                                src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
-                            <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
-                                style="width: 50px;"></span></ion-col>
-                          <ion-col style="border-bottom: gray solid 1px;">
-                            <div class="cardName">
-                              Your reservation in Room {{data.num}}
-                              at
-                              {{data.roomData.Title}}
-                              has received. Please note that your reservation will only be confirmed once we receive
-                              your full payment. Thank you!
-                              <div class="time ion-text-right">{{data.dateCreated | date:'short'}}</div>
-                            </div>
-                          </ion-col>
-                        </ion-row>
+                        <ion-row *ngIf="data.status === 'pending'">
+                          <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
+                               src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
+                           <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
+                               style="width: 50px;"></span></ion-col>-->
+                         <ion-col style="border-bottom: gray solid 1px;">
+                           <div class="cardName">
+                             Your reservation in {{data.RoomName}}
+                             at
+                             {{data.Title}}
+                             is confirmed and payment received in full. Thank you!
+                             <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
+                           </div>
+                         </ion-col>
+                       </ion-row>
                       </span>
-                    </span>
                   </ion-grid>
                 </div>
               </ion-content>

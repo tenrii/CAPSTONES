@@ -7,7 +7,7 @@ import { ModalController } from '@ionic/angular';
   styleUrls: ['./log.component.scss'],
 })
 export class LogComponent implements OnInit {
-
+  public button:any;
   constructor(
     private m: ModalController,
   ) { }

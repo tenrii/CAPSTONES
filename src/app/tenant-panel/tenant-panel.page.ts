@@ -20,7 +20,8 @@ export class TenantPanelPage implements OnInit {
   public billsPage = new BehaviorSubject('unpaid');
   public bills: any[] = [];
   public paidBills: any[] = [];
-
+  public be:any[]=[];
+  public ro:any[]=[];
   transaction: any[] = [];
   sortInBed: any[] = [];
   isButtonDisabled: boolean = false;
@@ -59,8 +60,12 @@ export class TenantPanelPage implements OnInit {
       )
       .subscribe((f: any) => {
         this.transaction = f;
+        console.log('a', this.transaction);+
         this.sortedBed();
-        // console.log('a', f);
+        this.sortedRoom();
+        this.transaction = this.transaction.sort(
+          (a: any, b: any) => (b.dateCreated || 0) - (a.dateCreated || 0)
+        );
       });
 
     combineLatest([
@@ -102,15 +107,47 @@ export class TenantPanelPage implements OnInit {
   }
 
   sortedBed(): any {
-    const bed = this.transaction.map((a: any) => {
-      a.roomData.Bed = a.roomData?.Bed?.sort(
-        (a: any, b: any) =>
-          (b.occupied?.dateCreated || 0) - (a.occupied?.dateCreated || 0)
-      );
-      return a;
-    });
-    this.sortInBed = bed;
-    // console.log('x', this.sortInBed);
+    this.transaction.map((a: any) => {
+      if (a.roomData && a.lineItems) {
+        if(a.roomData.Bed){
+        const bed = a.roomData.Bed?.filter((z:any)=>{
+          return a.lineItems?.some((x:any)=> z.uid === x.uid);
+        });
+          this.be.push({
+            Title: a.roomData.Title,
+            RoomName: a.roomData.RoomName,
+            Bed: bed.map((data:any)=> data.status),
+            Id: bed.map((data:any)=> data.id),
+            Date: a.dateCreated,
+            Status: a.status,
+          });
+          this.be = this.be.sort((a:any,b:any)=>{
+            return (b.Date || 0 ) - (a.Date || 0)
+           });
+          return bed;
+        }
+      }
+      })
+      console.log('bed',this.be);
+  }
+
+  sortedRoom(): any {
+    this.transaction.map((a: any) => {
+      if (a.roomData && a.lineItems) {
+        if(a.roomData.occupied){
+          this.ro.push({
+            Title: a.roomData.Title,
+            RoomName: a.roomData.RoomName,
+            Date: a.dateCreated,
+            Status: a.status,
+          });
+          this.ro = this.ro.sort((a:any,b:any)=>{
+            return (b.Date || 0 ) - (a.Date || 0)
+           });
+        }
+      }
+      })
+      console.log('room',this.ro);
   }
 
   async payBill(bill: any) {

@@ -11,6 +11,7 @@ import { AuthenticationService } from '../shared/authentication-service';
 import domtoimage from 'dom-to-image';
 import { jsPDF } from 'jspdf';
 import { saveAs } from 'file-saver';
+import { EditOwnerProfileComponent } from './edit-owner-profile/edit-owner-profile.component';
 
 @Component({
   selector: 'app-owner-panel',
@@ -50,6 +51,7 @@ export class OwnerPanelPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getOwner();
     combineLatest([
       this.firebaseService.read_tenant(),
       this.firebaseService.read_room(),
@@ -114,12 +116,12 @@ export class OwnerPanelPage implements OnInit {
         this.sortedRoom();
       });
 
-    if (!this.firebaseService.loading) {
-      this.firebaseService.read_owner().subscribe(() => {
-        this.owner = this.firebaseService.getOwner(this.ownerUid);
-      });
-      return;
-    }
+  }
+
+  async getOwner(){
+    this.firebaseService.read_owner().subscribe(() => {
+      this.owner = this.firebaseService.getOwner(this.ownerUid);
+    });
   }
 
   sortedBed(): any {
@@ -140,6 +142,9 @@ export class OwnerPanelPage implements OnInit {
             userId: b.occupied?.userId,
             date: b.occupied?.dateCreated,
             status: b.occupied?.status,
+          });
+          this.be = this.be.sort((a:any,b:any)=>{
+           return (b.date || 0 ) - (a.date || 0)
           });
           return bed;
         }
@@ -165,6 +170,9 @@ export class OwnerPanelPage implements OnInit {
             date: a.occupied?.dateCreated,
             status: a.occupied?.status,
           });
+          this.ro = this.ro.sort((a:any,b:any)=>{
+            return (b.date || 0 ) - (a.date || 0)
+           });
           return room;
         }
       })
@@ -319,6 +327,34 @@ export class OwnerPanelPage implements OnInit {
         return 0;
       });
     }
+  }
+
+  async gotoEditOwnerProfile() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
+    const modalInstance = await this.m.create({
+      component: EditOwnerProfileComponent,
+      cssClass: 'create-modal',
+      componentProps: {
+        data: this.owner,
+      },
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 1 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 
   filterData(data: any, b: any): boolean {

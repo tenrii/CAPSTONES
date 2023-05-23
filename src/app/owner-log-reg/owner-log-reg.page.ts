@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { AuthenticationService } from '../shared/authentication-service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Route, Router } from '@angular/router';
 import { VerifyOwnerComponent } from './verify-owner/verify-owner.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Observable, finalize } from 'rxjs';
+import { BehaviorSubject, Observable, finalize } from 'rxjs';
 
 @Component({
   selector: 'app-owner-log-reg',
@@ -14,6 +14,7 @@ import { Observable, finalize } from 'rxjs';
   styleUrls: ['./owner-log-reg.page.scss'],
 })
 export class OwnerLogRegPage implements OnInit {
+  public condition = new BehaviorSubject('login');
   ownerRegister!: FormGroup;
   isModalOpen = false;
   selectedBP!: File;
@@ -27,7 +28,8 @@ export class OwnerLogRegPage implements OnInit {
     public router: Router,
     private fb: FormBuilder,
     private storage: AngularFireStorage,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    private route: ActivatedRoute,
   ) {}
 
   ngOnInit() {
@@ -37,6 +39,13 @@ export class OwnerLogRegPage implements OnInit {
       Age: ['', [Validators.required]],
       Address: ['', [Validators.required]],
       Email: ['', [Validators.required]],
+    });
+
+    this.route.queryParams.subscribe(params => {
+      const conditions = params['conditions'];
+      if (conditions) {
+        this.condition.next(conditions);
+      }
     });
   }
 

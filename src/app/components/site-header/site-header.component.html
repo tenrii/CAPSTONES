@@ -33,10 +33,13 @@
         <img src="{{tenant?.profpic}}">
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModal()">Login</button></li>
+        <span *ngIf="isLogin()===false">
+        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModalL()">Login</button></li>
+        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModalR()">Register</button></li>
+      </span>
+        <span *ngIf="isLogin()===true">
         <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditProfile()">Edit Profile</button>
-        </li>
+      </span>
       </ul>
     </div>
   </nav>

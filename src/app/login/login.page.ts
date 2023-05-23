@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthenticationService } from '../shared/authentication-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { VerifyComponent } from './verify/verify.component';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,7 @@ import { VerifyComponent } from './verify/verify.component';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
+  public condition = new BehaviorSubject('login');
   user = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   tenantRegister!: FormGroup;
   isModalOpen = false;
@@ -20,7 +22,8 @@ export class LoginPage implements OnInit {
     private m: ModalController,
     public authService: AuthenticationService,
     public router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -31,6 +34,13 @@ export class LoginPage implements OnInit {
       Gender: ['', [Validators.required]],
       Address: ['', [Validators.required]],
       Email: ['', [Validators.required]],
+    });
+
+    this.route.queryParams.subscribe(params => {
+      const conditions = params['conditions'];
+      if (conditions) {
+        this.condition.next(conditions);
+      }
     });
   }
 

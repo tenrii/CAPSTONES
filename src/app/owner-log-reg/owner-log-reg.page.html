@@ -8,7 +8,7 @@
       <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
         <!--<div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
         <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>-->
-        <div id="login" style="display: block;">
+        <div id="login" *ngIf="(condition | async) === 'login'">
           <div class="card bg-glass" style="height: 550px;">
             <div class="card-body px-4 py-4 px-md-5">
               <span>
@@ -58,8 +58,8 @@
                 </div>
 
                 <div style="margin-top: 10px; font-size: 15px; text-align: center;">
-                  Are you new here? <div type="button" onclick="document.getElementById('login').style.display='none';
-        document.getElementById('register').style.display='block';" style="color:#644222; font-weight: 500;">Register
+                  Are you new here? <div type="button" (click)="condition.next('register')"
+                  [class.active]="(condition | async) === 'paid'">Register
                   </div>
                 </div>
               </span>
@@ -67,14 +67,14 @@
           </div>
         </div>
         <!---->
-        <div id="register" style="display: none; ">
+        <div id="register" *ngIf="(condition | async) === 'register'">
           <div class="card bg-glass" style="height: 550px; overflow-y: scroll; padding-bottom: 20px;">
             <div class="card-body px-4 py-4 px-md-5">
               <span>
 
 
-                <div type="button" class="back" style="float: left;" onclick="document.getElementById('login').style.display='block';
-  document.getElementById('register').style.display='none';">
+                <div type="button" class="back" style="float: left;" (click)="condition.next('login')"
+                [class.active]="(condition | async) === 'login'">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                     class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"

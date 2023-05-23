@@ -23,7 +23,15 @@ export class SiteHeaderComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getTenant();
+  }
+
+  isLogin(){
+    if(this.user){
+      return true;
+    }
+    else{
+      return false;
+    }
   }
 
   filterTenant() {
@@ -42,11 +50,26 @@ export class SiteHeaderComponent implements OnInit {
     }
   }
 
-  async gotoLogModal() {
+  async gotoLogModalL() {
     const modalInstance = await this.modalController.create({
       component: LogComponent,
       backdropDismiss: false,
       cssClass: 'login-modal',
+      componentProps: {
+        button: 'login',
+      }
+    });
+    return await modalInstance.present();
+  }
+
+  async gotoLogModalR() {
+    const modalInstance = await this.modalController.create({
+      component: LogComponent,
+      backdropDismiss: false,
+      cssClass: 'login-modal',
+      componentProps: {
+        button: 'register',
+      }
     });
     return await modalInstance.present();
   }
@@ -54,40 +77,6 @@ export class SiteHeaderComponent implements OnInit {
   closeModal() {
     this.isModalOpen = false;
     this.modalController.dismiss();
-  }
-
-  async gotoEditProfile() {
-    if (this.isButtonDisabled) {
-      return;
-    }
-    this.isButtonDisabled = true;
-
-    const previousModal = await this.modalController.getTop();
-    if (previousModal) {
-      await previousModal.dismiss();
-    }
-
-    const modalInstance = await this.modalController.create({
-      component: EditProfileComponent,
-      cssClass: 'create-modal',
-      componentProps: {
-        data: this.tenant,
-      },
-      backdropDismiss: false,
-    });
-
-    modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 1 dismissed');
-      this.isButtonDisabled = false;
-    });
-
-    return await modalInstance.present();
-  }
-
-  async getTenant() {
-    this.firebaseService.read_tenant().subscribe(() => {
-      this.tenant = this.firebaseService.getTenant(this.user);
-    });
   }
 
 }
