@@ -116,7 +116,7 @@
     </div>
   </div>
 
-  <div class="rating-review">
+  <div class="rating-review" *ngIf="filterOwner()===false">
     <div class="review-title">
       <h2>Leave a Review</h2>
     </div>
@@ -136,7 +136,9 @@
     </form>
   </div>
 
-
+  <div class="map_container">
+  <div id="map"></div>
+  </div>
 
   <footer>
     <div class="container">

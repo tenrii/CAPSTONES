@@ -340,6 +340,22 @@ form {
   bottom: 10px;
 }
 
+.map_container {
+  #map {
+    width: 80%;
+    height: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    opacity: 0;
+    transition: opacity 150ms ease-in;
+    display: block;
+    &.show-map {
+      opacity: 1;
+    }
+  }
+}
+
 ///////////////////////
 
 #myImg {

@@ -12,6 +12,16 @@ import { PaymentService } from '../services/payment.service';
 import { ModalController } from '@ionic/angular';
 import { ChatModalComponent } from './chat-modal/chat-modal.component';
 
+declare var google:any;
+
+interface Marker {
+  position: {
+    lat: number,
+    lng: number,
+  };
+  title: string;
+}
+
 interface Seat {
   id: number;
   status: string;
@@ -26,6 +36,10 @@ interface Seat {
   styleUrls: ['room.page.scss'],
 })
 export class RoomPage implements OnInit {
+  map:any;
+  markers: Marker[] = [];
+  private currentMarker:any = google.maps.event.Marker;
+  mark:any = {};
   selectedFiles: any = FileList;
   public data: any;
   public owner: any;
@@ -37,6 +51,7 @@ export class RoomPage implements OnInit {
   allData: any = {};
   collectionRoom = 'Room';
   downloadURL!: Observable<string>;
+  user = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   tenantId = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   email = JSON.parse(localStorage.getItem('user') || '{}')['email'];
   isReserving = new BehaviorSubject(false);
@@ -68,7 +83,7 @@ export class RoomPage implements OnInit {
 });
 
     this.load();
-
+    this.loadMap();
   }
 
   onFileSelected(event: any) {
@@ -236,4 +251,41 @@ export class RoomPage implements OnInit {
           .subscribe();
       });*/
   }
+
+  filterOwner() {
+    if (this.firebaseService.ownerUid.includes(this.user)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  loadMap() {
+    const mapEle: any = document.getElementById('map');
+    const myLatLng = { lat: 37.7749, lng: -122.4194 }; // Example coordinates for San Francisco
+    this.map = new google.maps.Map(mapEle, {
+      center: myLatLng,
+      zoom:20
+    });
+
+    google.maps.event.addListenerOnce(this.map, 'idle', () => {
+      const marker = { position: myLatLng, title: 'My Location' };
+      this.addMarker(marker);
+      mapEle.classList.add('show-map');
+    });
+  }
+
+  renderMarkers() {
+    // No changes needed if you're marking a single location
+  }
+
+  addMarker(marker: Marker) {
+    this.mark = marker.position;
+    return new google.maps.Marker({
+      position: marker.position,
+      map: this.map,
+      title: marker.title
+    });
+  }
+
 }

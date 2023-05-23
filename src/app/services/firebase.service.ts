@@ -100,6 +100,7 @@ export class FirebaseService {
               Price: localData.Price,
               occupied: localData.occupied,
               isUnlisted: localData.isUnlisted,
+              Marker: localData.Marker,
             };
           });
           return roomList;
