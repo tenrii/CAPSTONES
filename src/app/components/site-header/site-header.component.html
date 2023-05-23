@@ -27,6 +27,8 @@
     </ul>
 
   </div>
+
+
   <div class="dropdown">
     <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
       aria-expanded="false">
@@ -35,8 +37,11 @@
     </button>
     <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
       <span *ngIf="isLogin()===false">
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModalL()">Login</button></li>
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoLogModalR()">Register</button></li>
+        <li><button class="dropdown-item" style="font-size: 18px; font-family: Montserrat; font-weight: 600;"
+            (click)="gotoLogModalL()"><i class="bi bi-box-arrow-in-right" style="font-size:x-large;"></i>Login</button>
+        </li>
+        <li><button class=" dropdown-item" style="font-size: 18px; font-family: Montserrat; font-weight: 600;"
+            (click)="gotoLogModalR()"><i class="bi bi-pencil-square"></i>Register</button></li>
       </span>
       <span *ngIf="filterTenant() === true">
         <div>
@@ -44,8 +49,8 @@
             <div>{{tenant?.FName}} {{tenant?.LName}}</div>
           </span>
         </div>
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditProfile()"><i
-              class="bi bi-person-circle"></i>Edit Profile</button>
+        <li><button class="dropdown-item" style="font-size: 18px; font-family: Montserrat; font-weight: 600;"
+            (click)="gotoEditProfile()"><i class="bi bi-person-circle"></i>Edit Profile</button>
         </li>
       </span>
       <span *ngIf="filterOwner() === true">
@@ -54,11 +59,13 @@
             <div>{{owner?.FName}} {{owner?.LName}}</div>
           </span>
         </div>
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="gotoEditOwnerProfile()">Edit
+        <li><button class="dropdown-item" style="font-size: 18px; font-family: Montserrat; font-weight: 600;"
+            (click)="gotoEditOwnerProfile()"><i class="bi bi-person-circle"></i>Edit
             Profile</button></li>
       </span>
       <span *ngIf="isLogin()===true">
-        <li><button class="dropdown-item" style="font-size: 15px;" (click)="authService.SignOut()">Logout</button></li>
+        <li><button class="dropdown-item" style="font-size: 18px; font-family: Montserrat; font-weight: 600;"
+            (click)="authService.SignOut()"><i class="bi bi-box-arrow-left"></i>Logout</button></li>
       </span>
     </ul>
   </div>

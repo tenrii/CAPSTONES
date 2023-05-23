@@ -241,94 +241,6 @@ li a:hover {
   font-size: 14px;
 }
 
-/*VIDEO VIDEO SECTION*/
-.video-section {
-  position: relative;
-  height: 500px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.container {
-  max-width: 1200px;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-}
-
-.col img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.col {
-  flex-basis: 0;
-  flex-grow: 1;
-  max-width: 100%;
-  margin: 50px;
-}
-
-h1 {
-  font-size: 2.5rem;
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-family: Montserrat;
-}
-
-p {
-  font-size: 1rem;
-  line-height: 1.5;
-  margin: 0 0 1rem;
-  font-family: Montserrat;
-  text-align: justify;
-}
-
-/*LOGO BRANDS*/
-/*logo*/
-.brands {
-  margin-top: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 50px;
-}
-
-.brands h1 {
-  text-align: center;
-  font-size: 50px;
-  font-family: Crimson Pro;
-  font-weight: 500;
-  color: #544541;
-}
-
-.logo-brands {
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-  margin-bottom: 50px;
-}
-
-.logo-brands img {
-  width: 200px;
-  height: 150px;
-  margin: 0 30px;
-  background-color: white;
-  mix-blend-mode: luminosity;
-  filter: grayscale(1);
-  opacity: 0.5;
-  transition: filter 0.2s ease-in-out, opacity 0.2s ease-in-out;
-}
-
-.logo-brands img:hover {
-  filter: none;
-  opacity: 1;
-}
-
 /* Adjust margins and paddings for smaller screens */
 @media (max-width: 767px) {
   .navbar {
@@ -373,7 +285,6 @@ p {
 
 /* Specific Styles for Mobile Devices */
 @media (max-width: 767px) {
-  /* Adjust the logo size and margins */
   #logo {
     width: 80px;
     margin: 10px;
@@ -395,221 +306,6 @@ p {
   .navbar .dropdown #dropdownMenu2 {
     width: 80px;
     height: 35px;
-  }
-
-  /* Adjust the margins and paddings for the rooms */
-  .room {
-    width: 100%;
-    margin: 10px 0;
-    height: 300px;
-    max-height: 300px;
-  }
-
-  .room .over {
-    height: 150px;
-  }
-
-  .room .price {
-    bottom: 20px;
-  }
-
-  .room .price {
-    max-width: 150px;
-    bottom: 30px;
-  }
-
-  .room .price p {
-    font-size: 14px;
-  }
-
-  .room .details #p1 {
-    font-size: 16px;
-  }
-
-  .room .details #p3,
-  .room .details #p4 {
-    font-size: 12px;
-  }
-
-  /* Adjust the styles for the video section */
-  .video-section {
-    height: 300px;
-  }
-
-  .video-container img {
-    height: 100%;
-  }
-  .video-overlay h2 {
-    color: white;
-    font-size: 18px;
-    margin-top: -100%;
-    margin-bottom: 50px;
-  }
-  .button {
-    display: inline-block;
-    padding: 15px 15px;
-    background-color: #cd9452;
-    color: white;
-    text-decoration: none;
-    font-size: 12px;
-    border: none; /* remove button border */
-    margin-top: -20px;
-  }
-
-  .play-icon {
-    height: 50px;
-    width: 50px;
-    margin-top: -20px;
-  }
-
-  .play-icon i {
-    font-size: 1.5em;
-  }
-
-  .play-text {
-    top: calc(50% + 50px);
-    font-size: 1em;
-  }
-}
-
-/* Specific Styles for Mobile Devices */
-@media (max-width: 767px) {
-  /* Adjust the size and margins for the brand logos */
-  .logo-brands {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .logo-brands img {
-    width: 100px;
-    height: 75px;
-    margin: 15px 0;
-  }
-}
-
-/* Specific Styles for Tablet Devices */
-@media (min-width: 768px) and (max-width: 991px) {
-  /* Adjust the size and margins for the brand logos */
-  .logo-brands {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .logo-brands img {
-    width: 200px;
-    height: 112.5px;
-    margin: 30px 0;
-  }
-}
-
-/* Media Queries */
-@media only screen and (max-width: 768px) {
-  .team h1 {
-    padding-top: 20px;
-    font-size: 24px;
-  }
-
-  .container {
-    margin-top: 20px;
-  }
-
-  .carousel-inner .carousel-item {
-    height: 300px; /* Adjust the height as needed */
-  }
-
-  .carousel-inner .carousel-item img {
-    height: 100%; /* Reset the height to 100% */
-  }
-
-  .carousel-inner .carousel-item .text-content {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 30px;
-    text-align: center;
-    width: 100%;
-    color: #544541;
-  }
-
-  .carousel-inner .carousel-item .text-content h1 {
-    font-size: 28px;
-  }
-
-  .carousel-inner .carousel-item .text-content h2 {
-    font-size: 12px;
-    margin-top: -80px;
-  }
-
-  .carousel-inner .carousel-item .text-content p {
-    font-size: 10px;
-    max-width: 100%;
-    margin-top: 10px;
-    line-height: 15px;
-    text-align: center;
-  }
-
-  .carousel-inner .carousel-item .text-content button {
-    padding: 8px 16px;
-    font-size: 0.8em;
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  #filter {
-    float: none;
-    margin: 10px;
-  }
-
-  .filters {
-    position: static;
-    left: auto;
-    top: auto;
-  }
-
-  #filter ion-select,
-  #filter ion-range {
-    min-width: 100%;
-  }
-}
-
-/* Media Queries */
-@media only screen and (max-width: 430px) {
-  .room {
-    width: 90%;
-    margin: 20px;
-    margin-bottom: 20px;
-    height: auto;
-    max-height: none;
-  }
-
-  .room .over {
-    height: 200px;
-  }
-
-  .room .details {
-    margin-top: -30px;
-  }
-
-  .room .details #p1 {
-    font-size: 16px;
-  }
-
-  .room .price {
-    bottom: 30px;
-  }
-
-  .room .price p {
-    font-size: 16px;
-  }
-
-  .room .details #p3,
-  .room .details #p4 {
-    font-size: 12px;
   }
 }
 
@@ -771,5 +467,116 @@ p {
 
   .bottom-footer-center {
     font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat";
+  }
+
+  h2 {
+    font-family: Montserrat;
+    margin-top: 30px;
+    color: #fff;
+  }
+
+  .banner-content h1 {
+    font-family: Crimson Pro;
+    font-weight: 800;
+    font-size: 40px;
+    color: #fff;
+  }
+
+  .banner-content p {
+    font-family: "Montserrat";
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .image-wrap {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .banner-content {
+    position: absolute;
+    z-index: 99999;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    text-align: center;
+    font-size: 1.5em;
+    color: #fff;
+    line-height: 1.5;
+  }
+
+  .img-content img {
+    width: 100%;
+    height: 70vh;
+    display: block;
+    object-fit: cover;
+  }
+
+  .ban-btn {
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    border-radius: 4px;
+    font-family: Montserrat;
+  }
+}
+
+@media only screen and (max-width: 991px) {
+  /*TERMS & CONDITION*/
+  .terms-condition ul {
+    color: black;
+    list-style-type: circle;
+  }
+
+  .terms-condition p {
+    border-bottom: 1px solid gray;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 18px;
+  }
+
+  .terms-condition {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    margin-top: -15%;
+  }
+
+  p {
+    text-align: center;
+    align-content: center;
+    font-family: Montserrat;
+  }
+
+  ul {
+    list-style-type: none;
+    text-align: justify;
+    padding: 0;
+    font-family: Montserrat;
+  }
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  b {
+    font-weight: bold;
   }
 }

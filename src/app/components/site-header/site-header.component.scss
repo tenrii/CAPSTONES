@@ -37,7 +37,7 @@
 }
 .navbar .dropdown {
   position: relative;
-  right: 50px;
+  right: 150px;
   bottom: 10px;
   float: right;
 }
@@ -57,7 +57,45 @@
   background-color: transparent;
   border: none;
 }
+.navbar .dropdown .dropdown-menu {
+  width: 300px !important; /* Adjust the width value as needed */
+  margin-left: -50px;
+  margin-top: 20px;
+}
 
+.dropdown-menu span {
+  display: block;
+  overflow: hidden;
+}
+
+.dropdown-menu span img {
+  float: left;
+  margin-right: 10px;
+  border: 2px solid #c38f32;
+}
+
+.dropdown-menu span div {
+  margin-top: 10px;
+  padding-left: 20px;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.dropdown-menu span .bi {
+  color: #c38f32;
+  font-size: 30px;
+  margin-top: 20px;
+  margin: 10px;
+}
+
+.bi::before {
+  /* Add your custom styles here */
+  /* For example: */
+  font-size: 30px;
+  margin-top: 10px;
+  color: #c38f32;
+}
 .login-modal {
   ion-modal {
     --max-height: 250px;

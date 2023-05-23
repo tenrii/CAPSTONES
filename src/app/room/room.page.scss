@@ -342,11 +342,12 @@ form {
 
 .map_container {
   #map {
-    width: 80%;
+    border: 2px solid #c38f32;
+    border-radius: 8px;
+    width: 47%;
     height: 400px;
-    margin-left: auto;
-    margin-right: auto;
     margin-bottom: 20px;
+    margin-left: 35px;
     opacity: 0;
     transition: opacity 150ms ease-in;
     display: block;
@@ -448,15 +449,16 @@ form {
   display: none;
 }
 
-.contact div img {
+.contact span img {
   width: 70px;
   border-radius: 40px;
-  margin-left: 25px;
+  margin-left: 20px;
+  margin-bottom: 20px;
 }
 
 .contact .name {
-  margin-left: 20px;
   font-size: 20px;
+  justify-content: center;
 }
 
 /* 100% Image Width on Smaller Screens */

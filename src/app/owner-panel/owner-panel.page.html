@@ -27,58 +27,63 @@
           <ion-popover trigger="top-center" side="bottom" alignment="center">
             <ng-template>
               <ion-content class="ion-padding">
-                <div class="title"><ion-icon name="notifications"></ion-icon><span>Notification</span></div>
+                <div class="title"><ion-icon name="notifications" style="font-size: 30px;"></ion-icon><span
+                    style="align-items: center; margin-top: -10px">Notification</span></div>
 
                 <div class="bill" id="bill">
                   <ion-grid class="bills-header">
                     <ion-row>
                       <ion-col class="btn" size="4" [class.active]="(notifBtn | async) === 'bedspace'">
-                        <div type="button" (click)="notifBtn.next('bedspace')" style="font-family: Montserrat; font-size: 18px;">
+                        <div type="button" (click)="notifBtn.next('bedspace')"
+                          style="font-family: Montserrat; font-size: 18px;">
                           Bedspace</div>
                       </ion-col>
                       <ion-col class="btn" size="3" [class.active]="(notifBtn | async) === 'room'">
-                        <div type="button" (click)="notifBtn.next('room')" style="font-family: Montserrat; font-size: 18px;">Room
+                        <div type="button" (click)="notifBtn.next('room')"
+                          style="font-family: Montserrat; font-size: 18px;">Room
                         </div>
                       </ion-col>
                     </ion-row>
                   </ion-grid>
 
-                <div id="bedspace1" *ngIf="(notifBtn | async) === 'bedspace'">
-                  <ion-grid>
-                    <span *ngFor="let data of be; let i = index;" [attr.data-index]="i">
+                  <div id="bedspace1" *ngIf="(notifBtn | async) === 'bedspace'">
+                    <ion-grid>
+                      <span *ngFor="let data of be; let i = index;" [attr.data-index]="i">
                         <ion-row>
                           <ion-col style="max-width: 60px;">
 
-                            <img id="hover-trigger{{i}}" src="{{data.profpic}}" style="width: 50px;">
-                              <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
-                                <ng-template>
-                                  <ion-content>
-                                    <ion-grid>
-                                      <ion-row>
-                                        <ion-col style="max-width: 55px;"><img src="{{data.profpic}}" style="width: 40px;"></ion-col>
-                                        <ion-col>{{data.FName}} {{data.LName}}</ion-col>
-                                      </ion-row>
-                                      <ion-row>
-                                        <ion-col>{{data?.Address}}</ion-col>
-                                      </ion-row>
-                                      <ion-row>
-                                        <ion-col>{{data?.PhoneNum}}</ion-col>
-                                      </ion-row>
-                                      <ion-row>
-                                        <ion-col>{{data.Email}}</ion-col>
-                                      </ion-row>
-                                    </ion-grid>
-                                  </ion-content>
-                                </ng-template>
-                              </ion-popover>
+                            <img id="hover-trigger{{i}}" src="{{data.profpic}}"
+                              style="width: 50px; border-radius: 40px; border: 2px solid #544541">
+                            <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
+                              <ng-template>
+                                <ion-content>
+                                  <ion-grid>
+                                    <ion-row>
+                                      <ion-col style="max-width: 55px;"><img src="{{data.profpic}}"
+                                          style="width: 40px;"></ion-col>
+                                      <ion-col>{{data.FName}} {{data.LName}}</ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col>{{data?.Address}}</ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col>{{data?.PhoneNum}}</ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col>{{data.Email}}</ion-col>
+                                    </ion-row>
+                                  </ion-grid>
+                                </ion-content>
+                              </ng-template>
+                            </ion-popover>
 
                           </ion-col>
                           <ion-col style="border-bottom: gray solid 1px;">
                             <div class="cardName">
-                                  {{data.FName}} {{data.LName}} reserved a bedspace in <span
-                                    style="font-weight: 600;">{{data.Title}} - {{data.RoomName}} Bed - {{data.uid}}
-                                    <span *ngIf="data.bed === 'up'">Top Bunk</span><span
-                                      *ngIf="data.bed === 'down'">Bottom Bunk</span></span>
+                              {{data.FName}} {{data.LName}} reserved a bedspace in <span
+                                style="font-weight: 600;">{{data.Title}} - {{data.RoomName}} Bed - {{data.uid}}
+                                <span *ngIf="data.bed === 'up'">Top Bunk</span><span *ngIf="data.bed === 'down'">Bottom
+                                  Bunk</span></span>
                             </div>
 
                             <div class="cardPayment">
@@ -93,55 +98,56 @@
                           </ion-col>
                         </ion-row>
                       </span>
-                  </ion-grid>
-                </div>
+                    </ion-grid>
+                  </div>
 
-                <div id="room1" *ngIf="(notifBtn | async) === 'bedspace'">
-                  <ion-grid>
-                    <span *ngFor="let data of ro; let i = index;" [attr.data-index]="i">
-                      <ion-row>
-                        <ion-col style="max-width: 60px;"><img id="hover-trigger{{i}}" src="{{data.profpic}}" style="width: 50px;">
-                          <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
-                            <ng-template>
-                              <ion-content>
-                                <ion-grid>
-                                  <ion-row>
-                                    <ion-col><img src="{{data.profpic}}" style="width: 30px;"></ion-col>
-                                    <ion-col>{{data.FName}} {{data.LName}}</ion-col>
-                                  </ion-row>
-                                  <ion-row>
-                                    <ion-col>{{data?.Address}}</ion-col>
-                                  </ion-row>
-                                  <ion-row>
-                                    <ion-col>{{data?.PhoneNum}}</ion-col>
-                                  </ion-row>
-                                  <ion-row>
-                                    <ion-col>{{data.Email}}</ion-col>
-                                  </ion-row>
-                                </ion-grid>
-                              </ion-content>
-                            </ng-template>
-                          </ion-popover></ion-col>
-                        <ion-col style="border-bottom: gray solid 1px;">
-                          <div class="cardName">
+                  <div id="room1" *ngIf="(notifBtn | async) === 'bedspace'">
+                    <ion-grid>
+                      <span *ngFor="let data of ro; let i = index;" [attr.data-index]="i">
+                        <ion-row>
+                          <ion-col style="max-width: 60px;"><img id="hover-trigger{{i}}" src="{{data.profpic}}"
+                              style="width: 50px;">
+                            <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
+                              <ng-template>
+                                <ion-content>
+                                  <ion-grid>
+                                    <ion-row>
+                                      <ion-col><img src="{{data.profpic}}" style="width: 30px;"></ion-col>
+                                      <ion-col>{{data.FName}} {{data.LName}}</ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col>{{data?.Address}}</ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col>{{data?.PhoneNum}}</ion-col>
+                                    </ion-row>
+                                    <ion-row>
+                                      <ion-col>{{data.Email}}</ion-col>
+                                    </ion-row>
+                                  </ion-grid>
+                                </ion-content>
+                              </ng-template>
+                            </ion-popover></ion-col>
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
                               {{data.FName}} {{data.LName}} reserved a room in <span
                                 style="font-weight: 600;">{{data.Title}}</span>
-                          </div>
+                            </div>
 
-                          <div class="cardPayment">
-                            <span *ngIf="data.status === 'paidPayment'" style="color: green;">Paid in
-                              Full</span>
-                            <span *ngIf="data.status === 'pendingPayment'" style="color: gray;">Pending</span>
-                          </div>
+                            <div class="cardPayment">
+                              <span *ngIf="data.status === 'paidPayment'" style="color: green;">Paid in
+                                Full</span>
+                              <span *ngIf="data.status === 'pendingPayment'" style="color: gray;">Pending</span>
+                            </div>
 
-                          <div class="time ion-text-right">
-                            {{data.date | date:'short'}}
-                          </div>
-                        </ion-col>
-                      </ion-row>
-                    </span>
-                  </ion-grid>
-                </div>
+                            <div class="time ion-text-right">
+                              {{data.date | date:'short'}}
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                      </span>
+                    </ion-grid>
+                  </div>
                 </div>
               </ion-content>
             </ng-template>
