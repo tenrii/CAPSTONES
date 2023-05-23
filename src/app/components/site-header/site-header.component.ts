@@ -19,6 +19,7 @@ export class SiteHeaderComponent implements OnInit {
   user: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   isModalOpen: boolean = false;
   isButtonDisabled: boolean = false;
+  isMenuOpen = false;
 
 
   constructor(
@@ -30,6 +31,10 @@ export class SiteHeaderComponent implements OnInit {
   ngOnInit() {
     this.getTenant();
     this.getOwner();
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
   isLogin(){
