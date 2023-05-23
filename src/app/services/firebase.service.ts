@@ -130,6 +130,8 @@ export class FirebaseService {
               Address: localData.Address,
               Email: localData.Email,
               profpic: localData.profpic,
+              Birthday: localData.Birthday,
+              PhoneNum: localData.PhoneNum,
             };
           });
           return tenantList;
@@ -162,6 +164,8 @@ export class FirebaseService {
               Phone: localData.Phone,
               BusinessPermit: localData.BusinessPermit,
               profpic: localData.profpic,
+              Birthday: localData.Birthday,
+              PhoneNum: localData.PhoneNum,
             };
           });
           return ownerList;

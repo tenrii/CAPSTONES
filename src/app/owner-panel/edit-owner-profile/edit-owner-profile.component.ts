@@ -29,6 +29,8 @@ export class EditOwnerProfileComponent implements OnInit {
       Age: [this.data?.Age, [Validators.required]],
       Gender: [this.data?.Gender, [Validators.required]],
       Address: [this.data?.Address, [Validators.required]],
+      PhoneNum: [this.data?.PhoneNum,[Validators.required]],
+      Birthday: [this.data?.Birthday,[Validators.required]],
     });
     console.log('zz',this.data)
   }

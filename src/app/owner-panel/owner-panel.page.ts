@@ -39,6 +39,7 @@ export class OwnerPanelPage implements OnInit {
   currentSortColumn!: string;
   isSortAscending!: boolean;
   searchText!: string;
+  filterlist:any = new BehaviorSubject([]);
   sortBy: any;
   public notifBtn = new BehaviorSubject('bedspace');
   constructor(
@@ -83,6 +84,7 @@ export class OwnerPanelPage implements OnInit {
               LName: room.map((data:any) => data.FName),
               RoomName: a.RoomName,
               a:'',
+              Price: a.Price,
               userId: a.occupied?.userId,
               date: a.occupied?.dateCreated,
               status: a.occupied?.status,
@@ -97,8 +99,9 @@ export class OwnerPanelPage implements OnInit {
                 FName: bed.map((data:any) => data.FName),
                 LName: bed.map((data:any) => data.LName),
                 RoomName: a.RoomName,
-                id: b.id,
+                uid: b.id,
                 b:'',
+                Price: a.Price,
                 bed: b.status,
                 userId: b.occupied?.userId,
                 date: b.occupied?.dateCreated,
@@ -136,8 +139,11 @@ export class OwnerPanelPage implements OnInit {
             LName: bed.map((data:any) => data.LName),
             Title: a.Title,
             RoomName: a.RoomName,
+            Phone: bed.map((data:any) => data?.Phone),
+            Email: bed.map((data:any) => data?.Email),
+            Address: bed.map((data:any) => data?.Address),
             profpic: bed.map((data:any) => data.profpic),
-            id: b.id,
+            uid: b.id,
             bed: b.status,
             userId: b.occupied?.userId,
             date: b.occupied?.dateCreated,
@@ -164,8 +170,11 @@ export class OwnerPanelPage implements OnInit {
             LName: room.map((data:any) => data.LName),
             Title: a.Title,
             RoomName: a.RoomName,
+            Phone: room.map((data:any) => data?.Phone),
+            Email: room.map((data:any) => data?.Email),
+            Address: room.map((data:any) => data?.Address),
             profpic: room.map((data:any) => data.profpic),
-            id: a.id,
+            uid: a.id,
             userId: a.occupied?.userId,
             date: a.occupied?.dateCreated,
             status: a.occupied?.status,
@@ -357,33 +366,10 @@ export class OwnerPanelPage implements OnInit {
     return await modalInstance.present();
   }
 
-  filterData(data: any, b: any): boolean {
-    if (!this.searchText) {
-      return true; // Display all rows when no search term is entered
-    }
-
-    const searchTerm = this.searchText.toLowerCase();
-    const fullName = data.tenantData
-      .map((tenant: any) => tenant.FName + ' ' + tenant.LName)
-      .join(' ')
-      .toLowerCase();
-
-    // Customize the conditions based on your specific filtering requirements
-    return fullName.includes(searchTerm);
-    /*if (this.searchText) {
-      const searchTerm = this.searchText.toLowerCase();
-      console.log('a',searchTerm)
-      console.log('b',this.searchText.toLowerCase())
-      this.filteredRoom = this.room.filter(data => {
-        const fullName = data.tenantData.map((tenant:any) => tenant.FName + ' ' + tenant.LName).join(' ');
-        const bedId = data.Bed.map((bed: any) => bed.id)
-        const bedStatus = data.Bed.map((status:any) => status.status)
-        const bedDate = data.Bed.map((date:any) => date.occupied?.dateCreated)
-        console.log('c',fullName.toLowerCase().includes(searchTerm))
-        return fullName.toLowerCase().includes(searchTerm);
-      });
-    } else {
-      this.filteredRoom = this.room;
-    }*/
+  filterData() {
+    const data = this.filteredRecord.filter((item) => {
+      return item.FName.toLowerCase().includes(this.searchText.toLowerCase());
+    });
+    this.filterlist.next(data);
   }
 }

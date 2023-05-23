@@ -48,13 +48,35 @@
                     <span *ngFor="let data of be; let i = index;" [attr.data-index]="i">
                         <ion-row>
                           <ion-col style="max-width: 60px;">
-                            <span *ngIf="!data.profpic || data.profpic === 'null' || data.profpic === null"><img src="assets/user2.png" style="width: 50px;"></span>
-                            <span *ngIf="data.profpic"><img src="{{data.profpic}}" style="width: 50px;"></span>
+
+                            <img id="hover-trigger{{i}}" src="{{data.profpic}}" style="width: 50px;">
+                              <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
+                                <ng-template>
+                                  <ion-content>
+                                    <ion-grid>
+                                      <ion-row>
+                                        <ion-col style="max-width: 55px;"><img src="{{data.profpic}}" style="width: 40px;"></ion-col>
+                                        <ion-col>{{data.FName}} {{data.LName}}</ion-col>
+                                      </ion-row>
+                                      <ion-row>
+                                        <ion-col>{{data?.Address}}</ion-col>
+                                      </ion-row>
+                                      <ion-row>
+                                        <ion-col>{{data?.PhoneNum}}</ion-col>
+                                      </ion-row>
+                                      <ion-row>
+                                        <ion-col>{{data.Email}}</ion-col>
+                                      </ion-row>
+                                    </ion-grid>
+                                  </ion-content>
+                                </ng-template>
+                              </ion-popover>
+
                           </ion-col>
                           <ion-col style="border-bottom: gray solid 1px;">
                             <div class="cardName">
                                   {{data.FName}} {{data.LName}} reserved a bedspace in <span
-                                    style="font-weight: 600;">{{data.Title}} Bed - {{data.RoomName}}
+                                    style="font-weight: 600;">{{data.Title}} - {{data.RoomName}} Bed - {{data.uid}}
                                     <span *ngIf="data.bed === 'up'">Top Bunk</span><span
                                       *ngIf="data.bed === 'down'">Bottom Bunk</span></span>
                             </div>
@@ -78,7 +100,28 @@
                   <ion-grid>
                     <span *ngFor="let data of ro; let i = index;" [attr.data-index]="i">
                       <ion-row>
-                        <ion-col style="max-width: 60px;"><img src="assets/user2.png" style="width: 50px;"></ion-col>
+                        <ion-col style="max-width: 60px;"><img id="hover-trigger{{i}}" src="{{data.profpic}}" style="width: 50px;">
+                          <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
+                            <ng-template>
+                              <ion-content>
+                                <ion-grid>
+                                  <ion-row>
+                                    <ion-col><img src="{{data.profpic}}" style="width: 30px;"></ion-col>
+                                    <ion-col>{{data.FName}} {{data.LName}}</ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col>{{data?.Address}}</ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col>{{data?.PhoneNum}}</ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col>{{data.Email}}</ion-col>
+                                  </ion-row>
+                                </ion-grid>
+                              </ion-content>
+                            </ng-template>
+                          </ion-popover></ion-col>
                         <ion-col style="border-bottom: gray solid 1px;">
                           <div class="cardName">
                               {{data.FName}} {{data.LName}} reserved a room in <span
@@ -268,7 +311,7 @@
             <ion-col>Payment Status</ion-col>
             <ion-col>Date of Payment</ion-col>
           </ion-row>
-          <span *ngFor="let data of filteredRecord; let i = index;" [attr.data-index]="i">
+          <span *ngFor="let data of filteredRecord | filter: searchText">
             <ion-row class="row-body" style="text-align:center;">
               <ion-col>
                 {{data.FName}} {{data.LName}}
@@ -277,7 +320,7 @@
               <ion-col>
                 Room{{data.roomName}}
                 <br />
-                Bed{{data.id}} {{data.status}}
+                Bed {{data.id}} {{data.bed}}
               </ion-col>
 
               <ion-col>
