@@ -31,22 +31,22 @@
               <ion-content class="ion-padding">
                 <div class="title"><ion-icon name="notifications"></ion-icon><span>Notification</span></div>
 
-                <ion-grid ><ion-row style=" max-width: 155px;">
-                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #544541;
-              color: white; border-radius: 10px 10px 0px 0px;">
-                      <div type="button" onclick="
-                document.getElementById('bedspace1').style.display='block';
-                document.getElementById('room1').style.display='none';" style="font-family: Montserrat">Bedspace</div>
-                    </ion-col>
-                    <ion-col style="max-width: 100px; margin-left: 5px;background-color: #544541;
-              color: white; border-radius: 10px 10px 0px 0px;">
-                      <div type="button" onclick="
-                document.getElementById('bedspace1').style.display='none';
-                document.getElementById('room1').style.display='block';" style="font-family: Montserrat">Room</div>
-                    </ion-col>
-                  </ion-row></ion-grid>
+                <div class="bill" id="bill">
+                  <ion-grid class="bills-header">
+                    <ion-row>
+                      <ion-col class="btn" size="4" [class.active]="(notifBtn | async) === 'bedspace'">
+                        <div type="button" (click)="notifBtn.next('bedspace')" style="font-family: Montserrat; font-size: 18px;">
+                          Bedspace</div>
+                      </ion-col>
+                      <ion-col class="btn" size="3" [class.active]="(notifBtn | async) === 'room'">
+                        <div type="button" (click)="notifBtn.next('room')" style="font-family: Montserrat; font-size: 18px;">Room
+                        </div>
+                      </ion-col>
+                    </ion-row>
+                  </ion-grid>
 
-                <div id="bedspace1" style="display: block;">
+
+                <div id="bedspace1" *ngIf="(notifBtn | async) === 'bedspace'">
                   <ion-grid>
                     <span *ngFor="let data of be">
                         <!--Paid-->
@@ -93,7 +93,7 @@
                   </ion-grid>
                 </div>
 
-                <div id="room1" style="display: none;">
+                <div id="room1"  *ngIf="(notifBtn | async) === 'room'">
                   <ion-grid>
                     <span *ngFor="let data of ro">
                         <!--Paid-->
@@ -131,6 +131,7 @@
                       </span>
                   </ion-grid>
                 </div>
+              </div>
               </ion-content>
             </ng-template>
           </ion-popover>

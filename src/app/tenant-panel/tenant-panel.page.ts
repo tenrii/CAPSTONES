@@ -18,6 +18,7 @@ export class TenantPanelPage implements OnInit {
   public tenant: any;
   public page = new BehaviorSubject('bills');
   public billsPage = new BehaviorSubject('unpaid');
+  public notifBtn = new BehaviorSubject('bedspace');
   public bills: any[] = [];
   public paidBills: any[] = [];
   public be:any[]=[];

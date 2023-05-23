@@ -6,7 +6,7 @@ import { ModalController } from '@ionic/angular';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 import { Modal1Component } from './modal/modal1/modal1.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { combineLatest, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication-service';
 import domtoimage from 'dom-to-image';
 import { jsPDF } from 'jspdf';
@@ -40,7 +40,7 @@ export class OwnerPanelPage implements OnInit {
   isSortAscending!: boolean;
   searchText!: string;
   sortBy: any;
-
+  public notifBtn = new BehaviorSubject('bedspace');
   constructor(
     public authService: AuthenticationService,
     private m: ModalController,
