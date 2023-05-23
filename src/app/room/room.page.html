@@ -85,33 +85,33 @@
   </ion-grid>
 
   <div class="p-4 p-md-5 text-center text-lg-start shadow-1-strong rounded">
-    <span *ngFor="let data of review">
-      <div class="row d-flex">
-        <div class="col-md-6">
-          <div class="card review-card">
-            <div class="card-body m-3">
-              <div class="row align-items-center">
-                <div class="col-lg-4 mb-4">
-                  <div class="profile-pic-container">
-                    <div class="profile-pic-wrapper">
-                      <img [src]="data?.profpic" class="rounded-circle img-fluid shadow-1 profile-pic"
-                        alt="Profile Picture" />
-                    </div>
+    <div *ngFor="let data of review" class="row d-flex">
+      <div class="col-md-6">
+        <div class="card review-card">
+          <div class="card-body m-3">
+            <div class="row align-items-center">
+              <div class="col-lg-4 mb-4">
+                <div class="profile-pic-container">
+                  <div class="profile-pic-wrapper">
+                    <img [src]="data?.profpic" class="rounded-circle img-fluid shadow-1 profile-pic" alt="Profile Picture" />
                   </div>
                 </div>
-                <div class="col-lg-8">
-                  <p class="text-muted fw-light mb-4 review-text">
-                    {{data?.Review}}
-                  </p>
-                  <p class="fw-bold lead mb-2 reviewer-name">{{data?.Name}}</p>
-                  <p class="fw-bold text-muted mb-0 role">Tenant</p>
+              </div>
+              <div class="col-lg-8">
+                <div class="rating-container">
+                  <ion-icon class="rating-star" *ngFor="let i of [1,2,3,4,5]" [name]="i <= data.Rating ? 'star' : 'star-outline'"></ion-icon>
                 </div>
+                <p class="text-muted fw-light mb-4 review-text">
+                  {{ data?.Review }}
+                </p>
+                <p class="fw-bold lead mb-2 reviewer-name">{{ data?.Name }}</p>
+                <p class="fw-bold text-muted mb-0 role">Tenant</p>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </span>
+    </div>
   </div>
 
   <div class="rating-review">
