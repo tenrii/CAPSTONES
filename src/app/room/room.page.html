@@ -262,7 +262,7 @@
             [disabled]="(this.isReserving | async) || this.pendingPayment || this.data?.occupied"
             style="font-family: Montserrat;">
             <ion-spinner *ngIf="this.isReserving | async"></ion-spinner>
-            Reserve
+            {{ (this.isReserving | async) || this.pendingPayment || this.data?.occupied ? 'Reserved' : 'Reserve' }}
           </ion-button>
         </ion-col>
       </ion-row>
