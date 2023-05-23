@@ -86,6 +86,7 @@
 
 .price #pr {
   text-align: center;
+  font-family: Montserrat;
 }
 
 .price #pr ion-select {
@@ -99,6 +100,7 @@
 .price #pr #p {
   margin-top: 10px;
   font-size: 20px;
+  font-family: Montserrat;
 }
 
 .price #pr #priceBtn {
@@ -109,21 +111,25 @@
 }
 
 .detail .room {
+  margin-left: 20px;
   font-size: 35px;
   font-weight: 500;
   font-family: Montserrat;
 }
 
 .detail .rent {
-  font-weight: 600;
+  margin-left: 20px;
+  font-weight: 500;
   font-family: Montserrat;
   color: #c38f32;
   font-size: 20px;
 }
 
 .detail .details {
+  margin-left: 20px;
   font-family: Montserrat;
   font-size: 16px;
+  margin-left: 20px;
 }
 
 .detail .amenities {
@@ -134,11 +140,13 @@
 }
 
 .detail .amenities #amenities-header {
+  margin-left: 20px;
   font-size: 20px;
   font-weight: 500;
 }
 
 .detail .amenities #amenities {
+  margin-left: 20px;
   min-width: 180px;
   text-align: center;
   padding: 10px;
@@ -152,31 +160,52 @@
   color: #c38f32;
 }
 
-.detail .contact {
-  margin-top: 20px;
-  margin: 10px;
+.contact .contact-owner {
+  margin-bottom: 10px;
+  margin-left: 20px;
+  font-family: Montserrat;
+  font-size: 25px;
+  font-weight: 600;
+}
+
+.contact .host {
+  margin-bottom: 10px;
+  margin-left: 20px;
+  font-family: Montserrat;
+  font-size: 20px;
+}
+.contact-button {
+  font-weight: bold;
+  color: #fff;
+  border-color: #333;
+  border-radius: 4px;
+  padding: 12px 24px;
   font-family: Montserrat;
 }
 
-.detail .contact #contact {
-  color: rgb(100, 66, 34);
-  border: rgb(194, 123, 17) solid 1px;
-  border-radius: 20px;
+.contact-button:hover {
+  background-color: #c38f32;
 }
 
-.detail .contact #contact:hover {
-  background-color: black;
-  color: white;
-  border: black solid 1px;
-}
+/*RATING*/
 
 .rating-star {
   font-size: 20px;
   color: #c38f32;
-
   &:not(:last-child) {
     margin-right: 4px;
   }
+}
+form {
+  margin-bottom: 50px;
+  margin-left: 15px;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  padding: 1rem;
+  font-family: Montserrat;
+  width: 78%;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 :host(.read-only) ion-icon {
@@ -193,11 +222,12 @@
   font-weight: 500;
   color: #544541;
   font-family: Montserrat !important;
+  margin-left: 20px;
 }
 
 .rating-review {
   margin-top: 10px;
-  margin-left: 60px;
+  margin-left: 20px;
   width: 60%;
 }
 
@@ -215,7 +245,6 @@
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 20px 0;
   cursor: pointer;
   border-radius: 4px;
 }
@@ -223,6 +252,8 @@
 .reviewBTN:hover {
   background-color: #c38f32; /* Change background color on hover */
 }
+
+////////////////////
 
 .content_btn {
   margin-left: 50px;
@@ -246,12 +277,58 @@
   border-right: rgb(0, 0, 0) solid 4px;
 }
 
-.all_review {
-  width: 600px;
+/*ALL REVIEWS*/
+/* Custom CSS styles for the review card */
+.review-card {
+  border: 2px solid #c38f32;
+  border-radius: 8px;
+  background-color: #fff;
+  margin: 5px;
 }
 
-.all_review ion-card-title {
-  color: #544541;
+.review-card .card-body {
+  padding: 20px;
+}
+
+.profile-pic-container {
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.profile-pic-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.profile-pic-wrapper img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+}
+.review-text {
+  font-size: 16px;
+  line-height: 1;
+  color: #555;
+  font-family: Montserrat;
+}
+
+.reviewer-name {
+  font-size: 20px;
+  font-family: Montserrat;
+  color: #333;
+}
+
+.role {
+  font-size: 14px;
+  color: #888;
+  font-family: Montserrat;
 }
 
 ///////////////////////
