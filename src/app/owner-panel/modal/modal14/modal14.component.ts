@@ -11,12 +11,23 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 })
 export class Modal14Component implements OnInit {
   isButtonDisabled = false;
+  ownerUid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
+  public owner: any;
   constructor(
     private service: FirebaseService,
     private m: ModalController,
-    private afs: AngularFirestore) {}
+    private afs: AngularFirestore,
+    private firebaseService: FirebaseService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getOwner();
+  }
+
+  async getOwner(){
+    this.firebaseService.read_owner().subscribe(() => {
+      this.owner = this.firebaseService.getOwner(this.ownerUid);
+    });
+  }
 
   exit() {
     if (this.isButtonDisabled) {
