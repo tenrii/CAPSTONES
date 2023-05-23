@@ -97,7 +97,7 @@
                   <ion-grid>
                     <span *ngFor="let data of ro">
                         <!--Paid-->
-                        <ion-row *ngIf="data.status === 'paid'">
+                        <ion-row *ngIf="data.Status === 'paid'">
                            <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
                                 src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
                             <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
@@ -107,13 +107,13 @@
                               Your reservation in {{data.RoomName}}
                               at
                               {{data.Title}}
-                              is pending. Please pay within 24hrs to avoid cancellation.
+                              is confirmed and payment received in full. Thank you!
                               <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
                             </div>
                           </ion-col>
                         </ion-row>
                         <!--Pending-->
-                        <ion-row *ngIf="data.status === 'pending'">
+                        <ion-row *ngIf="data.Status === 'pending'">
                           <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
                                src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
                            <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
@@ -123,7 +123,7 @@
                              Your reservation in {{data.RoomName}}
                              at
                              {{data.Title}}
-                             is confirmed and payment received in full. Thank you!
+                             is pending. Please pay within 24hrs to avoid cancellation.
                              <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
                            </div>
                          </ion-col>
