@@ -109,7 +109,7 @@ export class TenantPanelPage implements OnInit {
 
   sortedBed(): any {
     this.transaction.map((a: any) => {
-      if (a.roomData && a.lineItems) {
+      if (a.roomData && a.lineItems && a.type === 'bedspace-reservation') {
         if(a.roomData.Bed){
         const bed = a.roomData.Bed?.filter((z:any)=>{
           return a.lineItems?.some((x:any)=> z.uid === x.uid);
@@ -134,7 +134,7 @@ export class TenantPanelPage implements OnInit {
 
   sortedRoom(): any {
     this.transaction.map((a: any) => {
-      if (a.roomData && a.lineItems) {
+      if (a.roomData && a.lineItems && a.type === 'room-reservation') {
         if(a.roomData.occupied){
           this.ro.push({
             Title: a.roomData.Title,
