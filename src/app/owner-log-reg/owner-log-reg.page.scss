@@ -1,23 +1,12 @@
 .background-radial-gradient {
   background-color: hsl(30, 41%, 15%);
-  background-image: url("/assets/owner.png"); /*radial-gradient(650px circle at 0% 0%,
-      hsl(30, 41%, 35%) 15%,
-      hsl(30, 41%, 30%) 35%,
-      hsl(30, 41%, 20%) 75%,
-      hsl(30, 41%, 19%) 80%,
-      transparent 100%),
-    radial-gradient(1250px circle at 100% 100%,
-      hsl(30, 41%, 45%) 15%,
-      hsl(30, 41%, 30%) 35%,
-      hsl(30, 41%, 20%) 75%,
-      hsl(30, 41%, 19%) 80%,
-      transparent 100%);*/
+  background-image: url("../../assets/tenant.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh; /* Set the height to 100% of the viewport height */
+  height: 120vh; /* Set the height to 100% of the viewport height */
   width: 100%; /* Set the width to 100% of the parent container */
-  font-family: DM Sans;
+  font-family: Montserrat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,4 +53,46 @@
 
 .file {
   font-size: 15px;
+}
+
+.owner-login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  font-size: 17px;
+  padding: 5px;
+  height: 45px;
+  border-radius: 21px;
+  width: 110px;
+  background-color: #544541;
+  font-family: Montserrat;
+}
+
+.register-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+h2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 30px;
 }

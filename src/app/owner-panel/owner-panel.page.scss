@@ -225,7 +225,6 @@ div[type="button-list"]:hover {
   background-color: #a06f4a;
 }
 
-
 .bills-body h1 {
   font-family: Montserrat;
   font-size: 18px;
@@ -267,5 +266,105 @@ div[type="button-list"]:hover {
         }
       }
     }
+  }
+}
+
+////////////////////
+///
+
+@media only screen and (max-width: 991px) {
+  .notification {
+    text-align: center;
+    font-family: Montserrat;
+    position: relative;
+    z-index: 1;
+  }
+
+  #top-center {
+    font-size: 18px;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+  }
+
+  #top-center:hover {
+    background-color: #e2e2e2;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+    margin-top: -10px;
+  }
+
+  .title ion-icon {
+    font-size: 30px;
+  }
+
+  .bill {
+    margin-top: 20px;
+  }
+
+  .bills-header .btn {
+    font-family: Montserrat;
+    font-size: 18px;
+  }
+
+  #bedspace1,
+  #room1 {
+    margin-top: 20px;
+  }
+
+  #bedspace1 ion-grid,
+  #room1 ion-grid {
+    padding: 0;
+  }
+
+  #bedspace1 ion-row,
+  #room1 ion-row {
+    border-bottom: 1px solid gray;
+    padding: 10px 0;
+  }
+
+  #bedspace1 ion-col,
+  #room1 ion-col {
+    display: flex;
+    align-items: center;
+  }
+
+  #bedspace1 ion-col:first-child img,
+  #room1 ion-col:first-child img {
+    width: 50px;
+  }
+
+  #bedspace1 ion-col:last-child,
+  #room1 ion-col:last-child {
+    border-bottom: none;
+    flex-grow: 1;
+    margin-left: 10px;
+  }
+
+  .cardName {
+    font-weight: 600;
+  }
+
+  .cardPayment {
+    margin-top: 5px;
+  }
+
+  .time {
+    text-align: right;
+  }
+
+  ion-popover {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 300px;
+    z-index: 2;
+    text-align: center;
   }
 }

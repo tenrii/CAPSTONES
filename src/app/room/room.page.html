@@ -67,14 +67,14 @@
           </div>
 
           <div class="contact">
-            <div>
-              <img [src]="owner?.profpic" style="width: 50px">
-            </div>
             <div class="host">Hosted by:</div>
-            <div class="contact-owner">{{owner?.FName}} {{owner?.LName}}</div>
-            <ion-button (click)="contactOwner()" style="font-family: Montserrat; margin-left: 20px; ">Contact
-              Owner</ion-button>
+            <span class="host-img">
+              <img [src]="owner?.profpic" style="width: 50px">
+            </span>
+            <span class="contact-owner">{{owner?.FName}} {{owner?.LName}}</span>
           </div>
+          <ion-button (click)="contactOwner()" style="font-family: Montserrat; margin-left: 20px; ">Contact
+            Owner</ion-button>
         </div>
       </ion-col>
 
@@ -137,7 +137,7 @@
   </div>
 
   <div class="map_container">
-  <div id="map"></div>
+    <div id="map"></div>
   </div>
 
   <footer>

@@ -11,18 +11,17 @@
         <div id="login" *ngIf="(condition | async) === 'login'">
           <div class="card bg-glass" style="height: 600px; margin-top: 50px;">
             <div class="card-body px-4 py-4 px-md-5">
-              <span>
+              <div class="login-image">
 
-                <img src="assets/logo.png" width=150 id="logo" style="margin-bottom: 30px;
-                margin-top: 0; margin-left: 165px;">
+                <img src="assets/logo.png" style="width: 200px;">
 
-                <div class="form-outline mb-4">
+                <div class=" form-outline mb-4" style="width: 100%;">
                   <label class="form-label" for="form3Example3" style="font-size:18px; float: left;">
                     Email Address: </label>
                   <input type="email" #email id="form3Example3" class="form-control" />
                 </div>
 
-                <div class="form-outline mb-4">
+                <div class="form-outline mb-4" style="width: 100%;">
                   <label class="form-label" for="form3Example4" style="font-size:18px; float: left;">
                     Password: </label>
                   <input type="password" #password id="form3Example4" class="form-control" />
@@ -31,8 +30,7 @@
                   </small>
                 </div>
 
-                <button type="submit" (click)="logIn(email,password)" class="btn btn-primary btn-block mb-4" style="font-size: 17px; padding: 5px; height: 45px; border-radius: 21px;
-            width: 110px; margin-left: 190px; background-color:#544541; font-family: Dm Sans;">
+                <button type="submit" (click)="logIn(email,password)" class="btn btn-primary btn-block mb-4">
                   Sign in
                 </button>
 
@@ -59,10 +57,10 @@
 
                 <div style="margin-top: 10px; font-size: 15px; text-align: center;">
                   Are you new here? <div type="button" (click)="condition.next('register')"
-                  [class.active]="(condition | async) === 'paid'" style="color: #544541; font-weight: 500;">
+                    [class.active]="(condition | async) === 'paid'" style="color: #544541; font-weight: 500;">
                     Register</div>
                 </div>
-              </span>
+              </div>
             </div>
           </div>
         </div>
@@ -72,8 +70,7 @@
           <div class="card bg-glass" style="height: 550px; overflow-y: scroll;">
             <div class="card-body px-4 py-4 px-md-5">
               <span>
-                <div type="button" (click)="condition.next('login')"
-                [class.active]="(condition | async) === 'login'">
+                <div type="button" (click)="condition.next('login')" [class.active]="(condition | async) === 'login'">
                   <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                     class="bi bi-arrow-left" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -81,7 +78,7 @@
                   </svg>
                 </div>
 
-                <h2 style="margin-left: 190px; font-family: DM Sans;">Register</h2>
+                <h2>Register</h2>
                 <form [formGroup]="tenantRegister">
 
                   <div class="form-outline mb-4">
@@ -138,12 +135,11 @@
                       We'll never share your password with anyone else
                     </small>
                   </div>
-
-                  <button type="submit" (click)="register(emails,passwords)" class="btn btn-primary btn-block mb-4"
-                    style="font-size: 17px;
-    padding: 5px; height: 45px; border-radius: 21px; width: 110px; margin-left: 190px;
-    background-color:#544541;"> Register
-                  </button>
+                  <div class="register-button">
+                    <button type="submit" (click)="register(emails,passwords)" class="btn btn-primary btn-block mb-4">
+                      Register
+                    </button>
+                  </div>
                 </form>
 
               </span>

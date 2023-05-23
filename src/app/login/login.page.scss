@@ -6,7 +6,7 @@
   background-repeat: no-repeat;
   height: 100vh; /* Set the height to 100% of the viewport height */
   width: 100%; /* Set the width to 100% of the parent container */
-  font-family: DM Sans;
+  font-family: Montserrat;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -51,4 +51,60 @@
 
 #passwordHelp {
   font-size: 12px;
+}
+
+h2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.bi {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.btn-primary {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.row {
+  /* Add your custom styles here */
+  /* For example: */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center the items horizontally */
+}
+
+.login-image {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.btn-primary {
+  font-size: 17px;
+  padding: 5px;
+  height: 45px;
+  border-radius: 21px;
+  width: 110px;
+  background-color: #544541;
+  font-family: Montserrat;
+}
+
+.register-button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
 }
