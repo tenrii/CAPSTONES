@@ -133,6 +133,7 @@ ion-content {
   font-weight: 500;
 }
 
+////////
 .room {
   align-content: center;
   margin-top: 100px;
@@ -143,7 +144,7 @@ ion-content {
   margin-top: 70px;
   margin-left: 57px;
   margin-bottom: 20px;
-  height: 500px;
+  height: 550px;
   max-height: 600px;
   box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
@@ -174,40 +175,46 @@ ion-content {
 }
 
 .room .details #p1 {
-  margin-top: 10px;
-  font-size: 20px;
-  font-weight: 900;
+  margin-top: 25px;
+  font-size: 18px;
+  font-weight: 500;
   text-align: center;
-  font-family: Crimson Pro;
+  font-family: Montserrat;
+  color: #544541;
 }
 
-.footer{
+.footer {
   border: white;
   background-color: white;
 }
 
-.footer #p2{
+.footer #p2 {
   float: left;
   font-weight: 600;
+  font-family: Montserrat;
 }
 
-.footer .button{
-  border-radius: 10px;
+.footer .button {
+  border-radius: 8px;
   padding: 5px;
   color: white;
   background-color: #544541;
   float: right;
+  font-family: Montserrat;
 }
 
-.footer #p2
-.footer .button{
-  font-family: DM Sans;
+.footer .button:hover {
+  background-color: #cd9452;
+}
+
+.footer #p2 .footer .button {
+  font-family: Montserrat;
 }
 
 .room .details #p3 {
   font-size: 15px;
   margin-top: -5px;
-  font-family: DM Sans;
+  font-family: Montserrat;
 }
 
 .room .details #p4 {
@@ -217,11 +224,14 @@ ion-content {
 
 .room .price #p2 {
   color: #ffffff;
-  font-family: DM Sans;
+  font-family: Montserrat;
   font-weight: 600;
   margin: 0;
 }
 
+////////
+///
+///
 .carousel-item {
   height: 600px;
 }
@@ -751,7 +761,7 @@ p {
     bottom: 30px;
   }
 
-  .footer .button{
+  .footer .button {
     margin-top: 1px;
   }
 

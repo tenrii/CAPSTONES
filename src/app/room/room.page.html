@@ -68,10 +68,12 @@
 
           <div class="contact">
             <div>
-              <img [src]="owner?.Image" style="width: 20px">
+              <img [src]="owner?.Image" style="width: 50px">
             </div>
-            <div>{{owner?.FName}} {{owner?.LName}}</div>
-            <ion-button shape="round" fill="outline" size="large" (click)="contactOwner()">Contact Owner</ion-button>
+            <div class="host">Hosted by:</div>
+            <div class="contact-owner">{{owner?.FName}} {{owner?.LName}}</div>
+            <ion-button (click)="contactOwner()" style="font-family: Montserrat; margin-left: 20px; ">Contact
+              Owner</ion-button>
           </div>
         </div>
       </ion-col>
@@ -82,25 +84,35 @@
     </ion-row>
   </ion-grid>
 
-  <div class="all_review">
+  <div class="p-4 p-md-5 text-center text-lg-start shadow-1-strong rounded">
     <span *ngFor="let data of review">
-      <ion-card>
-        <ion-card-header>
-          <ion-card-title>{{data?.Name}}</ion-card-title>
-        </ion-card-header>
-
-        <ion-card-content>
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img [src]="data?.profpic" />
-            </ion-thumbnail>
-            <ion-label>{{data?.Review}}</ion-label>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
+      <div class="row d-flex">
+        <div class="col-md-6">
+          <div class="card review-card">
+            <div class="card-body m-3">
+              <div class="row align-items-center">
+                <div class="col-lg-4 mb-4">
+                  <div class="profile-pic-container">
+                    <div class="profile-pic-wrapper">
+                      <img [src]="data?.profpic" class="rounded-circle img-fluid shadow-1 profile-pic"
+                        alt="Profile Picture" />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-8">
+                  <p class="text-muted fw-light mb-4 review-text">
+                    {{data?.Review}}
+                  </p>
+                  <p class="fw-bold lead mb-2 reviewer-name">{{data?.Name}}</p>
+                  <p class="fw-bold text-muted mb-0 role">Tenant</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </span>
   </div>
-
 
   <div class="rating-review">
     <div class="review-title">
@@ -120,6 +132,7 @@
 
     </form>
   </div>
+
 
   <footer>
     <div class="container">
@@ -185,46 +198,47 @@
 <ng-template #reservation>
   <ion-card class="price-card">
     <ion-card-header>
-      <ion-card-title class="ion-text-center payment-title">
+      <ion-card-title class="ion-text-center payment-title" style="font-family: Montserrat;">
         {{ data?.RoomType === 'Shared Room' ? 'Reserve a BEDSPACE' : 'Reserve a ROOM'}}
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-row>
         <ion-col>
-          <h1 class="ion-text-center price-text">₱{{data?.priceSub}}/month</h1>
+          <h1 class="ion-text-center price-text" style="font-size: 25px;">₱{{data?.priceSub}}/month</h1>
         </ion-col>
       </ion-row>
 
       <ng-container *ngIf="data?.RoomType === 'Shared Room'">
         <ion-row>
           <ion-col>
-            <h2 class="ion-text-center"><ion-icon color="#000" name="bed-outline"></ion-icon> CHOOSE BED
+            <h2 class="ion-text-center" style="font-family: Montserrat;"><ion-icon color="#000"
+                name="bed-outline"></ion-icon> CHOOSE BED
               PLACEMENT:</h2>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col class="ion-no-padding">
-            <h2>
+            <h2 style="font-family: Montserrat;">
               TOP BUNK:
             </h2>
           </ion-col>
         </ion-row>
         <ion-row>
           <ng-container *ngFor="let seat of data?.Bed" [class.occupied]="seat.selected || seat.occupied">
-            <ion-col *ngIf="seat.status === 'up'" size="3">
+            <ion-col *ngIf="seat.status === 'up'" size="3" style="font-family: Montserrat;">
               <ng-container *ngTemplateOutlet="bedButton; context: {seat: seat}"></ng-container>
             </ion-col>
           </ng-container>
         </ion-row>
         <ion-col class="ion-no-padding">
-          <h2>
+          <h2 style="font-family: Montserrat;">
             BOTTOM BUNK:
           </h2>
         </ion-col>
         <ion-row>
           <ng-container *ngFor="let seat of data?.Bed" [class.occupied]="seat.selected || seat.occupied">
-            <ion-col *ngIf="seat.status === 'down'" size="3">
+            <ion-col *ngIf="seat.status === 'down'" size="3" style="font-family: Montserrat;">
               <ng-container *ngTemplateOutlet="bedButton; context: {seat: seat}"></ng-container>
             </ion-col>
           </ng-container>
@@ -245,7 +259,8 @@
       <ion-row>
         <ion-col class="payment-col">
           <ion-button size="large" shape="round" strong="true" class="reserve-button" (click)="reserveBedspace()"
-            [disabled]="(this.isReserving | async) || this.pendingPayment || this.data?.occupied">
+            [disabled]="(this.isReserving | async) || this.pendingPayment || this.data?.occupied"
+            style="font-family: Montserrat;">
             <ion-spinner *ngIf="this.isReserving | async"></ion-spinner>
             Reserve
           </ion-button>
@@ -253,13 +268,14 @@
       </ion-row>
 
       <div *ngIf="pendingPayment" class="ion-padding-horizontal">
-        <span>Please click on <a [href]="pendingPayment.occupied.checkoutUrl">this link</a> to pay for your
+        <span style="font-family: Montserrat;">Please click on <a [href]="pendingPayment.occupied.checkoutUrl">this
+            link</a> to pay for your
           pending reservation.</span>
       </div>
 
       <ion-row>
         <ion-col class="ion-no-padding">
-          <h2>
+          <h2 style="font-family: Montserrat;">
             Payment methods:
           </h2>
         </ion-col>
@@ -273,7 +289,8 @@
         </ion-col>
       </ion-row>
       <div class="ion-padding">
-        <span class="note">Note: If payment for the reservation is not made within 24hrs, the reservation will be
+        <span class="note" style="font-family: Montserrat;">Note: If payment for the reservation is not made within
+          24hrs, the reservation will be
           automatically cancelled.</span>
       </div>
     </ion-card-content>
