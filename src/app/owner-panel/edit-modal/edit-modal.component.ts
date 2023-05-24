@@ -20,9 +20,11 @@ export class EditModalComponent implements OnInit {
   record: any;
   roomForm!: FormGroup;
   roomData!: RoomData;
-  constructor(public fb: FormBuilder,
+  constructor(
+    public fb: FormBuilder,
     private m: ModalController,
-    private firebaseService: FirebaseService,) {}
+    private firebaseService: FirebaseService
+  ) {}
 
   ngOnInit() {
     this.roomForm = this.fb.group({
@@ -42,31 +44,35 @@ export class EditModalComponent implements OnInit {
     });
   }
 
-  ifChange(event: any){
+  ifChange(event: any) {
     return this.record.Amenities.find((a: any) => a === event);
   }
 
   onChange(event: any) {
-    if (event.target.checked) {
-      const am = this.record.Amenities.findIndex((a: any) => a === event.target.value);
-      if (am == -1) {
-        this.record.Amenities.push(event.target.value);
+    const checked = event.target.checked;
+    const value = event.target.value;
+
+    if (checked) {
+      const am = this.roomForm.get('Amenities')?.value;
+      if (!am.includes(value)) {
+        am.push(value);
+        this.roomForm.get('Amenities')?.setValue(am);
       }
     } else {
-      const am = this.record.Amenities.findIndex((a: any) => a === event.target.value);
-      if (am >= 0) {
-        this.record.Amenities.splice(am, 1);
+      const am = this.roomForm.get('Amenities')?.value;
+      const index = am.indexOf(value);
+      if (index !== -1) {
+        am.splice(index, 1);
+        this.roomForm.get('Amenities')?.setValue(am);
       }
     }
-    this.roomForm.get('Amenities')?.setValue(this.record.Amenities);
-    console.log('a', this.record.Amenities);
   }
 
-  updateRoom(){
+  updateRoom() {
     this.firebaseService.update_room(this.record.id, this.roomForm.value);
   }
 
-  close(){
+  close() {
     this.m.dismiss();
   }
 }

@@ -79,7 +79,6 @@ export class AuthenticationService {
   SendVerificationMailT() {
     return this.ngFireAuth.currentUser.then((user: any) => {
       return user.sendEmailVerification().then(() => {
-        window.location.reload();
         this.router.navigate(['tenant-panel']).then(() => {
           this.m.dismiss().then(() => {
             window.location.reload();
