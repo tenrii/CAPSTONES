@@ -32,7 +32,7 @@ export class FirebaseService {
   constructor(
     private firestore: AngularFirestore,
     private afAuth: AngularFireAuth,
-    private storage: AngularFireStorage,
+    private storage: AngularFireStorage
   ) {
     this.firestore
       .collection('Tenant')
@@ -204,9 +204,11 @@ export class FirebaseService {
       );
   }
 
-  read_review(id:any): Observable<any[]> {
+  read_review(id: any): Observable<any[]> {
     return this.firestore
-      .collection('Room').doc(id).collection('Review')
+      .collection('Room')
+      .doc(id)
+      .collection('Review')
       .snapshotChanges()
       .pipe(
         map((a) => {
@@ -234,31 +236,50 @@ export class FirebaseService {
     this.firestore.doc(this.collectionRoom + '/' + recordID).update(record);
   }
 
-  update_owner(ownerID: any, record: any) {
-    this.firestore.doc(this.collectionOwner + '/' + ownerID).update(record);
-  }
-
-  update_tenant(tenantID: any, record: any, image:any) {
-    this.firestore.doc(this.collectionTenant + '/' + tenantID).update(record).then(()=>{
-      const filePathBP = `Tenant/${tenantID}/${image.name}`;
-      const fileRefBP = this.storage.ref(filePathBP);
-      const bp = this.storage.upload(filePathBP, image);
-      bp.snapshotChanges()
-        .pipe(
-          finalize(() => {
-            this.downloadURL = fileRefBP.getDownloadURL();
-            this.downloadURL.subscribe((url) => {
-              this.firestore
-                .collection('Tenant')
-                .doc(tenantID)
-                .update({
+  update_owner(ownerID: any, record: any, image: any) {
+    this.firestore
+      .doc(this.collectionOwner + '/' + ownerID)
+      .update(record)
+      .then(() => {
+        const filePathBP = `Owner/${ownerID}/${image.name}`;
+        const fileRefBP = this.storage.ref(filePathBP);
+        const bp = this.storage.upload(filePathBP, image);
+        bp.snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.downloadURL = fileRefBP.getDownloadURL();
+              this.downloadURL.subscribe((url) => {
+                this.firestore.collection('Owner').doc(ownerID).update({
                   profpic: url,
                 });
-            });
-          })
-        )
-        .subscribe();
-    })
+              });
+            })
+          )
+          .subscribe();
+      });
+  }
+
+  update_tenant(tenantID: any, record: any, image: any) {
+    this.firestore
+      .doc(this.collectionTenant + '/' + tenantID)
+      .update(record)
+      .then(() => {
+        const filePathBP = `Tenant/${tenantID}/${image.name}`;
+        const fileRefBP = this.storage.ref(filePathBP);
+        const bp = this.storage.upload(filePathBP, image);
+        bp.snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.downloadURL = fileRefBP.getDownloadURL();
+              this.downloadURL.subscribe((url) => {
+                this.firestore.collection('Tenant').doc(tenantID).update({
+                  profpic: url,
+                });
+              });
+            })
+          )
+          .subscribe();
+      });
   }
 
   delete_room(record_id: any) {

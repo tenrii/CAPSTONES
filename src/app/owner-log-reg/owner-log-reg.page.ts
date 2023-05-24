@@ -29,7 +29,7 @@ export class OwnerLogRegPage implements OnInit {
     private fb: FormBuilder,
     private storage: AngularFireStorage,
     private firestore: AngularFirestore,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -41,7 +41,7 @@ export class OwnerLogRegPage implements OnInit {
       Email: ['', [Validators.required]],
     });
 
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       const conditions = params['conditions'];
       if (conditions) {
         this.condition.next(conditions);
@@ -84,48 +84,44 @@ export class OwnerLogRegPage implements OnInit {
       .RegisterUserOwner(email.value, password.value, this.ownerRegister.value)
       .then((res) => {
         this.authService.SendVerificationMailO();
-        this.verify().then((a) => {
-          const filePathBP = `Owner/${this.authService.uid}/${this.selectedBP.name}`;
-          const fileRefBP = this.storage.ref(filePathBP);
-          const bp = this.storage.upload(filePathBP, this.selectedBP);
-          bp.snapshotChanges()
-            .pipe(
-              finalize(() => {
-                this.downloadURL = fileRefBP.getDownloadURL();
-                this.downloadURL.subscribe((url) => {
-                  this.firestore
-                    .collection('Owner')
-                    .doc(this.authService.uid)
-                    .update({
-                      BusinessPermit: url,
-                    });
-                });
-              })
-            )
-            .subscribe();
+        this.verify();
+        const filePathBP = `Owner/${this.authService.uid}/${this.selectedBP.name}`;
+        const fileRefBP = this.storage.ref(filePathBP);
+        const bp = this.storage.upload(filePathBP, this.selectedBP);
+        bp.snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.downloadURL = fileRefBP.getDownloadURL();
+              this.downloadURL.subscribe((url) => {
+                this.firestore
+                  .collection('Owner')
+                  .doc(this.authService.uid)
+                  .update({
+                    BusinessPermit: url,
+                  });
+              });
+            })
+          )
+          .subscribe();
 
-          const filePathVI = `Owner/${this.authService.uid}/${this.selectedVI.name}`;
-          const fileRefVI = this.storage.ref(filePathVI);
-          const vi = this.storage.upload(filePathVI, this.selectedVI);
-          bp.snapshotChanges()
-            .pipe(
-              finalize(() => {
-                this.downloadURL = fileRefVI.getDownloadURL();
-                this.downloadURL.subscribe((url) => {
-                  this.firestore
-                    .collection('Owner')
-                    .doc(this.authService.uid)
-                    .update({
-                      ValidID: url,
-                    });
-                });
-              })
-            )
-            .subscribe();
-        });
-      })
-      .catch((error) => {
-        window.alert(error.message);
+        const filePathVI = `Owner/${this.authService.uid}/${this.selectedVI.name}`;
+        const fileRefVI = this.storage.ref(filePathVI);
+        const vi = this.storage.upload(filePathVI, this.selectedVI);
+        bp.snapshotChanges()
+          .pipe(
+            finalize(() => {
+              this.downloadURL = fileRefVI.getDownloadURL();
+              this.downloadURL.subscribe((url) => {
+                this.firestore
+                  .collection('Owner')
+                  .doc(this.authService.uid)
+                  .update({
+                    ValidID: url,
+                  });
+              });
+            })
+          )
+          .subscribe();
       });
   }
 

@@ -31,52 +31,57 @@ export class AuthenticationService {
         JSON.parse(localStorage.getItem('user') || '{}');
       }
     });
-
   }
   // Login in with email/password
   async SignIn(email: string, password: string) {
-   const signin = await this.ngFireAuth.signInWithEmailAndPassword(email, password);
-    return signin
+    const signin = await this.ngFireAuth.signInWithEmailAndPassword(
+      email,
+      password
+    );
+    return signin;
   }
   // Register user with email/password
   RegisterUserTenant(email: any, password: any, record: any) {
-    const register = this.ngFireAuth.createUserWithEmailAndPassword(email, password).then((data)=>{
-      const uid = data.user?.uid;
-      this.afStore.doc('Tenant/'+ uid).set({
-        uid: uid,
-        Email: record.Email,
-        FName: record.FName,
-        LName: record.LName,
-        Age: record.Age,
-        Gender: record.Gender,
-        Address: record.Address,
-      })
-    })
+    const register = this.ngFireAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((data) => {
+        const uid = data.user?.uid;
+        this.afStore.doc('Tenant/' + uid).set({
+          uid: uid,
+          Email: record.Email,
+          FName: record.FName,
+          LName: record.LName,
+          Age: record.Age,
+          Gender: record.Gender,
+          Address: record.Address,
+        });
+      });
     return register;
   }
 
   async RegisterUserOwner(email: any, password: any, record: any) {
-    const credential = await this.ngFireAuth.createUserWithEmailAndPassword(
-      email,
-      password
-    );
-    this.uid = credential.user?.uid;
-    this.SendVerificationMailO().then((res) => {
-      this.afStore.doc(`Owner/${this.uid}`).set({
-        uid: this.uid,
-        Email: credential.user?.email,
+    const register = this.ngFireAuth
+      .createUserWithEmailAndPassword(email, password)
+      .then((data) => {
+        const uid = data.user?.uid;
+        this.afStore.doc('Owner/' + uid).set({
+          uid: uid,
+          Email: record.Email,
+          FName: record.FName,
+          LName: record.LName,
+          Age: record.Age,
+          Address: record.Address,
+        });
       });
-      this.afStore.collection('Owner').doc(this.uid).update(record);
-    });
-    return credential;
+    return register;
   }
   // Email verification when new user register
   SendVerificationMailT() {
     return this.ngFireAuth.currentUser.then((user: any) => {
       return user.sendEmailVerification().then(() => {
-        window.location.reload()
+        window.location.reload();
         this.router.navigate(['tenant-panel']).then(() => {
-          this.m.dismiss().then(()=>{
+          this.m.dismiss().then(() => {
             window.location.reload();
           });
         });
@@ -88,7 +93,7 @@ export class AuthenticationService {
     return this.ngFireAuth.currentUser.then((user: any) => {
       return user.sendEmailVerification().then(() => {
         this.router.navigate(['owner-panel']).then(() => {
-          this.m.dismiss().then(()=>{
+          this.m.dismiss().then(() => {
             window.location.reload();
           });
         });

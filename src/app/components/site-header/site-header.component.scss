@@ -32,7 +32,7 @@
   color: #544541;
 }
 
-.navbar .dropdown{
+.navbar .dropdown {
   margin-right: 115px;
 }
 
@@ -134,7 +134,6 @@
     background-color: transparent;
     padding: 0;
     text-align: right;
-
   }
 
   .navbar .navbar-collapse .nav-link {
@@ -167,9 +166,10 @@
     font-size: 14px;
   }
 
-  .navbar .dropdown #dropdownMenu2 img{
+  .navbar .dropdown #dropdownMenu2 img {
     width: 100%;
-
+    justify-content: end;
+    align-items: end;
   }
 
   /* Reduce the size of the dropdown button */

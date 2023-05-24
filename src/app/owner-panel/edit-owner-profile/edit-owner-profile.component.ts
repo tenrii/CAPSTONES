@@ -18,9 +18,8 @@ export class EditOwnerProfileComponent implements OnInit {
   constructor(
     public fb: FormBuilder,
     private m: ModalController,
-    private firebaseService: FirebaseService,
-  ) {
-  }
+    private firebaseService: FirebaseService
+  ) {}
 
   ngOnInit() {
     this.updateForm = this.fb.group({
@@ -29,10 +28,10 @@ export class EditOwnerProfileComponent implements OnInit {
       Age: [this.data?.Age, [Validators.required]],
       Gender: [this.data?.Gender, [Validators.required]],
       Address: [this.data?.Address, [Validators.required]],
-      PhoneNum: [this.data?.PhoneNum,[Validators.required]],
-      Birthday: [this.data?.Birthday,[Validators.required]],
+      PhoneNum: [this.data?.PhoneNum, [Validators.required]],
+      Birthday: [this.data?.Birthday, [Validators.required]],
     });
-    console.log('zz',this.data)
+    console.log('zz', this.data);
   }
 
   onFileChange(event: any) {
@@ -59,9 +58,12 @@ export class EditOwnerProfileComponent implements OnInit {
     this.m.dismiss();
   }
 
-  updateRoom(){
-    this.firebaseService.update_tenant(this.data?.id, this.updateForm.value, this.selectedFile)
+  updateRoom() {
+    this.firebaseService.update_owner(
+      this.data?.id,
+      this.updateForm.value,
+      this.selectedFile
+    );
     this.m.dismiss();
   }
-
 }
