@@ -1,9 +1,10 @@
 <nav class="navbar navbar-expand-sm sticky-top">
   <img src="assets/real logo.png" width=120 id="logo">
   <button class="navbar-toggler" type="button" (click)="toggleMenu()" [class.collapsed]="!isMenuOpen"
-  aria-controls="navbarNavDropdown" [attr.aria-expanded]="isMenuOpen ? 'true' : 'false'" aria-label="Toggle navigation">
-  <span class="navbar-toggler-icon"></span>
-</button>
+    aria-controls="navbarNavDropdown" [attr.aria-expanded]="isMenuOpen ? 'true' : 'false'"
+    aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon" style="color: white;"></span>
+  </button>
   <div class="collapse navbar-collapse" [class.show]="isMenuOpen" id="navbarNavDropdown">
     <ul class="navbar-nav">
       <li class="nav-item active">
