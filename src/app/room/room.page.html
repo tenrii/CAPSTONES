@@ -306,7 +306,7 @@
 </ng-template>
 
 <ng-template #carousel>
-  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+  <!--<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button *ngFor="let pic of data?.Images; let i = index" type="button" data-bs-target="#carouselExampleControls"
         [attr.data-bs-slide-to]="i" aria-current="true" aria-label="..." [ngClass]="{'active': i === 0}">
@@ -327,17 +327,15 @@
     </button>
 
     <div id="myModal" class="modal">
+ The Close Button
+<span class="close">&times;</span>
 
-      <!-- The Close Button -->
-      <span class="close">&times;</span>
-
-      <!-- Modal Content (The Image) -->
+Modal Content (The Image) 
       <img class="modal-content" id="img01">
-
-      <!-- Modal Caption (Image Text) -->
+ Modal Caption (Image Text) 
       <div id="caption"></div>
     </div>
-  </div>
+  </div>-->
 
 
   <div class="tz-gallery">
@@ -345,11 +343,8 @@
     <div class="row">
 
       <div class="col-sm-12 col-md-4" *ngFor="let img of data?.Images">
-        <a class="lightbox"
-          href="{{img}}">
-          <img
-            src="{{img}}"
-            alt="Bridge">
+        <a class="lightbox" href="{{img}}">
+          <img src="{{img}}" alt="Bridge">
         </a>
       </div>
     </div>
