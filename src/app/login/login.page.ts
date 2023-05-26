@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
 import { VerifyComponent } from './verify/verify.component';
 import { BehaviorSubject } from 'rxjs';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,8 @@ export class LoginPage implements OnInit {
     public authService: AuthenticationService,
     public router: Router,
     private fb: FormBuilder,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private afstore: AngularFirestore,
   ) {}
 
   ngOnInit() {
@@ -70,13 +72,7 @@ export class LoginPage implements OnInit {
         password.value,
         this.tenantRegister.value,
       )
-      .then((res) => {
-        this.authService.SendVerificationMailT()
         this.verify();
-      })
-      .catch((error) => {
-        window.alert(error.message);
-      });
     return a;
   }
 

@@ -33,31 +33,41 @@ export class AuthenticationService {
     });
   }
   // Login in with email/password
-  async SignIn(email: string, password: string) {
-    const signin = await this.ngFireAuth.signInWithEmailAndPassword(
-      email,
-      password
-    );
-    return signin;
+  SignIn(email:any, password:any) {
+    return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
+
   // Register user with email/password
-  RegisterUserTenant(email: any, password: any, record: any) {
-    const register = this.ngFireAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((data) => {
-        const uid = data.user?.uid;
-        this.afStore.doc('Tenant/' + uid).set({
-          uid: uid,
-          Email: record.Email,
-          FName: record.FName,
-          LName: record.LName,
-          Age: record.Age,
-          Gender: record.Gender,
-          Address: record.Address,
-        });
-      });
-    return register;
+  async SendVerificationMailT() {
+    const user:any = await this.ngFireAuth.currentUser;
+    await user.sendEmailVerification();
   }
+
+  async RegisterUserTenant(email: any, password: any, record: any) {
+    try {
+      const { user }:any = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+    await this.SendVerificationMailT();
+
+      const uid = user.uid;
+      await this.afStore.collection('Tenant').doc(uid).set({
+        uid: uid,
+        Email: record.Email,
+        FName: record.FName,
+        LName: record.LName,
+        Age: record.Age,
+        Address: record.Address,
+      });
+
+      await this.m.dismiss();
+      await this.router.navigate(['owner-panel']);
+      return user;
+    } catch (error) {
+      // Handle error
+      console.error(error);
+      throw error;
+    }
+  }
+
 
   async RegisterUserOwner(email: any, password: any, record: any) {
     const register = this.ngFireAuth
@@ -76,17 +86,6 @@ export class AuthenticationService {
     return register;
   }
   // Email verification when new user register
-  SendVerificationMailT() {
-    return this.ngFireAuth.currentUser.then((user: any) => {
-      return user.sendEmailVerification().then(() => {
-        this.router.navigate(['tenant-panel']).then(() => {
-          this.m.dismiss().then(() => {
-            window.location.reload();
-          });
-        });
-      });
-    });
-  }
 
   SendVerificationMailO() {
     return this.ngFireAuth.currentUser.then((user: any) => {
@@ -114,7 +113,7 @@ export class AuthenticationService {
   }
   // Returns true when user is looged in
   get isLoggedIn(): boolean {
-    console.log('zxca');
+
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user !== null && user.emailVerified !== false ? true : false;
   }
