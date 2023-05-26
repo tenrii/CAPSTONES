@@ -47,6 +47,36 @@ export class AuthenticationService {
     try {
       const { user }:any = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
     await this.SendVerificationMailT();
+    const uid = user.uid;
+
+      await this.afStore.collection('Tenant').doc(uid).set({
+        uid: uid,
+        Email: record.Email,
+        FName: record.FName,
+        LName: record.LName,
+        Age: record.Age,
+        Address: record.Address,
+      });
+      await this.m.dismiss();
+      await this.router.navigate(['owner-panel']);
+      return user;
+    } catch (error) {
+      // Handle error
+      console.error(error);
+      throw error;
+    }
+  }
+
+
+  async SendVerificationMailO() {
+    const user:any = await this.ngFireAuth.currentUser;
+    await user.sendEmailVerification();
+  }
+
+  async RegisterUserOwner(email: any, password: any, record: any) {
+    try {
+      const { user }:any = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+    await this.SendVerificationMailT();
 
       const uid = user.uid;
       await this.afStore.collection('Tenant').doc(uid).set({
@@ -68,36 +98,6 @@ export class AuthenticationService {
     }
   }
 
-
-  async RegisterUserOwner(email: any, password: any, record: any) {
-    const register = this.ngFireAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((data) => {
-        const uid = data.user?.uid;
-        this.afStore.doc('Owner/' + uid).set({
-          uid: uid,
-          Email: record.Email,
-          FName: record.FName,
-          LName: record.LName,
-          Age: record.Age,
-          Address: record.Address,
-        });
-      });
-    return register;
-  }
-  // Email verification when new user register
-
-  SendVerificationMailO() {
-    return this.ngFireAuth.currentUser.then((user: any) => {
-      return user.sendEmailVerification().then(() => {
-        this.router.navigate(['owner-panel']).then(() => {
-          this.m.dismiss().then(() => {
-            window.location.reload();
-          });
-        });
-      });
-    });
-  }
   // Recover password
   PasswordRecover(passwordResetEmail: any) {
     return this.ngFireAuth

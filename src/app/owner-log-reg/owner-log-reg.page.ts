@@ -82,9 +82,8 @@ export class OwnerLogRegPage implements OnInit {
   register(email: any, password: any) {
     this.authService
       .RegisterUserOwner(email.value, password.value, this.ownerRegister.value)
+      this.verify()
       .then((res) => {
-        this.authService.SendVerificationMailO();
-        this.verify();
         const filePathBP = `Owner/${this.authService.uid}/${this.selectedBP.name}`;
         const fileRefBP = this.storage.ref(filePathBP);
         const bp = this.storage.upload(filePathBP, this.selectedBP);
