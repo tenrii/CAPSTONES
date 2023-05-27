@@ -306,7 +306,7 @@
 </ng-template>
 
 <ng-template #carousel>
-  <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       <button *ngFor="let pic of data?.Images; let i = index" type="button" data-bs-target="#carouselExampleControls"
         [attr.data-bs-slide-to]="i" aria-current="true" aria-label="..." [ngClass]="{'active': i === 0}">

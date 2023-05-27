@@ -1,32 +1,24 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { Modal3Component } from '../modal3/modal3.component';
 import { ModalController } from '@ionic/angular';
 import { Modal4Component } from '../modal4/modal4.component';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { Modal2Component } from '../modal2/modal2.component';
 import { FirebaseService } from 'src/app/services/firebase.service';
-import { Modal15Component } from '../modal15/modal15.component';
+
 @Component({
-  selector: 'app-modal3',
-  templateUrl: './modal3.component.html',
-  styleUrls: ['./modal3.component.scss'],
+  selector: 'app-modal15',
+  templateUrl: './modal15.component.html',
+  styleUrls: ['./modal15.component.scss'],
 })
-export class Modal3Component implements OnInit {
+export class Modal15Component implements OnInit {
   isButtonDisabled = false;
   roomForm!: FormGroup;
   constructor(
+    private m :ModalController,
     private service: FirebaseService,
-    private m: ModalController,
-    private fb: FormBuilder,
-    private firestore: AngularFirestore
-  ) {}
+  ) { }
 
-  ngOnInit() {
-    this.roomForm = this.fb.group({
-      Rent: ['', [Validators.required]],
-    });
-    console.log('a',this.service.modalData)
-  }
+  ngOnInit() {}
 
   exit() {
     if (this.isButtonDisabled) {
@@ -48,7 +40,8 @@ export class Modal3Component implements OnInit {
     }
 
     const modalInstance = await this.m.create({
-      component: Modal2Component,
+
+      component: Modal3Component,
       cssClass: 'create-modal',
       backdropDismiss: false,
     });
@@ -61,7 +54,7 @@ export class Modal3Component implements OnInit {
     return await modalInstance.present();
   }
 
-  async gotoModal15() {
+  async gotoModal4() {
     if (this.isButtonDisabled) {
       return;
     }
@@ -73,7 +66,7 @@ export class Modal3Component implements OnInit {
     }
 
     const modalInstance = await this.m.create({
-      component: Modal15Component,
+      component: Modal4Component,
       cssClass: 'create-modal',
       backdropDismiss: false,
     });
@@ -81,9 +74,8 @@ export class Modal3Component implements OnInit {
     modalInstance.onDidDismiss().then(() => {
       this.service.modalData = {
         ...this.service.modalData,
-        Rent: this.roomForm.get('Rent')?.value,
       }
-      console.log('a',this.service.modalData);
+      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

@@ -6,6 +6,7 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Modal3Component } from '../modal3/modal3.component';
 import { FirebaseService } from 'src/app/services/firebase.service';
 import { debounceTime } from 'rxjs';
+import { Modal15Component } from '../modal15/modal15.component';
 
 declare var google:any;
 
@@ -169,7 +170,7 @@ markLocation(event: any) {
 
     const modalInstance = await this.m.create({
 
-      component: Modal3Component,
+      component: Modal15Component,
       cssClass: 'create-modal',
       backdropDismiss: false,
     });
