@@ -37,7 +37,7 @@ h1 {
   transform: translate(-50%, -50%);
 }
 
-label {
+.btn-group label {
   max-width: 250px;
   max-height: 250px;
   min-width: 250px;
@@ -50,11 +50,43 @@ label {
   font-family: Montserrat;
 }
 
-#icon {
+.btn-group #icon {
   margin-top: 10px;
 }
 
-p {
+.btn-group p {
+  text-align: center;
+  margin-top: 30px;
+  font-family: Montserrat;
+}
+
+.btn-group1 {
+  margin-bottom: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.btn-group1 label {
+  max-width: 80px;
+  max-height: 80px;
+  min-width: 250px;
+  min-height: 250px;
+  background-color: white;
+  color: rgb(100, 66, 34);
+  font-size: 15px;
+  padding: 10px;
+  margin-top: 20px;
+  font-family: Montserrat;
+}
+
+.btn-group1 #icon {
+  margin-top: 10px;
+}
+
+.btn-group1 p {
   text-align: center;
   margin-top: 30px;
   font-family: Montserrat;
