@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, finalize, map, Observable, tap } from 'rxjs';
-import { doc, getDocFromCache, getFirestore } from 'firebase/firestore';
+import { doc, Firestore, getDocFromCache, getFirestore } from 'firebase/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import firebase from 'firebase/compat/app';
@@ -312,16 +312,20 @@ export class FirebaseService {
     return this.transactions.value.filter((a: any) => a.userId === transaction);
   }
 
-  editTenant(roomId:any, bedId:any, tenantId:any){
-    const db = this.firestore.collection('Room').doc(roomId);
-
-    this.rooms.map((a:any)=>{
-        if (a.occupied) {
-
-    db.update({
-      Bed: firebase.firestore.FieldValue.arrayRemove('occupied'),
-    })
-  }
+  editTenant(roomId:any, bedId:number, tenantId:any){
+    const docRef = this.firestore.collection('Room').doc(roomId);
+    const fieldValue = firebase.firestore.FieldValue;
+    const updatedData:any = {};
+    const indexToRemove = bedId - 1;
+    console.log('index',indexToRemove)
+    updatedData['Bed'][indexToRemove] = fieldValue.arrayRemove('occupied');
+    docRef.update(updatedData)
+  .then(() => {
+    console.log("Document updated successfully.");
   })
+  .catch((error) => {
+    console.error("Error updating document:", error);
+  });
+
   }
 }

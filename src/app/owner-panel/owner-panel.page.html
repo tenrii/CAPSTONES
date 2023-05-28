@@ -1,4 +1,19 @@
 <ion-content>
+  <ion-grid style="padding: 0; margin:0;">
+    <ion-row style="padding: 0; margin:0;">
+      <ion-col class="side">
+        <div class="sidebar">
+          <h1>Brand</h1>
+          <a href="">Home</a>
+          <a href="">About</a>
+          <a href="">Portfolio</a>
+          <a href="">Gallery</a>
+          <a href="">Service</a>
+          <a href="">Join</a>
+          <a href="">Contact</a>
+       </div>
+      </ion-col>
+      <ion-col style="padding: 0; margin:0;">
   <div class="header">
     <ion-grid>
       <ion-row>
@@ -170,8 +185,6 @@
 
       </ion-row>
     </ion-grid>
-
-
   </div>
 
   <div class="container-img">
@@ -329,7 +342,7 @@
               </span>
               </ion-col>
               <ion-col>
-                <ion-button (click)="RemoveTenant(data.roomId,data.bedId,data.userId)">
+                <ion-button (click)="RemoveTenant(data.roomId,data.id,data.userId)">
                   <ion-icon name="trash"></ion-icon>
                 </ion-button>
               </ion-col>
@@ -404,4 +417,7 @@
     </div>
 
   </div>
+</ion-col>
+</ion-row>
+</ion-grid>
 </ion-content>
