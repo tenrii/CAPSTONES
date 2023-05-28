@@ -18,14 +18,10 @@ export class TenantPanelPage implements OnInit {
   public tenant: any;
   public page = new BehaviorSubject('bills');
   public billsPage = new BehaviorSubject('unpaid');
-  public notifBtn = new BehaviorSubject('bedspace');
   public bills: any[] = [];
   public paidBills: any[] = [];
-  public be:any[]=[];
-  public ro:any[]=[];
   transaction: any[] = [];
   sortInBed: any[] = [];
-  isButtonDisabled: boolean = false;
   public isPayButtonLoading = new BehaviorSubject(false);
 
   constructor(
@@ -61,9 +57,7 @@ export class TenantPanelPage implements OnInit {
       )
       .subscribe((f: any) => {
         this.transaction = f;
-        console.log('a', this.transaction);+
-        this.sortedBed();
-        this.sortedRoom();
+        console.log('a', this.transaction);
         this.transaction = this.transaction.sort(
           (a: any, b: any) => (b.dateCreated || 0) - (a.dateCreated || 0)
         );
@@ -107,50 +101,6 @@ export class TenantPanelPage implements OnInit {
     });
   }
 
-  sortedBed(): any {
-    this.transaction.map((a: any) => {
-      if (a.roomData && a.lineItems && a.type === 'bedspace-reservation') {
-        if(a.roomData.Bed){
-        const bed = a.roomData.Bed?.filter((z:any)=>{
-          return a.lineItems?.some((x:any)=> z.uid === x.uid);
-        });
-          this.be.push({
-            Title: a.roomData.Title,
-            RoomName: a.roomData.RoomName,
-            Bed: bed.map((data:any)=> data.status),
-            Id: bed.map((data:any)=> data.id),
-            Date: a.dateCreated,
-            Status: a.status,
-          });
-          this.be = this.be.sort((a:any,b:any)=>{
-            return (b.Date || 0 ) - (a.Date || 0)
-           });
-          return bed;
-        }
-      }
-      })
-      console.log('bed',this.be);
-  }
-
-  sortedRoom(): any {
-    this.transaction.map((a: any) => {
-      if (a.roomData && a.lineItems && a.type === 'room-reservation') {
-        if(a.roomData.occupied){
-          this.ro.push({
-            Title: a.roomData.Title,
-            RoomName: a.roomData.RoomName,
-            Date: a.dateCreated,
-            Status: a.status,
-          });
-          this.ro = this.ro.sort((a:any,b:any)=>{
-            return (b.Date || 0 ) - (a.Date || 0)
-           });
-        }
-      }
-      })
-      console.log('room',this.ro);
-  }
-
   async payBill(bill: any) {
     this.isPayButtonLoading.next(true);
     try {
@@ -161,31 +111,4 @@ export class TenantPanelPage implements OnInit {
     }
   }
 
-  async gotoEditProfile() {
-    if (this.isButtonDisabled) {
-      return;
-    }
-    this.isButtonDisabled = true;
-
-    const previousModal = await this.m.getTop();
-    if (previousModal) {
-      await previousModal.dismiss();
-    }
-
-    const modalInstance = await this.m.create({
-      component: EditProfileComponent,
-      cssClass: 'create-modal',
-      componentProps: {
-        data: this.tenant,
-      },
-      backdropDismiss: false,
-    });
-
-    modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 1 dismissed');
-      this.isButtonDisabled = false;
-    });
-
-    return await modalInstance.present();
-  }
 }

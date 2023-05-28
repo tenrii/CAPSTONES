@@ -7,23 +7,282 @@
   </button>
   <div class="collapse navbar-collapse" [class.show]="isMenuOpen" id="navbarNavDropdown">
     <ul class="navbar-nav">
+      <!--Home-->
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only"></span></a>
       </li>
+
+      <!--About-->
       <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/about-us']">About<span class="sr-only"></span></a>
       </li>
+
+      <!--Contact-->
       <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/contact-us']">Contact<span class="sr-only"></span></a>
       </li>
+
+      <!--Terms-->
       <li class="nav-item active">
         <a class="nav-link" [routerLink]="['/terms-condition']">Terms & Condition<span class="sr-only"></span></a>
       </li>
+
+      <!--Panels-->
       <li class="nav-item active" *ngIf="filterOwner() === true">
         <a class="nav-link" [routerLink]="['/owner-panel']">Owner Panel<span class="sr-only"></span></a>
       </li>
       <li class="nav-item active" *ngIf="filterTenant() === true">
         <a class="nav-link" [routerLink]="['/tenant-panel']">Tenant Panel<span class="sr-only"></span></a>
+      </li>
+
+      <!--Chats-->
+      <li class="nav-item active" *ngIf="filterTenant() === true || filterOwner() === true">
+        <a class="nav-link" type="button" id="chat-list">Chats</a>
+        <ion-popover trigger="chat-list" side="bottom" alignment="center" dismissOnSelect="true">
+          <ng-template>
+            <app-chatlist [isPopover]="true"></app-chatlist>
+          </ng-template>
+        </ion-popover>
+      </li>
+
+      <!--Notification for Tenant-->
+      <li class="nav-item active" *ngIf="filterTenant() === true">
+        <a class="nav-link" type="button" id="top-center">Notification</a>
+          <ion-popover trigger="top-center" side="bottom" alignment="center">
+            <ng-template>
+              <ion-content class="ion-padding">
+                <div class="title"><ion-icon name="notifications"></ion-icon><span>Notification</span></div>
+
+                  <!--Notification Button-->
+                  <div class="bill" id="bill">
+                    <ion-grid class="bills-header">
+                      <ion-row>
+                        <ion-col class="btn" size="4" [class.active]="(notifBtn | async) === 'bedspace'">
+                          <div type="button" (click)="notifBtn.next('bedspace')"
+                          style="font-family: Montserrat; font-size: 18px;">
+                          Bedspace</div>
+                        </ion-col>
+                        <ion-col class="btn" size="3" [class.active]="(notifBtn | async) === 'room'">
+                          <div type="button" (click)="notifBtn.next('room')"
+                          style="font-family: Montserrat; font-size: 18px;">Room
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+
+                  <!--BedSpace-->
+                  <div id="bedspace1" *ngIf="(notifBtn | async) === 'bedspace'">
+                    <ion-grid>
+                      <span *ngFor="let data of bedTN">
+
+                        <!--Paid-->
+                        <ion-row *ngIf="data.Status === 'paid' || data.Status === 'paidPayment'">
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                            Your reservation in {{data.RoomName}} -
+                            Bed {{data.Id}}
+                            <span *ngIf="data.Bed === 'up'">TOP BUNK</span>
+                            <span *ngIf="data.Bed === 'down'">BOTTOM BUNK</span>
+                            at
+                            {{data.Title}}
+                            is confirmed and payment received in full. Thank you!
+                            <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
+                            </div>
+                          </ion-col>
+                        </ion-row>
+
+                        <!--Pending-->
+                        <ion-row *ngIf="data.Status === 'pending' || data.Status === 'pendingPayment'">
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                            Your reservation in {{data.RoomName}} -
+                            Bed {{data.Id}}
+                            <span *ngIf="data.Bed === 'up'">TOP BUNK</span>
+                            <span *ngIf="data.Bed === 'down'">BOTTOM BUNK</span>
+                            at
+                            {{data.Title}}
+                            is pending. Please pay within 24hrs to avoid cancellation.
+                            <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                      </span>
+                    </ion-grid>
+                  </div>
+
+                  <!--Room-->
+                  <div id="room1" *ngIf="(notifBtn | async) === 'room'">
+                    <ion-grid>
+                      <span *ngFor="let data of roomTN">
+
+                        <!--Paid-->
+                        <ion-row *ngIf="data.Status === 'paid'">
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                            Your reservation in {{data.RoomName}}
+                            at
+                            {{data.Title}}
+                            is confirmed and payment received in full. Thank you!
+                            <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
+                            </div>
+                          </ion-col>
+                        </ion-row>
+
+                        <!--Pending-->
+                        <ion-row *ngIf="data.Status === 'pending'">
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                            Your reservation in {{data.RoomName}}
+                            at
+                            {{data.Title}}
+                            is pending. Please pay within 24hrs to avoid cancellation.
+                            <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                      </span>
+                    </ion-grid>
+                  </div>
+                </div>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
+      </li>
+
+      <!--Notification for Owner-->
+      <li class="nav-item active" *ngIf="filterOwner() === true">
+        <a class="nav-link" type="button" id="top-center">Notification</a>
+          <ion-popover trigger="top-center" side="bottom" alignment="center">
+            <ng-template>
+              <ion-content class="ion-padding">
+                <div class="title"><ion-icon name="notifications" style="font-size: 30px;"></ion-icon><span
+                style="align-items: center; margin-top: -10px">Notification</span></div>
+
+                  <!--Notification Button-->
+                  <div class="bill" id="bill">
+                    <ion-grid class="bills-header">
+                      <ion-row>
+                        <ion-col class="btn" size="4" [class.active]="(notifBtn | async) === 'bedspace'">
+                          <div type="button" (click)="notifBtn.next('bedspace')"
+                          style="font-family: Montserrat; font-size: 18px;">
+                          Bedspace</div>
+                        </ion-col>
+                        <ion-col class="btn" size="3" [class.active]="(notifBtn | async) === 'room'">
+                          <div type="button" (click)="notifBtn.next('room')"
+                          style="font-family: Montserrat; font-size: 18px;">Room
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+
+                  <!--BedSpace-->
+                  <div id="bedspace1" *ngIf="(notifBtn | async) === 'bedspace'">
+                    <ion-grid>
+                      <span *ngFor="let data of bedON; let i = index;" [attr.data-index]="i">
+                        <ion-row>
+                          <ion-col style="max-width: 60px;">
+                            <img id="hover-trigger{{i}}" src="{{data.profpic}}"
+                            style="width: 50px; border-radius: 40px; border: 2px solid #544541">
+                          <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
+                            <ng-template>
+                              <ion-content>
+                                <ion-grid>
+                                  <ion-row>
+                                    <ion-col style="max-width: 55px;"><img src="{{data.profpic}}"
+                                        style="width: 40px;"></ion-col>
+                                    <ion-col>{{data.FName}} {{data.LName}}</ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col>{{data?.Address}}</ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col>{{data?.PhoneNum}}</ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col>{{data.Email}}</ion-col>
+                                  </ion-row>
+                                </ion-grid>
+                              </ion-content>
+                            </ng-template>
+                          </ion-popover>
+                          </ion-col>
+
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                            {{data.FName}} {{data.LName}} reserved a bedspace in <span
+                            style="font-weight: 600;">{{data.Title}} - {{data.RoomName}} Bed - {{data.uid}}
+                            <span *ngIf="data.bed === 'up'">Top Bunk</span><span *ngIf="data.bed === 'down'">Bottom
+                            Bunk</span></span>
+                            </div>
+
+                            <div class="cardPayment">
+                            <span *ngIf="data.status === 'paidPayment'" style="color: green;">Paid in
+                            Full</span>
+                            <span *ngIf="data.status === 'pendingPayment'" style="color: gray;">Pending</span>
+                            </div>
+
+                            <div class="time ion-text-right">
+                            {{data.date | date:'short'}}
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                      </span>
+                    </ion-grid>
+                  </div>
+
+                  <!--Room-->
+                  <div id="room1" *ngIf="(notifBtn | async) === 'bedspace'">
+                    <ion-grid>
+                      <span *ngFor="let data of roomON; let i = index;" [attr.data-index]="i">
+                        <ion-row>
+                          <ion-col style="max-width: 60px;"><img id="hover-trigger{{i}}" src="{{data.profpic}}"
+                          style="width: 50px;">
+                          <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
+                            <ng-template>
+                              <ion-content>
+                                <ion-grid>
+                                  <ion-row>
+                                    <ion-col><img src="{{data.profpic}}" style="width: 30px;"></ion-col>
+                                    <ion-col>{{data.FName}} {{data.LName}}</ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col>{{data?.Address}}</ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col>{{data?.PhoneNum}}</ion-col>
+                                  </ion-row>
+                                  <ion-row>
+                                    <ion-col>{{data.Email}}</ion-col>
+                                  </ion-row>
+                                </ion-grid>
+                              </ion-content>
+                            </ng-template>
+                          </ion-popover></ion-col>
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                            {{data.FName}} {{data.LName}} reserved a room in <span
+                            style="font-weight: 600;">{{data.Title}}</span>
+                            </div>
+
+                            <div class="cardPayment">
+                            <span *ngIf="data.status === 'paidPayment'" style="color: green;">Paid in
+                            Full</span>
+                            <span *ngIf="data.status === 'pendingPayment'" style="color: gray;">Pending</span>
+                            </div>
+
+                            <div class="time ion-text-right">
+                            {{data.date | date:'short'}}
+                            </div>
+                          </ion-col>
+                        </ion-row>
+                      </span>
+                    </ion-grid>
+                  </div>
+
+                </div>
+              </ion-content>
+            </ng-template>
+          </ion-popover>
       </li>
     </ul>
   </div>
