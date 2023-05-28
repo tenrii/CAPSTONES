@@ -1,5 +1,13 @@
+body {
+  margin: 0;
+}
+
 .side{
-max-width: 250px;
+  max-width: 250px;
+  }
+
+.side {
+  max-width: 250px;
 }
 
 .sidebar {
@@ -8,7 +16,7 @@ max-width: 250px;
   background: #111;
 }
 
-.sidebar h1{
+.sidebar h1 {
   display: block;
   padding: 10px 20px;
   color: #fff;
