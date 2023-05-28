@@ -24,21 +24,11 @@
 
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img src="assets/Bungalow.png" class="d-block w-100" alt="...">
-        <div class="text-content">
-          <h2 style="font-family: Montserrat; font-weight: 600; color: #544541;">SPOT-A-HOME</h2>
-          <h1>Boarding House Search & Reservation</h1>
-          <p style=" font-family: Montserrat; font-weight: 600; color: #544541;">Discover, Reserve, and Settle In: Your
-            Perfect Boarding
-            House Awaits!</p>
-        </div>
+      <div class="carousel-item active" style="border-radius: 50px; ">
+        <img src="assets/homebanner1.png" class="d-block w-100" alt="...">
       </div>
       <div class="carousel-item">
-        <img src="assets/banner1.png" class="d-block w-100" alt="...">
-      </div>
-      <div class="carousel-item">
-        <img src="assets/banner2.png" class="d-block w-100" alt="...">
+        <img src="assets/homebanner2.png" class="d-block w-100" alt="...">
       </div>
     </div>
   </div>
@@ -63,6 +53,9 @@
     </ion-item>
   </div>
 
+  <div class="room-home">
+    <h1>ENTIRE CITY OF CHOICE</h1>
+  </div>
   <span *ngFor="let item of list | async">
     <div *ngIf="!item.isUnlisted || item.isUnlisted==='false'" class="room">
       <div>
@@ -111,20 +104,10 @@
     </div>
   </section>
 
-  <div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-      <div class="modal-content">
-        <div class="modal-body">
-          <div class="embed-responsive embed-responsive-16by9">
-            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/0etCKCAsImI"
-              allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <section class="services-section">
+    <div class="brands">
+      <h1>OUR SERVICES</h1>
+    </div>
     <div class="container">
       <div class="row">
         <div class="col-md-3">
@@ -161,7 +144,7 @@
     </div>
   </section>
   <div class="brands">
-    <h1>Some of Our Clients</h1>
+    <h1>SOME OF OUR CLIENTS</h1>
   </div>
   <div class="logo-brands">
     <img src="assets/ourhome.png" alt="Brand 1">

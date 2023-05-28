@@ -11,6 +11,7 @@ import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { PaymentService } from '../services/payment.service';
 import { ModalController } from '@ionic/angular';
 import { ChatModalComponent } from './chat-modal/chat-modal.component';
+import { GalleryItem, ImageItem } from 'ng-gallery';
 
 declare var google: any;
 
@@ -57,6 +58,7 @@ export class RoomPage implements OnInit {
   isReserving = new BehaviorSubject(false);
   public pendingPayment: any;
   a = 'hello';
+  public galleryItems$ = new BehaviorSubject<any>([]);
 
   seats: Seat[] = [];
 
@@ -105,9 +107,17 @@ export class RoomPage implements OnInit {
       console.log('review', this.review);
     });
 
-    console.log('id', this.firebaseService.getRoom(this.roomId));
+    // console.log('id', this.firebaseService.getRoom(this.roomId));
 
     this.data = this.firebaseService.getRoom(this.roomId);
+
+    console.log(this.data);
+    this.galleryItems$.next([
+      ...this.data?.Images?.map(
+        (img: string) => new ImageItem({ src: img, thumb: img })
+      ),
+    ]);
+
     this.loadMap();
     this.firebaseService.read_owner().subscribe(() => {
       this.owner = this.firebaseService.getOwner(this.data.OwnerId);

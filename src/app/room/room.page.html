@@ -2,12 +2,11 @@
   <app-site-header></app-site-header>
 
 
-  <ion-grid class="ion-padding">
+  <ion-grid class="ion-padding" style="padding:40px">
     <ion-row>
-      <ion-col size="12">
+      <ion-col size-lg="8" size-md="12" size-sm="12" class="ion-padding-horizontal"
+        style="margin-bottom: 50px; margin-top: 100px;">
         <ng-container *ngTemplateOutlet="carousel"></ng-container>
-      </ion-col>
-      <ion-col size-lg="8" size-md="12" size-sm="12" class="ion-padding-horizontal">
         <div class="detail">
           <div class="room">{{data?.RoomType}}</div>
           <div class="rent">Space Type: <a style="">{{data?.Rent}}</a></div>
@@ -81,6 +80,9 @@
       </ion-col>
 
       <ion-col size-lg="4" size-md="12" size-sm="12" class="ion-no-padding">
+        <div class="map_container">
+          <div id="map"></div>
+        </div>
         <ng-container *ngTemplateOutlet="reservation"></ng-container>
       </ion-col>
     </ion-row>
@@ -306,56 +308,5 @@
 </ng-template>
 
 <ng-template #carousel>
-
-  <!--<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-      <button *ngFor="let pic of data?.Images; let i = index" type="button" data-bs-target="#carouselExampleControls"
-        [attr.data-bs-slide-to]="i" aria-current="true" aria-label="..." [ngClass]="{'active': i === 0}">
-      </button>
-    </div>
-    <div class="carousel-inner">
-      <div class="carousel-item" *ngFor="let pic of data?.Images; let i = index" [class.active]="i === 0">
-        <img [src]="pic" class="d-block w-100" alt="...">
-      </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-
-    <div id="myModal" class="modal">
-      The Close Button
-      <span class="close">&times;</span>
-
-      Modal Content (The Image)
-      <img class="modal-content" id="img01">
-      Modal Caption (Image Text)
-      <div id="caption"></div>
-    </div>
-  </div>-->
-
-
-  <div class="tz-gallery">
-
-    <div class="row">
-
-      <div class="col-sm-12 col-md-4" *ngFor="let pic of data?.Images">
-        <a class="lightbox"
-          href="{{pic}}">
-          <img
-            src="{{pic}}"
-            alt="{{pic.name}}">
-        </a>
-      </div>
-
-    </div>
-
-  </div>
-
-
-
+  <gallery [items]="galleryItems$ | async" gallerize imageSize="cover"></gallery>
 </ng-template>

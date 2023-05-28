@@ -21,78 +21,25 @@ ion-content {
   margin-top: 50px;
 }
 .carousel-inner {
+  margin-top: 100px;
   position: relative;
   overflow: hidden;
+  padding-left: 50px;
+  padding-right: 50px;
 }
 .carousel-inner .carousel-item {
   position: relative;
 }
+
 .carousel-inner .carousel-item img {
   display: block;
-  background-size: cover;
-  background-position: center;
   background-repeat: no-repeat;
-  height: 100vh; /* Set the height to 100% of the viewport height */
-  width: 100%; /* Set the width to 100% of the parent container */
+  background-size: contain; /* Adjust the sizing method as needed */
+  background-position: center;
+  max-height: 100vh; /* Set the maximum height to 100% of the viewport height */
+  max-width: 100%; /* Set the maximum width to 100% of the parent container */
   font-family: DM Sans;
-}
-.carousel-inner .carousel-item .text-content {
-  position: absolute;
-  bottom: 50%;
-  transform: translateY(50%);
-  left: 25%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  padding: 60px;
-  text-align: center;
-  width: 50%;
-  color: #544541;
-}
-.carousel-inner .carousel-item .text-content h1 {
-  font-size: 68px;
-  line-height: normal;
-  margin: 0;
-  padding: 0;
-  font-weight: bold;
-  font-family: Crimson Pro;
-}
-.carousel-inner .carousel-item .text-content h2 {
-  font-size: 18px;
-  font-weight: 900;
-  text-transform: uppercase;
-  line-height: 1;
-  color: #333;
-  font-weight: 500;
-  font-style: Crimson Pro, serif;
-  letter-spacing: 2px;
-}
-.carousel-inner .carousel-itemk .text-content p {
-  font-family: DM Sans;
-  font-size: 16px;
-  max-width: 55%;
-  margin-top: 25px;
-  color: #fff;
-  font-weight: 800;
-  line-height: 25px;
-  margin-bottom: 0;
-}
-.carousel-inner .carousel-item .text-content button {
-  background-color: #544541;
-  border: none;
-  padding: 15px 30px;
-  font-size: 1.5em;
-  margin-top: 10px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.carousel-inner .carousel-item .text-content button:hover {
-  color: #333;
-  text-decoration: none;
-  background-color: #333;
-  color: #fff;
+  margin: 0 auto;
 }
 
 //rgb(194, 123, 17)
@@ -112,28 +59,38 @@ ion-content {
   margin: 0;
   position: absolute;
   left: 260px;
-  top: 520px;
-  background-color: rgba(84, 69, 65, 0.7);
+  top: 500px;
+  margin-bottom: 150px;
+  background-color: white;
   border-radius: 10px;
 }
 
 #filter ion-select {
   font-size: 18px;
-  min-height: 60px;
+  min-height: 80px;
   min-width: 170px;
-  font-family: DM Sans;
+  font-family: Montserrat;
   font-weight: 500;
 }
 
 #filter ion-range {
   font-size: 18px;
-  min-height: 60px;
+  min-height: 80px;
   min-width: 350px;
   font-family: DM Sans;
   font-weight: 500;
+  font-family: Montserrat;
 }
 
 ////////
+///
+.room-home h1 {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 600;
+  font-family: League Spartan;
+  color: #544541;
+}
 .room {
   align-content: center;
   margin-top: 100px;
@@ -268,7 +225,7 @@ footer {
   padding: 0;
   font-weight: 600;
   line-height: normal;
-  font-family: Crimson Pro;
+  font-family: Montserrat;
   text-transform: uppercase;
 }
 p {
@@ -442,7 +399,7 @@ h1 {
 }
 
 p {
-  font-size: 1rem;
+  font-size: 18px;
   line-height: 1.5;
   margin: 0 0 1rem;
   font-family: Montserrat;
@@ -461,9 +418,9 @@ p {
 
 .brands h1 {
   text-align: center;
-  font-size: 50px;
-  font-family: Crimson Pro;
-  font-weight: 500;
+  font-size: 40px;
+  font-family: League Spartan;
+  font-weight: 600;
   color: #544541;
 }
 
@@ -660,63 +617,6 @@ p {
     width: 200px;
     height: 112.5px;
     margin: 30px 0;
-  }
-}
-
-/* Media Queries */
-@media only screen and (max-width: 768px) {
-  .team h1 {
-    padding-top: 20px;
-    font-size: 24px;
-  }
-
-  .container {
-    margin-top: 20px;
-  }
-
-  .carousel-inner .carousel-item {
-    height: 300px; /* Adjust the height as needed */
-  }
-
-  .carousel-inner .carousel-item img {
-    height: 100%; /* Reset the height to 100% */
-  }
-
-  .carousel-inner .carousel-item .text-content {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding: 30px;
-    text-align: center;
-    width: 100%;
-    color: #544541;
-  }
-
-  .carousel-inner .carousel-item .text-content h1 {
-    font-size: 28px;
-  }
-
-  .carousel-inner .carousel-item .text-content h2 {
-    font-size: 12px;
-    margin-top: -80px;
-  }
-
-  .carousel-inner .carousel-item .text-content p {
-    font-size: 10px;
-    max-width: 100%;
-    margin-top: 10px;
-    line-height: 15px;
-    text-align: center;
-  }
-
-  .carousel-inner .carousel-item .text-content button {
-    padding: 8px 16px;
-    font-size: 0.8em;
   }
 }
 
@@ -974,4 +874,11 @@ p {
   margin-left: 25px;
   text-align: center;
   margin-top: -5px;
+}
+
+/* Media Query */
+@media screen and (min-width: 300px) and (max-width: 600px) {
+  .carousel-inner .carousel-item img {
+    width: 100%; /* Adjust the maximum width as needed */
+  }
 }

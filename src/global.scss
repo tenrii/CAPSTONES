@@ -24,7 +24,9 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
-@import '~bootstrap-icons/font/bootstrap-icons.css';
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+
+@import "~@angular/cdk/overlay-prebuilt.css";
 
 /*ion-modal:not(.normal-modal) {
   &::part(content) {
@@ -33,10 +35,10 @@
   }
 }*/
 
-.login-modal{
-    --max-height:250px;
-    --max-width:600px;
- ion-button{
+.login-modal {
+  --max-height: 250px;
+  --max-width: 600px;
+  ion-button {
     margin-bottom: 23px;
     display: flex;
     justify-content: center;
@@ -45,13 +47,13 @@
   }
 }
 
-.create-modal{
-  --min-height:83%;
-  --min-width:73%;
-  --max-height:83%;
-  --max-width:73%;
+.create-modal {
+  --min-height: 83%;
+  --min-width: 73%;
+  --max-height: 83%;
+  --max-width: 73%;
 
-  ion-header{
+  ion-header {
     background-color: rgb(84, 69, 65);
     color: white;
   }

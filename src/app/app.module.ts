@@ -13,6 +13,7 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SplashScreen } from '@capacitor/splash-screen';
 
 @NgModule({
@@ -30,6 +31,7 @@ import { SplashScreen } from '@capacitor/splash-screen';
 
     AngularFireStorageModule,
     AngularFireDatabaseModule,
+    BrowserAnimationsModule,
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
