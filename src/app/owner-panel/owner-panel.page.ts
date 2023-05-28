@@ -225,6 +225,7 @@ export class OwnerPanelPage implements OnInit {
         return bed;
       }
     })
+    return a;
     })
 
     this.occupant = this.occupant.sort((a:any,b:any)=>{

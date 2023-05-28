@@ -312,20 +312,31 @@ export class FirebaseService {
     return this.transactions.value.filter((a: any) => a.userId === transaction);
   }
 
-  editTenant(roomId:any, bedId:number, tenantId:any){
-    const docRef = this.firestore.collection('Room').doc(roomId);
-    const fieldValue = firebase.firestore.FieldValue;
-    const updatedData:any = {};
-    const indexToRemove = bedId - 1;
-    console.log('index',indexToRemove)
-    updatedData['Bed'][indexToRemove] = fieldValue.arrayRemove('occupied');
-    docRef.update(updatedData)
-  .then(() => {
-    console.log("Document updated successfully.");
-  })
-  .catch((error) => {
-    console.error("Error updating document:", error);
-  });
-
+  editTenant(roomId:any, bedId:any, tenantId:any){
+    if(!bedId){
+    //const roomBeds = (this.firestore.collection(this.collectionRoom).doc(roomId).get()).data()?.Bed;
+      this.firestore.collection(this.collectionRoom).doc(roomId).update({
+        Bed: this.rooms.map((a: any) => {
+          const bed = a.Bed?.find((b: any) => b.uid === bedId);
+          if (!bed.occupied) {
+            return a;
+          } else {
+            delete bed.occupied;
+            return a;
+          }
+        }),
+      });
+      this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
+        status: 'inactive',
+      })
+    }
+    else{
+      this.firestore.collection(this.collectionRoom).doc(roomId).update({
+        occupied: firebase.firestore.FieldValue.delete(),
+      });
+      this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
+        status: 'inactive',
+      })
+    }
+    }
   }
-}
