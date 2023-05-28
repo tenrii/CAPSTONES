@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Modal3Component } from '../modal3/modal3.component';
 import { ModalController } from '@ionic/angular';
 import { Modal4Component } from '../modal4/modal4.component';
@@ -16,9 +16,14 @@ export class Modal15Component implements OnInit {
   constructor(
     private m :ModalController,
     private service: FirebaseService,
+    private fb: FormBuilder,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.roomForm = this.fb.group({
+      Gender: ['', [Validators.required]],
+    });
+  }
 
   exit() {
     if (this.isButtonDisabled) {
@@ -74,6 +79,7 @@ export class Modal15Component implements OnInit {
     modalInstance.onDidDismiss().then(() => {
       this.service.modalData = {
         ...this.service.modalData,
+        Gender: this.roomForm.get('Gender')?.value,
       }
       console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;

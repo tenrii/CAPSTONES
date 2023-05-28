@@ -5,6 +5,7 @@ import { BehaviorSubject, finalize, map, Observable, tap } from 'rxjs';
 import { doc, getDocFromCache, getFirestore } from 'firebase/firestore';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
+import firebase from 'firebase/compat/app';
 
 export interface User {
   uid: string;
@@ -88,6 +89,7 @@ export class FirebaseService {
               RoomName: localData.RoomName,
               RoomType: localData.RoomType,
               Street: localData.Street,
+              Gender: localData.Gender,
               Barangay: localData.Barangay,
               City: localData.City,
               Province: localData.Province,
@@ -308,5 +310,18 @@ export class FirebaseService {
 
   getTransaction(transaction: any) {
     return this.transactions.value.filter((a: any) => a.userId === transaction);
+  }
+
+  editTenant(roomId:any, bedId:any, tenantId:any){
+    const db = this.firestore.collection('Room').doc(roomId);
+
+    this.rooms.map((a:any)=>{
+        if (a.occupied) {
+
+    db.update({
+      Bed: firebase.firestore.FieldValue.arrayRemove('occupied'),
+    })
+  }
+  })
   }
 }

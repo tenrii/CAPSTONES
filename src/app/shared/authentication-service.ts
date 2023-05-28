@@ -55,6 +55,7 @@ export class AuthenticationService {
         FName: record.FName,
         LName: record.LName,
         Age: record.Age,
+        Gender: record.Gender,
         Address: record.Address,
       });
       await this.m.dismiss();

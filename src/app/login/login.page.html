@@ -109,10 +109,6 @@
                       <ion-label>Female</ion-label>
                       <ion-radio slot="start" value="Female"></ion-radio>
                     </ion-item>
-                    <ion-item style="border-radius: 0px 0px 15px 15px ;">
-                      <ion-label>Other</ion-label>
-                      <ion-radio slot="start" value="Other"></ion-radio>
-                    </ion-item>
                   </ion-radio-group>
 
                   <div class="form-outline mb-4">
@@ -135,11 +131,26 @@
                       We'll never share your password with anyone else
                     </small>
                   </div>
-                  <div class="register-button">
-                    <button type="submit" (click)="register(emails,passwords)" class="btn btn-primary btn-block mb-4">
-                      Register
-                    </button>
-                  </div>
+
+                  <form [formGroup]="conditionForm">
+                    <div class="tnc">
+
+                      <ion-checkbox formControlName="check1" id="check1"></ion-checkbox>
+                      <ion-label for="check1"> I agree with the <a href=""
+                        [routerLink]="['/terms-condition']">Terms and Condition</a></ion-label><br/>
+
+                      <ion-checkbox formControlName="check2" id="check2"></ion-checkbox>
+                      <ion-label for="check2"> I agree with Spot A Home <a href=""
+                        [routerLink]="['/terms-condition']">Privacy Policy</a></ion-label>
+
+                    </div>
+
+                    <div class="register-button">
+                      <button type="submit" (click)="register(emails,passwords)" [disabled]="!conditionForm.valid" class="btn btn-primary btn-block mb-4">
+                        Register
+                      </button>
+                    </div>
+                  </form>
                 </form>
 
               </span>

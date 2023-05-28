@@ -33,14 +33,14 @@ export class OwnerPanelPage implements OnInit {
   public owner: any;
   be: any[] = [];
   ro: any[] = [];
-  name: any[] = [];
-  date: any[] = [];
-  tenantName: any;
-  currentSortColumn!: string;
+  occupant:any[] = [];
   isSortAscending!: boolean;
   searchText!: string;
   filterlist:any = new BehaviorSubject([]);
   sortBy: any;
+  currentPage: number = 1;
+  itemsPerPage: number = 5;
+
   public notifBtn = new BehaviorSubject('bedspace');
   constructor(
     public authService: AuthenticationService,
@@ -74,6 +74,7 @@ export class OwnerPanelPage implements OnInit {
       .subscribe((f: any) => {
         this.room = f;
         console.log('all',this.room);
+                /// filteredRecord ///
         this.room.map((a: any) => {
           if (a.occupied) {
             const room = a.tenantData.filter((z:any)=>{
@@ -83,7 +84,6 @@ export class OwnerPanelPage implements OnInit {
               FName: room.map((data:any) => data.FName),
               LName: room.map((data:any) => data.FName),
               RoomName: a.RoomName,
-              a:'',
               Price: a.Price,
               userId: a.occupied?.userId,
               date: a.occupied?.dateCreated,
@@ -99,8 +99,7 @@ export class OwnerPanelPage implements OnInit {
                 FName: bed.map((data:any) => data.FName),
                 LName: bed.map((data:any) => data.LName),
                 RoomName: a.RoomName,
-                uid: b.id,
-                b:'',
+                id: b.id,
                 Price: a.Price,
                 bed: b.status,
                 userId: b.occupied?.userId,
@@ -115,8 +114,11 @@ export class OwnerPanelPage implements OnInit {
           (a: any, b: any) => (b.dateCreated || 0) - (a.dateCreated || 0)
         );
         console.log('ey', this.filteredRecord);
+                /// filteredRecord ///
+
         this.sortedBed();
         this.sortedRoom();
+        this.sortedTenant();
       });
 
   }
@@ -188,8 +190,58 @@ export class OwnerPanelPage implements OnInit {
     console.log('room', this.ro);
   }
 
+  sortedTenant(){
+    this.room.map((a:any)=>{
+      if (a.occupied) {
+        const room = a.tenantData.filter((z:any)=>{
+          return a.occupied?.userId === z.uid;
+        });
+        this.occupant.push({
+          FName: room.map((data:any) => data.FName),
+          LName: room.map((data:any) => data.LName),
+          Title: a.Title,
+          RoomName: a.RoomName,
+          roomId: a.id,
+          userId: a.occupied?.userId,
+        })
+        return room;
+      }
+      a.Bed?.map((b:any) =>{
+        if (b.occupied) {
+          const bed = a.tenantData.filter((z:any)=>{
+            return b.occupied?.userId === z.uid;
+          });
+        this.occupant.push({
+          FName: bed.map((data:any) => data.FName),
+          LName: bed.map((data:any) => data.LName),
+          Title: a.Title,
+          RoomName: a.RoomName,
+          userId: b.occupied?.userId,
+          roomId: a.id,
+          bedId: b.uid,
+          id: b.id,
+          bed: b.status,
+        })
+        return bed;
+      }
+    })
+    })
+
+    this.occupant = this.occupant.sort((a:any,b:any)=>{
+      const nameA = a.RoomName;
+      const nameB = b.RoomName;
+        nameA < nameB
+      return 0;
+     });
+    console.log('occupant', this.occupant);
+  }
+
   RemoveRecord(rowID: any) {
     this.firebaseService.delete_room(rowID);
+  }
+
+  RemoveTenant(roomId: any, bedId:any, tenantId:any) {
+    this.firebaseService.editTenant(roomId, bedId, tenantId)
   }
 
   UnlistRoom(id: any) {
@@ -228,7 +280,7 @@ export class OwnerPanelPage implements OnInit {
   }
 
   exportToCSV() {
-    const csvContent = this.convertToCSV(this.room);
+    const csvContent = this.convertToCSV(this.filteredRecord);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'data_export.csv');
   }
@@ -243,30 +295,18 @@ export class OwnerPanelPage implements OnInit {
     const rows = [];
 
     for (const data of room) {
-      let i = 0;
-      for (const b of data.Bed) {
-        if (b.occupied) {
-          for (const tenant of data.tenantData) {
-            if (b.occupied?.userId === tenant.id) {
-              this.tenantName = `${tenant.FName} ${tenant.LName}`;
-            }
-          }
-
           const rowData = [
-            this.tenantName || '',
-            `Room${i + 1} / Bed${b.id} ${b.status}`,
-            b.occupied?.status === 'paidPayment'
+            data.FName + ' ' + data.LName,
+            `${data.RoomName} / Bed${data.id} ${data.bed}`,
+            data.status === 'paidPayment'
               ? `Paid in Full / ${data.Price}`
               : `Pending / ${data.Price}`,
-            new Date(b.occupied?.dateCreated).toLocaleString('en-US', {
+            new Date(data.date).toLocaleString('en-US', {
               dateStyle: 'short',
             }),
           ];
 
           rows.push(rowData);
-        }
-      }
-      i++;
     }
     const csvContent = [
       headers.join(','),
@@ -303,8 +343,6 @@ export class OwnerPanelPage implements OnInit {
     this.isModalOpen = false;
     this.m.dismiss();
   }
-
-  LogOut() {}
 
   toggleSortOrder() {
     this.isSortAscending = !this.isSortAscending;
@@ -372,4 +410,26 @@ export class OwnerPanelPage implements OnInit {
     });
     this.filterlist.next(data);
   }
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.getTotalPages()) {
+      this.currentPage++;
+    }
+  }
+
+  getTotalPages() {
+    return Math.ceil(this.room.length / this.itemsPerPage);
+  }
+
+  get totalPages() {
+    return Math.ceil(this.room.length / this.itemsPerPage);
+  }
+
+
 }

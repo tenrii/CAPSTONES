@@ -1,4 +1,4 @@
-ion-toolbar {
+.new-background-color {
   --background: #544541;
 }
 
@@ -22,7 +22,7 @@ h1 {
 
 .modalbtnn {
   background-color: #544541;
-  color: rgb(252, 211, 211);
+  color: white;
   padding: 15px;
   font-size: 20px;
   font-family: Montserrat;
@@ -31,7 +31,7 @@ h1 {
 .btn-group {
   margin-bottom: 0;
   position: absolute;
-  top: 50%;
+  top: 60%;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -44,18 +44,17 @@ label {
   min-height: 250px;
   background-color: white;
   color: rgb(100, 66, 34);
+  border: rgb(100, 66, 34) solid 1px;
   font-size: 15px;
   padding: 10px;
   margin-top: 20px;
-  font-family: Montserrat;
-}
-
-#icon {
-  margin-top: 10px;
 }
 
 p {
   text-align: center;
   margin-top: 30px;
-  font-family: Montserrat;
+}
+
+#icon {
+  margin-top: 10px;
 }

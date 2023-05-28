@@ -82,6 +82,7 @@
 }
 
 .register-button {
+  margin-top: 10px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -95,4 +96,17 @@ h2 {
   justify-content: center;
   text-align: center;
   margin-bottom: 30px;
+}
+
+.tnc{
+  justify-content: center;
+}
+
+.tnc ion-checkbox{
+--border-color:black;
+}
+
+.tnc ion-label a{
+  font-weight: 600;
+  font-style:oblique;
 }

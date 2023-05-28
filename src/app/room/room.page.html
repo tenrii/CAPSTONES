@@ -66,6 +66,14 @@
             </ion-grid>
           </div>
 
+          <div style="margin-bottom: 15px;">
+            <div class="rent">!! FOR
+              <span *ngIf="data?.Gender === 'Male'">MALE TENANT ONLY !!</span>
+              <span *ngIf="data?.Gender === 'Female'">FEMALE TENANT ONLY !!</span>
+              <span *ngIf="data?.Gender === 'Both'">BOTH MALE AND FEMALE !!</span>
+            </div>
+          </div>
+
           <div class="contact">
             <div class="host">Hosted by:</div>
             <span class="host-img">
@@ -81,7 +89,9 @@
       </ion-col>
 
       <ion-col size-lg="4" size-md="12" size-sm="12" class="ion-no-padding">
+
         <ng-container *ngTemplateOutlet="reservation"></ng-container>
+
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -266,12 +276,14 @@
 
       <ion-row>
         <ion-col class="payment-col">
+          <span *ngIf="tenant?.Gender === data?.Gender || data.Gender === 'Both'">
           <ion-button size="large" shape="round" strong="true" class="reserve-button" (click)="reserveBedspace()"
             [disabled]="(this.isReserving | async) || this.pendingPayment || this.data?.occupied"
             style="font-family: Montserrat;">
             <ion-spinner *ngIf="this.isReserving | async"></ion-spinner>
             {{ (this.isReserving | async) || this.pendingPayment || this.data?.occupied ? 'Reserved' : 'Reserve' }}
           </ion-button>
+        </span>
         </ion-col>
       </ion-row>
 

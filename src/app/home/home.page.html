@@ -63,7 +63,7 @@
     </ion-item>
   </div>
 
-  <span *ngFor="let item of list | async">
+  <span *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
     <div *ngIf="!item.isUnlisted || item.isUnlisted==='false'" class="room">
       <div>
         <div class="over">
@@ -83,6 +83,14 @@
       </div>
     </div>
   </span>
+
+  <section class="pagination">
+    <div class="page_container">
+      <ion-button ion-button (click)="previousPage()" [disabled]="currentPage === 1">Previous</ion-button>
+      <div class="pages">Page {{currentPage}} of {{totalPages}}</div>
+      <ion-button ion-button (click)="nextPage()" [disabled]="currentPage === getTotalPages()">Next</ion-button>
+    </div>
+  </section>
 
   <section class="video-section">
     <div class="container">

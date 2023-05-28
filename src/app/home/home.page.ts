@@ -20,10 +20,12 @@ interface RoomData {
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  currentPage: number = 1;
+  itemsPerPage: number = 8;
   roomList: any[] = [];
   emailList: any[] = [];
   roomData!: RoomData;
-  list: any = new BehaviorSubject([]);
+  list: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   listEmail: any = new BehaviorSubject([]);
   filterPlace: any;
   filterRent: any;
@@ -95,6 +97,27 @@ export class HomePage implements OnInit {
       );
     });
     this.list.next(filteredList);
+  }
+
+
+  previousPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  nextPage() {
+    if (this.currentPage < this.getTotalPages()) {
+      this.currentPage++;
+    }
+  }
+
+  getTotalPages() {
+    return Math.ceil(this.list.getValue().length / this.itemsPerPage);
+  }
+
+  get totalPages() {
+    return Math.ceil(this.list.getValue().length / this.itemsPerPage);
   }
 
 }
