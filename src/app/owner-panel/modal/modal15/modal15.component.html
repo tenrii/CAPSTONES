@@ -8,18 +8,21 @@
 </ion-header>
 
 <ion-content>
+
+  <h1 style="font-family: Montserrat;">What tenant can you only<br />allowed to reserve in the room?</h1>
+
   <form [formGroup]="roomForm">
 
     <div class="btn-group">
       <input type="radio" class="btn-check" name="Gender" id="option1" autocomplete="off" formControlName="Gender"
-        value="Only Male" />
+        value="Male" />
       <label class="btn btn-dark" for="option1">Only Male
         <p>only male tenant can<br />reserve in this room</p>
         <ion-icon name="man"></ion-icon>
       </label>
 
     <input type="radio" class="btn-check" name="Gender" id="option2" autocomplete="off" formControlName="Gender"
-        value="Only Female" />
+        value="Female" />
     <label class="btn btn-dark" for="option2">Only Female
         <p>only female tenant can<br />reserve in this room</p>
         <ion-icon name="woman"></ion-icon>

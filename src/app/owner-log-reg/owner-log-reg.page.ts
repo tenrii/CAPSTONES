@@ -15,11 +15,13 @@ import { BehaviorSubject, Observable, finalize } from 'rxjs';
 })
 export class OwnerLogRegPage implements OnInit {
   public condition = new BehaviorSubject('login');
+  isButtonDisabled = false;
   ownerRegister!: FormGroup;
   isModalOpen = false;
   selectedBP!: File;
   selectedVI!: File;
   downloadURL!: Observable<string>;
+  conditionForm!: FormGroup;
   uid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
 
   constructor(
@@ -39,6 +41,15 @@ export class OwnerLogRegPage implements OnInit {
       Age: ['', [Validators.required]],
       Address: ['', [Validators.required]],
       Email: ['', [Validators.required]],
+    });
+
+    this.conditionForm = this.fb.group({
+      check1: [false, Validators.requiredTrue],
+      check2: [false, Validators.requiredTrue]
+    });
+
+    this.conditionForm.valueChanges.subscribe(() => {
+      this.conditionForm.updateValueAndValidity();
     });
 
     this.route.queryParams.subscribe((params) => {
@@ -135,4 +146,5 @@ export class OwnerLogRegPage implements OnInit {
     this.isModalOpen = true;
     return await modalInstance.present();
   }
+
 }

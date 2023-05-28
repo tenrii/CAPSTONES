@@ -188,6 +188,26 @@ ion-content {
   margin: 0;
 }
 
+.pagination{
+  width: 100%;
+
+}
+
+.pagination .page_container{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.pagination ion-button{
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+.pagination div{
+  margin-top: 12px;
+}
+
 ////////
 ///
 ///

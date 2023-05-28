@@ -190,12 +190,20 @@
           <ion-col>
             <div type="button-list" onclick="
           document.getElementById('listed').style.display='block';
-          document.getElementById('unlisted').style.display='none';">Listed Room</div>
+          document.getElementById('unlisted').style.display='none';
+          document.getElementById('occupant').style.display='none';">Listed Room</div>
           </ion-col>
           <ion-col>
             <div type="button-list" onclick="
           document.getElementById('listed').style.display='none';
-          document.getElementById('unlisted').style.display='block';">Unlisted Room</div>
+          document.getElementById('unlisted').style.display='block';
+          document.getElementById('occupant').style.display='none';">Unlisted Room</div>
+          </ion-col>
+          <ion-col>
+            <div type="button-list" onclick="
+          document.getElementById('listed').style.display='none';
+          document.getElementById('unlisted').style.display='none';
+          document.getElementById('occupant').style.display='block';">Occupant</div>
           </ion-col>
         </ion-row>
       </ion-grid>
@@ -214,7 +222,7 @@
               <ion-col>Details</ion-col>
               <ion-col>Action</ion-col>
             </ion-row>
-            <span *ngFor="let data of room">
+            <span *ngFor="let data of room.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
               <ion-row class="row-body" *ngIf="!data.isUnlisted || data.isUnlisted === 'false'">
                 <ion-col>{{data.Title}}</ion-col>
                 <ion-col>{{data.RoomType}}</ion-col>
@@ -239,6 +247,13 @@
                 </ion-col>
               </ion-row>
             </span>
+            <ion-footer>
+              <div class="pagination">
+                <ion-button ion-button (click)="previousPage()" [disabled]="currentPage === 1">Previous</ion-button>
+                <div class="pages">Page {{currentPage}} of {{totalPages}}</div>
+                <ion-button ion-button (click)="nextPage()" [disabled]="currentPage === getTotalPages()">Next</ion-button>
+              </div>
+            </ion-footer>
           </ion-grid>
         </div>
       </div>
@@ -257,7 +272,7 @@
               <ion-col>Details</ion-col>
               <ion-col>Action</ion-col>
             </ion-row>
-            <span *ngFor="let data of room">
+            <span *ngFor="let data of room.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
               <ion-row class="row-body" *ngIf="data.isUnlisted === 'true'">
                 <ion-col>{{data.Title}}</ion-col>
                 <ion-col>{{data.RoomType}}</ion-col>
@@ -282,6 +297,44 @@
                 </ion-col>
               </ion-row>
             </span>
+            <ion-footer>
+              <div class="pagination">
+                <ion-button ion-button (click)="previousPage()" [disabled]="currentPage === 1">Previous</ion-button>
+                <div class="pages">Page {{currentPage}} of {{totalPages}}</div>
+                <ion-button ion-button (click)="nextPage()" [disabled]="currentPage === getTotalPages()">Next</ion-button>
+              </div>
+            </ion-footer>
+          </ion-grid>
+        </div>
+      </div>
+      <div id="occupant" style="display:none;">
+        <div class="room">
+          <ion-grid>
+            <ion-row class="row-header">
+              <ion-col>Tenant Name</ion-col>
+              <ion-col>Room</ion-col>
+              <ion-col>Bed Position</ion-col>
+              <ion-col>Action</ion-col>
+            </ion-row>
+            <span *ngFor="let data of occupant">
+            <ion-row class="row-body">
+              <ion-col>{{data.FName}} {{data.LName}}</ion-col>
+              <ion-col>{{data.RoomName}}</ion-col>
+              <ion-col>
+                <span *ngIf="!data.bed"></span>
+                <span *ngIf="data.bed">
+                Bed {{data.id}}
+                <span *ngIf="data.bed === 'down'">BOTTOM BUNK</span>
+                <span *ngIf="data.bed === 'up'">TOP BUNK</span>
+              </span>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="RemoveTenant(data.roomId,data.bedId,data.userId)">
+                  <ion-icon name="trash"></ion-icon>
+                </ion-button>
+              </ion-col>
+            </ion-row>
+          </span>
           </ion-grid>
         </div>
       </div>
@@ -325,9 +378,9 @@
               </ion-col>
 
               <ion-col>
-                Room{{data.roomName}}
+                {{data.RoomName}}
                 <br />
-                Bed {{data.id}} {{data.bed}}
+                <span *ngIf="data.bed && data.id">Bed {{data.id}} {{data.bed}}</span>
               </ion-col>
 
               <ion-col>

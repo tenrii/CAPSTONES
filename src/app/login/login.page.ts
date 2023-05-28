@@ -18,7 +18,7 @@ export class LoginPage implements OnInit {
   tenantRegister!: FormGroup;
   isModalOpen = false;
   isRegister = true;
-
+  conditionForm!: FormGroup;
   constructor(
     private m: ModalController,
     public authService: AuthenticationService,
@@ -36,6 +36,15 @@ export class LoginPage implements OnInit {
       Gender: ['', [Validators.required]],
       Address: ['', [Validators.required]],
       Email: ['', [Validators.required]],
+    });
+
+    this.conditionForm = this.fb.group({
+      check1: [false, Validators.requiredTrue],
+      check2: [false, Validators.requiredTrue]
+    });
+
+    this.conditionForm.valueChanges.subscribe(() => {
+      this.conditionForm.updateValueAndValidity();
     });
 
     this.route.queryParams.subscribe(params => {

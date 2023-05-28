@@ -45,7 +45,7 @@ export class RoomPage implements OnInit {
   public data: any;
   public owner: any;
   public review: any[] = [];
-  tenant: any = {};
+  public tenant: any;
   studentList: any;
   reviewForm: any = FormGroup;
   roomId: any;
@@ -59,6 +59,7 @@ export class RoomPage implements OnInit {
   public pendingPayment: any;
   a = 'hello';
   public galleryItems$ = new BehaviorSubject<any>([]);
+  public gender: any;
 
   seats: Seat[] = [];
 
@@ -121,6 +122,9 @@ export class RoomPage implements OnInit {
     this.loadMap();
     this.firebaseService.read_owner().subscribe(() => {
       this.owner = this.firebaseService.getOwner(this.data.OwnerId);
+    });
+    this.firebaseService.read_tenant().subscribe(() => {
+      this.tenant = this.firebaseService.getOwner(this.tenantId);
     });
 
     this.data.priceSub = parseFloat(this.data.Price)
