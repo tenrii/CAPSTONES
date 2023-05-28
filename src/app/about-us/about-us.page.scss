@@ -34,7 +34,7 @@ h2 {
 
 .banner-content {
   position: absolute;
-  z-index: 99999;
+  z-index: 10;
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -81,14 +81,10 @@ h2 {
 }
 
 /*DEVELOPER*/
-.team h1 {
-  font-family: Crimson Pro;
-  text-align: center;
-  margin-top: -200px;
-  font-size: 50px;
-  margin-bottom: 50px;
+body {
+  margin-top: 20px;
+  background: #ee82ee;
 }
-
 img {
   max-width: 100%;
   height: auto;
@@ -97,11 +93,6 @@ img {
 .mb-1 {
   margin-bottom: 0.25rem !important;
 }
-
-.mb-0 {
-  text-align: center;
-}
-
 .h5,
 h5 {
   font-size: 1.25rem;
@@ -109,7 +100,6 @@ h5 {
 a {
   text-decoration: none;
 }
-
 .team-style07 {
   background: #fff;
   text-align: center;
@@ -128,7 +118,7 @@ a {
 }
 
 .team-style07:hover {
-  background: rgba(84, 69, 65, 0.8);
+  background: #292dc2;
 }
 
 .team-style07:hover h3 a,
@@ -200,7 +190,7 @@ a {
 }
 
 .team-style07 .team-thumb .team-social .styled-icons li a {
-  background: #bb995c;
+  background: #3457f1;
   color: #fff;
   height: 40px;
   width: 40px;

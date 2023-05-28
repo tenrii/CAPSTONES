@@ -269,21 +269,20 @@ div[type="button-list"]:hover {
   }
 }
 
-.pagination{
+.pagination {
   display: flex;
   justify-content: center;
   text-align: center;
 }
 
-.pagination ion-button{
+.pagination ion-button {
   margin-left: 20px;
   margin-right: 20px;
 }
 
-.pagination div{
+.pagination div {
   margin-top: 12px;
 }
-
 
 ////////////////////
 ///
@@ -385,21 +384,24 @@ div[type="button-list"]:hover {
   }
 }
 
-@import url("https://fonts.googleapis.com/css?family=Rubik&display=swap");
-
+/*SIDEBAR*/
 
 body {
   margin: 0;
 }
 
-.side{
+.side {
   max-width: 250px;
-  }
+}
 
 .sidebar {
-  width: 250px;
+  position: sticky;
+  width: 260px;
+  top: 100%;
+  background: #544541;
+  display: flex;
   height: 100%;
-  background: #111;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .sidebar h1 {
@@ -407,25 +409,28 @@ body {
   padding: 10px 20px;
   color: #fff;
   text-decoration: none;
-  font-family: "Rubik";
+  font-family: "Montserrat";
   letter-spacing: 2px;
   font-weight: 400;
-  margin: 0;
   font-size: 25px;
+  margin: 0;
   text-transform: uppercase;
+  margin-bottom: 20px;
 }
 
 .sidebar a {
   display: block;
   padding: 10px 20px;
-  color: #bbb;
+  color: #fff;
   text-decoration: none;
-  font-family: "Rubik";
+  font-family: Montserrat;
+  font-size: 18px;
   letter-spacing: 2px;
 }
 
 .sidebar a:hover {
-  color: #fff;
+  background-color: #e2e2e2;
+  color: #000;
   margin-left: 20px;
   transition: 0.4s;
 }

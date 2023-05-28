@@ -35,20 +35,22 @@
                   <ion-grid class="bills-header">
                     <ion-row>
                       <ion-col class="btn" size="4" [class.active]="(notifBtn | async) === 'bedspace'">
-                        <div type="button" (click)="notifBtn.next('bedspace')" style="font-family: Montserrat; font-size: 18px;">
+                        <div type="button" (click)="notifBtn.next('bedspace')"
+                          style="font-family: Montserrat; font-size: 18px;">
                           Bedspace</div>
                       </ion-col>
                       <ion-col class="btn" size="3" [class.active]="(notifBtn | async) === 'room'">
-                        <div type="button" (click)="notifBtn.next('room')" style="font-family: Montserrat; font-size: 18px;">Room
+                        <div type="button" (click)="notifBtn.next('room')"
+                          style="font-family: Montserrat; font-size: 18px;">Room
                         </div>
                       </ion-col>
                     </ion-row>
                   </ion-grid>
 
 
-                <div id="bedspace1" *ngIf="(notifBtn | async) === 'bedspace'">
-                  <ion-grid>
-                    <span *ngFor="let data of be">
+                  <div id="bedspace1" *ngIf="(notifBtn | async) === 'bedspace'">
+                    <ion-grid>
+                      <span *ngFor="let data of be">
                         <!--Paid-->
                         <ion-row *ngIf="data.Status === 'paid' || data.Status === 'paidPayment'">
                           <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
@@ -90,15 +92,15 @@
                           </ion-col>
                         </ion-row>
                       </span>
-                  </ion-grid>
-                </div>
+                    </ion-grid>
+                  </div>
 
-                <div id="room1"  *ngIf="(notifBtn | async) === 'room'">
-                  <ion-grid>
-                    <span *ngFor="let data of ro">
+                  <div id="room1" *ngIf="(notifBtn | async) === 'room'">
+                    <ion-grid>
+                      <span *ngFor="let data of ro">
                         <!--Paid-->
                         <ion-row *ngIf="data.Status === 'paid'">
-                           <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
+                          <!--<ion-col style="max-width: 60px;"><span *ngIf="data.ownerData.profpic"><img
                                 src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
                             <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
                                 style="width: 50px;"></span></ion-col>-->
@@ -118,20 +120,20 @@
                                src="{{data.ownerData.profpic}}" style="width: 50px;"></span>
                            <span *ngIf="!data.ownerData.profpic"><img src="assets/user2.png"
                                style="width: 50px;"></span></ion-col>-->
-                         <ion-col style="border-bottom: gray solid 1px;">
-                           <div class="cardName">
-                             Your reservation in {{data.RoomName}}
-                             at
-                             {{data.Title}}
-                             is pending. Please pay within 24hrs to avoid cancellation.
-                             <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
-                           </div>
-                         </ion-col>
-                       </ion-row>
+                          <ion-col style="border-bottom: gray solid 1px;">
+                            <div class="cardName">
+                              Your reservation in {{data.RoomName}}
+                              at
+                              {{data.Title}}
+                              is pending. Please pay within 24hrs to avoid cancellation.
+                              <div class="time ion-text-right">{{data.Date | date:'short'}}</div>
+                            </div>
+                          </ion-col>
+                        </ion-row>
                       </span>
-                  </ion-grid>
+                    </ion-grid>
+                  </div>
                 </div>
-              </div>
               </ion-content>
             </ng-template>
           </ion-popover>
@@ -157,125 +159,129 @@
           <a href="">Service</a>
           <a href="">Join</a>
           <a href="">Contact</a>
-       </div>
+        </div>
       </ion-col>
       <ion-col style="padding: 0; margin:0;">
 
-  <div class="container-img">
-    <img src="assets/logo2.jpg">
-  </div>
+        <div class="container-img">
+          <img src="assets/logo2.jpg">
+        </div>
 
-  <div class="center">
-    <div>Hello, {{tenant?.FName}}!</div>
-    <p>Lets help you live your perfect boarding <br /> house match</p>
-  </div>
+        <div class="center">
+          <div>Hello, {{tenant?.FName}}!</div>
+          <p>Lets help you live your perfect boarding <br /> house match</p>
+        </div>
 
-  <div class="body">
+        <div class="body">
 
-    <div *ngIf="(page | async) === 'bills'" class="bill" id="bill">
-      <ion-grid class="bills-header">
-        <ion-row>
-          <ion-col class="btn" size="3" [class.active]="(billsPage | async) === 'unpaid'">
-            <div type="button" (click)="billsPage.next('unpaid')" style="font-family: Montserrat; font-size: 18px;">
-              Unpaid</div>
-          </ion-col>
-          <ion-col class="btn" size="3" [class.active]="(billsPage | async) === 'paid'">
-            <div type="button" (click)="billsPage.next('paid')" style="font-family: Montserrat; font-size: 18px;">Paid
-            </div>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-
-      <div class="bills-body">
-        <div id="unpaid" *ngIf="(billsPage | async) === 'unpaid'">
-          <ion-grid>
-            <ion-row>
-              <ion-col class="ion-text-center">
-                <h1 style="font-weight: bold;">Monthly Rent</h1>
-              </ion-col>
-              <ion-col class="ion-text-center">
-                <h1 style="font-weight: bold;">Amount</h1>
-              </ion-col>
-            </ion-row>
-            <ion-row *ngFor="let bill of bills">
-              <ion-col>
-                <h1 style="font-family: Montserrat; font-size: 18px;">{{bill.roomData.Title}}:{{bill.roomData.RoomName
-                  || 'Room'}}</h1>
-                <div style="font-family: Montserrat; font-size: 18px;">Due date: {{bill.nextPaymentMonth | date}}</div>
-              </ion-col>
-              <ion-col class="ion-text-center">
-                <div>
-                  <h1 style="font-family: Montserrat; font-size: 18px;">{{bill.amount | currency:'Php'}}</h1>
-                  <ion-button [disabled]="isPayButtonLoading | async" (click)="payBill(bill)"
+          <div *ngIf="(page | async) === 'bills'" class="bill" id="bill">
+            <ion-grid class="bills-header">
+              <ion-row>
+                <ion-col class="btn" size="3" [class.active]="(billsPage | async) === 'unpaid'">
+                  <div type="button" (click)="billsPage.next('unpaid')"
                     style="font-family: Montserrat; font-size: 18px;">
-                    <ion-spinner *ngIf="isPayButtonLoading | async"></ion-spinner>Pay now
-                  </ion-button>
-                </div>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
+                    Unpaid</div>
+                </ion-col>
+                <ion-col class="btn" size="3" [class.active]="(billsPage | async) === 'paid'">
+                  <div type="button" (click)="billsPage.next('paid')" style="font-family: Montserrat; font-size: 18px;">
+                    Paid
+                  </div>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+            <div class="bills-body">
+              <div id="unpaid" *ngIf="(billsPage | async) === 'unpaid'">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col class="ion-text-center">
+                      <h1 style="font-weight: bold;">Monthly Rent</h1>
+                    </ion-col>
+                    <ion-col class="ion-text-center">
+                      <h1 style="font-weight: bold;">Amount</h1>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngFor="let bill of bills">
+                    <ion-col>
+                      <h1 style="font-family: Montserrat; font-size: 18px;">
+                        {{bill.roomData.Title}}:{{bill.roomData.RoomName
+                        || 'Room'}}</h1>
+                      <div style="font-family: Montserrat; font-size: 18px;">Due date: {{bill.nextPaymentMonth | date}}
+                      </div>
+                    </ion-col>
+                    <ion-col class="ion-text-center">
+                      <div>
+                        <h1 style="font-family: Montserrat; font-size: 18px;">{{bill.amount | currency:'Php'}}</h1>
+                        <ion-button [disabled]="isPayButtonLoading | async" (click)="payBill(bill)"
+                          style="font-family: Montserrat; font-size: 18px;">
+                          <ion-spinner *ngIf="isPayButtonLoading | async"></ion-spinner>Pay now
+                        </ion-button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+
+              <div id="paid" *ngIf="(billsPage | async) === 'paid'">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col class="ion-text-center">
+                      <h1 style="font-weight: bold;">Paid</h1>
+                    </ion-col>
+                    <ion-col class="ion-text-center">
+                      <h1 style="font-weight: bold;">Amount</h1>
+                    </ion-col>
+                    <ion-col class="ion-text-center">
+                      <h1 style="font-weight: bold;">Date</h1>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row *ngFor="let paidBill of paidBills">
+                    <ion-col style="font-family: Montserrat; font-size: 18px;">
+                      <h1 style="font-family: Montserrat; font-size: 18px;">
+                        {{paidBill.roomData.Title}}:{{paidBill.roomData.RoomName || 'Room'}}</h1>
+                      <p style="font-family: Montserrat; font-size: 18px;">{{paidBill.monthDate | date:'MMMM YYYY'}}</p>
+                    </ion-col>
+                    <ion-col class="ion-text-center">
+                      <h2 style="font-family: Montserrat; font-size: 18px;">{{paidBill.amount | currency: 'Php'}}</h2>
+                    </ion-col>
+                    <ion-col class="ion-text-center" style="font-family: Montserrat; font-size: 18px;">
+                      <h2 style="font-family: Montserrat; font-size: 18px;">{{paidBill.dateCreated | date}}</h2>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="(page | async) === 'records'" id="transaction">
+            <div class="room">
+              <ion-grid>
+                <ion-row class="row-header">
+                  <ion-col>Boarding House Name</ion-col>
+                  <ion-col>Bedspace Placement</ion-col>
+                  <ion-col>Payment Amount</ion-col>
+                  <ion-col>Payment Status</ion-col>
+                  <ion-col>Reference</ion-col>
+                  <ion-col>Date of Payment</ion-col>
+                </ion-row>
+                <ion-card *ngIf="transaction.length === 0">
+                  <ion-icon name="search-outline"></ion-icon>
+                  <p>You have no reservation transaction yet</p>
+                </ion-card>
+                <ion-row class="row-body" *ngFor="let td of transaction">
+                  <ion-col>{{td.roomData?.Title}}</ion-col>
+                  <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
+                  <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
+                  <ion-col>{{td.status}}</ion-col>
+                  <ion-col>{{td.id}}</ion-col>
+                  <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </div>
+
         </div>
-
-        <div id="paid" *ngIf="(billsPage | async) === 'paid'">
-          <ion-grid>
-            <ion-row>
-              <ion-col class="ion-text-center">
-                <h1 style="font-weight: bold;">Paid</h1>
-              </ion-col>
-              <ion-col class="ion-text-center">
-                <h1 style="font-weight: bold;">Amount</h1>
-              </ion-col>
-              <ion-col class="ion-text-center">
-                <h1 style="font-weight: bold;">Date</h1>
-              </ion-col>
-            </ion-row>
-            <ion-row *ngFor="let paidBill of paidBills">
-              <ion-col style="font-family: Montserrat; font-size: 18px;">
-                <h1 style="font-family: Montserrat; font-size: 18px;">
-                  {{paidBill.roomData.Title}}:{{paidBill.roomData.RoomName || 'Room'}}</h1>
-                <p style="font-family: Montserrat; font-size: 18px;">{{paidBill.monthDate | date:'MMMM YYYY'}}</p>
-              </ion-col>
-              <ion-col class="ion-text-center">
-                <h2 style="font-family: Montserrat; font-size: 18px;">{{paidBill.amount | currency: 'Php'}}</h2>
-              </ion-col>
-              <ion-col class="ion-text-center" style="font-family: Montserrat; font-size: 18px;">
-                <h2 style="font-family: Montserrat; font-size: 18px;">{{paidBill.dateCreated | date}}</h2>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </div>
-      </div>
-    </div>
-
-    <div *ngIf="(page | async) === 'records'" id="transaction">
-      <div class="room">
-        <ion-grid>
-          <ion-row class="row-header">
-            <ion-col>Boarding House Name</ion-col>
-            <ion-col>Bedspace Placement</ion-col>
-            <ion-col>Payment Amount</ion-col>
-            <ion-col>Payment Status</ion-col>
-            <ion-col>Reference</ion-col>
-            <ion-col>Date of Payment</ion-col>
-          </ion-row>
-          <ion-card *ngIf="transaction.length === 0">
-            <ion-icon name="search-outline"></ion-icon>
-            <p>You have no reservation transaction yet</p>
-          </ion-card>
-          <ion-row class="row-body" *ngFor="let td of transaction">
-            <ion-col>{{td.roomData?.Title}}</ion-col>
-            <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
-            <ion-col><span *ngFor="let data of td.lineItems">₱{{data.amount}}</span></ion-col>
-            <ion-col>{{td.status}}</ion-col>
-            <ion-col>{{td.id}}</ion-col>
-            <ion-col>{{td.dateCreated | date:'short'}}</ion-col>
-          </ion-row>
-        </ion-grid>
-      </div>
-    </div>
-
-  </div>
-</ion-col>
-</ion-row>
-</ion-grid>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

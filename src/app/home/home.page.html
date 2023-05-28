@@ -53,6 +53,9 @@
     </ion-item>
   </div>
 
+  <div class="brands">
+    <h1>ENTIRE CITY OF CHOICE</h1>
+  </div>
   <span *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
     <div *ngIf="!item.isUnlisted || item.isUnlisted==='false'" class="room">
       <div>
@@ -83,29 +86,8 @@
   </section>
 
   <section class="video-section">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <img src="assets/home2.jpg">
-        </div>
-        <div class="col">
-          <h1>SPOT-A-HOME</h1>
-          <p>Introducing Spot-A-Home, your ultimate solution for finding and reserving boarding houses in the Science
-            City of Muñoz.
-            With a user-friendly platform tailored to your preferences, finding the perfect accommodation is just a few
-            clicks away.
-            Enjoy a seamless reservation process and cashless payments, eliminating the hassle of coordinating with
-            landlords and
-            handling cash transactions. <br><br> Rest assured, all listed properties meet quality standards, providing
-            detailed
-            descriptions
-            and amenities for an informed decision. Experience the convenience of Spot-A-Home today and unlock a
-            stress-free,
-            cashless solution for your boarding house needs. Join our platform now for a seamless housing search and
-            reservation
-            experience.</p>
-        </div>
-      </div>
+    <div class="col">
+      <img src="assets/banner5.png">
     </div>
   </section>
 
