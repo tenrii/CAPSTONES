@@ -495,7 +495,7 @@ export const verifyPayment = functions.runWith({secrets: ['MAIL_PASS']}).https.o
         promises.push(sendMail(ownerEmail, ownerEmailSubject, ownerEmailHtml));
       }
     }
-    
+
     // if bedspace or room type save to tenant
     if (paymentSession?.type === 'bedspace-reservation' || paymentSession?.type === 'room-reservation') {
       const dateNow = Date.now();

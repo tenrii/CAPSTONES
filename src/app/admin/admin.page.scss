@@ -146,6 +146,11 @@ header {
   flex-wrap: wrap;
   gap: 50px;
 }
+
+.box-container .topic{
+  color: black;
+}
+
 .nav {
   min-height: 91vh;
   width: 250px;
@@ -244,6 +249,11 @@ header {
 .box .text {
   color: white;
 }
+
+.box i {
+  font-size: 25px;
+}
+
 .topic {
   font-size: 13px;
   font-weight: 400;
@@ -264,6 +274,7 @@ header {
   box-shadow: 3px 3px 10px rgb(188, 188, 188);
   padding: 0px 20px 20px 20px;
 }
+
 .report-header {
   height: 80px;
   width: 100%;
@@ -303,9 +314,26 @@ header {
   justify-content: space-between;
   align-items: center;
 }
+
+.item1 button{
+  padding: 10px;
+  margin-right: 10px;
+}
+
 .t-op {
   font-size: 18px;
   letter-spacing: 0px;
+  min-width: 230px;
+  max-width: 230px;
+  border-right: black solid 1px;
+}
+
+.t-op1 {
+  font-size: 18px;
+  letter-spacing: 0px;
+  min-width: 300px;
+  max-width: 300px;
+  border-right: black solid 1px;
 }
 
 .items {
@@ -320,6 +348,12 @@ header {
   font-size: 14px;
   letter-spacing: 0px;
   font-weight: 600;
+  min-width: 230px;
+  max-width: 230px;
+  min-height: 100px;
+  max-height: 100px;
+  border: black solid 1px;
+  overflow-y: hidden;
 }
 
 .label-tag {

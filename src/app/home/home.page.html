@@ -57,7 +57,7 @@
     <h1>ENTIRE CITY OF CHOICE</h1>
   </div>
   <span *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
-    <div *ngIf="!item.isUnlisted || item.isUnlisted==='false'" class="room">
+    <div *ngIf="!item.isUnlisted || item.isUnlisted==='false' && item?.Permitted === true || item?.Permitted === 'true'" class="room">
       <div>
         <div class="over">
           <img src="{{item.Images[0]}}" class="img">

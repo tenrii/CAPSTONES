@@ -19,11 +19,15 @@ Accepted: string;
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
-  tenantList!: any[];
+  status = new BehaviorSubject('pending')
+  switch = new BehaviorSubject('owner')
+  roomList: any[]=[];
   ownerData: OwnerData;
-  ownerList!: any[];
-  truelist: any = new BehaviorSubject([]);
-  falselist: any = new BehaviorSubject([]);
+  ownerList: any[]=[];
+  approveRoomList: any = new BehaviorSubject([]);
+  rejectRoomList: any = new BehaviorSubject([]);
+  approveOwnerList: any = new BehaviorSubject([]);
+  rejectOwnerList: any = new BehaviorSubject([]);
 
   constructor(
     private firebaseService: FirebaseService,
@@ -34,39 +38,62 @@ export class AdminPage implements OnInit {
 
     this.firebaseService.read_owner().subscribe((data) => {
       this.ownerList = data;
-      this.filterF();
-      this.filterT();
-    });
-
-    this.firebaseService.read_tenant().subscribe((data) => {
-      this.tenantList = data;
-      console.log('stud list', this.tenantList);
+      this.filterOwnerApprove();
+      this.filterOwnerReject();
     });
 
 
-
-  }
-
-  filterF() {
-    const filteredList = this.ownerList.filter((obj) => {
-      return 'false' === obj.Accepted || false === obj.Accepted;
+    this.firebaseService.read_room().subscribe((data) => {
+      this.roomList = data;
+      this.filterRoomApprove();
+      this.filterRoomReject();
     });
 
-    this.falselist.next(filteredList);
   }
 
-  filterT() {
-    const filteredList = this.ownerList.filter((obj) => {
-      return 'true' === obj.Accepted || true === obj.Accepted;;
-    });
-    this.truelist.next(filteredList);
+
+  filterOwnerApprove(){
+    const filtering = this.ownerList.filter((a)=>{
+      return a.Permitted === true || a.Permitted === 'true'
+    })
+    this.approveOwnerList.next(filtering);
   }
 
-  Approve(a: any) {
-    this.firestore.collection('Owner').doc(a).update({ Accepted: true });
+  filterRoomApprove(){
+    const filtering = this.roomList.filter((a)=>{
+      return a.Permitted === true || a.Permitted === 'true'
+    })
+    this.approveRoomList.next(filtering);
   }
 
-  Reject(a: any) {
-    this.firestore.collection('Owner').doc(a).update({ Accepted: false });
+
+  filterOwnerReject(){
+    const filtering = this.ownerList.filter((a)=>{
+      return a.Permitted === false || a.Permitted === 'false'
+    })
+    this.rejectOwnerList.next(filtering);
+  }
+
+  filterRoomReject(){
+    const filtering = this.roomList.filter((a)=>{
+      return a.Permitted === false || a.Permitted === 'false'
+    })
+    this.rejectRoomList.next(filtering);
+  }
+
+  ApproveOwner(a: any) {
+    this.firestore.collection('Owner').doc(a).update({ Permitted: true });
+  }
+
+  RejectOwner(a: any) {
+    this.firestore.collection('Owner').doc(a).update({ Permitted: false });
+  }
+
+  ApproveRoom(a: any) {
+    this.firestore.collection('Room').doc(a).update({ Permitted: true });
+  }
+
+  RejectRoom(a: any) {
+    this.firestore.collection('Room').doc(a).update({ Permitted: false });
   }
 }

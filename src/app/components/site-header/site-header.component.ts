@@ -65,7 +65,7 @@ export class SiteHeaderComponent implements OnInit {
       )
       .subscribe((f: any) => {
         this.transaction = f;
-        console.log('a', this.transaction);+
+        console.log('a', this.transaction);
         this.TenantSortedBed();
         this.TenantSortedRoom();
         this.transaction = this.transaction.sort(

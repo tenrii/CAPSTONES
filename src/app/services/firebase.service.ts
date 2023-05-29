@@ -313,22 +313,23 @@ export class FirebaseService {
   }
 
   editTenant(roomId:any, bedId:any, tenantId:any){
-    if(!bedId){
-    //const roomBeds = (this.firestore.collection(this.collectionRoom).doc(roomId).get()).data()?.Bed;
+    if(bedId){
+      this.read_owner();
       this.firestore.collection(this.collectionRoom).doc(roomId).update({
-        Bed: this.rooms.map((a: any) => {
-          const bed = a.Bed?.find((b: any) => b.uid === bedId);
-          if (!bed.occupied) {
+        Bed: this.rooms.value.map((a: any) => {
+          const item = a.Bed?.find((b: any) => b.uid === bedId);
+          if (!item.occupied) {
             return a;
           } else {
-            delete bed.occupied;
+            delete item.occupied;
             return a;
           }
         }),
-      });
+    });
       this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
         status: 'inactive',
       })
+      return
     }
     else{
       this.firestore.collection(this.collectionRoom).doc(roomId).update({
@@ -338,5 +339,6 @@ export class FirebaseService {
         status: 'inactive',
       })
     }
+    return
     }
   }

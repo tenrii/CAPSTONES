@@ -36,14 +36,16 @@
             <h3> Dashboard</h3>
           </div>
 
-          <div class="option2 nav-option">
+          <div class="option2 nav-option" [class.active]="(switch | async) === 'owner'"
+          (click)="switch.next('owner')">
             <i class="bi bi-person"></i>
             <h3>Owner</h3>
           </div>
 
-          <div class="nav-option option3">
+          <div class="nav-option option3" [class.active]="(switch | async) === 'room'"
+          (click)="switch.next('room')">
             <i class="bi bi-people"></i>
-            <h3>Tenant</h3>
+            <h3>Room</h3>
           </div>
 
           <div class="nav-option logout">
@@ -66,7 +68,8 @@
 
       <div class="box-container">
 
-        <div class="box box1">
+        <div class="box box1" [class.active]="(status | async) === 'pending'"
+        (click)="status.next('pending')">
           <div class="text">
             <h2 class="topic-heading">20</h2>
             <h2 class="topic">Pending</h2>
@@ -75,7 +78,8 @@
           <i class="bi bi-hourglass-split"></i>
         </div>
 
-        <div class="box box2">
+        <div class="box box2" [class.active]="(status | async) === 'approved'"
+        (click)="status.next('approved')">
           <div class="text">
             <h2 class="topic-heading">100</h2>
             <h2 class="topic">Approved</h2>
@@ -84,7 +88,8 @@
           <i class="bi bi-check-circle"></i>
         </div>
 
-        <div class="box box3">
+        <div class="box box3" [class.active]="(status | async) === 'reject'"
+        (click)="status.next('reject')">
           <div class="text">
             <h2 class="topic-heading">0</h2>
             <h2 class="topic">Declined</h2>
@@ -107,91 +112,139 @@
           <button class="view">View All</button>
         </div>
 
+        <!--owner-->
+        <span *ngIf="(switch | async) === 'owner'">
+
         <div class="report-body">
           <div class="report-topic-heading">
             <h3 class="t-op">Owner Name</h3>
-            <h3 class="t-op">Room</h3>
+            <h3 class="t-op">Age</h3>
             <h3 class="t-op">Address</h3>
-            <h3 class="t-op">Status</h3>
+            <h3 class="t-op">Business Permit</h3>
+            <h3 class="t-op">Valid ID</h3>
+            <h3 class="t-op">Email</h3>
+            <h3 class="t-op">Phone No.</h3>
+            <h3 class="t-op1">Action</h3>
           </div>
 
-          <div class="items">
-            <div class="item1">
-              <h3 class="t-op-nextlvl">Article 73</h3>
-              <h3 class="t-op-nextlvl">2.9k</h3>
-              <h3 class="t-op-nextlvl">210</h3>
-              <button class="action">Accept</button>
-              <button class="action">Reject</button>
+          <div class="items" *ngIf="(status | async) === 'pending'">
+            <div class="item1" *ngFor="let data of ownerList">
+              <h3 class="t-op-nextlvl">{{data?.FName}} {{data?.LName}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Age}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Address}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.BusinessPermit}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.ValidID}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Email}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.PhoneNum}}</h3>
+              <button class="action" (click)="ApproveOwner(data.id)">Accept</button>
+              <button class="action" (click)="RejectOwner(data.id)">Reject</button>
             </div>
-
-            <div class="item1">
-              <h3 class="t-op-nextlvl">Article 72</h3>
-              <h3 class="t-op-nextlvl">1.5k</h3>
-              <h3 class="t-op-nextlvl">360</h3>
-              <button class="action">Accept</button>
-              <button class="action">Reject</button>
-            </div>
-
-            <div class="item1">
-              <h3 class="t-op-nextlvl">Article 71</h3>
-              <h3 class="t-op-nextlvl">1.1k</h3>
-              <h3 class="t-op-nextlvl">150</h3>
-              <button class="action">Accept</button>
-              <button class="action">Reject</button>
-            </div>
-
-            <div class="item1">
-              <h3 class="t-op-nextlvl">Article 70</h3>
-              <h3 class="t-op-nextlvl">1.2k</h3>
-              <h3 class="t-op-nextlvl">420</h3>
-              <button class="action">Accept</button>
-              <button class="action">Reject</button>
-            </div>
-
-            <div class="item1">
-              <h3 class="t-op-nextlvl">Article 69</h3>
-              <h3 class="t-op-nextlvl">2.6k</h3>
-              <h3 class="t-op-nextlvl">190</h3>
-              <button class="action">Accept</button>
-              <button class="action">Reject</button>
-            </div>
-
-            <div class="item1">
-              <h3 class="t-op-nextlvl">Article 68</h3>
-              <h3 class="t-op-nextlvl">1.9k</h3>
-              <h3 class="t-op-nextlvl">390</h3>
-              <button class="action">Accept</button>
-              <button class="action">Reject</button>
-            </div>
-
-            <div class="item1">
-              <h3 class="t-op-nextlvl">Article 67</h3>
-              <h3 class="t-op-nextlvl">1.2k</h3>
-              <h3 class="t-op-nextlvl">580</h3>
-              <button class="action">Accept</button>
-              <button class="action">Reject</button>
-            </div>
-
-            <div class="item1">
-              <h3 class="t-op-nextlvl">Article 66</h3>
-              <h3 class="t-op-nextlvl">3.6k</h3>
-              <h3 class="t-op-nextlvl">160</h3>
-              <button class="action">Accept</button>
-              <button class="action">Reject</button>
-            </div>
-
-            <div class="item1">
-              <h3 class="t-op-nextlvl">Article 65</h3>
-              <h3 class="t-op-nextlvl">1.3k</h3>
-              <h3 class="t-op-nextlvl">220</h3>
-              <button class="action">Accept</button>
-              <button class="action">Reject</button>
-            </div>
-
           </div>
+
+          <div class="items" *ngIf="(status | async) === 'approved'">
+            <div class="item1" *ngFor="let data of ownerList">
+              <span *ngIf="data.Permitted === true || data.Permitted === 'true'">
+              <h3 class="t-op-nextlvl">{{data?.FName}} {{data?.LName}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Age}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Address}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.BusinessPermit}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.ValidID}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Email}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.PhoneNum}}</h3>
+              <button class="action" (click)="RejectOwner(data.id)">Reject</button>
+            </span>
+            </div>
+          </div>
+
+          <div class="items" *ngIf="(status | async) === 'reject'">
+            <div class="item1" *ngFor="let data of ownerList">
+              <span *ngIf="data.Permitted === false || data.Permitted === 'false'">
+              <h3 class="t-op-nextlvl">{{data?.FName}} {{data?.LName}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Age}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Address}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.BusinessPermit}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.ValidID}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Email}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.PhoneNum}}</h3>
+              <button class="action" (click)="ApproveOwner(data.id)">Accept</button>
+              </span>
+            </div>
+          </div>
+          </div>
+        </span>
+
+        <!--Room-->
+        <span *ngIf="(switch | async) === 'room'">
+
+          <div class="report-body">
+            <div class="report-topic-heading">
+              <h3 class="t-op">Property Name</h3>
+              <h3 class="t-op">Room Type</h3>
+              <h3 class="t-op">Rent</h3>
+              <h3 class="t-op">Beds</h3>
+              <h3 class="t-op">Address</h3>
+              <h3 class="t-op">Price</h3>
+              <h3 class="t-op">Amenities</h3>
+              <h3 class="t-op">Images</h3>
+              <h3 class="t-op">Details</h3>
+              <h3 class="t-op1">Action</h3>
+          </div>
+
+          <div class="items" *ngIf="(status | async) === 'pending'">
+            <div class="item1" *ngFor="let data of roomList">
+              <h3 class="t-op-nextlvl">{{data?.Title}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.RoomType}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Rent}}</h3>
+              <h3 class="t-op-nextlvl"><span *ngFor="let bed of data.Bed">B{{bed.id}}-{{bed.status}}<br /></span></h3>
+              <h3 class="t-op-nextlvl">{{data.Street}}, {{data.Barangay}}, {{data.City}}, {{data.Province}},
+                {{data.ZIP}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Price}}</h3>
+              <h3 class="t-op-nextlvl"><span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span></h3>
+              <h3 class="t-op-nextlvl"><span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
+              </a><br /></span></h3>
+              <h3 class="t-op-nextlvl">{{data?.Details}}</h3>
+              <button class="action" (click)="ApproveRoom(data.id)">Accept</button>
+              <button class="action" (click)="RejectRoom(data.id)">Reject</button>
+            </div>
+          </div>
+
+          <div class="items" *ngIf="(status | async) === 'approved'">
+            <div class="item1" *ngFor="let data of roomList">
+              <span *ngIf="data.Permitted === true || data.Permitted === 'true'">
+              <h3 class="t-op-nextlvl">{{data?.Title}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.RoomType}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Rent}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Bed}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Address}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Price}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Amenities}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Images}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Details}}</h3>
+              <button class="action" (click)="RejectRoom(data.id)">Reject</button>
+            </span>
+            </div>
+          </div>
+
+          <div class="items" *ngIf="(status | async) === 'reject'">
+            <div class="item1" *ngFor="let data of roomList">
+              <span *ngIf="data.Permitted === false || data.Permitted === 'false'">
+              <h3 class="t-op-nextlvl">{{data?.Title}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.RoomType}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Rent}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Bed}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Address}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Price}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Amenities}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Images}}</h3>
+              <h3 class="t-op-nextlvl">{{data?.Details}}</h3>
+              <button class="action" (click)="ApproveRoom(data.id)">Accept</button>
+            </span>
+            </div>
+          </div>
+          </div>
+        </span>
         </div>
       </div>
     </div>
-  </div>
 
 </ion-content>
