@@ -199,9 +199,16 @@ ion-content {
   text-align: center;
 }
 
-.pagination ion-button{
-  margin-left: 20px;
-  margin-right: 20px;
+.pagination ion-icon:first-child{
+  font-size: 40px;
+  color: #544541;
+  margin-right: 400px;
+}
+
+.pagination ion-icon:last-child{
+  font-size: 40px;
+  color: #544541;
+  margin-left: 400px;
 }
 
 .pagination div{

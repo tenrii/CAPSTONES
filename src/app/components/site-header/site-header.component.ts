@@ -95,6 +95,7 @@ export class SiteHeaderComponent implements OnInit {
       )
       .subscribe((f: any) => {
         this.room = f;
+        console.log('owner notif',this.room)
         this.OwnerSortedBed();
         this.OwnerSortedRoom();
       })

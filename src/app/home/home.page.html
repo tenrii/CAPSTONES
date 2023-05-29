@@ -57,7 +57,8 @@
     <h1>ENTIRE CITY OF CHOICE</h1>
   </div>
   <span *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
-    <div *ngIf="!item.isUnlisted || item.isUnlisted==='false' && item?.Permitted === true || item?.Permitted === 'true'" class="room">
+    <div *ngIf="(!item?.isUnlisted || item?.isUnlisted==='false') &&
+    (item.Permitted==='true')" class="room">
       <div>
         <div class="over">
           <img src="{{item.Images[0]}}" class="img">
@@ -79,9 +80,10 @@
 
   <section class="pagination">
     <div class="page_container">
-      <ion-button ion-button (click)="previousPage()" [disabled]="currentPage === 1">Previous</ion-button>
-      <div class="pages">Page {{currentPage}} of {{totalPages}}</div>
-      <ion-button ion-button (click)="nextPage()" [disabled]="currentPage === getTotalPages()">Next</ion-button>
+      <ion-icon type="button" (click)="previousPage()" name="arrow-undo"></ion-icon>
+      <ion-icon type="button" (click)="nextPage()" name="arrow-redo"></ion-icon>
+      <!--<ion-button (click)="previousPage()" [disabled]="currentPage === 1">Previous</ion-button>
+      <ion-button (click)="nextPage()" [disabled]="currentPage === getTotalPages()">Next</ion-button>-->
     </div>
   </section>
 

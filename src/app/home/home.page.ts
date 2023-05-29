@@ -59,7 +59,7 @@ export class HomePage implements OnInit {
     this.firebaseService.read_room().subscribe((data) => {
       this.roomList = data;
 
-      this.filterPlace = [...new Set(this.roomList.map((a) => a.Barangay))];
+      this.filterPlace = [...new Set(this.roomList.map((a) => a.Barangay.toLowerCase()))];
       this.filterRent = [...new Set(this.roomList.map((a) => a.Rent))];
 
       const sorted = this.roomList.sort((a: any, b: any) => {
@@ -71,7 +71,7 @@ export class HomePage implements OnInit {
       this.price.upper = this.priceMax;
 
       this.filter();
-      console.log('a', this.list);
+      console.log('a', this.list.getValue());
     });
   }
 
@@ -113,11 +113,14 @@ export class HomePage implements OnInit {
   }
 
   getTotalPages() {
-    return Math.ceil(this.list.getValue().length / this.itemsPerPage);
+    const filteredList = this.list.getValue().filter(item => item.Permitted === "true");
+    return Math.ceil(filteredList.length / this.itemsPerPage);
   }
 
   get totalPages() {
-    return Math.ceil(this.list.getValue().length / this.itemsPerPage);
+    const filteredList = this.list.getValue().filter(item => item.Permitted === "true");
+    return Math.ceil(filteredList.length / this.itemsPerPage);
   }
+
 
 }

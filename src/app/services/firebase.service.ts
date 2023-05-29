@@ -101,6 +101,7 @@ export class FirebaseService {
               Details: localData.Details,
               Price: localData.Price,
               occupied: localData.occupied,
+              Permitted: localData.Permitted,
               isUnlisted: localData.isUnlisted,
               Marker: localData.Marker,
             };
@@ -162,7 +163,7 @@ export class FirebaseService {
               Age: localData.Age,
               Address: localData.Address,
               Email: localData.Email,
-              Accepted: localData.Accepted,
+              Permitted: localData.Permitted,
               Phone: localData.Phone,
               BusinessPermit: localData.BusinessPermit,
               profpic: localData.profpic,
@@ -301,11 +302,15 @@ export class FirebaseService {
   }
 
   getOwner(owner: any) {
+    if(this.ownerUid.includes(owner)){
     return this.owners.value.find((a: any) => a.id == owner);
+  }
   }
 
   getTenant(tenant: any) {
+    if(this.tenantUid.includes(tenant)){
     return this.tenants.value.find((a: any) => a.id == tenant);
+    }
   }
 
   getTransaction(transaction: any) {
@@ -317,7 +322,9 @@ export class FirebaseService {
       this.read_owner();
       this.firestore.collection(this.collectionRoom).doc(roomId).update({
         Bed: this.rooms.value.map((a: any) => {
+          console.log('a',a)
           const item = a.Bed?.find((b: any) => b.uid === bedId);
+          console.log('a',item)
           if (!item.occupied) {
             return a;
           } else {
