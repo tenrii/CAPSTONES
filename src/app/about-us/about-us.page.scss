@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Montserrat";
+  margin-top: -100px;
 }
 
 h2 {
@@ -81,10 +82,6 @@ h2 {
 }
 
 /*DEVELOPER*/
-body {
-  margin-top: 20px;
-  background: #ee82ee;
-}
 img {
   max-width: 100%;
   height: auto;
@@ -93,10 +90,12 @@ img {
 .mb-1 {
   margin-bottom: 0.25rem !important;
 }
+
 .h5,
 h5 {
   font-size: 1.25rem;
 }
+
 a {
   text-decoration: none;
 }
@@ -104,7 +103,7 @@ a {
   background: #fff;
   text-align: center;
   padding: 30px;
-  box-shadow: 0px 10px 30px 0px rgb(26 29 72 / 7%);
+  box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.9);
   border-radius: 15px;
   transition: all 0.3s ease-in-out;
 }
@@ -112,13 +111,13 @@ a {
   background: #fff;
   text-align: center;
   padding: 30px;
-  box-shadow: 0px 10px 30px 0px rgba(26, 29, 72, 0.07);
+  box-shadow: 0px 10px 30px 0px rgba(26, 29, 72, 0.09);
   border-radius: 15px;
   transition: all 0.3s ease-in-out;
 }
 
 .team-style07:hover {
-  background: #292dc2;
+  background: #544541;
 }
 
 .team-style07:hover h3 a,
@@ -190,7 +189,7 @@ a {
 }
 
 .team-style07 .team-thumb .team-social .styled-icons li a {
-  background: #3457f1;
+  background: #bb995c;
   color: #fff;
   height: 40px;
   width: 40px;
@@ -229,6 +228,7 @@ a {
 
 /*LOGO BRANDS*/
 /*logo*/
+@import url("https://fonts.cdnfonts.com/css/league-spartan");
 .brands {
   margin-top: 50px;
   display: flex;
@@ -240,8 +240,8 @@ a {
 .brands h1 {
   text-align: center;
   font-size: 50px;
-  font-family: Crimson Pro;
-  font-weight: 500;
+  font-family: "League Spartan", sans-serif;
+  font-weight: 600;
   color: #544541;
 }
 
@@ -274,7 +274,7 @@ a {
   margin: 50px;
   text-align: center;
   margin: 0 auto;
-  font-family: Crimson Pro;
+  font-family: "League Spartan", sans-serif;
   font-size: 50px;
   color: #544541;
   max-width: 400px; /* adjust the max-width value as needed */
@@ -295,7 +295,7 @@ footer {
   padding: 0;
   font-weight: 600;
   line-height: normal;
-  font-family: Crimson Pro;
+  font-family: Montserrat;
   text-transform: uppercase;
 }
 
@@ -440,7 +440,8 @@ li a:hover {
 .brands h1 {
   text-align: center;
   font-size: 50px;
-  font-family: Crimson Pro;
+  font-family: "League Spartan", sans-serif;
+
   font-weight: 500;
   color: #544541;
 }
@@ -520,7 +521,7 @@ li a:hover {
     padding: 0;
     font-weight: 600;
     line-height: normal;
-    font-family: Crimson Pro;
+    font-family: Montserrat;
     text-transform: uppercase;
     text-align: center; /* Center align the text */
   }
