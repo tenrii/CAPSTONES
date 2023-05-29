@@ -25,7 +25,7 @@ import { Modal15Component } from './modal/modal15/modal15.component';
 import { ChatlistModule } from '../components/chatlist/chatlist.module';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { EditOwnerProfileComponent } from './edit-owner-profile/edit-owner-profile.component';
-
+import { SiteHeaderModule } from '../components/site-header/site-header.module';
 
 @NgModule({
   imports: [
@@ -36,7 +36,8 @@ import { EditOwnerProfileComponent } from './edit-owner-profile/edit-owner-profi
     OwnerPanelPageRoutingModule,
     Ng2SearchPipeModule,
     NgxFileDropModule,
-    ChatlistModule
+    ChatlistModule,
+    SiteHeaderModule,
   ],
   declarations: [
     OwnerPanelPage,
