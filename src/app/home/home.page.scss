@@ -476,6 +476,10 @@ p {
 
 /* Adjust margins and paddings for smaller screens */
 @media (max-width: 767px) {
+  /* Carousel */
+  div#carouselExampleSlidesOnly { height: 11rem; }
+  .carousel-inner { margin: 0 !important; padding: 0 !important; }
+
   .navbar {
     height: auto;
     margin-bottom: 0;
