@@ -1,0 +1,46 @@
+
+.container .box{
+  padding: 15px;
+  justify-content: center;
+  text-align: center;
+  width: 300px;
+  height: 250px;
+  border: gray 1px solid;
+}
+
+.container .box:hover{
+  box-shadow: 5px 10px #888888;
+}
+
+.container .box h3{
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.container .box img{
+  width: 200px;
+}
+
+.container .box p{
+  margin-top: 15px;
+  margin-bottom: 7px;
+}
+
+.content{
+  margin: 15px;
+  border: black solid 1px;
+  padding: 12px;
+}
+
+.content .key{
+  margin-bottom: 7px;
+}
+
+.content .key label{
+font-size: 25px;
+}
+
+.content .key div{
+  font-size: 18px;
+}
+

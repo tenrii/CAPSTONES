@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar class="new-background-color">
+    <ion-title style="color: white; font-family: Montserrat;">Payment Gateaway</ion-title>
+    <ion-buttons slot="end">
+      <ion-button style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-grid *ngIf="(content | async)=== 'menu'">
+  <ion-row>
+    <ion-col>
+      <div class="container" type="button" [class.active]="(content | async) === 'paymongo'"
+      (click)="content.next('paymongo')">
+        <div class="box">
+          <img src="assets/Paymongo.png">
+          <h3>PayMongo</h3>
+          <p>PayMongo provides businesses with an easy and user-friendly way of accepting payments from customers.</p>
+        </div>
+      </div>
+    </ion-col>
+  </ion-row>
+</ion-grid>
+
+<span *ngIf="(content | async)   === 'paymongo'">
+<div class="content">
+<form>
+  <div class="key">
+    <label>Secret Key:</label>
+    <div><span *ngIf="data?.SecretKey">{{data?.SecretKey}}</span><span *ngIf="!data?.SecretKey">-</span></div>
+  </div>
+
+  <div class="btn">
+    <ion-button (click)="update(data?.SecretKey)">Update</ion-button>
+  </div>
+</form>
+</div>
+</span>
+</ion-content>

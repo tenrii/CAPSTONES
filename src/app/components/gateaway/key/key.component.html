@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar class="new-background-color">
+    <ion-title style="color: white; font-family: Montserrat;">Payment Gateaway</ion-title>
+    <ion-buttons slot="end">
+      <ion-button style="color: white;" (click)="exit()"><ion-icon name="close"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<form [formGroup]="keyForm">
+<ion-label>Secret Key:</ion-label>
+<ion-input formControlName="SecretKey"></ion-input>
+<br/>
+<ion-button (click)="addKey()">Update</ion-button>
+</form>
+</ion-content>

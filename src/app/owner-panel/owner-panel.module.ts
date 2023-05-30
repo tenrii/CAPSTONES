@@ -26,6 +26,8 @@ import { ChatlistModule } from '../components/chatlist/chatlist.module';
 import { NgxFileDropModule } from 'ngx-file-drop';
 import { EditOwnerProfileComponent } from './edit-owner-profile/edit-owner-profile.component';
 import { SiteHeaderModule } from '../components/site-header/site-header.module';
+import { GateawayComponent } from '../components/gateaway/gateaway.component';
+import { KeyComponent } from '../components/gateaway/key/key.component';
 
 @NgModule({
   imports: [
@@ -58,6 +60,8 @@ import { SiteHeaderModule } from '../components/site-header/site-header.module';
     Modal14Component,
     Modal15Component,
     EditOwnerProfileComponent,
+    GateawayComponent,
+    KeyComponent,
   ],
 })
 export class OwnerPanelPageModule {}

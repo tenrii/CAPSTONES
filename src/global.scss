@@ -58,3 +58,14 @@
     color: white;
   }
 }
+  .key-modal {
+    --min-height: 35%;
+    --min-width: 40%;
+    --max-height: 35%;
+    --max-width: 40%;
+
+    ion-header {
+      background-color: rgb(84, 69, 65);
+      color: white;
+    }
+}

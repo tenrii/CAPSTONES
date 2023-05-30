@@ -169,6 +169,7 @@ export class FirebaseService {
               profpic: localData.profpic,
               Birthday: localData.Birthday,
               PhoneNum: localData.PhoneNum,
+              SecretKey: localData.SecretKey,
             };
           });
           return ownerList;

@@ -13,6 +13,7 @@ import { jsPDF } from 'jspdf';
 import { saveAs } from 'file-saver';
 import { EditOwnerProfileComponent } from './edit-owner-profile/edit-owner-profile.component';
 import firebase from 'firebase/compat/app';
+import { GateawayComponent } from '../components/gateaway/gateaway.component';
 
 @Component({
   selector: 'app-owner-panel',
@@ -418,6 +419,34 @@ export class OwnerPanelPage implements OnInit {
 
     modalInstance.onDidDismiss().then(() => {
       console.log('Modal 1 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
+  }
+
+  async gotoGateaway() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
+    const modalInstance = await this.m.create({
+      component: GateawayComponent,
+      cssClass: 'create-modal',
+      componentProps:{
+        ownerId: this.ownerUid,
+      },
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal Paymongo dismissed');
       this.isButtonDisabled = false;
     });
 
