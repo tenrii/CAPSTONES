@@ -143,8 +143,6 @@ export class OwnerPanelPage implements OnInit {
       return this.listed = data.length;
       }
     })
-    console.log('unlisted',this.unlisted);
-    console.log('listed',this.listed);
   }
 
   async getOwner(){
@@ -182,7 +180,6 @@ export class OwnerPanelPage implements OnInit {
         }
       })
       })
-    console.log('bed', this.be);
   }
 
   sortedRoom() {
@@ -211,7 +208,6 @@ export class OwnerPanelPage implements OnInit {
           return room;
         }
       })
-    console.log('room', this.ro);
   }
 
   sortedTenant(){
@@ -258,7 +254,6 @@ export class OwnerPanelPage implements OnInit {
         nameA < nameB
       return 0;
      });
-    console.log('occupant', this.occupant);
   }
 
   RemoveRecord(rowID: any) {
@@ -351,6 +346,11 @@ export class OwnerPanelPage implements OnInit {
       }
 
   async gotoEditModal(record: any) {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
     const modalInstance = await this.m.create({
       component: EditModalComponent,
       componentProps: {
@@ -378,7 +378,6 @@ export class OwnerPanelPage implements OnInit {
         const dateB = b.date || 0;
         return this.isSortAscending ? dateA - dateB : dateB - dateA;
       });
-      console.log('sort', this.filteredRecord);
     }
     else if(this.sortBy === 'name'){
       this.filteredRecord = this.filteredRecord.sort((a:any, b:any)=>{

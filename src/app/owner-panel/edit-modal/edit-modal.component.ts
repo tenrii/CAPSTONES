@@ -17,9 +17,11 @@ interface RoomData {
   styleUrls: ['./edit-modal.component.scss'],
 })
 export class EditModalComponent implements OnInit {
-  record: any;
+  isButtonDisabled = false;
+  public record: any;
   roomForm!: FormGroup;
   roomData!: RoomData;
+  amenities: any[] = [];
   constructor(
     public fb: FormBuilder,
     private m: ModalController,
@@ -38,10 +40,11 @@ export class EditModalComponent implements OnInit {
       Province: [this.record.Province, [Validators.required]],
       ZIP: [this.record.ZIP, [Validators.required]],
       Price: [this.record.Price, [Validators.required]],
-      Amenities: [this.record.Amenities, [Validators.required]],
+      Amenities: [[], [Validators.required]],
       Images: [this.record.Images, [Validators.required]],
       Details: [this.record.Details, [Validators.required]],
     });
+    console.log('amenities',this.record.Amenities)
   }
 
   ifChange(event: any) {
@@ -49,30 +52,34 @@ export class EditModalComponent implements OnInit {
   }
 
   onChange(event: any) {
-    const checked = event.target.checked;
-    const value = event.target.value;
-
-    if (checked) {
-      const am = this.roomForm.get('Amenities')?.value;
-      if (!am.includes(value)) {
-        am.push(value);
-        this.roomForm.get('Amenities')?.setValue(am);
+    if (event.target.checked) {
+      const am = this.amenities.findIndex((a: any) => a === event.target.value);
+      if (am == -1) {
+        this.amenities.push(event.target.value);
       }
     } else {
-      const am = this.roomForm.get('Amenities')?.value;
-      const index = am.indexOf(value);
-      if (index !== -1) {
-        am.splice(index, 1);
-        this.roomForm.get('Amenities')?.setValue(am);
+      const am = this.amenities.findIndex((a: any) => a === event.target.value);
+      if (am >= 0) {
+        this.amenities.splice(am, 1);
       }
     }
+    this.roomForm.get('Amenities')?.setValue(this.amenities);
+    console.log('a', this.amenities);
   }
 
+
+
   updateRoom() {
+    console.log('amenities',this.record.Amenities)
     this.firebaseService.update_room(this.record.id, this.roomForm.value);
   }
 
-  close() {
+  exit() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
     this.m.dismiss();
   }
+
 }
