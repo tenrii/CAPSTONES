@@ -20,17 +20,10 @@
       </div>
 
       <div class="form-group">
-        <ion-label>Rent</ion-label>
-        <ion-radio-group class="rent" formControlName="Rent">
-          <ion-item>
-            <ion-label>Bedspace</ion-label>
-            <ion-radio slot="end" value="Bed Space"></ion-radio>
-          </ion-item>
-          <ion-item>
-            <ion-label>Room</ion-label>
-            <ion-radio slot="end" value="Room"></ion-radio>
-          </ion-item>
-        </ion-radio-group>
+        <ion-label style="font-family: Montserrat;">Room Name</ion-label>
+        <ion-item>
+          <ion-input formControlName="RoomName" style="font-family: Montserrat;"></ion-input>
+        </ion-item>
       </div>
 
       <div class="form-group">
@@ -46,6 +39,59 @@
           </ion-item>
         </ion-radio-group>
       </div>
+
+      <div class="form-group">
+        <ion-label>Rent</ion-label>
+        <ion-radio-group class="rent" formControlName="Rent">
+          <ion-item>
+            <ion-label>Bedspace</ion-label>
+            <ion-radio slot="end" value="Bed Space"></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Room</ion-label>
+            <ion-radio slot="end" value="Room"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </div>
+
+      <div class="form-group">
+        <ion-label style="font-family: Montserrat;">Address</ion-label>
+        <ion-item>
+          <ion-input formControlName="Street" style="font-family: Montserrat;"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input formControlName="Barangay" style="font-family: Montserrat;"></ion-input>
+        </ion-item>
+          <ion-item>
+          <ion-input formControlName="City" style="font-family: Montserrat;"></ion-input>
+        </ion-item>
+          <ion-item>
+          <ion-input formControlName="Province" style="font-family: Montserrat;"></ion-input>
+        </ion-item>
+          <ion-item>
+          <ion-input formControlName="ZIP" style="font-family: Montserrat;"></ion-input>
+        </ion-item>
+      </div>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col>
+            <div for="img_btn">
+              <input id="img_btn" type="file" multiple (change)="onFileSelected($event)" accept="image/*" class="d-none">
+              <label class="image_btn" type="button" for="img_btn">Choose Images
+              </label>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="img" *ngFor="let img of record.Images">
+            <img src="{{img.url}}">
+          </ion-col>
+          <ion-col class="img" *ngFor="let img of images">
+            <img src="{{img.url}}">
+          </ion-col>
+        </ion-row>
+      </ion-grid>
 
       <div class="form-group">
         <ion-label>Price</ion-label>

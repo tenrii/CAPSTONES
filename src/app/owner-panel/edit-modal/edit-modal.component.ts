@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
+import { finalize } from 'rxjs';
 import { FirebaseService } from 'src/app/services/firebase.service';
 interface RoomData {
   Name: string;
@@ -17,22 +19,28 @@ interface RoomData {
   styleUrls: ['./edit-modal.component.scss'],
 })
 export class EditModalComponent implements OnInit {
+  uid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   isButtonDisabled = false;
   public record: any;
   roomForm!: FormGroup;
   roomData!: RoomData;
   amenities: any[] = [];
+  selectedFiles: any = FileList;
+  images: { name: any; url: any }[] = [];;
+  img: any[]=[];
   constructor(
     public fb: FormBuilder,
     private m: ModalController,
-    private firebaseService: FirebaseService
+    private firebaseService: FirebaseService,
+    private storage: AngularFireStorage,
   ) {}
 
   ngOnInit() {
     this.roomForm = this.fb.group({
       Title: [this.record.Title, [Validators.required]],
-      Rent: [this.record.Rent, [Validators.required]],
+      RoomName: [this.record.RoomName, [Validators.required]],
       RoomType: [this.record.RoomType, [Validators.required]],
+      Rent: [this.record.Rent, [Validators.required]],
       Beds: [this.record.Beds, [Validators.required]],
       Street: [this.record.Street, [Validators.required]],
       Barangay: [this.record.Barangay, [Validators.required]],
@@ -41,10 +49,8 @@ export class EditModalComponent implements OnInit {
       ZIP: [this.record.ZIP, [Validators.required]],
       Price: [this.record.Price, [Validators.required]],
       Amenities: [[], [Validators.required]],
-      Images: [this.record.Images, [Validators.required]],
       Details: [this.record.Details, [Validators.required]],
     });
-    console.log('amenities',this.record.Amenities)
   }
 
   ifChange(event: any) {
@@ -64,14 +70,29 @@ export class EditModalComponent implements OnInit {
       }
     }
     this.roomForm.get('Amenities')?.setValue(this.amenities);
-    console.log('a', this.amenities);
   }
 
-
-
   updateRoom() {
-    console.log('amenities',this.record.Amenities)
     this.firebaseService.update_room(this.record.id, this.roomForm.value);
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      const file = this.selectedFiles.item(i);
+      const path = `${this.uid}/Room/${Date.now()}_${file.name}`;
+      const uploadTask = this.storage.upload(path, file);
+      const ref = this.storage.ref(path);
+      uploadTask
+        .snapshotChanges()
+        .pipe(
+          finalize(() => {
+            const downloadURL = ref.getDownloadURL();
+            downloadURL.subscribe((url: any) => {
+              this.img.push(url);
+              console.log('Image uploaded successfully:', url);
+              console.log(this.img);
+            });
+          })
+        )
+        .subscribe();
+    }
   }
 
   exit() {
@@ -80,6 +101,18 @@ export class EditModalComponent implements OnInit {
     }
     this.isButtonDisabled = true;
     this.m.dismiss();
+  }
+
+  onFileSelected(event: any) {
+    this.selectedFiles = event.target.files;
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      const file = this.selectedFiles.item(i);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.images.push({ name: file.name, url: reader.result?.toString() });
+      };
+    }
   }
 
 }

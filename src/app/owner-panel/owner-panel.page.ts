@@ -357,7 +357,12 @@ export class OwnerPanelPage implements OnInit {
         record,
       },
     });
-    modalInstance.present();
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 1 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 
   closeModal() {
