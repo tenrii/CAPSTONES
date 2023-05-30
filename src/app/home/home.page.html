@@ -33,49 +33,56 @@
     </div>
   </div>
 
-  <div class="filters">
-    <ion-item id="filter">
-      <ion-select interface="popover" placeholder="Select Place" [(ngModel)]="barangay" (ionChange)="getAd(barangay)">
-        <ion-select-option [value]="null"></ion-select-option>
-        <ion-select-option *ngFor="let ad of filterPlace" [value]="ad">{{ad}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item id="filter">
-      <ion-select interface="popover" placeholder="Select Rent" [(ngModel)]="rent" (ionChange)="getRe(rent)">
-        <ion-select-option [value]="null"></ion-select-option>
-        <ion-select-option *ngFor="let re of filterRent" [value]="re">{{re}}</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item id="filter">
-      <p style="margin-right: 5px; margin-top: 7px;">₱{{price.lower}} - ₱{{price.upper}}</p>
-      <ion-range [dualKnobs]="true" [min]="0" [max]="priceMax" [(ngModel)]="price"
-        (ionChange)="filterPrice()"></ion-range>
-    </ion-item>
+  <div class="filter-container">
+    <div class="filters">
+      <ion-item class="filter">
+        <ion-select interface="popover" placeholder="Select Place" [(ngModel)]="barangay" (ionChange)="getAd(barangay)">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option *ngFor="let ad of filterPlace" [value]="ad">{{ad}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="filter">
+        <ion-select interface="popover" placeholder="Select Rent" [(ngModel)]="rent" (ionChange)="getRe(rent)">
+          <ion-select-option [value]="null"></ion-select-option>
+          <ion-select-option *ngFor="let re of filterRent" [value]="re">{{re}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item class="filter-range">
+        <p>₱{{price.lower}} - ₱{{price.upper}}</p>
+        <ion-range [dualKnobs]="true" [min]="0" [max]="priceMax" [(ngModel)]="price"
+          (ionChange)="filterPrice()"></ion-range>
+      </ion-item>
+    </div>
   </div>
 
   <div class="brands">
     <h1>ENTIRE CITY OF CHOICE</h1>
   </div>
   <span *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
-    <div *ngIf="(!item?.isUnlisted || item?.isUnlisted==='false') &&
-    (item.Permitted==='true')" class="room" type="button" [routerLink]="['/','room',item.id]">
-      <div>
-        <div class="over">
-          <img src="{{item.Images[0]}}" class="img">
-        </div>
-
-        <div class="details">
-          <p id="p1" value="na">{{item.Title}}</p>
-          <p id="p3" value="ad">
-            <i class="bi bi-geo-alt-fill"></i> {{item.Street}}, {{item.Barangay}}, {{item.City}}, {{item.Province}}
-          </p>
-        </div>
-      </div>
-      <div class="footer">
-        <div id="p2" value="pr">₱{{item.Price}}/month</div>
-      </div>
-    </div>
   </span>
+
+  <div class="room-container">
+    <ng-container *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+      <div *ngIf="(!item?.isUnlisted || item?.isUnlisted==='false') &&
+      (item.Permitted==='true')" class="room" type="button" [routerLink]="['/','room',item.id]">
+        <div>
+          <div class="over">
+            <img src="{{item.Images[0]}}" class="img">
+          </div>
+
+          <div class="details">
+            <p id="p1" value="na">{{item.Title}}</p>
+            <p id="p3" value="ad">
+              <i class="bi bi-geo-alt-fill"></i> {{item.Street}}, {{item.Barangay}}, {{item.City}}, {{item.Province}}
+            </p>
+          </div>
+        </div>
+        <div class="footer">
+          <div id="p2" value="pr">{{item.Price | currency:'₱'}}/month</div>
+        </div>
+      </div>
+    </ng-container>
+  </div>
 
   <section class="pagination">
     <div class="page_container">

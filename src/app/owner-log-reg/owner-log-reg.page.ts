@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { AuthenticationService } from '../shared/authentication-service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { VerifyOwnerComponent } from './verify-owner/verify-owner.component';
@@ -31,7 +31,8 @@ export class OwnerLogRegPage implements OnInit {
     private fb: FormBuilder,
     private storage: AngularFireStorage,
     private firestore: AngularFirestore,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alert: AlertController
   ) {}
 
   ngOnInit() {
@@ -75,18 +76,32 @@ export class OwnerLogRegPage implements OnInit {
   logIn(email: any, password: any) {
     this.authService
       .SignIn(email.value, password.value)
-      .then((res) => {
+      .then(async (res) => {
         if (this.authService.isEmailVerified) {
           this.router.navigate(['owner-panel']).then(() => {
             window.location.reload();
           });
         } else {
-          window.alert('Email is not verified');
+          const alert = await this.alert.create({
+            header: 'Error',
+            message: 'Email is not verified',
+            buttons: ['OK'],
+          });
+          await alert.present();
           return false;
         }
       })
-      .catch((error) => {
-        window.alert(error.message);
+      .catch(async (error) => {
+        let message = error.message;
+        if (message.toLowerCase().includes('firebase:')) {
+          message = message.split('Firebase: ')[1].split(' (')[0];
+        }
+        const alert = await this.alert.create({
+          header: 'Error',
+          message,
+          buttons: ['OK'],
+        });
+        await alert.present();
       });
   }
 
