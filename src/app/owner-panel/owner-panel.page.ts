@@ -485,24 +485,24 @@ export class OwnerPanelPage implements OnInit {
     return Math.ceil(this.room.length / this.itemsPerPage);
   }
 
-  /*deleteTenant(roomId:any, bedId:any, tenantId:any){
-      if(bedId){
+  async deleteTenant(roomId:any, bedId:any, tenantId:any){
+    if (bedId) {
+      this.firebaseService.read_room().subscribe((a) => {
+        const data = this.firebaseService.getRoom(roomId);
         this.firestore.collection('Room').doc(roomId).update({
-          Bed: this.rooms.value.map((a: any) => {
-            console.log('room',a)
-            const item = a.Bed?.find((b: any) => b.uid === bedId);
-            console.log('bed',item)
-            if (item.occupied) {
-              delete item.occupied;
+          Bed: data.Bed.map((bed: any) => {
+            if (bed.uid === bedId && bed.occupied) {
+              delete bed.occupied;
             }
-            return a;
+            return bed;
           }),
-      });
+        });
         this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
           status: 'inactive',
-        })
-        return
-      }
+        });
+      });
+      return;
+    }
       else{
         this.firestore.collection('Room').doc(roomId).update({
           occupied: firebase.firestore.FieldValue.delete(),
@@ -512,5 +512,5 @@ export class OwnerPanelPage implements OnInit {
         })
       }
       return
-      }*/
+      }
     }
