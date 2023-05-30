@@ -24,7 +24,7 @@
                 <div class="form-outline mb-4" style="width: 100%;">
                   <label class="form-label" for="form3Example4" style="font-size:18px; float: left;">
                     Password: </label>
-                  <input type="password" #password id="form3Example4" class="form-control" />
+                  <input type="password" #password id="form3Example4" class="form-control" (keyup.enter)="logIn(email,password)"/>
                   <small id="passwordHelp" class="form-text text-muted">
                     We'll never share your password with anyone else
                   </small>
