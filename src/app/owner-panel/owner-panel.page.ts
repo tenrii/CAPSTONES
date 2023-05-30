@@ -353,6 +353,7 @@ export class OwnerPanelPage implements OnInit {
 
     const modalInstance = await this.m.create({
       component: EditModalComponent,
+      cssClass: 'create-modal',
       componentProps: {
         record,
       },

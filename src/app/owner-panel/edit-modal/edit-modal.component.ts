@@ -51,6 +51,7 @@ export class EditModalComponent implements OnInit {
       Amenities: [[], [Validators.required]],
       Details: [this.record.Details, [Validators.required]],
     });
+    console.log('images',this.record.Images)
   }
 
   ifChange(event: any) {
@@ -93,6 +94,7 @@ export class EditModalComponent implements OnInit {
         )
         .subscribe();
     }
+    this.m.dismiss();
   }
 
   exit() {
@@ -100,7 +102,6 @@ export class EditModalComponent implements OnInit {
       return;
     }
     this.isButtonDisabled = true;
-    this.m.dismiss();
   }
 
   onFileSelected(event: any) {
