@@ -58,7 +58,7 @@
   </div>
   <span *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
     <div *ngIf="(!item?.isUnlisted || item?.isUnlisted==='false') &&
-    (item.Permitted==='true')" class="room">
+    (item.Permitted==='true')" class="room" type="button" [routerLink]="['/','room',item.id]">
       <div>
         <div class="over">
           <img src="{{item.Images[0]}}" class="img">
@@ -66,14 +66,13 @@
 
         <div class="details">
           <p id="p1" value="na">{{item.Title}}</p>
-          <p id="p3" value="ad"><a style="font-weight: 600; color: #bb995c">Address:</a>
+          <p id="p3" value="ad">
             {{item.Street}}, {{item.Barangay}}, {{item.City}}, {{item.Province}}</p>
           <p id="p4" value="re"><a style="font-weight: 700; color: #bb995c">Space Type: </a>{{item.Rent}}</p>
         </div>
       </div>
       <div class="footer">
         <div id="p2" value="pr">₱{{item.Price}}</div>
-        <div class="button" type="button" [routerLink]="['/','room',item.id]">Reserve Now</div>
       </div>
     </div>
   </span>
