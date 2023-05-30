@@ -278,7 +278,7 @@
 
       <ion-row>
         <ion-col class="payment-col">
-          <span *ngIf="tenant?.Gender === data?.Gender || data.Gender === 'Both'">
+          <span *ngIf="tenant?.Gender === data?.Gender || data.Gender === 'Both' && tenant">
             <ion-button size="large" shape="round" strong="true" class="reserve-button" (click)="reserveBedspace()"
               [disabled]="(this.isReserving | async) || this.pendingPayment || this.data?.occupied"
               style="font-family: Montserrat;">

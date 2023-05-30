@@ -21,7 +21,7 @@ export const sendMail = async (to: string, subject: string, html: string) => {
 // OWNER EMAILS
 
 const ownerFooter = `
-  <p>We value your trust in us and we assure you that we will take good care of your property. Should you have any concerns or inquiries, please do not hesitate to contact us.</p> 
+  <p>We value your trust in us and we assure you that we will take good care of your property. Should you have any concerns or inquiries, please do not hesitate to contact us.</p>
   <p>Thank you for your attention to this matter.</p>
   <p>Best regards,<br>
   Spot-a-Home Team</p>
@@ -288,3 +288,4 @@ export const monthlyBillingOverdueTenant = (
 };
 
 // END OF TENANT EMAILS
+

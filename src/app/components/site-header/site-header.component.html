@@ -316,9 +316,6 @@
                 <div>{{tenant?.FName}} {{tenant?.LName}}</div>
               </span>
             </div>
-            <li><button class="dropdown-item" style="font-size: 18px; font-family: Montserrat; font-weight: 600;"
-                (click)="gotoEditProfile()"><i class="bi bi-person-circle"></i>Edit Profile</button>
-            </li>
           </span>
           <span *ngIf="filterOwner() === true">
             <div>
@@ -326,9 +323,6 @@
                 <div>{{owner?.FName}} {{owner?.LName}}</div>
               </span>
             </div>
-            <li><button class="dropdown-item" style="font-size: 18px; font-family: Montserrat; font-weight: 600;"
-                (click)="gotoEditOwnerProfile()"><i class="bi bi-person-circle"></i>Edit
-                Profile</button></li>
           </span>
           <span *ngIf="isLogin()===true">
             <li><button class="dropdown-item" style="font-size: 18px; font-family: Montserrat; font-weight: 600;"

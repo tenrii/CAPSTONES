@@ -13,6 +13,7 @@
           <a type="button" onclick="
           document.getElementById('room').style.display='none';
           document.getElementById('record').style.display='block';">Records</a>
+          <a type="button" (click)="gotoEditOwnerProfile()">Edit Profile</a>
         </div>
       </ion-col>
       <ion-col style="padding: 0; margin:0;">
@@ -56,6 +57,20 @@
                     <ion-col>Details</ion-col>
                     <ion-col>Action</ion-col>
                   </ion-row>
+
+                  <ion-row *ngIf="listed === 0 || !listed">
+                    <ion-card style="width: 100%;">
+                      <ion-card-header>
+                        <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
+                      </ion-card-header>
+
+                      <ion-card-content>
+                        You don't have rooms yet,<br/>
+                        Go to create room to upload your property room
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-row>
+
                   <span *ngFor="let data of room.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
                     <ion-row class="row-body" *ngIf="!data.isUnlisted || data.isUnlisted === 'false'">
                       <ion-col>{{data.Title}}</ion-col>
@@ -109,7 +124,22 @@
                     <ion-col>Details</ion-col>
                     <ion-col>Action</ion-col>
                   </ion-row>
+
+                  <ion-row *ngIf="unlisted === 0 || !unlisted">
+                    <ion-card style="width: 100%;">
+                      <ion-card-header>
+                        <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
+                      </ion-card-header>
+
+                      <ion-card-content>
+                        You don't have rooms yet,<br/>
+                        Go to create room to upload your property room
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-row>
+
                   <span *ngFor="let data of room.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+
                     <ion-row class="row-body" *ngIf="data.isUnlisted === 'true'">
                       <ion-col>{{data.Title}}</ion-col>
                       <ion-col>{{data.RoomType}}</ion-col>
@@ -147,6 +177,7 @@
                 </ion-grid>
               </div>
             </div>
+
             <div id="occupant" style="display:none;">
               <div class="room">
                 <ion-grid>
@@ -156,10 +187,23 @@
                     <ion-col>Bed Position</ion-col>
                     <ion-col>Action</ion-col>
                   </ion-row>
+
+                  <ion-row *ngIf="!occupant">
+                    <ion-card style="width: 100%;">
+                      <ion-card-header>
+                        <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
+                      </ion-card-header>
+
+                      <ion-card-content>
+                        You don't have any tenants in your property rooms yet
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-row>
+
                   <span *ngFor="let data of occupant">
                     <ion-row class="row-body">
                       <ion-col>{{data.FName}} {{data.LName}}</ion-col>
-                      <ion-col>{{data.RoomName}}</ion-col>
+                      <ion-col>{{data.RoomName}}<br/>{{data.roomId}}</ion-col>
                       <ion-col>
                         <span *ngIf="!data.bed"></span>
                         <span *ngIf="data.bed">
@@ -169,9 +213,9 @@
                         </span>
                       </ion-col>
                       <ion-col>
-                        <ion-button (click)="RemoveTenant(data.roomId,data.id,data.userId)">
+                        <!--<ion-button (click)="editTenant(data.roomId,data.id,data.userId)">
                           <ion-icon name="trash"></ion-icon>
-                        </ion-button>
+                        </ion-button>-->
                       </ion-col>
                     </ion-row>
                   </span>

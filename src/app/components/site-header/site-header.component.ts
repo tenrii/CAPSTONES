@@ -171,34 +171,6 @@ export class SiteHeaderComponent implements OnInit {
       this.tenant = this.firebaseService.getTenant(this.tenantUid);
     });
   }
-
-  async gotoEditProfile() {
-    if (this.isButtonDisabled) {
-      return;
-    }
-    this.isButtonDisabled = true;
-
-    const previousModal = await this.modalController.getTop();
-    if (previousModal) {
-      await previousModal.dismiss();
-    }
-
-    const modalInstance = await this.modalController.create({
-      component: EditProfileComponent,
-      cssClass: 'create-modal',
-      componentProps: {
-        data: this.tenant,
-      },
-      backdropDismiss: false,
-    });
-
-    modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 1 dismissed');
-      this.isButtonDisabled = false;
-    });
-
-    return await modalInstance.present();
-  }
   ////Tenant////
 
   ////Owner////
@@ -206,34 +178,6 @@ export class SiteHeaderComponent implements OnInit {
     this.firebaseService.read_owner().subscribe(() => {
       this.owner = this.firebaseService.getOwner(this.ownerUid);
     });
-  }
-
-  async gotoEditOwnerProfile() {
-    if (this.isButtonDisabled) {
-      return;
-    }
-    this.isButtonDisabled = true;
-
-    const previousModal = await this.modalController.getTop();
-    if (previousModal) {
-      await previousModal.dismiss();
-    }
-
-    const modalInstance = await this.modalController.create({
-      component: EditOwnerProfileComponent,
-      cssClass: 'create-modal',
-      componentProps: {
-        data: this.owner,
-      },
-      backdropDismiss: false,
-    });
-
-    modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 1 dismissed');
-      this.isButtonDisabled = false;
-    });
-
-    return await modalInstance.present();
   }
   ////Owner////
 

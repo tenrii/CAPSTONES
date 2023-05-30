@@ -55,6 +55,9 @@
                   </button>
                 </div>
 
+                <small class="password_reset" style="margin-top: 0; padding-top: 0;"><a type="button"
+                  [routerLink]="['/password-reset']">Reset your password?</a></small>
+
                 <div style="margin-top: 10px; font-size: 15px; text-align: center;">
                   Are you new here? <div type="button" (click)="condition.next('register')"
                     [class.active]="(condition | async) === 'paid'" style="color: #544541; font-weight: 500;">

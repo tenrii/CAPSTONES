@@ -123,9 +123,12 @@ export class RoomPage implements OnInit {
     this.firebaseService.read_owner().subscribe(() => {
       this.owner = this.firebaseService.getOwner(this.data.OwnerId);
     });
+
+    if(this.firebaseService.tenantUid.includes(this.tenantId)){
     this.firebaseService.read_tenant().subscribe(() => {
       this.tenant = this.firebaseService.getOwner(this.tenantId);
     });
+  }
 
     this.data.priceSub = parseFloat(this.data.Price)
       .toFixed(2)

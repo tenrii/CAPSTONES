@@ -23,6 +23,8 @@ export class TenantPanelPage implements OnInit {
   transaction: any[] = [];
   sortInBed: any[] = [];
   public isPayButtonLoading = new BehaviorSubject(false);
+  isModalOpen: boolean = false;
+  isButtonDisabled: boolean = false;
 
   constructor(
     public authService: AuthenticationService,
@@ -109,6 +111,34 @@ export class TenantPanelPage implements OnInit {
     } catch (e) {
       this.isPayButtonLoading.next(false);
     }
+  }
+
+  async gotoEditProfile() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const previousModal = await this.m.getTop();
+    if (previousModal) {
+      await previousModal.dismiss();
+    }
+
+    const modalInstance = await this.m.create({
+      component: EditProfileComponent,
+      cssClass: 'create-modal',
+      componentProps: {
+        data: this.tenant,
+      },
+      backdropDismiss: false,
+    });
+
+    modalInstance.onDidDismiss().then(() => {
+      console.log('Modal 1 dismissed');
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
   }
 
 }

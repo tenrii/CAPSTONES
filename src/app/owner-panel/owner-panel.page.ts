@@ -12,6 +12,7 @@ import domtoimage from 'dom-to-image';
 import { jsPDF } from 'jspdf';
 import { saveAs } from 'file-saver';
 import { EditOwnerProfileComponent } from './edit-owner-profile/edit-owner-profile.component';
+import firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-owner-panel',
@@ -40,6 +41,8 @@ export class OwnerPanelPage implements OnInit {
   sortBy: any;
   currentPage: number = 1;
   itemsPerPage: number = 5;
+  unlisted:any;
+  listed:any;
 
   public notifBtn = new BehaviorSubject('bedspace');
   constructor(
@@ -48,6 +51,7 @@ export class OwnerPanelPage implements OnInit {
     private af: AngularFireStorage,
     private firestore: AngularFirestore,
     private firebaseService: FirebaseService,
+    public afservice:FirebaseService,
     public fb: FormBuilder
   ) {}
 
@@ -73,6 +77,7 @@ export class OwnerPanelPage implements OnInit {
       )
       .subscribe((f: any) => {
         this.room = f;
+        this.getLenght();
         console.log('all',this.room);
                 /// filteredRecord ///
         this.room.map((a: any) => {
@@ -119,8 +124,26 @@ export class OwnerPanelPage implements OnInit {
         this.sortedBed();
         this.sortedRoom();
         this.sortedTenant();
+
       });
 
+  }
+
+  getLenght(){
+    this.room.forEach((a:any)=>{
+      if(a.isUnlisted === 'true'){
+        const data:any[]=[];
+        data.push(a)
+        return this.unlisted = data.length;
+      }
+      else{
+      const data:any[]=[];
+      data.push(a)
+      return this.listed = data.length;
+      }
+    })
+    console.log('unlisted',this.unlisted);
+    console.log('listed',this.listed);
   }
 
   async getOwner(){
@@ -239,10 +262,6 @@ export class OwnerPanelPage implements OnInit {
 
   RemoveRecord(rowID: any) {
     this.firebaseService.delete_room(rowID);
-  }
-
-  RemoveTenant(roomId: any, bedId:any, tenantId:any) {
-    this.firebaseService.editTenant(roomId, bedId, tenantId)
   }
 
   UnlistRoom(id: any) {
@@ -432,5 +451,32 @@ export class OwnerPanelPage implements OnInit {
     return Math.ceil(this.room.length / this.itemsPerPage);
   }
 
-
-}
+  /*deleteTenant(roomId:any, bedId:any, tenantId:any){
+      if(bedId){
+        this.firestore.collection('Room').doc(roomId).update({
+          Bed: this.rooms.value.map((a: any) => {
+            console.log('room',a)
+            const item = a.Bed?.find((b: any) => b.uid === bedId);
+            console.log('bed',item)
+            if (item.occupied) {
+              delete item.occupied;
+            }
+            return a;
+          }),
+      });
+        this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
+          status: 'inactive',
+        })
+        return
+      }
+      else{
+        this.firestore.collection('Room').doc(roomId).update({
+          occupied: firebase.firestore.FieldValue.delete(),
+        });
+        this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
+          status: 'inactive',
+        })
+      }
+      return
+      }*/
+    }

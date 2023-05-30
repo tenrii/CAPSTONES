@@ -59,7 +59,7 @@ export class AuthenticationService {
         Address: record.Address,
       });
       await this.m.dismiss();
-      await this.router.navigate(['owner-panel']);
+      await this.router.navigate(['tenant-panel']);
       return user;
     } catch (error) {
       // Handle error
@@ -69,7 +69,7 @@ export class AuthenticationService {
   }
 
 
-  async SendVerificationMailO() {
+  async SendVerificationMailO(){
     const user:any = await this.ngFireAuth.currentUser;
     await user.sendEmailVerification();
   }
@@ -77,10 +77,10 @@ export class AuthenticationService {
   async RegisterUserOwner(email: any, password: any, record: any) {
     try {
       const { user }:any = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
-    await this.SendVerificationMailT();
+    await this.SendVerificationMailO();
+    const uid = user.uid;
 
-      const uid = user.uid;
-      await this.afStore.collection('Tenant').doc(uid).set({
+      await this.afStore.collection('Owner').doc(uid).set({
         uid: uid,
         Email: record.Email,
         FName: record.FName,
@@ -88,7 +88,6 @@ export class AuthenticationService {
         Age: record.Age,
         Address: record.Address,
       });
-
       await this.m.dismiss();
       await this.router.navigate(['owner-panel']);
       return user;

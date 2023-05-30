@@ -317,35 +317,4 @@ export class FirebaseService {
     return this.transactions.value.filter((a: any) => a.userId === transaction);
   }
 
-  editTenant(roomId:any, bedId:any, tenantId:any){
-    if(bedId){
-      this.read_owner();
-      this.firestore.collection(this.collectionRoom).doc(roomId).update({
-        Bed: this.rooms.value.map((a: any) => {
-          console.log('a',a)
-          const item = a.Bed?.find((b: any) => b.uid === bedId);
-          console.log('a',item)
-          if (!item.occupied) {
-            return a;
-          } else {
-            delete item.occupied;
-            return a;
-          }
-        }),
-    });
-      this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
-        status: 'inactive',
-      })
-      return
-    }
-    else{
-      this.firestore.collection(this.collectionRoom).doc(roomId).update({
-        occupied: firebase.firestore.FieldValue.delete(),
-      });
-      this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
-        status: 'inactive',
-      })
-    }
-    return
-    }
   }
