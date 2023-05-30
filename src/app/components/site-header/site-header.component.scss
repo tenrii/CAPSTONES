@@ -18,15 +18,8 @@
 .navbar::before, .navbar::after { display: none; }
 .navbar > .menu-section { display: flex; align-items: center; }
 #navbarNavDropdown {
-  position: fixed;
-  top: 8rem;
-  left: 0;
-  background: #fff;
-  z-index: 1000;
-  width: 100%;
-  height: 100%;
-  padding: 1rem 3rem;
   font-weight: bold;
+  text-transform: uppercase;
 }
 
 .navbar .nav-link {
@@ -66,9 +59,10 @@
   border: none;
 }
 .navbar .dropdown .dropdown-menu {
-  width: 300px !important;
-  margin-left: -50px;
-  margin-top: 20px;
+  position: absolute;
+  width: 200px !important;
+  left: -18rem;
+  top: 5rem;
 }
 
 .dropdown-menu span {
@@ -198,7 +192,19 @@ ion-popover {
     padding: 10px;
   }
 
-  .navbar .dropdown .dropdown-menu { position: absolute; left: -85px; width: 135px !important; }
+  .navbar .dropdown .dropdown-menu { position: absolute; left: -130px; width: 135px !important; }
+  #navbarNavDropdown {
+    position: fixed;
+    top: 8rem;
+    left: 0;
+    background: #fff;
+    z-index: 1000;
+    width: 100%;
+    height: 100%;
+    padding: 1rem 3rem;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
 
   .navbar .dropdown .dropdown-item {
     font-size: 12px;
