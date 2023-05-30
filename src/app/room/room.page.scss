@@ -109,39 +109,69 @@ banner .text-content h1 {
   width: 250px;
 }
 
-.detail .room {
+.detail .room-title {
   margin-left: 20px;
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 500;
+  font-family: League Spartan;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.detail .room-type {
+  margin-left: 18px;
+  font-weight: 600;
   font-family: Montserrat;
+  color: #000;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
 .detail .rent {
-  margin-left: 20px;
-  font-weight: 500;
+  margin-left: 18px;
+  font-weight: 600;
   font-family: Montserrat;
-  color: #c38f32;
+  color: #000;
   font-size: 20px;
+  margin-bottom: 10px;
 }
 
 .detail .details {
-  margin-left: 20px;
+  margin-left: 18px;
+  font-weight: 600;
   font-family: Montserrat;
-  font-size: 16px;
-  margin-left: 20px;
+  color: #000;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.detail .deets {
+  margin-left: 18px;
+  font-weight: 500;
+  font-family: Montserrat;
+  color: #333;
+  font-size: 18px;
+}
+
+.detail .space-type {
+  margin-left: 18px;
+  font-weight: 500;
+  font-family: Montserrat;
+  color: #333;
+  font-size: 18px;
 }
 
 .detail .amenities {
   font-family: Montserrat;
-  color: #c38f32;
+  color: #000;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .detail .amenities #amenities-header {
   margin-left: 20px;
   font-size: 20px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .detail .amenities #amenities {
@@ -149,14 +179,14 @@ banner .text-content h1 {
   min-width: 180px;
   text-align: center;
   padding: 10px;
-  border: rgb(194, 123, 17) solid 1px;
+  border: #000 solid 1px;
   font-size: 18px;
   margin-right: 20px;
   margin-top: 10px;
 }
 
 .detail .amenities #amenities span {
-  color: #c38f32;
+  color: #000;
 }
 
 .contact .contact-owner {
@@ -171,6 +201,8 @@ banner .text-content h1 {
   margin-left: 20px;
   font-family: Montserrat;
   font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .contact-button {
@@ -213,7 +245,7 @@ form {
 
 .review-title {
   text-align: left;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
 .review-title h2 {
@@ -221,7 +253,7 @@ form {
   font-weight: 500;
   color: #544541;
   font-family: Montserrat !important;
-  margin-left: 20px;
+  margin-left: 50px;
 }
 
 .rating-review {
@@ -340,11 +372,11 @@ form {
 
 .map_container {
   #map {
-    border: 2px solid #c38f32;
-    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    border-radius: 20px;
     width: 95%;
-    height: 510px;
-    margin-top: 100px;
+    height: 503px;
+    margin-top: 104px;
     margin-bottom: 20px;
     opacity: 0;
     transition: opacity 150ms ease-in;
@@ -725,6 +757,7 @@ body {
   min-height: 50%;
   font: normal 16px sans-serif;
   padding: 0;
+  border-radius: 20px;
 }
 
 .container.gallery-container {
