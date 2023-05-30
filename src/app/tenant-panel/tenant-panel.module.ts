@@ -8,6 +8,7 @@ import { TenantPanelPageRoutingModule } from './tenant-panel-routing.module';
 import { TenantPanelPage } from './tenant-panel.page';
 import { ChatlistModule } from '../components/chatlist/chatlist.module';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { SiteHeaderModule } from '../components/site-header/site-header.module';
 
 @NgModule({
   imports: [
@@ -16,8 +17,9 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
     FormsModule,
     IonicModule,
     TenantPanelPageRoutingModule,
-    ChatlistModule
+    ChatlistModule,
+    SiteHeaderModule,
   ],
-  declarations: [TenantPanelPage]
+  declarations: [TenantPanelPage],
 })
 export class TenantPanelPageModule {}

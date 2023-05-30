@@ -1,9 +1,10 @@
 <ion-content>
+  <app-site-header></app-site-header>
   <ion-grid style="padding: 0; margin:0;">
     <ion-row style="padding: 0; margin:0;">
       <ion-col class="side" style="padding: 0; margin:0;">
         <div class="sidebar">
-          <img src="assets/real logo.png">
+          <h1>Tenant Panel</h1>
           <a type="button" [routerLink]="['/home']">Home</a>
           <a type="button" (click)="page.next('bills')">Bills</a>
           <a type="button" (click)="page.next('records')">Records</a>
@@ -12,19 +13,10 @@
       </ion-col>
       <ion-col style="padding: 0; margin:0;">
 
-        <div class="container-img">
-          <img src="assets/logo2.jpg">
-        </div>
-
-        <div class="center">
-          <div>Hello, {{tenant?.FName}}!</div>
-          <p>Lets help you live your perfect boarding <br /> house match</p>
-        </div>
-
         <div class="body">
 
-          <div *ngIf="(page | async) === 'bills'" class="bill" id="bill">
-            <ion-grid class="bills-header">
+          <div *ngIf="(page | async) === 'bills'" class="bill" id="bill" style="margin-top:50px;">
+            <ion-grid class=" bills-header">
               <ion-row>
                 <ion-col class="btn" size="3" [class.active]="(billsPage | async) === 'unpaid'">
                   <div type="button" (click)="billsPage.next('unpaid')"
@@ -102,7 +94,7 @@
             </div>
           </div>
 
-          <div *ngIf="(page | async) === 'records'" id="transaction">
+          <div *ngIf="(page | async) === 'records'" id="transaction" style="margin-top:50px">
             <div class="room">
               <ion-grid>
                 <ion-row class="row-header">
