@@ -35,6 +35,7 @@ export class HomePage implements OnInit {
   priceMax: any = 0;
   pc: number = 10;
   myIndex: number = 0;
+  roomLenght:any;
   slideOpts = {
     initialSlide: 1,
     speed: 400,
@@ -58,7 +59,6 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.firebaseService.read_room().subscribe((data) => {
       this.roomList = data;
-
       this.filterPlace = [...new Set(this.roomList.map((a) => a.Barangay.toLowerCase()))];
       this.filterRent = [...new Set(this.roomList.map((a) => a.Rent))];
 

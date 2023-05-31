@@ -58,6 +58,20 @@
   <div class="brands">
     <h1>ENTIRE CITY OF CHOICE</h1>
   </div>
+
+  <ion-row *ngIf="(list | async) === null">
+    <ion-card style="width: 100%;">
+      <ion-card-header>
+        <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        You don't have rooms yet,<br/>
+        Go to create room to upload your property room
+      </ion-card-content>
+    </ion-card>
+  </ion-row>
+
   <span *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
   </span>
 
