@@ -45,6 +45,18 @@
                       <h1 style="font-weight: bold;">Amount</h1>
                     </ion-col>
                   </ion-row>
+                  <ion-row *ngIf="bills.length === 0 || !bills">
+                    <ion-card style="width: 100%;">
+                      <ion-card-header>
+                        <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
+                      </ion-card-header>
+
+                      <ion-card-content>
+                        You don't have rooms yet,<br/>
+                        Go to create room to upload your property room
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-row>
                   <ion-row *ngFor="let bill of bills">
                     <ion-col>
                       <h1 style="font-family: Montserrat; font-size: 18px;">
@@ -79,6 +91,18 @@
                       <h1 style="font-weight: bold;">Date</h1>
                     </ion-col>
                   </ion-row>
+                  <ion-row *ngIf="paidBills.length === 0 || !paidBills">
+                    <ion-card style="width: 100%;">
+                      <ion-card-header>
+                        <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
+                      </ion-card-header>
+
+                      <ion-card-content>
+                        You don't have rooms yet,<br/>
+                        Go to create room to upload your property room
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-row>
                   <ion-row *ngFor="let paidBill of paidBills">
                     <ion-col style="font-family: Montserrat; font-size: 18px;">
                       <h1 style="font-family: Montserrat; font-size: 18px;">
@@ -108,10 +132,18 @@
                   <ion-col>Reference</ion-col>
                   <ion-col>Date of Payment</ion-col>
                 </ion-row>
-                <ion-card *ngIf="transaction.length === 0">
-                  <ion-icon name="search-outline"></ion-icon>
-                  <p>You have no reservation transaction yet</p>
-                </ion-card>
+                <ion-row *ngIf="transaction.length === 0 || !transaction">
+                  <ion-card style="width: 100%;">
+                    <ion-card-header>
+                      <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
+                    </ion-card-header>
+
+                    <ion-card-content>
+                      You don't have rooms yet,<br/>
+                      Go to create room to upload your property room
+                    </ion-card-content>
+                  </ion-card>
+                </ion-row>
                 <ion-row class="row-body" *ngFor="let td of transaction">
                   <ion-col>{{td.roomData?.Title}}</ion-col>
                   <ion-col><span *ngFor="let data of td.lineItems">{{data.name}}</span></ion-col>
