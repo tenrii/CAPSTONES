@@ -60,16 +60,16 @@
   </div>
 
   <ion-row *ngIf="(list | async)?.length === 0">
-    <ion-card style="width: 100%;">
-      <ion-card-header>
-        <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
-      </ion-card-header>
+    <div class="no_record">
+      <div>
+        <ion-card-title><ion-icon name="search" style="color: black;"></ion-icon></ion-card-title>
+      </div>
 
-      <ion-card-content>
-        You don't have rooms yet,<br/>
+      <h4>
+        You don't have rooms yet,<br/>s
         Go to create room to upload your property room
-      </ion-card-content>
-    </ion-card>
+      </h4>
+    </div>
   </ion-row>
 
   <span *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">

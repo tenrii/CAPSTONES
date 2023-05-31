@@ -91,6 +91,14 @@ ion-content {
     }
   }
 
+  .no_record{
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    color: black;
+    margin-top: 20px;
+  }
+
   @media only screen and (max-width: 768px) {
     margin-top: -1vw;
   }

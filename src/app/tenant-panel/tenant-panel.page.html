@@ -46,14 +46,13 @@
                     </ion-col>
                   </ion-row>
                   <ion-row *ngIf="bills.length === 0 || !bills">
-                    <ion-card style="width: 100%;">
+                    <ion-card style="width: 100%; text-align: center; justify-content: center;">
                       <ion-card-header>
                         <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
                       </ion-card-header>
 
                       <ion-card-content>
-                        You don't have rooms yet,<br/>
-                        Go to create room to upload your property room
+                        You don't have unpaid monthly bills yet
                       </ion-card-content>
                     </ion-card>
                   </ion-row>
@@ -92,14 +91,14 @@
                     </ion-col>
                   </ion-row>
                   <ion-row *ngIf="paidBills.length === 0 || !paidBills">
-                    <ion-card style="width: 100%;">
+                    <ion-card style="width: 100%; text-align: center; justify-content: center;
+                    border-color: white ; color: black;">
                       <ion-card-header>
                         <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
                       </ion-card-header>
 
                       <ion-card-content>
-                        You don't have rooms yet,<br/>
-                        Go to create room to upload your property room
+                        You don't have paid bills yet
                       </ion-card-content>
                     </ion-card>
                   </ion-row>
