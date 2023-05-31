@@ -49,9 +49,10 @@ export class OwnerLogRegPage implements OnInit {
       check2: [false, Validators.requiredTrue]
     });
 
-    this.conditionForm.valueChanges.subscribe(() => {
-      this.conditionForm.updateValueAndValidity();
-    });
+    // removed because it is causing call stack exceeded error
+    // this.conditionForm.valueChanges.subscribe(() => {
+    //   this.conditionForm.updateValueAndValidity();
+    // });
 
     this.route.queryParams.subscribe((params) => {
       const conditions = params['conditions'];
@@ -157,6 +158,7 @@ export class OwnerLogRegPage implements OnInit {
         form: this.ownerRegister,
       },
       backdropDismiss: false,
+      cssClass: 'verify-modal',
     });
     this.isModalOpen = true;
     return await modalInstance.present();

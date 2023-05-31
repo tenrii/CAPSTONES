@@ -107,6 +107,7 @@ export class LoginPage implements OnInit {
         form: this.tenantRegister,
       },
       backdropDismiss: false,
+      cssClass: 'verify-modal'
     });
     this.isModalOpen = true;
     return await modalInstance.present();
