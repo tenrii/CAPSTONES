@@ -62,7 +62,8 @@
   </span>
 
   <div class="room-container">
-    <ng-container *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+    <ng-container
+      *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
       <div *ngIf="(!item?.isUnlisted || item?.isUnlisted==='false') &&
       (item.Permitted==='true')" class="room" type="button" [routerLink]="['/','room',item.id]">
         <div>
