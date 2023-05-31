@@ -178,12 +178,16 @@ export class AuthenticationService {
     });
   }
   // Sign-out
-  SignOut() {
+  SignOut(redirect = true) {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
-      this.router.navigate(['home']).then(() => {
+      if (redirect) {
+        this.router.navigate(['home']).then(() => {
+          window.location.reload();
+        });
+      } else {
         window.location.reload();
-      });
+      }
     });
   }
 }
