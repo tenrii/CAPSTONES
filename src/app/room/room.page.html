@@ -257,7 +257,7 @@
         </ion-col>
         <ion-row>
           <ng-container *ngFor="let seat of data?.Bed" [class.occupied]="seat.selected || seat.occupied">
-            <ion-col *ngIf="seat.status === 'down'" style="font-family: Montserrat;">
+            <ion-col *ngIf="seat.status === 'down'" style="font-family: Montserrat; max-width: 100px;">
               <ng-container *ngTemplateOutlet="bedButton; context: {seat: seat}"></ng-container>
             </ion-col>
           </ng-container>
