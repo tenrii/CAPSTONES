@@ -22,12 +22,12 @@
   font-family: Montserrat;
 }
 
-.profile{
+.profile {
   text-align: center;
   justify-content: center;
 }
 
-.profile img{
+.profile img {
   width: 90px;
   border-radius: 45px;
 }
@@ -404,4 +404,12 @@ body {
   color: #000;
   margin-left: 20px;
   transition: 0.4s;
+}
+
+.owner-name {
+  text-align: center;
+  justify-content: center;
+  font-size: 18px;
+  font-family: Montserrat;
+  margin-bottom: 10px;
 }

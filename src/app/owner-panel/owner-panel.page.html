@@ -6,9 +6,9 @@
         <div class="sidebar">
           <h1>Owner Panel</h1>
           <span class="profile"><img src="{{owner?.profpic}}">
-            <div>{{owner?.FName}} {{owner?.LName}}</div>
+            <div class="owner-name">{{owner?.FName}} {{owner?.LName}}</div>
           </span>
-          <a type="button" [routerLink]="['/home']">Home</a>
+          <a type="button" (click)="gotoEditOwnerProfile()">Edit Profile</a>
           <a type="button" (click)="gotoModal1()">Create Room</a>
           <a type="button" onclick="
           document.getElementById('room').style.display='block';
@@ -16,8 +16,7 @@
           <a type="button" onclick="
           document.getElementById('room').style.display='none';
           document.getElementById('record').style.display='block';">Records</a>
-          <a type="button" (click)="gotoEditOwnerProfile()">Edit Profile</a>
-          <a type="button" (click)="gotoGateaway()">Paymongo</a>
+          <a type="button" (click)="gotoGateaway()">Payment Gateway</a>
         </div>
       </ion-col>
       <ion-col style="padding: 0; margin:0;">
@@ -69,7 +68,7 @@
                       </ion-card-header>
 
                       <ion-card-content>
-                        You don't have rooms yet,<br/>
+                        You don't have rooms yet,<br />
                         Go to create room to upload your property room
                       </ion-card-content>
                     </ion-card>
@@ -136,8 +135,7 @@
                       </ion-card-header>
 
                       <ion-card-content>
-                        You don't have rooms yet,<br/>
-                        Go to create room to upload your property room
+                        You don't have unlisted rooms yet.
                       </ion-card-content>
                     </ion-card>
                   </ion-row>
@@ -219,7 +217,7 @@
                         </span>
                       </ion-col>
                       <ion-col>
-                        <ion-button (click)="deleteTenant(data.roomId,data.id,data.userId)">
+                        <ion-button (click)="deleteTenant(data.roomId,data.bedId,data.userId)">
                           <ion-icon name="trash"></ion-icon>
                         </ion-button>
                       </ion-col>
@@ -265,6 +263,12 @@
                 </ion-row>
 
 
+                    <ion-card-content>
+                      You don't have any reservation transaction <br/>
+                      in your records yet
+                    </ion-card-content>
+                  </ion-card>
+                </ion-row>
 
                 <span *ngFor="let data of filteredRecord | filter: searchText">
                   <ion-row class="row-body" style="text-align:center;">

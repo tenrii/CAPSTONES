@@ -2,11 +2,11 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FirebaseService } from '../services/firebase.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController, ToastController } from '@ionic/angular';
 import { EditModalComponent } from './edit-modal/edit-modal.component';
 import { Modal1Component } from './modal/modal1/modal1.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import { BehaviorSubject, combineLatest, lastValueFrom, map } from 'rxjs';
 import { AuthenticationService } from '../shared/authentication-service';
 import domtoimage from 'dom-to-image';
 import { jsPDF } from 'jspdf';
@@ -54,7 +54,9 @@ export class OwnerPanelPage implements OnInit {
     private firestore: AngularFirestore,
     private firebaseService: FirebaseService,
     public afservice:FirebaseService,
-    public fb: FormBuilder
+    public fb: FormBuilder,
+    private alert: AlertController,
+    private toast: ToastController
   ) {}
 
   ngOnInit() {
@@ -212,6 +214,7 @@ export class OwnerPanelPage implements OnInit {
   }
 
   sortedTenant(){
+    this.occupant = [];
     this.room.map((a:any)=>{
       if (a.occupied) {
         const room = a.tenantData.filter((z:any)=>{
@@ -547,34 +550,73 @@ export class OwnerPanelPage implements OnInit {
     if (this.isButtonDisabled) {
       return;
     }
-    this.isButtonDisabled = true;
 
-    if (bedId) {
-      this.firebaseService.read_room().subscribe((a) => {
-        const data = this.firebaseService.getRoom(roomId);
+    const alert = await this.alert.create({
+      header: 'Delete Tenant',
+      message: 'Are you sure you want to delete this tenant?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        },
+        {
+          text: 'Delete',
+          handler: async () => {
+            await this.deleteTenantHandle(roomId, bedId, tenantId);
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async deleteTenantHandle(roomId:any, bedId:any, tenantId:any) {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+    // console.log('deleteTenant', roomId, bedId, tenantId);
+    try {
+      if (bedId) {
+        const roomData: any = (await lastValueFrom(this.firestore.collection('Room').doc(roomId).get())).data();
         this.firestore.collection('Room').doc(roomId).update({
-          Bed: data.Bed.map((bed: any) => {
+          Bed: roomData.Bed.map((bed: any) => {
             if (bed.uid === bedId && bed.occupied) {
               delete bed.occupied;
             }
             return bed;
           }),
         });
-        this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
-          status: 'inactive',
-        });
-      });
-      return;
-    }
-      else{
-        this.firestore.collection('Room').doc(roomId).update({
+        const tenantReservation: any = (await lastValueFrom(this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).get())).data();
+        // console.log('tenantReservation', tenantReservation);
+        if (tenantReservation && tenantReservation.lineItems?.length > 1) {
+          // if more than one bed
+          const remainingBeds = tenantReservation.lineItems.filter((item: any) => item.uid !== bedId);
+          // console.log('remainingBeds', remainingBeds);
+          await this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
+            lineItems: remainingBeds,
+            amount: remainingBeds.reduce((acc: any, item: any) => acc + item.amount, 0),
+          });
+        } else {
+          await this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
+            status: 'inactive',
+          });
+        }
+        this.isButtonDisabled = false;
+      } else {
+        await this.firestore.collection('Room').doc(roomId).update({
           occupied: firebase.firestore.FieldValue.delete(),
         });
-        this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
+        await this.firestore.collection('Tenant').doc(tenantId).collection('Reservations').doc(roomId).update({
           status: 'inactive',
         })
+        this.isButtonDisabled = false;
       }
-      this.isButtonDisabled = false;
-      return
-      }
+
+      const toast = await this.toast.create({
+        message: 'Tenant deleted successfully',
+      });
+      await toast.present();
+    } catch (_) {}
+  }
 }
