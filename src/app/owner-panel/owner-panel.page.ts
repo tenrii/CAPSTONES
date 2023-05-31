@@ -486,6 +486,11 @@ export class OwnerPanelPage implements OnInit {
   }
 
   async deleteTenant(roomId:any, bedId:any, tenantId:any){
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
     if (bedId) {
       this.firebaseService.read_room().subscribe((a) => {
         const data = this.firebaseService.getRoom(roomId);
@@ -511,6 +516,7 @@ export class OwnerPanelPage implements OnInit {
           status: 'inactive',
         })
       }
+      this.isButtonDisabled = false;
       return
       }
-    }
+}
