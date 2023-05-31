@@ -6,6 +6,10 @@
         <div class="sidebar">
           <h1>Tenant Panel</h1>
           <a type="button" (click)="gotoEditProfile()">Edit Profile</a>
+          <span><img src="{{tenant?.profpic}}">
+            <div>{{tenant?.FName}} {{tenant?.LName}}</div>
+          </span>
+          <a type="button" [routerLink]="['/home']">Home</a>
           <a type="button" (click)="page.next('bills')">Bills</a>
           <a type="button" (click)="page.next('records')">Records</a>
         </div>

@@ -57,7 +57,7 @@ export class OwnerPanelPage implements OnInit {
   ) {}
 
   ngOnInit() {
-
+    this.getOwner();
     combineLatest([
       this.firebaseService.read_tenant(),
       this.firebaseService.read_room(),
