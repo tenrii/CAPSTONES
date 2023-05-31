@@ -59,7 +59,7 @@
     <h1>ENTIRE CITY OF CHOICE</h1>
   </div>
 
-  <ion-row *ngIf="(list | async) === null">
+  <ion-row *ngIf="(list | async)?.length === 0">
     <ion-card style="width: 100%;">
       <ion-card-header>
         <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
