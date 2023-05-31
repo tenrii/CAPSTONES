@@ -58,8 +58,9 @@ export class AuthenticationService {
         Gender: record.Gender,
         Address: record.Address,
       });
+      await this.SignOut();
       await this.m.dismiss();
-      await this.router.navigate(['tenant-panel']);
+      await this.router.navigate(['home']);
       return user;
     } catch (error) {
       // Handle error
@@ -88,8 +89,9 @@ export class AuthenticationService {
         Age: record.Age,
         Address: record.Address,
       });
+      await this.SignOut();
       await this.m.dismiss();
-      await this.router.navigate(['owner-panel']);
+      await this.router.navigate(['home']);
       return user;
     } catch (error) {
       // Handle error
