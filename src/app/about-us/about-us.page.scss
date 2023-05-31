@@ -3,7 +3,6 @@ body {
   margin: 0;
   padding: 0;
   font-family: "Montserrat";
-  margin-top: -100px;
 }
 
 h2 {
@@ -29,8 +28,9 @@ h2 {
 .image-wrap {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   overflow-x: hidden;
+  margin-bottom: -150px;
 }
 
 .banner-content {
@@ -281,6 +281,8 @@ a {
 }
 
 /*FOOTER FOOTER*/
+
+/*FOOTER FOOTER*/
 footer {
   padding: 50px 0;
   color: #000;
@@ -298,14 +300,12 @@ footer {
   font-family: Montserrat;
   text-transform: uppercase;
 }
-
 p {
   color: #000;
   font-family: Montserrat;
   font-size: 16px;
-  margin-top: 40px;
   line-height: 1.6;
-  text-align: center;
+  text-align: left;
 }
 
 .social-icons {
@@ -313,10 +313,12 @@ p {
   margin: 0;
   padding: 0;
   display: flex;
+  align-items: center;
 }
 
 .social-icons a {
   display: block;
+  margin-right: 20px;
   color: #544541;
 }
 .social-icons a:hover .fab.fa-facebook,

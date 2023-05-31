@@ -8,10 +8,10 @@
           <span class="profile"><img src="{{tenant?.profpic}}">
             <div>{{tenant?.FName}} {{tenant?.LName}}</div>
           </span>
-          <a type="button" [routerLink]="['/home']">Home</a>
+          <a type="button" (click)="gotoEditProfile()">Edit Profile</a>
+
           <a type="button" (click)="page.next('bills')">Bills</a>
           <a type="button" (click)="page.next('records')">Records</a>
-          <a type="button" (click)="gotoEditProfile()">Records</a>
         </div>
       </ion-col>
       <ion-col style="padding: 0; margin:0;">
