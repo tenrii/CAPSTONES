@@ -515,7 +515,7 @@ export const verifyPayment = functions.runWith({secrets: ['MAIL_PASS']}).https.o
           .update({
             paymentSessionIDs: admin.firestore.FieldValue.arrayUnion(paymentIntentId),
             lineItems: admin.firestore.FieldValue.arrayUnion(...paymentSession?.lineItems),
-            amount: hasExistingReservation.amountNumber + amountNumber,
+            amount: hasExistingReservation.amount + amountNumber,
             dateUpdated: dateNow,
             month: moment().tz(timezone).format('MMMM'),
           });
