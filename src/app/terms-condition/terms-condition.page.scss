@@ -34,7 +34,7 @@ h2 {
 
 .banner-content {
   position: absolute;
-  z-index: 99999;
+  z-index: 10;
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -70,11 +70,26 @@ h2 {
   padding: 20px;
   margin-top: -15%;
 }
+.col {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: -10%;
+}
+.col ul {
+  list-style-type: none;
+  text-align: justify;
+  padding: 0;
+  font-family: Montserrat;
+}
+
+.col p {
+  text-align: justify;
+  font-family: Montserrat;
+}
 
 p {
-  text-align: center;
-  font-family: DM Sans;
-  align-content: center;
+  text-align: justify;
   font-family: Montserrat;
 }
 

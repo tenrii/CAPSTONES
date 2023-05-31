@@ -77,7 +77,8 @@ ion-content {
       margin-top: 7px;
     }
 
-    ion-select, ion-range {
+    ion-select,
+    ion-range {
       font-size: 18px;
       min-height: 80px;
       font-family: Montserrat;
@@ -109,7 +110,6 @@ ion-content {
       min-width: 200px !important;
     }
   }
-
 }
 
 ////////
@@ -475,6 +475,7 @@ p {
 }
 
 .brands h1 {
+  margin-top: 20px;
   text-align: center;
   font-size: 40px;
   font-family: League Spartan;

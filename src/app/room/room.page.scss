@@ -194,7 +194,7 @@ banner .text-content h1 {
   margin-left: 20px;
   font-family: Montserrat;
   font-size: 25px;
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .contact .host {
@@ -245,7 +245,6 @@ form {
 
 .review-title {
   text-align: left;
-  margin-bottom: 50px;
 }
 
 .review-title h2 {
@@ -253,13 +252,15 @@ form {
   font-weight: 500;
   color: #544541;
   font-family: Montserrat !important;
-  margin-left: 50px;
+  margin-left: 20px;
+  margin-top: -150px;
 }
 
 .rating-review {
   margin-top: 10px;
   margin-left: 20px;
   width: 60%;
+  margin-left: 60px;
 }
 
 .rating-review #review {
@@ -757,24 +758,26 @@ body {
   min-height: 50%;
   font: normal 16px sans-serif;
   padding: 0;
-  border-radius: 20px;
 }
 
+gallery {
+  border-radius: 20px;
+  background-color: #ececec;
+}
 .container.gallery-container {
   background-color: #fff;
-  color: #35373a;
+  color: #fafafa;
   min-height: 50%;
 }
 
 .tz-gallery {
   padding: 40px;
-  margin-top: 50px;
 }
 
 .tz-gallery img {
   width: 50%;
   height: 50%;
-  border: 2px solid #c38f32;
+  border-radius: 20px;
 }
 
 /* Override bootstrap column paddings */
