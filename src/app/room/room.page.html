@@ -245,7 +245,7 @@
         </ion-row>
         <ion-row>
           <ng-container *ngFor="let seat of data?.Bed" [class.occupied]="seat.selected || seat.occupied">
-            <ion-col *ngIf="seat.status === 'up'" size="3" style="font-family: Montserrat;">
+            <ion-col *ngIf="seat.status === 'up'" style="font-family: Montserrat;">
               <ng-container *ngTemplateOutlet="bedButton; context: {seat: seat}"></ng-container>
             </ion-col>
           </ng-container>
@@ -257,7 +257,7 @@
         </ion-col>
         <ion-row>
           <ng-container *ngFor="let seat of data?.Bed" [class.occupied]="seat.selected || seat.occupied">
-            <ion-col *ngIf="seat.status === 'down'" size="3" style="font-family: Montserrat;">
+            <ion-col *ngIf="seat.status === 'down'" style="font-family: Montserrat;">
               <ng-container *ngTemplateOutlet="bedButton; context: {seat: seat}"></ng-container>
             </ion-col>
           </ng-container>
@@ -265,7 +265,7 @@
       </ng-container>
 
       <ng-template #bedButton let-seat="seat">
-        <ion-button
+        <ion-button class="bed_btn"
           [color]="seat.occupied && seat.occupied.email === email && seat.occupied.status === 'paidPayment' ? 'success' : 'primary' "
           size="small" shape="round" expand="full"
           [disabled]="(isReserving | async) || seat.occupied || this.pendingPayment" (click)="toggleSeat(seat)">

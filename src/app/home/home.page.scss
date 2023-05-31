@@ -17,6 +17,14 @@ ion-content {
   max-width: 400px; /* adjust the max-width value as needed */
 }
 
+.no_record{
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+  color: black;
+  margin-top: 20px;
+}
+
 .container {
   margin-top: 50px;
 }
@@ -89,14 +97,6 @@ ion-content {
     ion-range {
       min-width: 350px;
     }
-  }
-
-  .no_record{
-    width: 100%;
-    text-align: center;
-    justify-content: center;
-    color: black;
-    margin-top: 20px;
   }
 
   @media only screen and (max-width: 768px) {

@@ -102,7 +102,9 @@ export class EditModalComponent implements OnInit {
       return;
     }
     this.isButtonDisabled = true;
+    this.m.dismiss();
   }
+
 
   onFileSelected(event: any) {
     this.selectedFiles = event.target.files;

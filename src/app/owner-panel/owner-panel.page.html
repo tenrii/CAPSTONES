@@ -183,10 +183,11 @@
             </div>
 
             <div id="occupant" style="display:none;">
-              <div class="room">
+              <div class="room" #occupantsPDF>
                 <ion-grid>
                   <ion-row class="row-header">
                     <ion-col>Tenant Name</ion-col>
+                    <ion-col>Property</ion-col>
                     <ion-col>Room</ion-col>
                     <ion-col>Bed Position</ion-col>
                     <ion-col>Action</ion-col>
@@ -207,7 +208,8 @@
                   <span *ngFor="let data of occupant">
                     <ion-row class="row-body" *ngIf="data.paymentStatus === 'paidPayment'">
                       <ion-col>{{data.FName}} {{data.LName}}</ion-col>
-                      <ion-col>{{data.RoomName}}<br/>{{data.roomId}}</ion-col>
+                      <ion-col>{{data.Title}}</ion-col>
+                      <ion-col>{{data.RoomName}}</ion-col>
                       <ion-col>
                         <span *ngIf="!data.bed"></span>
                         <span *ngIf="data.bed">
@@ -225,11 +227,12 @@
                   </span>
                 </ion-grid>
               </div>
+              <ion-button (click)="generatePDF('occupants')">Export into PDF</ion-button>
             </div>
           </div>
 
           <div id="record" style="display:none;">
-            <div class="room" #content>
+            <div class="room" #recordsPDF>
               <ion-grid>
                 <ion-row class="top">
                   <ion-col>
@@ -253,7 +256,7 @@
                   </ion-col>
                 </ion-row>
               </ion-grid>
-              <ion-grid #grid>
+              <ion-grid>
                 <ion-row class="row-header" style="text-align:center;">
                   <ion-col>Tenant Name</ion-col>
                   <ion-col>Room/Bedspace Placement</ion-col>
@@ -261,18 +264,7 @@
                   <ion-col>Date of Payment</ion-col>
                 </ion-row>
 
-                <ion-row *ngIf="!filteredRecord || filteredRecord.length === 0">
-                  <ion-card style="width: 100%;">
-                    <ion-card-header>
-                      <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
-                    </ion-card-header>
 
-                    <ion-card-content>
-                      You don't have any reservation transaction <br/>
-                      in your records yet
-                    </ion-card-content>
-                  </ion-card>
-                </ion-row>
 
                 <span *ngFor="let data of filteredRecord | filter: searchText">
                   <ion-row class="row-body" style="text-align:center;">
@@ -296,12 +288,11 @@
                     <ion-col>
                       {{data.date | date:'short'}}
                     </ion-col>
-
                   </ion-row>
                 </span>
               </ion-grid>
             </div>
-            <ion-button (click)="generatePDF()">Export into PDF</ion-button>
+            <ion-button (click)="generatePDF('records')">Export into PDF</ion-button>
             <ion-button (click)="exportToCSV()">Export to CSV</ion-button>
 
           </div>

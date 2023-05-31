@@ -59,18 +59,19 @@
     <h1>ENTIRE CITY OF CHOICE</h1>
   </div>
 
-  <ion-row *ngIf="(list | async)?.length === 0">
-    <div class="no_record">
+  <ion-grid *ngIf="(list | async)?.length === 0">
+    <ion-row>
+      <ion-col class="no_record">
       <div>
-        <ion-card-title><ion-icon name="search" style="color: black;"></ion-icon></ion-card-title>
+        <ion-icon name="search" style="color: black; font-size: 40px;"></ion-icon>
       </div>
 
       <h4>
-        You don't have rooms yet,<br/>s
-        Go to create room to upload your property room
+        No rooms found
       </h4>
-    </div>
+  </ion-col>
   </ion-row>
+  </ion-grid>
 
   <span *ngFor="let item of (list | async)?.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
   </span>

@@ -306,7 +306,7 @@ export class FirebaseService {
     if(this.ownerUid.includes(owner)){
     return this.owners.value.find((a: any) => a.id == owner);
   }
-  }
+}
 
   getTenant(tenant: any) {
     if(this.tenantUid.includes(tenant)){

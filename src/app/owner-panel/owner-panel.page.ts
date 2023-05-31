@@ -21,8 +21,9 @@ import { GateawayComponent } from '../components/gateaway/gateaway.component';
   styleUrls: ['./owner-panel.page.scss'],
 })
 export class OwnerPanelPage implements OnInit {
-  @ViewChild('content', { static: false }) content!: ElementRef;
-  @ViewChild('grid', { static: false }) grid!: ElementRef;
+  @ViewChild('recordsPDF', { static: false }) recordsPDF!: ElementRef;
+  @ViewChild('occupantsPDF', { static: false }) occupantsPDF!: ElementRef;
+  @ViewChild('roomsPDF', { static: false }) roomsPDF!: ElementRef;
   isButtonDisabled = false;
   roomList!: any[];
   roomForm!: FormGroup;
@@ -276,28 +277,81 @@ export class OwnerPanelPage implements OnInit {
     });
   }
 
-  generatePDF() {
+  generatePDF(condition:any) {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns a zero-based index
+    const currentYear = currentDate.getFullYear();
+
+    if(condition === 'records'){
     const doc = new jsPDF();
 
-    const contentElement = this.content.nativeElement;
+    const recordsPDFElement = this.recordsPDF.nativeElement;
 
     const options = {
-      width: contentElement.offsetWidth,
-      height: contentElement.offsetHeight,
+      width: recordsPDFElement.offsetWidth,
+      height: recordsPDFElement.offsetHeight,
       style: {
         margin: '20px', // Adjust the margin value as per your requirement
       },
     };
 
-    domtoimage.toPng(contentElement, options).then((dataUrl) => {
+    domtoimage.toPng(recordsPDFElement, options).then((dataUrl) => {
       const imgWidth = doc.internal.pageSize.getWidth() - 40;
       const imgHeight =
-        (contentElement.offsetHeight / contentElement.offsetWidth) * imgWidth;
+        (recordsPDFElement.offsetHeight / recordsPDFElement.offsetWidth) * imgWidth;
 
       doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
-      doc.save('Records.pdf');
+      doc.save('Records_'+currentMonth+'_'+currentYear+'.pdf');
     });
   }
+  else if (condition === 'occupants') {
+      const doc = new jsPDF();
+
+      const occupantsPDFElement = this.occupantsPDF.nativeElement;
+
+      // Remove the "Action" column from the table header
+      const tableHeader = occupantsPDFElement.querySelector('.row-header');
+      const actionColumnHeader = tableHeader.querySelector('ion-col:last-child');
+      actionColumnHeader.remove();
+
+      // Remove the last column from each row body and store the reference to the last column in the first row body
+      const rowBodies = occupantsPDFElement.querySelectorAll('.row-body');
+      let lastColumn: HTMLElement;
+      rowBodies.forEach((row:any, index:any) => {
+        const currentLastColumn = row.querySelector('ion-col:last-child');
+        if (index === 0) {
+          lastColumn = currentLastColumn;
+        }
+        currentLastColumn.remove();
+      });
+
+      const options = {
+        width: occupantsPDFElement.offsetWidth,
+        height: occupantsPDFElement.offsetHeight,
+        style: {
+          margin: '20px', // Adjust the margin value as per your requirement
+        },
+      };
+
+      domtoimage.toPng(occupantsPDFElement, options).then((dataUrl) => {
+        const imgWidth = doc.internal.pageSize.getWidth() - 40;
+        const imgHeight =
+          (occupantsPDFElement.offsetHeight / occupantsPDFElement.offsetWidth) * imgWidth;
+
+        doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
+        doc.save('Occupants_'+currentMonth+'_'+currentYear+'.pdf');
+
+        // Restore the "Action" column to the table header
+        tableHeader.appendChild(actionColumnHeader);
+
+        // Restore the last column to each row body
+        rowBodies.forEach((row:any) => {
+          row.appendChild(lastColumn.cloneNode(true));
+        });
+      });
+    }
+  }
+
 
   exportToCSV() {
     const csvContent = this.convertToCSV(this.filteredRecord);
