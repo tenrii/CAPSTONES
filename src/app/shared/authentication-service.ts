@@ -12,6 +12,7 @@ import { ModalController } from '@ionic/angular';
   providedIn: 'root',
 })
 export class AuthenticationService {
+  id: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   userData: any;
   uid: any;
   constructor(
@@ -19,7 +20,7 @@ export class AuthenticationService {
     public afStore: AngularFirestore,
     public ngFireAuth: AngularFireAuth,
     public router: Router,
-    public ngZone: NgZone
+    public ngZone: NgZone,
   ) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
@@ -35,6 +36,10 @@ export class AuthenticationService {
   // Login in with email/password
   SignIn(email:any, password:any) {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password);
+  }
+
+  async SignInOwner(email:any, password:any) {
+    await this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
 
   // Register user with email/password
@@ -70,17 +75,25 @@ export class AuthenticationService {
   }
 
 
-  async SendVerificationMailO(){
-    const user:any = await this.ngFireAuth.currentUser;
+  async SendVerificationMailO() {
+    const user: any = await this.ngFireAuth.currentUser;
     await user.sendEmailVerification();
   }
 
   async RegisterUserOwner(email: any, password: any, record: any) {
     try {
-      const { user }:any = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
-    await this.SendVerificationMailO();
-    const uid = user.uid;
+      const { user }: any = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+      let emailVerified = user.emailVerified;
+      const uid = user.uid;
+      if (!emailVerified) {
+        await this.SendVerificationMailO();
 
+        while (!emailVerified) {
+          await new Promise(resolve => setTimeout(resolve, 2000)); // Delay for 2 seconds
+          await user.reload();
+          emailVerified = user.emailVerified; // Update emailVerified variable
+        }
+      }
       await this.afStore.collection('Owner').doc(uid).set({
         uid: uid,
         Email: record.Email,
@@ -89,6 +102,7 @@ export class AuthenticationService {
         Age: record.Age,
         Address: record.Address,
       });
+
       await this.SignOut();
       await this.m.dismiss();
       await this.router.navigate(['home']);
@@ -99,6 +113,7 @@ export class AuthenticationService {
       throw error;
     }
   }
+
 
   // Recover password
   PasswordRecover(passwordResetEmail: any) {
