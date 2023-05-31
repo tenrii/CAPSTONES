@@ -5,7 +5,7 @@
       <ion-col class="side" style="padding: 0; margin:0;">
         <div class="sidebar">
           <h1>Owner Panel</h1>
-          <span><img src="{{owner?.profpic}}">
+          <span class="profile"><img src="{{owner?.profpic}}">
             <div>{{owner?.FName}} {{owner?.LName}}</div>
           </span>
           <a type="button" [routerLink]="['/home']">Home</a>
@@ -205,7 +205,7 @@
                   </ion-row>
 
                   <span *ngFor="let data of occupant">
-                    <ion-row class="row-body">
+                    <ion-row class="row-body" *ngIf="data.paymentStatus === 'paidPayment'">
                       <ion-col>{{data.FName}} {{data.LName}}</ion-col>
                       <ion-col>{{data.RoomName}}<br/>{{data.roomId}}</ion-col>
                       <ion-col>

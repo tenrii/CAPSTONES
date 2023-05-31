@@ -223,6 +223,7 @@ export class OwnerPanelPage implements OnInit {
           RoomName: a.RoomName,
           roomId: a.id,
           userId: a.occupied?.userId,
+          paymentStatus: a.occupied?.status,
         })
         return room;
       }
@@ -241,10 +242,13 @@ export class OwnerPanelPage implements OnInit {
           bedId: b.uid,
           id: b.id,
           bed: b.status,
+          paymentStatus: b.occupied?.status
         })
+
         return bed;
       }
     })
+    console.log('occupant',this.occupant)
     return a;
     })
 
