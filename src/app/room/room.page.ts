@@ -111,7 +111,7 @@ export class RoomPage implements OnInit {
     // console.log('id', this.firebaseService.getRoom(this.roomId));
 
     this.data = this.firebaseService.getRoom(this.roomId);
-
+    this.getTenant();
     console.log(this.data);
     this.galleryItems$.next([
       ...this.data?.Images?.map(
@@ -123,12 +123,6 @@ export class RoomPage implements OnInit {
     this.firebaseService.read_owner().subscribe(() => {
       this.owner = this.firebaseService.getOwner(this.data.OwnerId);
     });
-
-    if(this.firebaseService.tenantUid.includes(this.tenantId)){
-    this.firebaseService.read_tenant().subscribe(() => {
-      this.tenant = this.firebaseService.getOwner(this.tenantId);
-    });
-  }
 
     this.data.priceSub = parseFloat(this.data.Price)
       .toFixed(2)
@@ -167,6 +161,14 @@ export class RoomPage implements OnInit {
       seat.selected = true;
     } else {
       seat.selected = false;
+    }
+  }
+
+  getTenant(){
+    if(this.firebaseService.tenantUid.includes(this.tenantId)){
+      this.firebaseService.read_tenant().subscribe(() => {
+        this.tenant = this.firebaseService.getTenant(this.tenantId);
+      });
     }
   }
 
