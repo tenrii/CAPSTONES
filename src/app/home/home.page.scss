@@ -17,7 +17,7 @@ ion-content {
   max-width: 400px; /* adjust the max-width value as needed */
 }
 
-.no_record{
+.no_record {
   width: 100%;
   text-align: center;
   justify-content: center;
@@ -454,7 +454,6 @@ li a:hover {
   flex-grow: 1;
   max-width: 100%;
   height: auto;
-  margin: 50px;
 }
 
 h1 {
@@ -625,7 +624,7 @@ p {
 
   /* Adjust the styles for the video section */
   .video-section {
-    height: 300px;
+    height: 200px;
   }
 
   .video-container img {
@@ -662,6 +661,19 @@ p {
     top: calc(50% + 50px);
     font-size: 1em;
   }
+  .col img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+
+  .col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+    height: auto;
+    margin-top: -10px;
+  }
 }
 
 /* Specific Styles for Mobile Devices */
@@ -676,6 +688,11 @@ p {
     width: 100px;
     height: 75px;
     margin: 15px 0;
+  }
+  .service-box {
+    text-align: center;
+    margin-bottom: 30px;
+    align-items: center;
   }
 }
 

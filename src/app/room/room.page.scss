@@ -9,7 +9,7 @@ banner .text-content h1 {
   max-width: 800px;
 }
 
-.bed_btn{
+.bed_btn {
   width: 75px;
 }
 
@@ -253,11 +253,20 @@ form {
 
 .review-title h2 {
   font-size: 24px;
-  font-weight: 500;
+  font-weight: 600;
   color: #544541;
   font-family: Montserrat !important;
   margin-left: 20px;
-  margin-top: -150px;
+  margin-top: -20px;
+}
+
+.reviews h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #544541;
+  font-family: Montserrat !important;
+  margin-left: 50px;
+  margin-top: -20px;
 }
 
 .rating-review {
@@ -501,7 +510,7 @@ form {
   .modal-content {
     width: 100%;
   }
-  .rating-review{
+  .rating-review {
     margin-top: 100px;
   }
 }

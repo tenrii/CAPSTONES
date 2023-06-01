@@ -9,7 +9,7 @@
 <ion-content *ngIf="{conversations: conversations$ | async, loading: chatService.chatListLoading$ | async} as detail">
   <ion-item>
     <ion-icon name="mail" style="font-size: 30px; color: black;"></ion-icon>
-    <ion-label style="font-size: 20px;">Messages</ion-label>
+    <ion-label style="font-size: 20px; font-family: Montserrat;">Messages</ion-label>
   </ion-item>
   <ion-list>
     <ion-item *ngFor="let conv of detail.conversations" (click)="openChat(conv.conversation)" lines="full" button
