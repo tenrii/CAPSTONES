@@ -27,7 +27,7 @@ export class EditModalComponent implements OnInit {
   roomData!: RoomData;
   amenities: any[] = [];
   selectedFiles: any = FileList;
-  images: { name: any; url: any }[] = [];;
+  images:any [] = [];;
   img: any[]=[];
   constructor(
     private afstore: AngularFirestore,
@@ -50,7 +50,7 @@ export class EditModalComponent implements OnInit {
       Province: [this.record.Province, [Validators.required]],
       ZIP: [this.record.ZIP, [Validators.required]],
       Price: [this.record.Price, [Validators.required]],
-      Amenities: [[], [Validators.required]],
+      Amenities: [this.record.Amenities, [Validators.required]],
       Details: [this.record.Details, [Validators.required]],
     });
     //this.record.Amenities.forEach((amenity: string) => {
@@ -58,6 +58,10 @@ export class EditModalComponent implements OnInit {
     //    this.onChange({ target: { checked: true, value: amenity } });
      // }
    // });
+  }
+
+  ifChange(event: any) {
+    return this.record.Amenities.find((a: any) => a === event);
   }
 
   onChange(event: any) {
@@ -89,7 +93,6 @@ export class EditModalComponent implements OnInit {
 
   updateRoom() {
     this.firebaseService.update_room(this.record.id, this.roomForm.value);
-    const newImages:any[] = [];
     for (let i = 0; i < this.selectedFiles.length; i++) {
       const file = this.selectedFiles.item(i);
       const path = `${this.uid}/Room/${Date.now()}_${file.name}`;
@@ -101,20 +104,16 @@ export class EditModalComponent implements OnInit {
           finalize(() => {
             const downloadURL = ref.getDownloadURL();
             downloadURL.subscribe((url: any) => {
-              newImages.push(url);
-              if (newImages.length === this.selectedFiles.length) {
-                // Combine new images with existing images
-                const allImages = [...this.record.Images.map((image:any) => ({ name: image.name, url: image.url })), ...newImages];
-                // Update the images array
-                this.images = allImages;
-                // Perform any necessary tasks with the updated images array
-                this.afstore.collection('Room').doc(this.record.id).set({
-                  Images: this.images,
-                })
-                // Dismiss the modal
-                this.m.dismiss();
+              for(const img of this.record.Images){
+              this.images.push(img);
               }
 
+              this.images.push(url);
+
+                this.afstore.collection('Room').doc(this.record.id).update({
+                  Images: this.images,
+                })
+                this.m.dismiss();
             });
           })
         )

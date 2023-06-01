@@ -88,6 +88,7 @@
 
 .dropdown-toggle {
   max-width: 75px;
+  max-height: 75px;
   background-color: transparent;
   border: none;
 }
@@ -110,6 +111,11 @@
   border-radius: 50%;
   height: 50px;
   border: 2px solid #c38f32;
+}
+
+.dropdown-menu span .imag{
+max-width: 50px;
+max-height: 50px;
 }
 
 .dropdown-menu span div {

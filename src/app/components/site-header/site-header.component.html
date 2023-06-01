@@ -225,7 +225,7 @@
                   <ion-grid>
                     <span *ngFor="let data of bedON; let i = index;" [attr.data-index]="i">
                       <ion-row>
-                        <ion-col style="max-width: 60px;">
+                        <ion-col style="max-width: 60px; max-height:60px">
                           <img id="hover-trigger{{i}}" src="{{data.profpic}}"
                             style="width: 50px; border-radius: 40px; border: 2px solid #544541">
                           <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
@@ -287,8 +287,9 @@
                   <ion-grid>
                     <span *ngFor="let data of roomON; let i = index;" [attr.data-index]="i">
                       <ion-row>
-                        <ion-col style="max-width: 60px;"><img id="hover-trigger{{i}}" src="{{data.profpic}}"
-                            style="width: 50px;">
+                        <ion-col style="max-width: 60px; max-height:60px">
+                          <img id="hover-trigger{{i}}" src="{{data.profpic}}"
+                            style="width: 50px; border-radius: 40px; border: 2px solid #544541">
                           <ion-popover trigger="hover-trigger{{i}}" triggerAction="hover">
                             <ng-template>
                               <ion-content>
@@ -361,7 +362,7 @@
           <div>
             <span>
               <ion-item>
-              <span *ngIf="tenant?.profpic" style="margin-bottom: 5px;"><img src="{{tenant?.profpic}}"></span>
+              <span class="imag" *ngIf="tenant?.profpic" style="margin-bottom: 5px;"><img src="{{tenant?.profpic}}"></span>
               <span *ngIf="!tenant?.profpic" style="margin-bottom: 5px;"><img src="assets/user2.png"></span>
               <div style="margin-bottom: 8px;">{{tenant?.FName}} {{tenant?.LName}}</div>
             </ion-item>
@@ -370,9 +371,12 @@
         </span>
         <span *ngIf="filterOwner() === true">
           <div>
-            <span><span *ngIf="tenant?.profpic"><img src="{{owner?.profpic}}"></span>
-            <span *ngIf="!owner?.profpic"><img src="assets/user2.png"></span>
-              <div>{{owner?.FName}} {{owner?.LName}}</div>
+            <span>
+              <ion-item>
+              <span *ngIf="owner?.profpic" style="margin-bottom: 5px;"><img src="{{owner?.profpic}}"></span>
+              <span *ngIf="!owner?.profpic" style="margin-bottom: 5px;"><img src="assets/user2.png"></span>
+              <div style="margin-bottom: 8px;">{{owner?.FName}} {{owner?.LName}}</div>
+            </ion-item>
             </span>
           </div>
         </span>

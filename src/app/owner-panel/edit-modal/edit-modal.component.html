@@ -104,34 +104,34 @@
         <ion-label>Amenities</ion-label>
         <ion-item>
           <ion-label>WiFi</ion-label>
-          <input type="checkbox" (change)="onChange($event)" value="WiFi">
+          <input type="checkbox" [checked]="ifChange('WiFi')" (change)="onChange($event)" value="WiFi">
         </ion-item>
         <ion-item>
           <ion-label>TV</ion-label>
-          <input type="checkbox"  (change)="onChange($event)" value="TV">
+          <input type="checkbox" [checked]="ifChange('TV')" (change)="onChange($event)" value="TV">
         </ion-item>
         <ion-item>
           <ion-label>Kitchen</ion-label>
-          <input type="checkbox" (change)="onChange($event)" value="Kitchen">
+          <input type="checkbox" [checked]="ifChange('Kitchen')" (change)="onChange($event)" value="Kitchen">
         </ion-item>
         <ion-item>
           <ion-label>Parking Lot</ion-label>
-          <input type="checkbox" (change)="onChange($event)"
+          <input type="checkbox" [checked]="ifChange('Parking Lot')" (change)="onChange($event)"
             value="Parking Lot">
         </ion-item>
         <ion-item>
           <ion-label>Air Conditioner</ion-label>
-          <input type="checkbox"  (change)="onChange($event)"
+          <input type="checkbox" [checked]="ifChange('Air Conditioner')" (change)="onChange($event)"
             value="Air Conditioner">
         </ion-item>
         <ion-item>
           <ion-label>Work Space</ion-label>
-          <input type="checkbox" (change)="onChange($event)"
+          <input type="checkbox" [checked]="ifChange('Work Space')" (change)="onChange($event)"
             value="Work Space">
         </ion-item>
         <ion-item>
           <ion-label>Washer</ion-label>
-          <input type="checkbox" (change)="onChange($event)" value="Washer">
+          <input type="checkbox" [checked]="ifChange('Washer')" (change)="onChange($event)" value="Washer">
         </ion-item>
       </div>
 
