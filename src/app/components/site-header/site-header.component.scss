@@ -93,7 +93,7 @@
 }
 .navbar .dropdown .dropdown-menu {
   position: absolute;
-  width: 200px !important;
+  width: 245px !important;
   left: -18rem;
   top: 5rem;
 }
@@ -114,7 +114,6 @@
 
 .dropdown-menu span div {
   margin-top: 10px;
-  padding-left: 20px;
   font-family: Montserrat;
   font-size: 20px;
   font-weight: 600;
@@ -239,8 +238,8 @@ ion-popover:not(.more-popover) {
 
   .navbar .dropdown .dropdown-menu {
     position: absolute;
-    left: -130px;
-    width: 135px !important;
+    left: -120px;
+    width: 200px !important;
   }
 
   #navbarNavDropdown {
@@ -258,6 +257,15 @@ ion-popover:not(.more-popover) {
 
   .navbar .dropdown .dropdown-item {
     font-size: 12px;
+  }
+
+  .dropdown-menu span div {
+    font-size: 15px;
+  }
+
+  .dropdown-menu span img{
+    width: 45px;
+    height: auto;
   }
 
   .navbar .navbar-toggler {

@@ -55,3 +55,16 @@ p {
 #icon {
   margin-top: 10px;
 }
+
+@media only screen and (max-width: 750px) {
+  /* Add your responsive CSS here */
+
+  .btn-group {
+    left: 0;
+  }
+
+  label {
+    max-width: 100%;
+    min-width: 100%;
+  }
+}

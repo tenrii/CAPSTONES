@@ -155,12 +155,12 @@
                     {{data.Address}}
                   </td>
                   <td>
-                    <a href="{{data.Business}}"> Business Permit
-                    </a>
+                    <span *ngFor="let img of data.Business; let i = index"><a href="{{img}}"> Business Permit
+                    </a><br /></span>
                   </td>
                   <td>
-                    <a href="{{data.ValidID}}"> Valid ID
-                    </a>
+                    <span *ngFor="let img of data.ValidID; let i = index"><a href="{{img}}"> Valid ID {{i+1}}
+                    </a><br /></span>
                   </td>
                   <td>
                     <div class="actions">
@@ -190,12 +190,12 @@
                     {{data.Address}}
                   </td>
                   <td>
-                    <a href="{{data.Business}}"> Business Permit
-                    </a>
+                    <span *ngFor="let img of data.Business; let i = index"><a href="{{img}}"> Business Permit
+                    </a><br /></span>
                   </td>
                   <td>
-                    <a href="{{data.ValidID}}"> Valid ID
-                    </a>
+                    <span *ngFor="let img of data.ValidID; let i = index"><a href="{{img}}"> Valid ID {{i+1}}
+                    </a><br /></span>
                   </td>
                   <td>
                     <div class="actions">
@@ -226,12 +226,12 @@
                       {{data.Address}}
                     </td>
                     <td>
-                      <a href="{{data.Business}}"> Business Permit
-                      </a>
+                      <span *ngFor="let img of data.Business; let i = index"><a href="{{img}}"> Business Permit
+                      </a><br /></span>
                     </td>
                     <td>
-                      <a href="{{data.ValidID}}"> Valid ID
-                      </a>
+                      <span *ngFor="let img of data.ValidID; let i = index"><a href="{{img}}"> Valid ID {{i+1}}
+                      </a><br /></span>
                     </td>
                     <td>
                       <div class="actions">

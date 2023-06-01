@@ -59,7 +59,6 @@ export class TenantPanelPage implements OnInit {
       )
       .subscribe((f: any) => {
         this.transaction = f;
-        console.log('a', this.transaction);
         this.transaction = this.transaction.sort(
           (a: any, b: any) => (b.dateCreated || 0) - (a.dateCreated || 0)
         );
@@ -134,7 +133,6 @@ export class TenantPanelPage implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 1 dismissed');
       this.isButtonDisabled = false;
     });
 

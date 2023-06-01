@@ -39,7 +39,6 @@ export class Modal1Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 1 dismissed');
       this.isButtonDisabled = false;
     });
 

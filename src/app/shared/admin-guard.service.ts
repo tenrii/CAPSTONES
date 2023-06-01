@@ -28,9 +28,6 @@ public adminUid:any[]=[]
       this.router.navigate(['/admin-log']);
       return false;
     }
-    else{
-
-    }
 
     return true;
   }

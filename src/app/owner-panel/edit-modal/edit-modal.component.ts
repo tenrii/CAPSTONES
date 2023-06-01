@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
@@ -29,6 +30,7 @@ export class EditModalComponent implements OnInit {
   images: { name: any; url: any }[] = [];;
   img: any[]=[];
   constructor(
+    private afstore: AngularFirestore,
     public fb: FormBuilder,
     private m: ModalController,
     private firebaseService: FirebaseService,
@@ -51,11 +53,11 @@ export class EditModalComponent implements OnInit {
       Amenities: [[], [Validators.required]],
       Details: [this.record.Details, [Validators.required]],
     });
-    console.log('images',this.record.Images)
-  }
-
-  ifChange(event: any) {
-    return this.record.Amenities.find((a: any) => a === event);
+    //this.record.Amenities.forEach((amenity: string) => {
+    //  if (this.record.Amenities.includes(amenity)) {
+    //    this.onChange({ target: { checked: true, value: amenity } });
+     // }
+   // });
   }
 
   onChange(event: any) {
@@ -73,8 +75,21 @@ export class EditModalComponent implements OnInit {
     this.roomForm.get('Amenities')?.setValue(this.amenities);
   }
 
+  onFileSelected(event: any) {
+    this.selectedFiles = event.target.files;
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      const file = this.selectedFiles.item(i);
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.images.push({ name: file.name, url: reader.result?.toString() });
+      };
+    }
+  }
+
   updateRoom() {
     this.firebaseService.update_room(this.record.id, this.roomForm.value);
+    const newImages:any[] = [];
     for (let i = 0; i < this.selectedFiles.length; i++) {
       const file = this.selectedFiles.item(i);
       const path = `${this.uid}/Room/${Date.now()}_${file.name}`;
@@ -86,15 +101,25 @@ export class EditModalComponent implements OnInit {
           finalize(() => {
             const downloadURL = ref.getDownloadURL();
             downloadURL.subscribe((url: any) => {
-              this.img.push(url);
-              console.log('Image uploaded successfully:', url);
-              console.log(this.img);
+              newImages.push(url);
+              if (newImages.length === this.selectedFiles.length) {
+                // Combine new images with existing images
+                const allImages = [...this.record.Images.map((image:any) => ({ name: image.name, url: image.url })), ...newImages];
+                // Update the images array
+                this.images = allImages;
+                // Perform any necessary tasks with the updated images array
+                this.afstore.collection('Room').doc(this.record.id).set({
+                  Images: this.images,
+                })
+                // Dismiss the modal
+                this.m.dismiss();
+              }
+
             });
           })
         )
         .subscribe();
     }
-    this.m.dismiss();
   }
 
   exit() {
@@ -103,19 +128,6 @@ export class EditModalComponent implements OnInit {
     }
     this.isButtonDisabled = true;
     this.m.dismiss();
-  }
-
-
-  onFileSelected(event: any) {
-    this.selectedFiles = event.target.files;
-    for (let i = 0; i < this.selectedFiles.length; i++) {
-      const file = this.selectedFiles.item(i);
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => {
-        this.images.push({ name: file.name, url: reader.result?.toString() });
-      };
-    }
   }
 
 }

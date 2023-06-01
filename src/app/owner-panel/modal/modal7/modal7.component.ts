@@ -77,7 +77,6 @@ export class Modal7Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -105,7 +104,6 @@ export class Modal7Component implements OnInit {
         ...this.service.modalData,
         Amenities: this.roomForm.get('Amenities')?.value,
       }
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

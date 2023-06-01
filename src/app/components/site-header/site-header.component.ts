@@ -65,7 +65,6 @@ export class SiteHeaderComponent implements OnInit {
       )
       .subscribe((f: any) => {
         this.transaction = f;
-        console.log('a', this.transaction);
         this.TenantSortedBed();
         this.TenantSortedRoom();
         this.transaction = this.transaction.sort(
@@ -95,7 +94,6 @@ export class SiteHeaderComponent implements OnInit {
       )
       .subscribe((f: any) => {
         this.room = f;
-        console.log('owner notif',this.room)
         this.OwnerSortedBed();
         this.OwnerSortedRoom();
       })
@@ -204,7 +202,6 @@ export class SiteHeaderComponent implements OnInit {
         }
       }
       })
-      console.log('bedTN',this.bedTN);
   }
 
   TenantSortedRoom(): any {
@@ -223,7 +220,6 @@ export class SiteHeaderComponent implements OnInit {
         }
       }
       })
-      console.log('roomTN',this.roomTN);
   }
   ////Tenant Sort////
 
@@ -257,7 +253,6 @@ export class SiteHeaderComponent implements OnInit {
         }
       })
       })
-    console.log('bedON', this.bedON);
   }
 
   OwnerSortedRoom() {
@@ -286,7 +281,6 @@ export class SiteHeaderComponent implements OnInit {
           return room;
         }
       })
-    console.log('roomON', this.roomON);
   }
   ////Owner Sort////
 }

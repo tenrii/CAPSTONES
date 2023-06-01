@@ -23,7 +23,6 @@ export class Modal12Component implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.price)
   }
 
   exit() {
@@ -63,7 +62,6 @@ export class Modal12Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -91,7 +89,6 @@ export class Modal12Component implements OnInit {
         ...this.service.modalData,
         Price: this.price,
       }
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

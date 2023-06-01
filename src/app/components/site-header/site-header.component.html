@@ -343,6 +343,7 @@
     <div class="dropdown m-0">
       <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
         aria-expanded="false">
+        <span *ngIf="!user"><img src="assets/user2.png"></span>
         <span *ngIf="filterTenant() === true && !isMenuOpen"><img src="{{tenant?.profpic}}"></span>
         <span *ngIf="filterOwner() === true && !isMenuOpen"><img src="{{owner?.profpic}}"></span>
         <span class="d-none" *ngIf="isMenuOpen">Account</span>
@@ -358,14 +359,19 @@
         </span>
         <span *ngIf="filterTenant() === true">
           <div>
-            <span><img src="{{tenant?.profpic}}">
-              <div>{{tenant?.FName}} {{tenant?.LName}}</div>
+            <span>
+              <ion-item>
+              <span *ngIf="tenant?.profpic" style="margin-bottom: 5px;"><img src="{{tenant?.profpic}}"></span>
+              <span *ngIf="!tenant?.profpic" style="margin-bottom: 5px;"><img src="assets/user2.png"></span>
+              <div style="margin-bottom: 8px;">{{tenant?.FName}} {{tenant?.LName}}</div>
+            </ion-item>
             </span>
           </div>
         </span>
         <span *ngIf="filterOwner() === true">
           <div>
-            <span><img src="{{owner?.profpic}}">
+            <span><span *ngIf="tenant?.profpic"><img src="{{owner?.profpic}}"></span>
+            <span *ngIf="!owner?.profpic"><img src="assets/user2.png"></span>
               <div>{{owner?.FName}} {{owner?.LName}}</div>
             </span>
           </div>

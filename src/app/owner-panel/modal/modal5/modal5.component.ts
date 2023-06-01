@@ -29,7 +29,6 @@ export class Modal5Component implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('a',this.service.modalData)
   }
 
   exit() {
@@ -81,7 +80,6 @@ export class Modal5Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -109,7 +107,6 @@ export class Modal5Component implements OnInit {
         ...this.service.modalData,
         Bed: this.beds
       }
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

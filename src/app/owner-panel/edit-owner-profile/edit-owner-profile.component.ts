@@ -31,7 +31,6 @@ export class EditOwnerProfileComponent implements OnInit {
       PhoneNum: [this.data?.PhoneNum, [Validators.required]],
       Birthday: [this.data?.Birthday, [Validators.required]],
     });
-    console.log('zz', this.data);
   }
 
   onFileChange(event: any) {

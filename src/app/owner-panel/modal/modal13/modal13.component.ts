@@ -22,8 +22,6 @@ export class Modal13Component implements OnInit {
 
   ngOnInit() {
     this.data = this.firebaseService.modalData;
-    console.log('a',this.data.value)
-    console.log('a',this.firebaseService.modalData)
   }
 
   exit() {
@@ -53,7 +51,6 @@ export class Modal13Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -81,8 +78,6 @@ export class Modal13Component implements OnInit {
       this.firebaseService.modalData = {
         ...this.firebaseService.modalData,
       }
-
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

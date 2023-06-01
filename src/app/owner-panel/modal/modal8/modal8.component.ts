@@ -72,7 +72,6 @@ export class Modal8Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -102,8 +101,6 @@ export class Modal8Component implements OnInit {
             const downloadURL = ref.getDownloadURL();
             downloadURL.subscribe((url: any) => {
               this.img.push(url);
-              console.log('Image uploaded successfully:', url);
-              console.log(this.img);
             });
           })
         )
@@ -120,7 +117,6 @@ export class Modal8Component implements OnInit {
         ...this.service.modalData,
         Images: this.img,
       }
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

@@ -25,7 +25,6 @@ export class Modal3Component implements OnInit {
     this.roomForm = this.fb.group({
       Rent: ['', [Validators.required]],
     });
-    console.log('a',this.service.modalData)
   }
 
   exit() {
@@ -54,7 +53,6 @@ export class Modal3Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 3 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -83,7 +81,6 @@ export class Modal3Component implements OnInit {
         ...this.service.modalData,
         Rent: this.roomForm.get('Rent')?.value,
       }
-      console.log('a',this.service.modalData);
       this.isButtonDisabled = false;
     });
 

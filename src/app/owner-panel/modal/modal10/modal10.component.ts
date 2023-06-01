@@ -60,7 +60,6 @@ export class Modal10Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -88,7 +87,6 @@ export class Modal10Component implements OnInit {
         ...this.service.modalData,
         Details: this.roomForm.get('Details')?.value,
       };
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

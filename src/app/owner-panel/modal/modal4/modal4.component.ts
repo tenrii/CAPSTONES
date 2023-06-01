@@ -176,7 +176,6 @@ markLocation(event: any) {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 3 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -210,7 +209,6 @@ markLocation(event: any) {
         ZIP: this.roomForm.get('ZIP')?.value,
         Marker: this.mark,
       }
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

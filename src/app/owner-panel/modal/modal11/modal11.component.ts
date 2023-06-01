@@ -45,7 +45,6 @@ export class Modal11Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -73,7 +72,6 @@ export class Modal11Component implements OnInit {
       this.service.modalData = {
         ...this.service.modalData,
       }
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

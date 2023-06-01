@@ -82,7 +82,6 @@ export class OwnerPanelPage implements OnInit {
       .subscribe((f: any) => {
         this.room = f;
         this.getLenght();
-        console.log('all',this.room);
                 /// filteredRecord ///
         this.room.map((a: any) => {
           if (a.occupied) {
@@ -122,7 +121,6 @@ export class OwnerPanelPage implements OnInit {
         this.filteredRecord = this.filteredRecord.sort(
           (a: any, b: any) => (b.dateCreated || 0) - (a.dateCreated || 0)
         );
-        console.log('ey', this.filteredRecord);
                 /// filteredRecord ///
 
         this.sortedBed();
@@ -252,7 +250,6 @@ export class OwnerPanelPage implements OnInit {
         return bed;
       }
     })
-    console.log('occupant',this.occupant)
     return a;
     })
 
@@ -420,7 +417,6 @@ export class OwnerPanelPage implements OnInit {
       },
     });
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 1 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -438,7 +434,6 @@ export class OwnerPanelPage implements OnInit {
   }
 
   sortData() {
-    console.log(this.sortBy);
     if (this.sortBy === 'date') {
       this.filteredRecord = this.filteredRecord.sort((a: any, b: any) => {
         const dateA = a.date || 0;
@@ -484,7 +479,7 @@ export class OwnerPanelPage implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 1 dismissed');
+
       this.isButtonDisabled = false;
     });
 

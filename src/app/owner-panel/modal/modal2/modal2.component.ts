@@ -56,7 +56,6 @@ export class Modal2Component implements OnInit {
     });
 
     modalInstance.onDidDismiss().then(() => {
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 
@@ -85,7 +84,6 @@ export class Modal2Component implements OnInit {
         RoomName: this.roomForm.get('RoomName')?.value,
         RoomType: this.roomForm.get('RoomType')?.value,
       }
-      console.log('Modal 2 dismissed');
       this.isButtonDisabled = false;
     });
 

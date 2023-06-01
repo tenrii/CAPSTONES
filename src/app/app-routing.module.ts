@@ -11,14 +11,6 @@ const routes: Routes = [
   },
 
   {
-    path: 'registration',
-    loadChildren: () =>
-      import('./registration/registration.module').then(
-        (m) => m.RegistrationPageModule
-      ),
-  },
-
-  {
     path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginPageModule),
@@ -63,7 +55,6 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminPageModule),
-      canActivate: [AdminGuardService],
   },
 
   {
