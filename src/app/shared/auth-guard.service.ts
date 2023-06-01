@@ -24,6 +24,7 @@ export class AuthGuardService {
 
   canActivate(route: any, state: any) {
     const user = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
+    // console.log('user', state.url);
 
     if (!user) {
       this.router.navigate(['/home']);
@@ -40,6 +41,9 @@ export class AuthGuardService {
       this.router.navigate(['/home']);
       return false;
     }
+    //  else {
+    //   this.router.navigate(['/home']);
+    // }
     return user;
   }
 
