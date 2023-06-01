@@ -615,6 +615,7 @@ export class OwnerPanelPage implements OnInit {
 
       const toast = await this.toast.create({
         message: 'Tenant deleted successfully',
+        duration: 3000,
       });
       await toast.present();
     } catch (_) {}

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FirebaseService } from '../services/firebase.service';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -9,7 +9,7 @@ import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, combineLatest, finalize, map, tap } from 'rxjs';
 import { BehaviorSubject, lastValueFrom } from 'rxjs';
 import { PaymentService } from '../services/payment.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { ChatModalComponent } from './chat-modal/chat-modal.component';
 import { GalleryItem, ImageItem } from 'ng-gallery';
 
@@ -36,7 +36,7 @@ interface Seat {
   templateUrl: 'room.page.html',
   styleUrls: ['room.page.scss'],
 })
-export class RoomPage implements OnInit {
+export class RoomPage implements OnInit, OnDestroy {
   map: any;
   markers: Marker[] = [];
   private currentMarker: any = google.maps.event.Marker;
@@ -60,10 +60,12 @@ export class RoomPage implements OnInit {
   a = 'hello';
   public galleryItems$ = new BehaviorSubject<any>([]);
   public gender: any;
+  public roomNotFound = false;
 
   seats: Seat[] = [];
 
   public star: number = 0;
+  subscriptions: any[] = [];
 
   constructor(
     private storage: AngularFireStorage,
@@ -74,7 +76,7 @@ export class RoomPage implements OnInit {
     private firebaseService: FirebaseService,
     private firestore: AngularFirestore,
     private paymentService: PaymentService,
-    private modalController: ModalController
+    private modalController: ModalController,
   ) {}
 
   ngOnInit() {
@@ -86,74 +88,74 @@ export class RoomPage implements OnInit {
     this.load();
   }
 
+  ngOnDestroy() {
+    this.subscriptions.forEach((sub) => sub.unsubscribe());
+  }
+
   onFileSelected(event: any) {
     this.selectedFiles = event.target.files;
   }
 
   async load() {
-    if (!this.firebaseService.loading) {
-      const roomSub = this.firebaseService.read_room().subscribe(() => {
-        this.load();
-        roomSub.unsubscribe();
-      });
-      return;
-    }
-
+    // if (!this.firebaseService.loading) {
+    //   const roomSub = this.firebaseService.read_room().subscribe(() => {
+    //     this.load();
+    //     roomSub.unsubscribe();
+    //   });
+    //   return;
+    // }
     this.roomId =
       this.route.snapshot.paramMap.get('id') ||
       window.location.pathname.split('/')[2];
 
-    this.firebaseService.read_review(this.roomId).subscribe((data) => {
+    this.subscriptions.push(this.firebaseService.read_review(this.roomId).subscribe((data) => {
       this.review = data;
-      console.log('review', this.review);
-    });
+      // console.log('review', this.review);
+    }));
 
-    // console.log('id', this.firebaseService.getRoom(this.roomId));
+    this.subscriptions.push(combineLatest([
+      this.firebaseService.listenToRoom(this.roomId),
+      this.firebaseService.read_owner()
+    ]).subscribe(([room, owners]) => {
+      this.data = room;
+      this.roomNotFound = !this.data?.ownerId;
 
-    this.data = this.firebaseService.getRoom(this.roomId);
+      if (this.roomNotFound) {
+        return;
+      }
+
+      this.galleryItems$.next([
+        ...this.data?.Images?.map(
+          (img: string) => new ImageItem({ src: img, thumb: img })
+        ),
+      ]);
+
+      this.loadMap();
+
+      this.data.priceSub = parseFloat(this.data.Price)
+        .toFixed(2)
+        .replace(/\d(?=(\d{3})+\.)/g, '$&,');
+      this.seats = [];
+
+      // check if user has pending payment
+      if (this.data.RoomType === 'Shared Room') {
+        this.pendingPayment = this.data.Bed.find(
+          (bed: any) =>
+            bed?.occupied?.email === this.email &&
+            bed?.occupied?.status === 'pendingPayment'
+        );
+      } else {
+        this.pendingPayment =
+          this.data.occupied &&
+          this.data.occupied.email === this.email &&
+          this.data.occupied.status === 'pendingPayment' &&
+          this.data;
+      }
+
+      this.owner = owners.find((owner: any) => owner.id === this.data.ownerId);
+    }));
+
     this.getTenant();
-    console.log(this.data);
-    this.galleryItems$.next([
-      ...this.data?.Images?.map(
-        (img: string) => new ImageItem({ src: img, thumb: img })
-      ),
-    ]);
-
-    this.loadMap();
-    this.firebaseService.read_owner().subscribe(() => {
-      this.owner = this.firebaseService.getOwner(this.data.OwnerId);
-    });
-
-    this.data.priceSub = parseFloat(this.data.Price)
-      .toFixed(2)
-      .replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    this.seats = [];
-
-    // if (!this.data['BedSpaces']) {
-    //   for (let i = 1; i <= this.data['NumBedSpace']; i++) {
-    //     this.seats.push({ BedSpace: 'B' + i, Occupied: false , Occupant: ''});
-    //   }
-    // } else {
-    //   const a = JSON.parse(this.data['BedSpaces']);
-    //   this.seats.push(...[...a]);
-    // }
-    // console.log('c', this.email);
-
-    // check if user has pending payment
-    if (this.data.RoomType === 'Shared Room') {
-      this.pendingPayment = this.data.Bed.find(
-        (bed: any) =>
-          bed?.occupied?.email === this.email &&
-          bed?.occupied?.status === 'pendingPayment'
-      );
-    } else {
-      this.pendingPayment =
-        this.data.occupied &&
-        this.data.occupied.email === this.email &&
-        this.data.occupied.status === 'pendingPayment' &&
-        this.data;
-    }
-    console.log('pending', this.pendingPayment);
   }
 
   toggleSeat(seat: Seat) {
@@ -164,11 +166,14 @@ export class RoomPage implements OnInit {
     }
   }
 
-  getTenant(){
-    if(this.firebaseService.tenantUid.includes(this.tenantId)){
-      this.firebaseService.read_tenant().subscribe(() => {
+  async getTenant() {
+    if (!this.firebaseService.tenantUid.length) {
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+    }
+    if (this.firebaseService.tenantUid.includes(this.tenantId)) {
+      this.subscriptions.push(this.firebaseService.read_tenant().subscribe(() => {
         this.tenant = this.firebaseService.getTenant(this.tenantId);
-      });
+      }));
     }
   }
 
@@ -210,7 +215,7 @@ export class RoomPage implements OnInit {
       paymentRequestType,
       lineItems
     );
-    console.log('res', response);
+    // console.log('res', response);
     window.location.replace(response.checkoutUrl);
   }
 
@@ -223,16 +228,13 @@ export class RoomPage implements OnInit {
       },
     });
     await chatWithOwnerModal.present();
-    const res = await chatWithOwnerModal.onWillDismiss();
-    // TODO remove this redirection. just added for testing.
-    // TODO Should not redirect as it is expected that the owner will not respond immediately
-    //this.router.navigate(['/', 'chatroom', res.data]);
+    await chatWithOwnerModal.onWillDismiss();
   }
 
   async Rate(i: any) {
     this.star = i;
     this.reviewForm.get('Rating')?.setValue(i);
-    console.log('i', i);
+    // console.log('i', i);
   }
 
   addReview() {
