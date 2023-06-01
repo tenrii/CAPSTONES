@@ -25,12 +25,15 @@
 .profile {
   text-align: center;
   justify-content: center;
-  max-height: 90px;
-  max-width: 90px;
+  font-size: 18px;
+  font-family: Montserrat;
+  margin-bottom: 10px;
 }
 
 .profile img {
+  margin-bottom: 10px;
   width: 90px;
+  height: 90px;
   border-radius: 45px;
 }
 
