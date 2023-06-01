@@ -85,9 +85,11 @@
         </ion-row>
         <ion-row>
           <ion-col class="img" *ngFor="let img of record.Images">
+            <ion-button (click)="removeImage(img)" color="danger"><ion-icon name="trash"></ion-icon></ion-button>
             <img src="{{img}}">
           </ion-col>
           <ion-col class="img" *ngFor="let img of images">
+            <ion-button (click)="removeImage(img)" color="danger"><ion-icon name="trash"></ion-icon></ion-button>
             <img src="{{img.url}}">
           </ion-col>
         </ion-row>

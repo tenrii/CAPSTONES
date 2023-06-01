@@ -25,10 +25,10 @@ export class EditModalComponent implements OnInit {
   public record: any;
   roomForm!: FormGroup;
   roomData!: RoomData;
-  amenities: any[] = [];
   selectedFiles: any = FileList;
   images: { name: any; url: any }[] = [];
   img: any[]=[];
+  private initialImages: any[] = [];
   constructor(
     private afstore: AngularFirestore,
     public fb: FormBuilder,
@@ -58,6 +58,7 @@ export class EditModalComponent implements OnInit {
     //    this.onChange({ target: { checked: true, value: amenity } });
      // }
    // });
+   this.initialImages = [...this.record.Images];
   }
 
   ifChange(event: any) {
@@ -66,17 +67,17 @@ export class EditModalComponent implements OnInit {
 
   onChange(event: any) {
     if (event.target.checked) {
-      const am = this.amenities.findIndex((a: any) => a === event.target.value);
+      const am = this.record.Amenities.findIndex((a: any) => a === event.target.value);
       if (am == -1) {
-        this.amenities.push(event.target.value);
+        this.record.Amenities.push(event.target.value);
       }
     } else {
-      const am = this.amenities.findIndex((a: any) => a === event.target.value);
+      const am = this.record.Amenities.findIndex((a: any) => a === event.target.value);
       if (am >= 0) {
-        this.amenities.splice(am, 1);
+        this.record.Amenities.splice(am, 1);
       }
     }
-    this.roomForm.get('Amenities')?.setValue(this.amenities);
+    this.roomForm.get('Amenities')?.setValue(this.record.Amenities);
   }
 
   onFileSelected(event: any) {
@@ -92,7 +93,16 @@ export class EditModalComponent implements OnInit {
   }
 
   updateRoom() {
-    this.firebaseService.update_room(this.record.id, this.roomForm.value);
+    const toUpdate = {
+      ...this.roomForm.value,
+    }
+    console.log(this.record.Images, this.initialImages);
+    if (this.initialImages !== this.record.Images) {
+      toUpdate.Images = this.record.Images;
+    }
+
+    this.firebaseService.update_room(this.record.id, toUpdate);
+
     for (let i = 0; i < this.selectedFiles.length; i++) {
       const file = this.selectedFiles.item(i);
       const path = `${this.uid}/Room/${Date.now()}_${file.name}`;
@@ -105,7 +115,7 @@ export class EditModalComponent implements OnInit {
             const downloadURL = ref.getDownloadURL();
             downloadURL.subscribe((url: any) => {
               for(const img of this.record.Images){
-              this.img.push(img);
+                this.img.push(img);
               }
               this.img.push(url);
                 this.afstore.collection('Room').doc(this.record.id).update({
@@ -116,6 +126,14 @@ export class EditModalComponent implements OnInit {
           })
         )
         .subscribe();
+    }
+  }
+
+  removeImage(image: any) {
+    if (typeof image === 'string') {
+      this.record.Images.splice(this.record.Images.indexOf(image), 1);
+    } else {
+      this.images.splice(this.images.indexOf(image), 1);
     }
   }
 

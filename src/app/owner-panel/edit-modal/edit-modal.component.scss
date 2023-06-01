@@ -66,6 +66,11 @@ ion-grid ion-row .img {
   padding: 1px;
   max-width: 190px;
   border: #544541 dashed 2px;
+  ion-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 }
 
 ion-grid ion-row .img img {
