@@ -8,6 +8,8 @@ import {
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
 import { ModalController } from '@ionic/angular';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
+import { Observable, finalize } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -15,6 +17,7 @@ export class AuthenticationService {
   id: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   userData: any;
   uid: any;
+  downloadURL!: Observable<string>;
   public adminUid:any[]=[]
   constructor(
     public m: ModalController,
@@ -22,6 +25,7 @@ export class AuthenticationService {
     public ngFireAuth: AngularFireAuth,
     public router: Router,
     public ngZone: NgZone,
+    public storage: AngularFireStorage,
   ) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
@@ -86,7 +90,7 @@ export class AuthenticationService {
     await user!.sendEmailVerification();
   }
 
-  async RegisterUserOwner(email: any, password: any, record: any) {
+  async RegisterUserOwner(email: any, password: any, record: any, BI:any, VI:any) {
     try {
       const { user } = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
       let emailVerified = user!.emailVerified;
@@ -109,6 +113,44 @@ export class AuthenticationService {
         Age: record.Age,
         Address: record.Address,
       });
+
+      const filePathBP = `Owner/${uid}/${BI.name}`;
+      const fileRefBP = this.storage.ref(filePathBP);
+      const bp = this.storage.upload(filePathBP, BI);
+      bp.snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.downloadURL = fileRefBP.getDownloadURL();
+            this.downloadURL.subscribe((url) => {
+              this.afStore
+                .collection('Owner')
+                .doc(uid)
+                .update({
+                  BusinessPermit: url,
+                });
+            });
+          })
+        )
+        .subscribe();
+
+      const filePathVI = `Owner/${uid}/${VI.name}`;
+      const fileRefVI = this.storage.ref(filePathVI);
+      const vi = this.storage.upload(filePathVI, VI);
+      bp.snapshotChanges()
+        .pipe(
+          finalize(() => {
+            this.downloadURL = fileRefVI.getDownloadURL();
+            this.downloadURL.subscribe((url) => {
+              this.afStore
+                .collection('Owner')
+                .doc(uid)
+                .update({
+                  ValidID: url,
+                });
+            });
+          })
+        )
+        .subscribe();
 
       await this.SignOut();
       await this.m.dismiss();

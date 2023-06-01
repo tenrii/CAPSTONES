@@ -131,52 +131,17 @@ export class OwnerLogRegPage implements OnInit {
     if (this.isButtonDisabled) {
       return;
     }
-
       const a = this.authService
         .RegisterUserOwner(
           email.value,
           password.value,
           this.ownerRegister.value,
-        )
+          this.selectedVI,
+          this.selectedBP,
+          )
           this.verify()
       .then((res) => {
-        const filePathBP = `Owner/${this.authService.uid}/${this.selectedBP.name}`;
-        const fileRefBP = this.storage.ref(filePathBP);
-        const bp = this.storage.upload(filePathBP, this.selectedBP);
-        bp.snapshotChanges()
-          .pipe(
-            finalize(() => {
-              this.downloadURL = fileRefBP.getDownloadURL();
-              this.downloadURL.subscribe((url) => {
-                this.firestore
-                  .collection('Owner')
-                  .doc(this.authService.uid)
-                  .update({
-                    BusinessPermit: url,
-                  });
-              });
-            })
-          )
-          .subscribe();
-
-        const filePathVI = `Owner/${this.authService.uid}/${this.selectedVI.name}`;
-        const fileRefVI = this.storage.ref(filePathVI);
-        const vi = this.storage.upload(filePathVI, this.selectedVI);
-        bp.snapshotChanges()
-          .pipe(
-            finalize(() => {
-              this.downloadURL = fileRefVI.getDownloadURL();
-              this.downloadURL.subscribe((url) => {
-                this.firestore
-                  .collection('Owner')
-                  .doc(this.authService.uid)
-                  .update({
-                    ValidID: url,
-                  });
-              });
-            })
-          )
-          .subscribe();
+        console.log(this.authService.uid)
       });
       this.isButtonDisabled = true;
       return a;

@@ -143,4 +143,5 @@ export class AdminPage implements OnInit {
   RejectRoom(a: any) {
     this.firestore.collection('Room').doc(a).update({ Permitted: "false" });
   }
+
 }

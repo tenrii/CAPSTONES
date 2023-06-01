@@ -38,7 +38,7 @@
       <ion-item class="filter">
         <ion-select interface="popover" placeholder="Select Place" [(ngModel)]="barangay" (ionChange)="getAd(barangay)">
           <ion-select-option [value]="null"></ion-select-option>
-          <ion-select-option *ngFor="let ad of filterPlace" [value]="ad">{{ad}}</ion-select-option>
+          <ion-select-option *ngFor="let ad of filterPlace" [value]="ad" autocapitalize="true">{{ad | titlecase }}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item class="filter">

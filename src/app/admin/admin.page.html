@@ -155,12 +155,12 @@
                     {{data.Address}}
                   </td>
                   <td>
-                    <span *ngFor="let img of data.Business; let i = index"><a href="{{img}}"> Business Permit
-                    </a><br /></span>
+                    <span *ngFor="let img of data.Business; let i = index" [attr.imageSrc]="img" [attr.thumbSrc]="img"> Business Permit
+                    </span>
                   </td>
                   <td>
-                    <span *ngFor="let img of data.ValidID; let i = index"><a href="{{img}}"> Valid ID {{i+1}}
-                    </a><br /></span>
+                    <a href="{{data.ValidID}}"> Valid ID
+                    </a>
                   </td>
                   <td>
                     <div class="actions">
@@ -190,12 +190,12 @@
                     {{data.Address}}
                   </td>
                   <td>
-                    <span *ngFor="let img of data.Business; let i = index"><a href="{{img}}"> Business Permit
-                    </a><br /></span>
+                    <a href="{{data.Business}}"> Business Permit
+                    </a>
                   </td>
                   <td>
-                    <span *ngFor="let img of data.ValidID; let i = index"><a href="{{img}}"> Valid ID {{i+1}}
-                    </a><br /></span>
+                    <a href="{{data.ValidID}}"> Valid ID
+                    </a>
                   </td>
                   <td>
                     <div class="actions">
@@ -226,12 +226,12 @@
                       {{data.Address}}
                     </td>
                     <td>
-                      <span *ngFor="let img of data.Business; let i = index"><a href="{{img}}"> Business Permit
-                      </a><br /></span>
+                      <a href="{{data.Business}}"> Business Permit
+                      </a>
                     </td>
                     <td>
-                      <span *ngFor="let img of data.ValidID; let i = index"><a href="{{img}}"> Valid ID {{i+1}}
-                      </a><br /></span>
+                      <a href="{{data.ValidID}}"> Valid ID
+                      </a>
                     </td>
                     <td>
                       <div class="actions">
