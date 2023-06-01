@@ -80,15 +80,14 @@
   font-size: 10px;
 }
 
-.navbar .dropdown .dropdown-toggle img {
-  width: 100%;
-  height: auto;
+.navbar .dropdown .dropdown-toggle span img {
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
 }
 
+
 .dropdown-toggle {
-  max-width: 75px;
-  max-height: 75px;
   background-color: transparent;
   border: none;
 }
@@ -109,13 +108,9 @@
   margin-left: auto;
   margin-right: 10px;
   border-radius: 50%;
+  width: 50px;
   height: 50px;
   border: 2px solid #c38f32;
-}
-
-.dropdown-menu span .imag{
-max-width: 50px;
-max-height: 50px;
 }
 
 .dropdown-menu span div {
