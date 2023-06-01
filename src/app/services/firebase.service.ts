@@ -22,6 +22,7 @@ export class FirebaseService {
   collectionOwner = 'Owner';
   public tenantUid: any[] = [];
   public ownerUid: any[] = [];
+
   rooms: any = new BehaviorSubject([]);
   tenants: any = new BehaviorSubject([]);
   owners: any = new BehaviorSubject([]);

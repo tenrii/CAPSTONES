@@ -106,9 +106,17 @@ export class OwnerLogRegPage implements OnInit {
   }
 
   register(email: any, password: any) {
-    this.authService
-      .RegisterUserOwner(email.value, password.value, this.ownerRegister.value)
-      this.verify()
+    if (this.isButtonDisabled) {
+      return;
+    }
+
+      const a = this.authService
+        .RegisterUserOwner(
+          email.value,
+          password.value,
+          this.ownerRegister.value,
+        )
+          this.verify()
       .then((res) => {
         const filePathBP = `Owner/${this.authService.uid}/${this.selectedBP.name}`;
         const fileRefBP = this.storage.ref(filePathBP);
@@ -148,6 +156,8 @@ export class OwnerLogRegPage implements OnInit {
           )
           .subscribe();
       });
+      this.isButtonDisabled = true;
+      return a;
   }
 
   async verify() {

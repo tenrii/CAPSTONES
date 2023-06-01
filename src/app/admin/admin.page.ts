@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../services/firebase.service';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { AuthenticationService } from '../shared/authentication-service';
 
 interface OwnerData{
 FName: string;
@@ -33,7 +34,8 @@ export class AdminPage implements OnInit {
 
   constructor(
     private firebaseService: FirebaseService,
-    private firestore: AngularFirestore
+    private firestore: AngularFirestore,
+    public authService: AuthenticationService,
   ) {this.ownerData = {} as OwnerData}
 
   ngOnInit() {

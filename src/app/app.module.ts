@@ -14,7 +14,7 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { environment } from '../environments/environment';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SplashScreen } from '@capacitor/splash-screen';
+import { AdminGuardService } from './shared/admin-guard.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,7 +33,8 @@ import { SplashScreen } from '@capacitor/splash-screen';
     AngularFireDatabaseModule,
     BrowserAnimationsModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+  AdminGuardService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -15,6 +15,7 @@ export class AuthenticationService {
   id: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   userData: any;
   uid: any;
+  public adminUid:any[]=[]
   constructor(
     public m: ModalController,
     public afStore: AngularFirestore,
@@ -32,14 +33,19 @@ export class AuthenticationService {
         JSON.parse(localStorage.getItem('user') || '{}');
       }
     });
+
+    this.afStore
+    .collection('Admin')
+    .get()
+    .subscribe((querySnapshot) => {
+      querySnapshot.forEach((doc: any) => {
+        this.adminUid.push(doc.id);
+      });
+    });
   }
   // Login in with email/password
   SignIn(email:any, password:any) {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password);
-  }
-
-  async SignInOwner(email:any, password:any) {
-    await this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
 
   // Register user with email/password
@@ -77,7 +83,7 @@ export class AuthenticationService {
 
   async SendVerificationMailO() {
     const user: any = await this.ngFireAuth.currentUser;
-    await user.sendEmailVerification();
+    user.sendEmailVerification();
   }
 
   async RegisterUserOwner(email: any, password: any, record: any) {
@@ -89,7 +95,7 @@ export class AuthenticationService {
         await this.SendVerificationMailO();
 
         while (!emailVerified) {
-          await new Promise(resolve => setTimeout(resolve, 2000)); // Delay for 2 seconds
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Delay for 2 seconds
           await user.reload();
           emailVerified = user.emailVerified; // Update emailVerified variable
         }
@@ -180,6 +186,14 @@ export class AuthenticationService {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
       this.router.navigate(['home']).then(() => {
+        window.location.reload();
+      });
+    });
+  }
+  SignOutAdmin() {
+    return this.ngFireAuth.signOut().then(() => {
+      localStorage.removeItem('user');
+      this.router.navigate(['admin-log']).then(() => {
         window.location.reload();
       });
     });

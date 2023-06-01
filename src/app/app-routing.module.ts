@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {
-  canActivate,
-} from '@angular/fire/compat/auth-guard';
 import { AuthGuardService } from './shared/auth-guard.service';
+import { AdminGuardService } from './shared/admin-guard.service';
 
 const routes: Routes = [
   {
@@ -60,11 +58,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuardService],
   },
+
   {
     path: 'admin',
     loadChildren: () =>
       import('./admin/admin.module').then((m) => m.AdminPageModule),
+      canActivate: [AdminGuardService],
   },
+
   {
     path: 'chatroom',
     loadChildren: () =>
@@ -86,21 +87,26 @@ const routes: Routes = [
   },
   {
     path: 'tenant-panel',
-    loadChildren: () => import('./tenant-panel/tenant-panel.module').then( m => m.TenantPanelPageModule),
+    loadChildren: () => import('./tenant-panel/tenant-panel.module').then( (m) => m.TenantPanelPageModule),
     canActivate: [AuthGuardService],
   },
   {
     path: 'about-us',
-    loadChildren: () => import('./about-us/about-us.module').then( m => m.AboutUsPageModule)
+    loadChildren: () => import('./about-us/about-us.module').then( (m) => m.AboutUsPageModule)
   },
   {
     path: 'contact-us',
-    loadChildren: () => import('./contact-us/contact-us.module').then( m => m.ContactUsPageModule)
+    loadChildren: () => import('./contact-us/contact-us.module').then( (m) => m.ContactUsPageModule)
   },
   {
     path: 'terms-condition',
-    loadChildren: () => import('./terms-condition/terms-condition.module').then( m => m.TermsConditionPageModule)
+    loadChildren: () => import('./terms-condition/terms-condition.module').then( (m) => m.TermsConditionPageModule)
   },
+  {
+    path: 'admin-log',
+    loadChildren: () => import('./admin-log/admin-log.module').then( (m) => m.AdminLogPageModule)
+  },
+
 
 
 ];
