@@ -6,7 +6,7 @@ import { ActivatedRoute, Route, Router } from '@angular/router';
 import { VerifyOwnerComponent } from './verify-owner/verify-owner.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { BehaviorSubject, Observable, finalize } from 'rxjs';
+import { BehaviorSubject, Observable, finalize, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-owner-log-reg',
@@ -49,9 +49,10 @@ export class OwnerLogRegPage implements OnInit {
       check2: [false, Validators.requiredTrue]
     });
 
-    this.conditionForm.valueChanges.subscribe(() => {
-      this.conditionForm.updateValueAndValidity();
-    });
+    // removed because it is causing call stack exceeded error
+    // this.conditionForm.valueChanges.subscribe(() => {
+    //   this.conditionForm.updateValueAndValidity();
+    // });
 
     this.route.queryParams.subscribe((params) => {
       const conditions = params['conditions'];
@@ -78,6 +79,27 @@ export class OwnerLogRegPage implements OnInit {
       .SignIn(email.value, password.value)
       .then(async (res) => {
         if (this.authService.isEmailVerified) {
+          const ownerData: any = (await lastValueFrom(this.firestore
+            .collection('Owner')
+            .doc(res.user!.uid)
+            .get())).data();
+
+          if (!ownerData.Permitted || ownerData.Permitted === 'false') {
+            let message = 'Your account has been rejected.';
+            if (!ownerData.Permitted) {
+              message = 'Account pending approval.';
+            }
+            const alert = await this.alert.create({
+              header: 'Sign in failed',
+              message,
+              buttons: ['OK'],
+            });
+            await alert.present();
+            await alert.onDidDismiss();
+            this.authService.SignOut(false);
+            return;
+          }
+
           this.router.navigate(['owner-panel']).then(() => {
             window.location.reload();
           });
@@ -167,6 +189,7 @@ export class OwnerLogRegPage implements OnInit {
         form: this.ownerRegister,
       },
       backdropDismiss: false,
+      cssClass: 'verify-modal',
     });
     this.isModalOpen = true;
     return await modalInstance.present();

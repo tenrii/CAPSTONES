@@ -69,3 +69,9 @@
       color: white;
     }
 }
+
+.verify-modal {
+  &::part(content) {
+    height: 180px;
+  }
+}

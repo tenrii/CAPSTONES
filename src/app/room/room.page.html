@@ -1,6 +1,7 @@
 <ion-content>
   <app-site-header></app-site-header>
 
+  <ng-container *ngIf="!roomNotFound; else roomNotFoundMessage">
 
   <ion-grid class="ion-padding" style="padding:40px">
     <ion-row>
@@ -164,6 +165,8 @@
     </form>
   </div>
 
+  </ng-container>
+
   <footer>
     <div class="container">
       <div class="row">
@@ -214,8 +217,18 @@
   </footer>
 </ion-content>
 
+<ng-template #roomNotFoundMessage>
+  <ion-row>
+    <ion-col class="ion-text-center ion-padding ion-margin">
+      <!--TODO put image or something here-->
+      <div style="height: 500px; margin-top: 100px;">placeholder</div>
+      Room not found!
+    </ion-col>
+  </ion-row>
+</ng-template>
+
 <ng-template #reservation>
-  <ion-card class="price-card">
+  <ion-card class="price-card" *ngIf="data">
     <ion-card-header>
       <ion-card-title class="ion-text-center payment-title" style="font-family: Montserrat;">
         {{ data?.RoomType === 'Shared Room' ? 'Reserve a BEDSPACE' : 'Reserve a ROOM'}}

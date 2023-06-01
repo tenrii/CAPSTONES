@@ -507,18 +507,37 @@ export const verifyPayment = functions.runWith({secrets: ['MAIL_PASS']}).https.o
         .get()).data();
 
       if (hasExistingReservation) {
-        await admin.firestore()
-          .collection(TENANT_COLLECTION)
-          .doc(paymentSession?.userId)
-          .collection(TENANT_RESERVATION_COLLECTION)
-          .doc(paymentSession?.roomId)
-          .update({
-            paymentSessionIDs: admin.firestore.FieldValue.arrayUnion(paymentIntentId),
-            lineItems: admin.firestore.FieldValue.arrayUnion(...paymentSession?.lineItems),
-            amount: hasExistingReservation.amount + amountNumber,
-            dateUpdated: dateNow,
-            month: moment().tz(timezone).format('MMMM'),
-          });
+        if (hasExistingReservation.status === 'active') {
+          await admin.firestore()
+            .collection(TENANT_COLLECTION)
+            .doc(paymentSession?.userId)
+            .collection(TENANT_RESERVATION_COLLECTION)
+            .doc(paymentSession?.roomId)
+            .update({
+              paymentSessionIDs: admin.firestore.FieldValue.arrayUnion(paymentIntentId),
+              lineItems: admin.firestore.FieldValue.arrayUnion(...paymentSession?.lineItems),
+              amount: hasExistingReservation.amount + amountNumber,
+              dateUpdated: dateNow,
+              month: moment().tz(timezone).format('MMMM'),
+            });
+        } else {
+          // if re-reserving an inactive reservation
+          // ie. tenant was deleted from a room then tries to reserve again
+          await admin.firestore()
+            .collection(TENANT_COLLECTION)
+            .doc(paymentSession?.userId)
+            .collection(TENANT_RESERVATION_COLLECTION)
+            .doc(paymentSession?.roomId)
+            .update({
+              paymentSessionIDs: admin.firestore.FieldValue.arrayUnion(paymentIntentId),
+              // lineItems: admin.firestore.FieldValue.arrayUnion(...paymentSession?.lineItems),
+              lineItems: paymentSession?.lineItems,
+              amount: amountNumber,
+              dateUpdated: dateNow,
+              month: moment().tz(timezone).format('MMMM'),
+              status: 'active',
+            });
+        }
       } else {
         await admin.firestore()
           .collection(TENANT_COLLECTION)

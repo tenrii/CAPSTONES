@@ -299,6 +299,10 @@ export class FirebaseService {
     return this.rooms.value.find((a: any) => a.id == data);
   }
 
+  listenToRoom(data: any) {
+    return this.firestore.collection('Room').doc(data).valueChanges({idField: 'id'});
+  }
+
   getOwnerRoom(data: any) {
     return this.rooms.value.find((a: any) => a.ownerId == data);
   }

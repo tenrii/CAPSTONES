@@ -20,19 +20,43 @@
           </li>
 
           <!--About-->
-          <li class="nav-item active">
+          <li class="nav-item active" [class.hide-when-small]="isLogin()">
             <a class="nav-link" [routerLink]="['/about-us']">About<span class="sr-only"></span></a>
           </li>
 
           <!--Contact-->
-          <li class="nav-item active">
+          <li class="nav-item active" [class.hide-when-small]="isLogin()">
             <a class="nav-link" [routerLink]="['/contact-us']">Contact<span class="sr-only"></span></a>
           </li>
 
           <!--Terms-->
-          <li class="nav-item active">
+          <li class="nav-item active" [class.hide-when-small]="isLogin()">
             <a class="nav-link" [routerLink]="['/terms-condition']">Terms & Conditions<span class="sr-only"></span></a>
           </li>
+
+          <li class="nav-item active" id="more-trigger" (click)="more.present($event)">
+            <a class="nav-link">More<span class="sr-only"></span></a>
+          </li>
+
+          <ion-popover #more class="more-popover" dismissOnSelect="true">
+            <ng-template>
+              <div>
+                <ul class="popover-nav">
+                  <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="['/about-us']">About<span class="sr-only"></span></a>
+                  </li>
+
+                  <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="['/contact-us']">Contact<span class="sr-only"></span></a>
+                  </li>
+
+                  <li class="nav-item active">
+                    <a class="nav-link" [routerLink]="['/terms-condition']">Terms & Conditions<span class="sr-only"></span></a>
+                  </li>
+                </ul>
+              </div>
+            </ng-template>
+          </ion-popover>
 
           <!--Panels-->
           <li class="nav-item active" *ngIf="filterOwner() === true">
@@ -44,8 +68,11 @@
 
           <!--Chats-->
           <li class="nav-item active" *ngIf="filterTenant() === true || filterOwner() === true">
-            <a class="nav-link" type="button" id="chat-list">Chats</a>
-            <ion-popover trigger="chat-list" side="bottom" alignment="center" dismissOnSelect="true">
+            <a class="nav-link" type="button" (click)="chatListPopover.present($event)">
+              <span class="icon-label">Chats</span>
+              <ion-icon name="mail" class="icon-content"></ion-icon>
+            </a>
+            <ion-popover #chatListPopover side="bottom" alignment="center" dismissOnSelect="true">
               <ng-template>
                 <app-chatlist [isPopover]="true"></app-chatlist>
               </ng-template>
@@ -54,8 +81,11 @@
 
           <!--Notification for Tenant-->
           <li class="nav-item active" *ngIf="filterTenant() === true">
-            <a class="nav-link" type="button" id="top-center">Notification</a>
-              <ion-popover trigger="top-center" side="bottom" alignment="center">
+            <a class="nav-link" type="button" (click)="notificationPopover.present($event)">
+              <span class="icon-label">Notifications</span>
+              <ion-icon name="notifications" class="icon-content"></ion-icon>
+            </a>
+              <ion-popover #notificationPopover side="bottom" alignment="center">
                 <ng-template>
                   <ion-content class="ion-padding">
                     <div class="title"><ion-icon name="notifications"></ion-icon><span>Notification</span></div>
@@ -158,8 +188,11 @@
 
           <!--Notification for Owner-->
           <li class="nav-item active" *ngIf="filterOwner() === true">
-            <a class="nav-link" type="button" id="top-center">Notification</a>
-              <ion-popover trigger="top-center" side="bottom" alignment="center">
+            <a class="nav-link" type="button" (click)="notificationPopoverOwner.present($event)">
+              <span class="icon-label">Notifications</span>
+              <ion-icon name="notifications" class="icon-content"></ion-icon>
+            </a>
+              <ion-popover #notificationPopoverOwner side="bottom" alignment="center">
                 <ng-template>
                   <ion-content class="ion-padding">
                     <div class="title"><ion-icon name="notifications" style="font-size: 30px;"></ion-icon><span

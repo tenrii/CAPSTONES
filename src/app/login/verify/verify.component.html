@@ -1,11 +1,13 @@
 <ion-grid>
   <ion-row>
-    <h2>Ionic Firebase Verify Email</h2>
-    <p>
-      Please check your email and click on the link to verfiy your email address.
-    </p>
-    <ion-button type="submit" (click)="authService.SendVerificationMailT()" expand="block">
-      Resend Verification Email
-    </ion-button>
+    <ion-col class="ion-text-center">
+      <h2>Verify Email</h2>
+      <p>
+        Please check your email and click on the link to verify your email address.
+      </p>
+      <ion-button type="submit" (click)="authService.SendVerificationMailT()" expand="block">
+        Resend Verification Email
+      </ion-button>
+    </ion-col>
   </ion-row>
 </ion-grid>
