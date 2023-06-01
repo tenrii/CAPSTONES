@@ -1,6 +1,6 @@
 <ion-header *ngIf="!isPopover">
   <ion-title color="dark">
-    <ion-item>
+    <ion-item class="top-item">
       <ion-icon name="mail" style="font-size: 30px; color: black;"></ion-icon>
       <ion-label style="font-size: 20px; font-family: Montserrat;">Messages</ion-label>
     </ion-item>
@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 <ion-content *ngIf="{conversations: conversations$ | async, loading: chatService.chatListLoading$ | async} as detail">
-  <ion-item *ngIf="isPopover">
+  <ion-item *ngIf="isPopover" class="top-item">
     <ion-icon name="mail" style="font-size: 30px; color: black;"></ion-icon>
     <ion-label style="font-size: 20px; font-family: Montserrat;">Messages</ion-label>
   </ion-item>

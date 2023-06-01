@@ -1,6 +1,6 @@
 /* Styling for the header */
 ion-header {
-  padding: 5px;
+  padding-top: 5px;
 }
 
 ion-title div {
@@ -10,15 +10,11 @@ ion-title div {
   font-family: Montserrat;
 }
 
-/* Styling for the toolbar */
-ion-toolbar {
-  padding: 5px;
-}
-
 ion-searchbar {
   width: 100%;
-  --background: transparent !important; /* Remove background color */
+  // --background: transparent !important; /* Remove background color */
   --border-radius: 10px; /* Apply border radius */
+  color: var(--ion-color-dark);
 }
 
 /* Styling for the content */
@@ -26,11 +22,11 @@ ion-content {
   padding: 10px;
 }
 
-/* Styling for the list items */
-ion-item {
+.top-item {
   display: flex;
   align-items: center;
   padding: 10px;
+  pointer-events: none;
 }
 
 ion-item:hover {

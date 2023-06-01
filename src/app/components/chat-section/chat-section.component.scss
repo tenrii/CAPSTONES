@@ -56,8 +56,22 @@ ion-content {
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  margin-top: 20px;
+  margin-top: 22px;
   h2 {
     margin-top: 0;
+  }
+}
+
+.chat-heading {
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  h5 {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  ion-button {
+    margin-right: 20px;
   }
 }
