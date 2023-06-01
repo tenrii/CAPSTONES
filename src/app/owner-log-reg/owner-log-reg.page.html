@@ -88,73 +88,86 @@
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example6" style="font-size:15px; float: left;">
-                      First Name: </label>
+                      First Name<span class="text-danger">*</span></label>
                     <input type="text" formControlName="FName" id="form3Example6" class="form-control" />
+                    <app-form-control-error label="First Name" [control]="ownerRegister.get('FName')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example5" style="font-size:15px; float: left;">
-                      Last Name: </label>
+                      Last Name<span class="text-danger">*</span> </label>
                     <input type="text" formControlName="LName" id="form3Example5" class="form-control" />
+                    <app-form-control-error label="Last Name" [control]="ownerRegister.get('LName')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example7" style="font-size:15px; float: left;">
-                      Age: </label>
+                      Age<span class="text-danger">*</span> </label>
                     <input type="text" formControlName="Age" class="form-control" />
+                    <app-form-control-error label="Age" [control]="ownerRegister.get('Age')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example8"
                       style="font-size:15px; float: left; margin-top: 20px;">
-                      Address: </label>
+                      Address<span class="text-danger">*</span> </label>
                     <input type="text" formControlName="Address" class="form-control" />
+                    <app-form-control-error label="Address" [control]="ownerRegister.get('Address')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example9" style="font-size:15px; float: left;">
-                      Business Permit: </label>
+                      Business Permit<span class="text-danger">*</span> </label>
                     <input class="form-control" type="file" (change)="businessPermitImage($event)">
+                    <div class="form-error" *ngIf="!selectedBP">
+                      <p>Business Permit is required.</p>
+                    </div>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example10" style="font-size:15px; float: left;">
-                      Valid ID: </label>
+                      Valid ID<span class="text-danger">*</span> </label>
                     <input class="form-control" type="file" (change)="validIdImage($event)">
+                    <div class="form-error" *ngIf="!selectedVI">
+                      <p>Valid ID is required.</p>
+                    </div>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example11" style="font-size:15px; float: left;">
-                      Email Address: </label>
+                      Email Address<span class="text-danger">*</span> </label>
                     <input type="email" formControlName="Email" #emails class="form-control" />
+                    <app-form-control-error label="Email" [control]="ownerRegister.get('Email')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example12" style="font-size:15px; float: left;">
-                      Password: </label>
-                    <input type="password" #passwords class="form-control" />
-                    <small id="passwordHelp" class="form-text text-muted">
-                      We'll never share your password with anyone else
-                    </small>
+                      Password<span class="text-danger">*</span> </label>
+                    <input type="password" #passwords class="form-control" formControlName="password" />
+                    <app-form-control-error label="Password" [control]="ownerRegister.get('password')!"></app-form-control-error>
+                    <label class="form-label" for="form3Example12" style="font-size:15px; float: left;">
+                      Confirm Password<span class="text-danger">*</span> </label>
+                    <input type="password" #confirmPassword class="form-control" formControlName="confirmPassword"/>
+                    <div class="form-error" *ngIf="ownerRegister.get('confirmPassword')!.dirty && passwords.value !== confirmPassword.value">
+                      <p>Passwords does not match</p>
+                    </div>
                   </div>
 
                   <div class="tnc">
-
                     <ion-checkbox formControlName="check1" id="check1"></ion-checkbox>
-                    <ion-label for="check1"> I agree with the <a href=""
-                      [routerLink]="['/terms-condition']">Terms and Condition</a></ion-label><br/>
+                    <ion-label for="check1"> I agree with the <a
+                      href="/terms-condition" target="_blank">Terms and Condition</a></ion-label><br/>
 
                     <ion-checkbox formControlName="check2" id="check2"></ion-checkbox>
-                    <ion-label for="check2"> I agree with Spot A Home <a href=""
-                      [routerLink]="['/terms-condition']">Privacy Policy</a></ion-label>
-
+                    <ion-label for="check2"> I agree with Spot A Home <a target="_blank"
+                      href="/terms-condition">Privacy Policy</a></ion-label>
                   </div>
 
                   <div class="register-button">
                     <button
                       type="submit"
                       (click)="register(emails,passwords)"
-                      [disabled]="!ownerRegister.valid"
+                      [disabled]="!ownerRegister.valid || passwords.value !== confirmPassword.value || !selectedBP || !selectedVI"
                       class="btn btn-primary btn-block mb-4">
                       Register
                     </button>

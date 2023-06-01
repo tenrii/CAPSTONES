@@ -8,6 +8,7 @@ import { OwnerLogRegPageRoutingModule } from './owner-log-reg-routing.module';
 
 import { OwnerLogRegPage } from './owner-log-reg.page';
 import { VerifyOwnerComponent } from './verify-owner/verify-owner.component';
+import { FormControlErrorModule } from '../components/form-control-error/form-control-error.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { VerifyOwnerComponent } from './verify-owner/verify-owner.component';
     FormsModule,
     IonicModule,
     ReactiveFormsModule,
-    OwnerLogRegPageRoutingModule
+    OwnerLogRegPageRoutingModule,
+    FormControlErrorModule
   ],
   declarations: [OwnerLogRegPage, VerifyOwnerComponent]
 })

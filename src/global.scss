@@ -75,3 +75,23 @@
     height: 180px;
   }
 }
+
+.text-danger {
+  color: #dc3545;
+}
+
+.form-error {
+  color: #dc3545;
+  font-size: 1.2rem;
+  margin-left: 2px;
+  margin-right: 2px;
+  p {
+    text-align: left;
+    margin-top: 5px;
+    position: relative;
+    display: inherit;
+    margin-bottom: 5px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
