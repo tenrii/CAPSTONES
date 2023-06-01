@@ -21,7 +21,6 @@ export class OwnerLogRegPage implements OnInit {
   selectedBP!: File;
   selectedVI!: File;
   downloadURL!: Observable<string>;
-  conditionForm!: FormGroup;
   uid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
 
   constructor(
@@ -39,12 +38,9 @@ export class OwnerLogRegPage implements OnInit {
     this.ownerRegister = this.fb.group({
       FName: ['', [Validators.required]],
       LName: ['', [Validators.required]],
-      Age: ['', [Validators.required]],
+      Age: ['', [Validators.required, Validators.min(1)]],
       Address: ['', [Validators.required]],
-      Email: ['', [Validators.required]],
-    });
-
-    this.conditionForm = this.fb.group({
+      Email: ['', [Validators.required, Validators.email]],
       check1: [false, Validators.requiredTrue],
       check2: [false, Validators.requiredTrue]
     });

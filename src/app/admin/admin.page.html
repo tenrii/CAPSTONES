@@ -155,12 +155,10 @@
                     {{data.Address}}
                   </td>
                   <td>
-                    <span *ngFor="let img of data.Business; let i = index" [attr.imageSrc]="img" [attr.thumbSrc]="img"> Business Permit
-                    </span>
+                    <a href="{{data.BusinessPermit}}">Permit</a>
                   </td>
                   <td>
-                    <a href="{{data.ValidID}}"> Valid ID
-                    </a>
+                    <a href="{{data.ValidID}}">Valid ID</a>
                   </td>
                   <td>
                     <div class="actions">
@@ -190,7 +188,7 @@
                     {{data.Address}}
                   </td>
                   <td>
-                    <a href="{{data.Business}}"> Business Permit
+                    <a href="{{data.BusinessPermit}}"> Business Permit
                     </a>
                   </td>
                   <td>
