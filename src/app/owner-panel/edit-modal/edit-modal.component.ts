@@ -27,7 +27,7 @@ export class EditModalComponent implements OnInit {
   roomData!: RoomData;
   amenities: any[] = [];
   selectedFiles: any = FileList;
-  images:any [] = [];;
+  images: { name: any; url: any }[] = [];
   img: any[]=[];
   constructor(
     private afstore: AngularFirestore,
@@ -105,13 +105,11 @@ export class EditModalComponent implements OnInit {
             const downloadURL = ref.getDownloadURL();
             downloadURL.subscribe((url: any) => {
               for(const img of this.record.Images){
-              this.images.push(img);
+              this.img.push(img);
               }
-
-              this.images.push(url);
-
+              this.img.push(url);
                 this.afstore.collection('Room').doc(this.record.id).update({
-                  Images: this.images,
+                  Images: this.img,
                 })
                 this.m.dismiss();
             });
