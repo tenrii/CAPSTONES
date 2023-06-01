@@ -28,6 +28,8 @@ import { EditOwnerProfileComponent } from './edit-owner-profile/edit-owner-profi
 import { SiteHeaderModule } from '../components/site-header/site-header.module';
 import { GateawayComponent } from '../components/gateaway/gateaway.component';
 import { KeyComponent } from '../components/gateaway/key/key.component';
+import { GalleryModule } from 'ng-gallery';
+import { LightboxModule } from 'ng-gallery/lightbox';
 
 @NgModule({
   imports: [
@@ -40,6 +42,8 @@ import { KeyComponent } from '../components/gateaway/key/key.component';
     NgxFileDropModule,
     ChatlistModule,
     SiteHeaderModule,
+    GalleryModule,
+    LightboxModule,
   ],
   declarations: [
     OwnerPanelPage,

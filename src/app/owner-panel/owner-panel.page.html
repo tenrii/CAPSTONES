@@ -76,7 +76,7 @@
 
                   <span *ngFor="let data of room.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
                     <ion-row class="row-body" *ngIf="!data.isUnlisted || data.isUnlisted === 'false'">
-                      <ion-col>{{data.Title}}</ion-col>
+                      <ion-col><a target="_blank" [href]="'/room/' + data.id">{{data.Title}}</a></ion-col>
                       <ion-col>{{data.RoomType}}</ion-col>
                       <ion-col>{{data.Rent}}</ion-col>
                       <ion-col><span *ngFor="let bed of data.Bed">B{{bed.id}}-{{bed.status}}<br /></span></ion-col>
@@ -84,8 +84,11 @@
                         {{data.ZIP}}</ion-col>
                       <ion-col>{{data.Price}}</ion-col>
                       <ion-col><span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span></ion-col>
-                      <ion-col><span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
-                          </a><br /></span></ion-col>
+                      <ion-col gallerize="{{data.id}}" selector="span">
+                        <span *ngFor="let img of data.Images; let i = index" [attr.imageSrc]="img" [attr.thumbSrc]="img">
+                          Image {{i+1}}<br/>
+                        </span>
+                      </ion-col>
                       <ion-col>{{data.Details}}</ion-col>
                       <ion-col>
                         <ion-button (click)="gotoEditModal(data)">
@@ -143,7 +146,7 @@
                   <span *ngFor="let data of room.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
 
                     <ion-row class="row-body" *ngIf="data.isUnlisted === 'true'">
-                      <ion-col>{{data.Title}}</ion-col>
+                      <ion-col><a target="_blank" [href]="'/room/' + data.id">{{data.Title}}</a></ion-col>
                       <ion-col>{{data.RoomType}}</ion-col>
                       <ion-col>{{data.Rent}}</ion-col>
                       <ion-col><span *ngFor="let bed of data.Bed">B{{bed.id}}-{{bed.status}}<br /></span></ion-col>
@@ -151,8 +154,11 @@
                         {{data.ZIP}}</ion-col>
                       <ion-col>{{data.Price}}</ion-col>
                       <ion-col><span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span></ion-col>
-                      <ion-col><span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
-                          </a><br /></span></ion-col>
+                      <ion-col gallerize="{{data.id}}" selector="span">
+                        <span *ngFor="let img of data.Images; let i = index" [attr.imageSrc]="img" [attr.thumbSrc]="img">
+                          Image {{i+1}}<br/>
+                        </span>
+                      </ion-col>
                       <ion-col>{{data.Details}}</ion-col>
                       <ion-col>
                         <ion-button (click)="gotoEditModal(data)">
