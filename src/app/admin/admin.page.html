@@ -7,7 +7,7 @@
 
     <div class="side-content">
       <div class="profile">
-        <div class="profile-img bg-img" style="background-image: url(img/3.jpeg)"></div>
+        <div class="profile-img bg-img" style="background-image: url('../../assets/user2.png')"></div>
         <h4>David Green</h4>
         <small>Admin</small>
       </div>
@@ -114,7 +114,6 @@
                 <option value="">Name</option>
                 <option value="">Address</option>
               </select>
-              <button>Add record</button>
             </div>
 
             <div class="browse">
@@ -143,7 +142,8 @@
                 <tr *ngFor="let data of pendingOwnerList | async">
                   <td>
                     <div class="client">
-                      <div class="client-img bg-img" style="background-image: url({{data.profpic}})"></div>
+                      <div *ngIf="!data.profpic" class="client-img bg-img" style="background-image: url('../../assets/user2.png')"></div>
+                      <div *ngIf="data.profpic" class="client-img bg-img" style="background-image: url({{data.profpic}})"></div>
                       <div class="client-info">
                         <h4>{{data.FName}} {{data.LName}}</h4>
                         <small>{{data.Email}}</small>
@@ -154,14 +154,16 @@
                   <td>
                     {{data.Address}}
                   </td>
-                  <td>
-                    <span *ngFor="let img of data.Business; let i = index" [attr.imageSrc]="img" [attr.thumbSrc]="img"> Business Permit
+                  <td gallerize="{{data.id}}" selector="span">
+                    <span [attr.imageSrc]="data.BusinessPermit" [attr.thumbSrc]="data.BusinessPermit">
+                      Business Permit<br/>
                     </span>
-                  </td>
-                  <td>
-                    <a href="{{data.ValidID}}"> Valid ID
-                    </a>
-                  </td>
+                </td>
+                <td gallerize="{{data.id}}" selector="span">
+                  <span [attr.imageSrc]="data.ValidID" [attr.thumbSrc]="data.ValidID">
+                    Valid ID<br/>
+                  </span>
+              </td>
                   <td>
                     <div class="actions">
                       <ion-icon type="button" (click)="ApproveOwner(data.id)"
@@ -178,7 +180,8 @@
                 <tr *ngFor="let data of approveOwnerList | async">
                   <td>
                     <div class="client">
-                      <div class="client-img bg-img" style="background-image: url({{data.profpic}})"></div>
+                      <div *ngIf="!data.profpic" class="client-img bg-img" style="background-image: url('../../assets/user2.png')"></div>
+                      <div *ngIf="data.profpic" class="client-img bg-img" style="background-image: url({{data.profpic}})"></div>
                       <div class="client-info">
                         <h4>{{data.FName}} {{data.LName}}</h4>
                         <small>{{data.Email}}</small>
@@ -189,14 +192,16 @@
                   <td>
                     {{data.Address}}
                   </td>
-                  <td>
-                    <a href="{{data.Business}}"> Business Permit
-                    </a>
-                  </td>
-                  <td>
-                    <a href="{{data.ValidID}}"> Valid ID
-                    </a>
-                  </td>
+                  <td gallerize="{{data.id}}" selector="span">
+                    <span [attr.imageSrc]="data.BusinessPermit" [attr.thumbSrc]="data.BusinessPermit">
+                      Business Permit<br/>
+                    </span>
+                </td>
+                <td gallerize="{{data.id}}" selector="span">
+                  <span [attr.imageSrc]="data.ValidID" [attr.thumbSrc]="data.ValidID">
+                    Valid ID<br/>
+                  </span>
+              </td>
                   <td>
                     <div class="actions">
                       <ion-icon type="button" (click)="ApproveOwner(data.id)"
@@ -210,11 +215,11 @@
 
               <!--Reject-->
               <tbody *ngIf="(status | async) === 'rejected'">
-                <span>
                   <tr *ngFor="let data of rejectOwnerList | async">
                     <td>
                       <div class="client">
-                        <div class="client-img bg-img" style="background-image: url({{data.profpic}})"></div>
+                        <div *ngIf="!data.profpic" class="client-img bg-img" style="background-image: url('../../assets/user2.png')"></div>
+                        <div *ngIf="data.profpic" class="client-img bg-img" style="background-image: url({{data.profpic}})"></div>
                         <div class="client-info">
                           <h4>{{data.FName}} {{data.LName}}</h4>
                           <small>{{data.Email}}</small>
@@ -225,14 +230,16 @@
                     <td>
                       {{data.Address}}
                     </td>
-                    <td>
-                      <a href="{{data.Business}}"> Business Permit
-                      </a>
-                    </td>
-                    <td>
-                      <a href="{{data.ValidID}}"> Valid ID
-                      </a>
-                    </td>
+                    <td gallerize="{{data.id}}" selector="span">
+                      <span [attr.imageSrc]="data.BusinessPermit" [attr.thumbSrc]="data.BusinessPermit">
+                        Business Permit<br/>
+                      </span>
+                  </td>
+                  <td gallerize="{{data.id}}" selector="span">
+                    <span [attr.imageSrc]="data.ValidID" [attr.thumbSrc]="data.ValidID">
+                      Valid ID<br/>
+                    </span>
+                </td>
                     <td>
                       <div class="actions">
                         <ion-icon type="button" (click)="ApproveOwner(data.id)"
@@ -241,7 +248,6 @@
                       </div>
                     </td>
                   </tr>
-                </span>
               </tbody>
               <!--Reject-->
             </table>
@@ -310,7 +316,6 @@
               <select name="" id="">
                 <option value="">ID</option>
               </select>
-              <button>Add record</button>
             </div>
 
             <div class="browse">
@@ -340,8 +345,8 @@
               <!--Pending-->
               <tbody *ngIf="(status | async) === 'pending'">
                 <tr *ngFor="let data of pendingRoomList | async">
-                  <td>
-                    {{data.Title}}
+                  <td style="max-width: 130px;">
+                    <div style="font-size: 20px;">{{data.Title}}</div>
                   </td>
                   <td>
                     {{data.Rent}}
@@ -356,13 +361,14 @@
                   <td>
                     {{data.Price}}
                   </td>
-                  <td>
-                    {{data.Street}}, {{data.Barangay}}, {{data.City}}, {{data.Province}}, {{data.ZIP}}
+                  <td style="max-width: 180px;">
+                    <div>{{data.Street}}, {{data.Barangay}}, <br/>{{data.City}}, {{data.Province}}, <br/>{{data.ZIP}}</div>
                   </td>
-                  <td>
-                    <span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
-                      </a><br /></span>
-                  </td>
+                  <td gallerize="{{data.id}}" selector="span">
+                    <span *ngFor="let img of data.Images; let i = index" [attr.imageSrc]="img" [attr.thumbSrc]="img">
+                      Image {{i+1}}<br/>
+                    </span>
+                </td>
                   <td>
                     <span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span>
                   </td>
@@ -380,8 +386,8 @@
               <!--Approve-->
               <tbody *ngIf="(status | async) === 'approved'">
                 <tr *ngFor="let data of approveRoomList | async">
-                  <td>
-                    {{data.Title}}
+                  <td style="max-width: 130px;">
+                    <div style="font-size: 20px;">{{data.Title}}</div>
                   </td>
                   <td>
                     {{data.Rent}}
@@ -396,13 +402,14 @@
                   <td>
                     {{data.Price}}
                   </td>
-                  <td>
-                    {{data.Street}}, {{data.Barangay}}, {{data.City}}, {{data.Province}}, {{data.ZIP}}
+                  <td style="max-width: 180px;">
+                    <div>{{data.Street}}, {{data.Barangay}}, <br/>{{data.City}}, {{data.Province}}, <br/>{{data.ZIP}}</div>
                   </td>
-                  <td>
-                    <span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
-                      </a><br /></span>
-                  </td>
+                  <td gallerize="{{data.id}}" selector="span">
+                    <span *ngFor="let img of data.Images; let i = index" [attr.imageSrc]="img" [attr.thumbSrc]="img">
+                      Image {{i+1}}<br/>
+                    </span>
+                </td>
                   <td>
                     <span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span>
                   </td>
@@ -419,8 +426,8 @@
               <tbody *ngIf="(status | async) === 'rejected'">
                 <span>
                   <tr *ngFor="let data of rejectRoomList | async">
-                    <td>
-                      {{data.Title}}
+                    <td style="max-width: 130px;">
+                      <div style="font-size: 20px;">{{data.Title}}</div>
                     </td>
                     <td>
                       {{data.Rent}}
@@ -435,17 +442,18 @@
                     <td>
                       {{data.Price}}
                     </td>
-                    <td>
-                      {{data.Street}}, {{data.Barangay}}, {{data.City}}, {{data.Province}}, {{data.ZIP}}
+                    <td style="max-width: 180px;">
+                      <div>{{data.Street}}, {{data.Barangay}}, <br/>{{data.City}}, {{data.Province}}, <br/>{{data.ZIP}}</div>
                     </td>
-                    <td>
-                      <span *ngFor="let img of data.Images; let i = index"><a href="{{img}}"> Image {{i+1}}
-                        </a><br /></span>
-                    </td>
+                    <td gallerize="{{data.id}}" selector="span">
+                      <span *ngFor="let img of data.Images; let i = index" [attr.imageSrc]="img" [attr.thumbSrc]="img">
+                        Image {{i+1}}<br/>
+                      </span>
+                  </td>
                     <td>
                       <span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span>
                     </td>
-                    <td>
+                    <td>+
                       <div class="actions">
                         <ion-icon type="button" (click)="ApproveRoom(data.id)"
                           name="shield-checkmark-outline"></ion-icon>

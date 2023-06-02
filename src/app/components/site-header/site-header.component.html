@@ -345,7 +345,7 @@
     <div class="dropdown m-0">
       <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown"
         aria-expanded="false">
-        <span *ngIf="!user"><img src="assets/user2.png"></span>
+        <span *ngIf="!user && !tenant?.profpic && !owner.profpic"><img src="assets/user2.png"></span>
         <span *ngIf="filterTenant() === true && !isMenuOpen"><img src="{{tenant?.profpic}}"></span>
         <span *ngIf="filterOwner() === true && !isMenuOpen"><img src="{{owner?.profpic}}"></span>
         <span class="d-none" *ngIf="isMenuOpen">Account</span>

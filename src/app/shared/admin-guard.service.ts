@@ -20,11 +20,15 @@ public adminUid:any[]=[]
 
   }
 
+  async getID(id:any){
+    id = this.adminUid;
+  }
+
   async canActivate(route: any, state: any) {
     const user = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
     console.log('user', state.url);
 
-    if (!user && !this.authService.adminUid.includes(user)) {
+    if (!user && !this.adminUid.includes(user)) {
       this.router.navigate(['/admin-log']);
       return false;
     }

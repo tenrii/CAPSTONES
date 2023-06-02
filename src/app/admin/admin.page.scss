@@ -13,6 +13,10 @@
   display: none;
 }
 
+ion-icon{
+  font-size: 30px;
+}
+
 .sidebar {
   position: fixed;
   height: 100%;
@@ -409,12 +413,22 @@ select {
   font-weight: 600;
 }
 
+.add select{
+  width: 150px;
+  background-color: transparent;
+  color: black;
+}
+
 .browse input {
   width: 150px;
+  background-color: transparent;
+  color: black;
 }
 
 .browse select {
-  width: 100px;
+  width: 150px;
+  background-color: transparent;
+  color: black;
 }
 
 .table-responsive {

@@ -5,7 +5,9 @@
       <ion-col class="side" style="padding: 0; margin:0;">
         <div class="sidebar">
           <h1>Tenant Panel</h1>
-          <span class="profile"><img src="{{tenant?.profpic}}">
+          <span class="profile">
+            <span *ngIf="tenant?.profpic"><img src="{{tenant?.profpic}}"></span>
+            <span *ngIf="!tenant?.profpic"><img  src="assets/user2.png"></span>
             <div>{{tenant?.FName}} {{tenant?.LName}}</div>
           </span>
           <a type="button" (click)="gotoEditProfile()">Edit Profile</a>

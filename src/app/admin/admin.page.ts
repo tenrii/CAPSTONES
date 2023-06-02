@@ -39,6 +39,7 @@ export class AdminPage implements OnInit {
   ) {this.ownerData = {} as OwnerData}
 
   ngOnInit() {
+    this.firestore.collection('Admin').get()
 
     this.firebaseService.read_owner().subscribe((data) => {
       this.ownerList = data;
@@ -143,5 +144,6 @@ export class AdminPage implements OnInit {
   RejectRoom(a: any) {
     this.firestore.collection('Room').doc(a).update({ Permitted: "false" });
   }
+
 
 }

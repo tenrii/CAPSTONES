@@ -18,7 +18,6 @@ export class AuthenticationService {
   userData: any;
   uid: any;
   downloadURL!: Observable<string>;
-  public adminUid:any[]=[]
   constructor(
     public m: ModalController,
     public afStore: AngularFirestore,
@@ -38,14 +37,6 @@ export class AuthenticationService {
       }
     });
 
-    this.afStore
-    .collection('Admin')
-    .get()
-    .subscribe((querySnapshot) => {
-      querySnapshot.forEach((doc: any) => {
-        this.adminUid.push(doc.id);
-      });
-    });
   }
   // Login in with email/password
   SignIn(email:any, password:any) {
