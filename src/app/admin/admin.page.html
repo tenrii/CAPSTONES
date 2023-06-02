@@ -8,15 +8,11 @@
     <div class="side-content">
       <div class="profile">
         <div class="profile-img bg-img" style="background-image: url('../../assets/user2.png')"></div>
-        <h4>David Green</h4>
         <small>Admin</small>
       </div>
 
       <div class="side-menu">
         <ul>
-          <li>
-            <small>Edit Profile</small>
-          </li>
           <li>
             <a type="button" class="active" [class.active]="(switch | async) === 'owner'"
               (click)="switch.next('owner')">
@@ -108,20 +104,24 @@
         <div class="records table-responsive">
 
           <div class="record-header">
-            <div class="add">
+            <!--<div class="add">
               <span>Entries</span>
               <select name="" id="" style="background-color: transparent;">
                 <option value="">Name</option>
                 <option value="">Address</option>
               </select>
-            </div>
+            </div>-->
 
             <div class="browse">
-              <input type="search" placeholder="Search" class="record-search" style="background-color: transparent;">
-              <select name="" id="" style="background-color: transparent;">
-                <option value="">Approved</option>
-                <option value="">Rejected</option>
-              </select>
+                  <input type="search" [(ngModel)]="searchText"
+                  (ngModelChange)="filterOwnerPending(); filterOwnerApprove(); filterOwnerReject()"
+                  placeholder="Search" class="record-search" style="background-color: transparent;">
+                  <select name="" id="" [(ngModel)]="searchOption" style="background-color: transparent;" >
+                    <option value=""></option>
+                    <option value="name">Name</option>
+                    <option value="email">Email</option>
+                    <option value="address">Address</option>
+                  </select>
             </div>
           </div>
 
@@ -139,7 +139,7 @@
 
               <!--Pending-->
               <tbody *ngIf="(status | async) === 'pending'">
-                <tr *ngFor="let data of pendingOwnerList | async">
+                <tr *ngFor="let data of pendingOwnerList | async ">
                   <td>
                     <div class="client">
                       <div *ngIf="!data.profpic" class="client-img bg-img" style="background-image: url('../../assets/user2.png')"></div>
@@ -151,7 +151,7 @@
                       </div>
                     </div>
                   </td>
-                  <td>
+                  <td style="max-width: 180px;">
                     {{data.Address}}
                   </td>
                   <td gallerize="{{data.id}}" selector="span">
@@ -189,7 +189,7 @@
                       </div>
                     </div>
                   </td>
-                  <td>
+                  <td style="max-width: 180px;">
                     {{data.Address}}
                   </td>
                   <td gallerize="{{data.id}}" selector="span">
@@ -227,7 +227,7 @@
                         </div>
                       </div>
                     </td>
-                    <td>
+                    <td style="max-width: 180px;">
                       {{data.Address}}
                     </td>
                     <td gallerize="{{data.id}}" selector="span">
@@ -311,17 +311,24 @@
         <div class="records table-responsive">
 
           <div class="record-header">
-            <div class="add">
+            <!--<div class="add">
               <span>Entries</span>
               <select name="" id="">
                 <option value="">ID</option>
               </select>
-            </div>
+            </div>-->
 
             <div class="browse">
-              <input type="search" placeholder="Search" class="record-search">
-              <select name="" id="">
-                <option value="">Status</option>
+              <input type="search" [(ngModel)]="searchText"
+              (ngModelChange)="filterRoomPending();filterRoomApprove();filterRoomReject();"
+              placeholder="Search" class="record-search" style="background-color: transparent;">
+              <select name="" id="" [(ngModel)]="searchOption" style="background-color: transparent;" >
+                <option value=""></option>
+                <option value="property">Property Name</option>
+                <option value="rent">Rent</option>
+                <option value="room">Room</option>
+                <option value="address">Address</option>
+                <option value="amenities">Amenities</option>
               </select>
             </div>
           </div>
@@ -345,8 +352,8 @@
               <!--Pending-->
               <tbody *ngIf="(status | async) === 'pending'">
                 <tr *ngFor="let data of pendingRoomList | async">
-                  <td style="max-width: 130px;">
-                    <div style="font-size: 20px;">{{data.Title}}</div>
+                  <td>
+                    <div style="font-size: 17px;">{{data.Title}}</div>
                   </td>
                   <td>
                     {{data.Rent}}
@@ -386,8 +393,8 @@
               <!--Approve-->
               <tbody *ngIf="(status | async) === 'approved'">
                 <tr *ngFor="let data of approveRoomList | async">
-                  <td style="max-width: 130px;">
-                    <div style="font-size: 20px;">{{data.Title}}</div>
+                  <td>
+                    <div style="font-size: 17px;">{{data.Title}}</div>
                   </td>
                   <td>
                     {{data.Rent}}
@@ -402,7 +409,7 @@
                   <td>
                     {{data.Price}}
                   </td>
-                  <td style="max-width: 180px;">
+                  <td>
                     <div>{{data.Street}}, {{data.Barangay}}, <br/>{{data.City}}, {{data.Province}}, <br/>{{data.ZIP}}</div>
                   </td>
                   <td gallerize="{{data.id}}" selector="span">
@@ -426,8 +433,8 @@
               <tbody *ngIf="(status | async) === 'rejected'">
                 <span>
                   <tr *ngFor="let data of rejectRoomList | async">
-                    <td style="max-width: 130px;">
-                      <div style="font-size: 20px;">{{data.Title}}</div>
+                    <td>
+                      <div style="font-size: 17px;">{{data.Title}}</div>
                     </td>
                     <td>
                       {{data.Rent}}

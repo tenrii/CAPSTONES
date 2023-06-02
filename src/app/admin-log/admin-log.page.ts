@@ -11,31 +11,22 @@ import { AdminGuardService } from '../shared/admin-guard.service';
   styleUrls: ['./admin-log.page.scss'],
 })
 export class AdminLogPage implements OnInit {
-  adminUid:any[]=[]
   constructor(
     private authService: AuthenticationService,
     private router: Router,
     private alert: AlertController,
-    private firestore:AngularFirestore,
-    private adminGuard: AdminGuardService,
+    public adminGuard: AdminGuardService,
   ) {
-    this.firestore
-    .collection('Admin')
-    .get()
-    .subscribe((querySnapshot) => {
-      querySnapshot.forEach((doc: any) => {
-        this.adminUid.push(doc.id);
-      });
-    });
+   this.adminGuard.adminUid;
   }
 
   ngOnInit() {
+
   }
 
   async logIn(email:any, password:any){
-    await this.adminGuard.getID(this.adminGuard);
     this.authService
-    .SignIn(email.value, password.value)
+    .SignInAdmin(email.value, password.value)
     .then(async (res) => {
       window.location.reload();
       if (this.authService.isEmailVerified) {

@@ -10,6 +10,7 @@ import {
 import { ModalController } from '@ionic/angular';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Observable, finalize, lastValueFrom } from 'rxjs';
+import { FirebaseService } from '../services/firebase.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -18,6 +19,7 @@ export class AuthenticationService {
   userData: any;
   uid: any;
   downloadURL!: Observable<string>;
+
   constructor(
     public m: ModalController,
     public afStore: AngularFirestore,
@@ -25,6 +27,7 @@ export class AuthenticationService {
     public router: Router,
     public ngZone: NgZone,
     public storage: AngularFireStorage,
+    public firebaseService: FirebaseService,
   ) {
     this.ngFireAuth.authState.subscribe((user) => {
       if (user) {
@@ -36,10 +39,13 @@ export class AuthenticationService {
         JSON.parse(localStorage.getItem('user') || '{}');
       }
     });
-
   }
   // Login in with email/password
   SignIn(email:any, password:any) {
+    return this.ngFireAuth.signInWithEmailAndPassword(email, password);
+  }
+
+  SignInAdmin(email:any, password:any) {
     return this.ngFireAuth.signInWithEmailAndPassword(email, password);
   }
 

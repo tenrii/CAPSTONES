@@ -22,6 +22,8 @@ Accepted: string;
 export class AdminPage implements OnInit {
   status = new BehaviorSubject('pending')
   switch = new BehaviorSubject('owner')
+  public searchText!: string;
+  public searchOption!: string;
   roomList: any[]=[];
   ownerData: OwnerData;
   ownerList: any[]=[];
@@ -46,9 +48,6 @@ export class AdminPage implements OnInit {
       this.filterOwnerPending();
       this.filterOwnerApprove();
       this.filterOwnerReject();
-      console.log('a',this.pendingOwnerList.getValue())
-      console.log('b',this.approveOwnerList.getValue())
-      console.log('c',this.rejectOwnerList.getValue())
     });
 
 
@@ -86,48 +85,244 @@ export class AdminPage implements OnInit {
     const filteredList = this.roomList.filter(item => item.Permitted === "false");
     return filteredList.length;
   }
-
+//
   filterOwnerPending(){
     const filtering = this.ownerList.filter((a)=>{
-      return !a.Permitted
+
+      if(this.searchOption === 'name'){
+        return (
+          (!a.Permitted) &&
+          ((a.FName.toLowerCase()+' '+a.LName.toLowerCase()).includes(this.searchText.toLowerCase()))
+          );
+      }
+      else if(this.searchOption === 'email'){
+        return (
+          (!a.Permitted) &&
+          (a.Email.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+      else if(this.searchOption === 'address'){
+        return (
+          (!a.Permitted) &&
+          (a.Address.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+      else if(!this.searchOption){
+        return !a.Permitted
+      }
+
     })
     this.pendingOwnerList.next(filtering);
   }
+//
 
+//
   filterRoomPending(){
     const filtering = this.roomList.filter((a)=>{
-      return !a.Permitted
+
+      if(this.searchOption === 'property'){
+        return (
+          (!a.Permitted) &&
+          (a.Title.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'rent'){
+        return (
+          (!a.Permitted) &&
+          (a.Rent.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'room'){
+        return (
+          (!a.Permitted) &&
+          (a.RoomName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          a.RoomType.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'address'){
+        return (
+          (!a.Permitted) &&
+          ((a.Street.toLowerCase()+' '+a.Barangay.toLowerCase()+' '+a.City.toLowerCase()+' '+a.Province.toLowerCase()+' '+a.ZIP.toLowerCase())
+          .includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'amenities'){
+        return (
+          (!a.Permitted) &&
+          a.Amenities.some((amenity:any) => amenity.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(!this.searchOption){
+        return !a.Permitted
+      }
+
     })
     this.pendingRoomList.next(filtering);
   }
+//
 
+//
   filterOwnerApprove(){
     const filtering = this.ownerList.filter((a)=>{
-      return a.Permitted === "true"
+      if(this.searchOption === 'name'){
+        return (
+          (a.Permitted === 'true') &&
+          ((a.FName.toLowerCase()+' '+a.LName.toLowerCase()).includes(this.searchText.toLowerCase()))
+          );
+      }
+      else if(this.searchOption === 'email'){
+        return (
+          (a.Permitted === 'true') &&
+          (a.Email.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+      else if(this.searchOption === 'address'){
+        return (
+          (a.Permitted === 'true') &&
+          (a.Address.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+      else if(!this.searchOption){
+        return a.Permitted === 'true'
+      }
     })
     this.approveOwnerList.next(filtering);
   }
+//
 
+//
   filterRoomApprove(){
     const filtering = this.roomList.filter((a)=>{
-      return a.Permitted === "true"
+
+      if(this.searchOption === 'property'){
+        return (
+          (a.Permitted === 'true') &&
+          (a.Title.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'rent'){
+        return (
+          (a.Permitted === 'true') &&
+          (a.Rent.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'room'){
+        return (
+          (a.Permitted === 'true') &&
+          (a.RoomName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          a.RoomType.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'address'){
+        return (
+          (a.Permitted === 'true') &&
+          ((a.Street.toLowerCase()+' '+a.Barangay.toLowerCase()+' '+a.City.toLowerCase()+' '+a.Province.toLowerCase()+' '+a.ZIP.toLowerCase())
+          .includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'amenities'){
+        return (
+          (a.Permitted === 'true') &&
+          a.Amenities.some((amenity:any) => amenity.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(!this.searchOption){
+        return a.Permitted === 'true'
+      }
+
     })
     this.approveRoomList.next(filtering);
   }
+//
 
+//
   filterOwnerReject(){
     const filtering = this.ownerList.filter((a)=>{
-      return a.Permitted === "false"
+      if(this.searchOption === 'name'){
+        return (
+          (a.Permitted === 'false') &&
+          ((a.FName.toLowerCase()+' '+a.LName.toLowerCase()).includes(this.searchText.toLowerCase()))
+          );
+      }
+      else if(this.searchOption === 'email'){
+        return (
+          (a.Permitted === 'false') &&
+          (a.Email.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+      else if(this.searchOption === 'address'){
+        return (
+          (a.Permitted === 'false') &&
+          (a.Address.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+      else if(!this.searchOption){
+        return a.Permitted === 'false'
+      }
     })
     this.rejectOwnerList.next(filtering);
   }
+//
 
+//
   filterRoomReject(){
     const filtering = this.roomList.filter((a)=>{
-      return a.Permitted === "false"
+
+      if(this.searchOption === 'property'){
+        return (
+          (a.Permitted === 'false') &&
+          (a.Title.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'rent'){
+        return (
+          (a.Permitted === 'false') &&
+          (a.Rent.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'room'){
+        return (
+          (a.Permitted === 'false') &&
+          (a.RoomName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+          a.RoomType.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'address'){
+        return (
+          (a.Permitted === 'false') &&
+          ((a.Street.toLowerCase()+' '+a.Barangay.toLowerCase()+' '+a.City.toLowerCase()+' '+a.Province.toLowerCase()+' '+a.ZIP.toLowerCase())
+          .includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(this.searchOption === 'amenities'){
+        return (
+          (a.Permitted === 'false') &&
+          a.Amenities.some((amenity:any) => amenity.toLowerCase().includes(this.searchText.toLowerCase()))
+          );
+      }
+
+      else if(!this.searchOption){
+        return a.Permitted === 'false'
+      }
+
     })
     this.rejectRoomList.next(filtering);
   }
+//
 
   ApproveOwner(a: any) {
     this.firestore.collection('Owner').doc(a).update({ Permitted: "true" });
@@ -144,6 +339,5 @@ export class AdminPage implements OnInit {
   RejectRoom(a: any) {
     this.firestore.collection('Room').doc(a).update({ Permitted: "false" });
   }
-
 
 }

@@ -90,7 +90,7 @@ export class HomePage implements OnInit {
   filter() {
     const filteredList = this.roomList.filter((obj) => {
       return (
-        (!this.barangay|| this.barangay === obj.Barangay.toLowerCase()) &&
+        (!this.barangay || this.barangay === obj.Barangay.toLowerCase()) &&
         (!this.rent || this.rent === obj.Rent) &&
         this.price.upper >= obj.Price &&
         this.price.lower <= obj.Price

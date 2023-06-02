@@ -53,6 +53,7 @@ export class FirebaseService {
           this.ownerUid.push(doc.id);
         });
       });
+
   }
 
   create_room(record: any) {
