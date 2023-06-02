@@ -18,6 +18,7 @@ export class LoginPage implements OnInit {
   tenantRegister!: FormGroup;
   isModalOpen = false;
   isRegister = true;
+  isButtonDisabled = false;
   conditionForm!: FormGroup;
   constructor(
     private m: ModalController,
@@ -90,6 +91,9 @@ export class LoginPage implements OnInit {
   }
 
   register(email: any, password: any) {
+    if (this.isButtonDisabled) {
+      return;
+    }
     const a = this.authService
       .RegisterUserTenant(
         email.value,
@@ -97,7 +101,8 @@ export class LoginPage implements OnInit {
         this.tenantRegister.value,
       )
         this.verify();
-    return a;
+        this.isButtonDisabled = true;
+        return a;
   }
 
   async verify() {

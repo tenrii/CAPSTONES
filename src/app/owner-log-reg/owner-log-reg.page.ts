@@ -142,7 +142,6 @@ export class OwnerLogRegPage implements OnInit {
         )
         this.verify()
     .then((res) => {
-      console.log(this.authService.uid)
     });
     this.isButtonDisabled = true;
     return a;

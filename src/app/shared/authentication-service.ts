@@ -45,16 +45,23 @@ export class AuthenticationService {
 
   // Register user with email/password
   async SendVerificationMailT() {
-    const user:any = await this.ngFireAuth.currentUser;
-    await user.sendEmailVerification();
+    const user = await this.ngFireAuth.currentUser;
+    await user!.sendEmailVerification();
   }
 
   async RegisterUserTenant(email: any, password: any, record: any) {
     try {
-      const { user }:any = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
-    await this.SendVerificationMailT();
-    const uid = user.uid;
-
+      const { user } = await this.ngFireAuth.createUserWithEmailAndPassword(email, password);
+      let emailVerified = user!.emailVerified;
+      const uid = user!.uid;
+      if (!emailVerified) {
+      await this.SendVerificationMailT();
+      while (!emailVerified) {
+        await new Promise(resolve => setTimeout(resolve, 2000)); // Delay for 2 seconds
+        await user!.reload();
+        emailVerified = user!.emailVerified; // Update emailVerified variable
+      }
+    }
       await this.afStore.collection('Tenant').doc(uid).set({
         uid: uid,
         Email: record.Email,
@@ -70,8 +77,8 @@ export class AuthenticationService {
       return user;
     } catch (error) {
       // Handle error
-      console.error(error);
-      throw error;
+      //console.error(error);
+      //throw error;
     }
   }
 
@@ -130,7 +137,6 @@ export class AuthenticationService {
       // throw error;
     }
   }
-
 
   // Recover password
   PasswordRecover(passwordResetEmail: any) {
