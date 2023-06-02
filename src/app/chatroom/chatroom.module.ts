@@ -9,6 +9,7 @@ import { ChatroomPageRoutingModule } from './chatroom-routing.module';
 import { ChatroomPage } from './chatroom.page';
 import { ChatSectionModule } from '../components/chat-section/chat-section.module';
 import { ChatlistModule } from '../components/chatlist/chatlist.module';
+import { SiteHeaderModule } from '../components/site-header/site-header.module';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ChatlistModule } from '../components/chatlist/chatlist.module';
     IonicModule,
     ChatroomPageRoutingModule,
     ChatSectionModule,
-    ChatlistModule
+    ChatlistModule,
+    SiteHeaderModule
   ],
   declarations: [ChatroomPage]
 })

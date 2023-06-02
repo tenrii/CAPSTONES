@@ -7,11 +7,11 @@
     <h2>{{chatMateData?.FName}} {{chatMateData?.LName}}</h2>
   </div>
 
-  <ion-toolbar color="light" *ngIf="{roomDetails: roomDetails$ | async} as listingInfo">
+  <ion-toolbar color="light" *ngIf="{roomDetails: roomDetails$ | async} as listingInfo" class="chat-heading">
     <ng-container *ngIf="listingInfo.roomDetails">
       <ion-title color="dark">
         <h3>{{listingInfo.roomDetails?.Title}}</h3>
-        <h3>{{listingInfo.roomDetails?.Price}}</h3>
+        <h5>{{listingInfo.roomDetails?.Price | currency:'₱'}}</h5>
       </ion-title>
       <ion-button slot="end" shape="round" [routerLink]="['/room', listingInfo.roomDetails?.id]">Details</ion-button>
     </ng-container>

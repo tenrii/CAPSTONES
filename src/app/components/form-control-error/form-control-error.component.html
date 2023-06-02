@@ -1,0 +1,15 @@
+<div *ngIf="control.invalid && (control.dirty || control.touched)" class="form-error">
+
+  <p *ngIf="control.errors!['required'] || control.errors!['whitespace']">
+    {{ label }} {{ 'is required.' }}
+  </p>
+
+  <div *ngIf="control.errors!['email']">Invalid email address.</div>
+
+  <p *ngIf="label === 'Age' && (control.errors!['pattern'] || control.errors!['min'])">Must be a valid age.</p>
+
+  <p *ngIf="control.errors!['minlength']">Must be at least 8 characters.</p>
+
+  <div *ngIf="control.errors!['custom']">{{ control.errors!['custom'] }}</div>
+
+</div>

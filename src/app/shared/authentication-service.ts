@@ -9,7 +9,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import { ModalController } from '@ionic/angular';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, finalize } from 'rxjs';
+import { Observable, finalize, lastValueFrom } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
@@ -96,6 +96,18 @@ export class AuthenticationService {
         }
       }
 
+      const filePathBP = `Owner/${uid}/${BI.name}`;
+      const filePathVI = `Owner/${uid}/${VI.name}`;
+
+      await this.storage.upload(filePathBP, BI);
+      await this.storage.upload(filePathVI, VI);
+
+      const fileRefBP = this.storage.ref(filePathBP);
+      const fileRefVI = this.storage.ref(filePathVI);
+
+      const bpDownloadURL = await lastValueFrom(fileRefBP.getDownloadURL());
+      const viDownloadURL = await lastValueFrom(fileRefVI.getDownloadURL());
+
       await this.afStore.collection('Owner').doc(uid).set({
         uid: uid,
         Email: record.Email,
@@ -103,45 +115,9 @@ export class AuthenticationService {
         LName: record.LName,
         Age: record.Age,
         Address: record.Address,
+        BusinessPermit: bpDownloadURL || '',
+        ValidID: viDownloadURL || '',
       });
-
-      const filePathBP = `Owner/${uid}/${BI.name}`;
-      const fileRefBP = this.storage.ref(filePathBP);
-      const bp = this.storage.upload(filePathBP, BI);
-      bp.snapshotChanges()
-        .pipe(
-          finalize(() => {
-            this.downloadURL = fileRefBP.getDownloadURL();
-            this.downloadURL.subscribe((url) => {
-              this.afStore
-                .collection('Owner')
-                .doc(uid)
-                .update({
-                  BusinessPermit: url,
-                });
-            });
-          })
-        )
-        .subscribe();
-
-      const filePathVI = `Owner/${uid}/${VI.name}`;
-      const fileRefVI = this.storage.ref(filePathVI);
-      const vi = this.storage.upload(filePathVI, VI);
-      bp.snapshotChanges()
-        .pipe(
-          finalize(() => {
-            this.downloadURL = fileRefVI.getDownloadURL();
-            this.downloadURL.subscribe((url) => {
-              this.afStore
-                .collection('Owner')
-                .doc(uid)
-                .update({
-                  ValidID: url,
-                });
-            });
-          })
-        )
-        .subscribe();
 
       await this.SignOut();
       await this.m.dismiss();

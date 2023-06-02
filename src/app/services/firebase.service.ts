@@ -167,6 +167,7 @@ export class FirebaseService {
               Permitted: localData.Permitted,
               Phone: localData.Phone,
               BusinessPermit: localData.BusinessPermit,
+              ValidID: localData.ValidID,
               profpic: localData.profpic,
               Birthday: localData.Birthday,
               PhoneNum: localData.PhoneNum,

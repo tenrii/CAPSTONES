@@ -21,7 +21,6 @@ export class OwnerLogRegPage implements OnInit {
   selectedBP!: File;
   selectedVI!: File;
   downloadURL!: Observable<string>;
-  conditionForm!: FormGroup;
   uid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
 
   constructor(
@@ -39,14 +38,13 @@ export class OwnerLogRegPage implements OnInit {
     this.ownerRegister = this.fb.group({
       FName: ['', [Validators.required]],
       LName: ['', [Validators.required]],
-      Age: ['', [Validators.required]],
+      Age: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1)]],
       Address: ['', [Validators.required]],
-      Email: ['', [Validators.required]],
-    });
-
-    this.conditionForm = this.fb.group({
+      Email: ['', [Validators.required, Validators.email]],
       check1: [false, Validators.requiredTrue],
-      check2: [false, Validators.requiredTrue]
+      check2: [false, Validators.requiredTrue],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
     });
 
     // removed because it is causing call stack exceeded error
@@ -128,23 +126,26 @@ export class OwnerLogRegPage implements OnInit {
   }
 
   register(email: any, password: any) {
+    if (!this.selectedBP || !this.selectedVI) {
+      return;
+    }
     if (this.isButtonDisabled) {
       return;
     }
-      const a = this.authService
-        .RegisterUserOwner(
-          email.value,
-          password.value,
-          this.ownerRegister.value,
-          this.selectedVI,
-          this.selectedBP,
-          )
-          this.verify()
-      .then((res) => {
-        console.log(this.authService.uid)
-      });
-      this.isButtonDisabled = true;
-      return a;
+    const a = this.authService
+      .RegisterUserOwner(
+        email.value,
+        password.value,
+        this.ownerRegister.value,
+        this.selectedVI,
+        this.selectedBP,
+        )
+        this.verify()
+    .then((res) => {
+      console.log(this.authService.uid)
+    });
+    this.isButtonDisabled = true;
+    return a;
   }
 
   async verify() {
