@@ -86,27 +86,27 @@
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example6" style="font-size:15px; float: left;">
-                      First Name: </label>
+                      First Name<span class="text-danger">*</span> </label>
                     <input type="text" formControlName="FName" id="form3Example6" class="form-control" />
                     <app-form-control-error label="First Name" [control]="tenantRegister.get('FName')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example5" style="font-size:15px; float: left;">
-                      Last Name: </label>
+                      Last Name<span class="text-danger">*</span> </label>
                     <input type="text" formControlName="LName" id="form3Example5" class="form-control" />
                     <app-form-control-error label="Last Name" [control]="tenantRegister.get('LName')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example7" style="font-size:15px; float: left;">
-                      Age: </label>
+                      Age<span class="text-danger">*</span> </label>
                     <input type="text" formControlName="Age" class="form-control" />
                     <app-form-control-error label="Age" [control]="tenantRegister.get('Age')!"></app-form-control-error>
                   </div>
 
                   <ion-radio-group formControlName="Gender">
-                    <ion-label>Gender:</ion-label>
+                    <ion-label>Gender<span class="text-danger">*</span></ion-label>
                     <ion-item style="border-radius: 15px 15px 0px 0px ;">
                       <ion-label>Male</ion-label>
                       <ion-radio slot="start" value="Male"></ion-radio>
@@ -120,14 +120,14 @@
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
-                      Address: </label>
+                      Address<span class="text-danger">*</span> </label>
                     <input type="text" formControlName="Address" class="form-control" />
                     <app-form-control-error label="Address" [control]="tenantRegister.get('Address')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
-                      Email Address: </label>
+                      Email Address<span class="text-danger">*</span> </label>
                     <input type="email" formControlName="Email" #emails class="form-control" />
                     <app-form-control-error label="Email" [control]="tenantRegister.get('Email')!"></app-form-control-error>
                   </div>
