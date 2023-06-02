@@ -9,14 +9,15 @@ import { LoginPageRoutingModule } from './login-routing.module';
 
 import { LoginPage } from './login.page';
 import { VerifyComponent } from './verify/verify.component';
-
+import { FormControlErrorModule } from '../components/form-control-error/form-control-error.module';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
-    LoginPageRoutingModule
+    LoginPageRoutingModule,
+    FormControlErrorModule
   ],
   declarations: [LoginPage, VerifyComponent]
 })

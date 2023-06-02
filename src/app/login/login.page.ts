@@ -34,20 +34,19 @@ export class LoginPage implements OnInit {
     this.tenantRegister = this.fb.group({
       FName: ['', [Validators.required]],
       LName: ['', [Validators.required]],
-      Age: ['', [Validators.required]],
+      Age: ['', [Validators.required, Validators.pattern('^[0-9]*$'), Validators.min(1)]],
       Gender: ['', [Validators.required]],
       Address: ['', [Validators.required]],
-      Email: ['', [Validators.required]],
-    });
-
-    this.conditionForm = this.fb.group({
+      Email: ['', [Validators.required, Validators.email]],
       check1: [false, Validators.requiredTrue],
-      check2: [false, Validators.requiredTrue]
+      check2: [false, Validators.requiredTrue],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
     });
 
-    this.conditionForm.valueChanges.subscribe(() => {
-      this.conditionForm.updateValueAndValidity();
-    });
+   // this.conditionForm.valueChanges.subscribe(() => {
+     // this.conditionForm.updateValueAndValidity();
+   // });
 
     this.route.queryParams.subscribe(params => {
       const conditions = params['conditions'];

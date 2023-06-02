@@ -88,18 +88,21 @@
                     <label class="form-label" for="form3Example6" style="font-size:15px; float: left;">
                       First Name: </label>
                     <input type="text" formControlName="FName" id="form3Example6" class="form-control" />
+                    <app-form-control-error label="First Name" [control]="tenantRegister.get('FName')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example5" style="font-size:15px; float: left;">
                       Last Name: </label>
                     <input type="text" formControlName="LName" id="form3Example5" class="form-control" />
+                    <app-form-control-error label="Last Name" [control]="tenantRegister.get('LName')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example7" style="font-size:15px; float: left;">
                       Age: </label>
                     <input type="text" formControlName="Age" class="form-control" />
+                    <app-form-control-error label="Age" [control]="tenantRegister.get('Age')!"></app-form-control-error>
                   </div>
 
                   <ion-radio-group formControlName="Gender">
@@ -112,30 +115,36 @@
                       <ion-label>Female</ion-label>
                       <ion-radio slot="start" value="Female"></ion-radio>
                     </ion-item>
+                    <app-form-control-error label="Gender" [control]="tenantRegister.get('Gender')!"></app-form-control-error>
                   </ion-radio-group>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
                       Address: </label>
                     <input type="text" formControlName="Address" class="form-control" />
+                    <app-form-control-error label="Address" [control]="tenantRegister.get('Address')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
                     <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
                       Email Address: </label>
                     <input type="email" formControlName="Email" #emails class="form-control" />
+                    <app-form-control-error label="Email" [control]="tenantRegister.get('Email')!"></app-form-control-error>
                   </div>
 
                   <div class="form-outline mb-4">
-                    <label class="form-label" for="form3Example8" style="font-size:15px; float: left;">
-                      Password: </label>
-                    <input type="password" #passwords class="form-control" />
-                    <small id="passwordHelp" class="form-text text-muted">
-                      We'll never share your password with anyone else
-                    </small>
+                    <label class="form-label" for="form3Example12" style="font-size:15px; float: left;">
+                      Password<span class="text-danger">*</span> </label>
+                    <input type="password" #passwords class="form-control" formControlName="password" />
+                    <app-form-control-error label="Password" [control]="tenantRegister.get('password')!"></app-form-control-error>
+                    <label class="form-label" for="form3Example12" style="font-size:15px; float: left;">
+                      Confirm Password<span class="text-danger">*</span> </label>
+                    <input type="password" #confirmPassword class="form-control" formControlName="confirmPassword"/>
+                    <div class="form-error" *ngIf="tenantRegister.get('confirmPassword')!.dirty && passwords.value !== confirmPassword.value">
+                      <p>Passwords does not match</p>
+                    </div>
                   </div>
 
-                  <form [formGroup]="conditionForm">
                     <div class="tnc">
 
                       <ion-checkbox formControlName="check1" id="check1"></ion-checkbox>
@@ -149,12 +158,15 @@
                     </div>
 
                     <div class="register-button">
-                      <button type="submit" (click)="register(emails,passwords)" [disabled]="!conditionForm.valid" class="btn btn-primary btn-block mb-4">
-                        Register
-                      </button>
+                      <button
+                      type="submit"
+                      (click)="register(emails,passwords)"
+                      [disabled]="!tenantRegister.valid || passwords.value !== confirmPassword.value"
+                      class="btn btn-primary btn-block mb-4">
+                      Register
+                    </button>
                     </div>
                   </form>
-                </form>
 
               </span>
             </div>
