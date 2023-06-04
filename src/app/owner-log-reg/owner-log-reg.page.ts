@@ -7,6 +7,7 @@ import { VerifyOwnerComponent } from './verify-owner/verify-owner.component';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable, finalize, lastValueFrom } from 'rxjs';
+import { PasswordResetPage } from '../password-reset/password-reset.page';
 
 @Component({
   selector: 'app-owner-log-reg',
@@ -158,6 +159,17 @@ export class OwnerLogRegPage implements OnInit {
     });
     this.isModalOpen = true;
     return await modalInstance.present();
+  }
+
+  async openResetPassword() {
+    const modal = await this.m.create({
+      component: PasswordResetPage,
+      cssClass: 'password-reset-modal',
+      componentProps: {
+        openAsModal: true,
+      }
+    });
+    modal.present();
   }
 
 }
