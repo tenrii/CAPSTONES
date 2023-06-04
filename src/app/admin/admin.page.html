@@ -126,8 +126,8 @@
           </div>
 
           <div>
-            <table width="100%">
-              <thead>
+            <table width="100%" #ownerPDF>
+              <thead >
                 <tr>
                   <th><span class="las la-sort"></span> Owner</th>
                   <th><span class="las la-sort"></span> Address</th>
@@ -173,10 +173,12 @@
                   </td>
                 </tr>
               </tbody>
+              <ion-button (click)="generatePDF('pending')">Export into PDF</ion-button>
+              <ion-button (click)="exportToCSV('pending')">Export to CSV</ion-button>
               <!--Pending-->
 
               <!--Approve-->
-              <tbody *ngIf="(status | async) === 'approved'">
+              <tbody *ngIf="(status | async) === 'approved'" >
                 <tr *ngFor="let data of approveOwnerList | async">
                   <td>
                     <div class="client">
@@ -210,11 +212,13 @@
                     </div>
                   </td>
                 </tr>
+                <ion-button (click)="generatePDF('approve')">Export into PDF</ion-button>
+                <ion-button (click)="exportToCSV('approve')">Export to CSV</ion-button>
               </tbody>
               <!--Approve-->
 
               <!--Reject-->
-              <tbody *ngIf="(status | async) === 'rejected'">
+              <tbody *ngIf="(status | async) === 'rejected'" #ownerRejectPDF>
                   <tr *ngFor="let data of rejectOwnerList | async">
                     <td>
                       <div class="client">
@@ -248,6 +252,8 @@
                       </div>
                     </td>
                   </tr>
+                  <ion-button (click)="generatePDF('reject')">Export into PDF</ion-button>
+                  <ion-button (click)="exportToCSV('reject')">Export to CSV</ion-button>
               </tbody>
               <!--Reject-->
             </table>
@@ -334,7 +340,7 @@
           </div>
 
           <div>
-            <table width="100%">
+            <table width="100%" #roomPDF>
               <thead>
                 <tr>
                   <th><span class="las la-sort"></span> Property</th>
@@ -387,6 +393,8 @@
                     </div>
                   </td>
                 </tr>
+                <ion-button (click)="generatePDFR('pending')">Export into PDF</ion-button>
+                <ion-button (click)="exportToCSVR('pending')">Export to CSV</ion-button>
               </tbody>
               <!--Pending-->
 
@@ -426,6 +434,8 @@
                     </div>
                   </td>
                 </tr>
+                <ion-button (click)="generatePDFR('approve')">Export into PDF</ion-button>
+                <ion-button (click)="exportToCSVR('approve')">Export to CSV</ion-button>
               </tbody>
               <!--Approve-->
 
@@ -468,6 +478,8 @@
                     </td>
                   </tr>
                 </span>
+                <ion-button (click)="generatePDFR('reject')">Export into PDF</ion-button>
+                <ion-button (click)="exportToCSVR('reject')">Export to CSV</ion-button>
               </tbody>
               <!--Reject-->
             </table>

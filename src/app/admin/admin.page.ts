@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FirebaseService } from '../services/firebase.service';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthenticationService } from '../shared/authentication-service';
 import { AlertController, ToastController } from '@ionic/angular';
-
+import domtoimage from 'dom-to-image';
+import { jsPDF } from 'jspdf';
+import { saveAs } from 'file-saver';
 interface OwnerData{
 FName: string;
 LName: string;
@@ -21,6 +23,9 @@ Accepted: string;
   styleUrls: ['./admin.page.scss'],
 })
 export class AdminPage implements OnInit {
+  exportingToPDF: boolean = false;
+  @ViewChild('ownerPDF', { static: false }) ownerPDF!: ElementRef;
+  @ViewChild('roomPDF', { static: false }) roomPDF!: ElementRef;
   status = new BehaviorSubject('pending')
   switch = new BehaviorSubject('owner')
   public searchText!: string;
@@ -431,5 +436,399 @@ export class AdminPage implements OnInit {
     alert.present();
     // this.firestore.collection('Room').doc(a).update({ Permitted: "false" });
   }
+//
+  exportToCSV(condition:any) {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns a zero-based index
+    const currentYear = currentDate.getFullYear();
 
+    if(condition === 'pending'){
+    const csvContent = this.convertToCSV(this.pendingOwnerList,condition);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'Records'+currentMonth+'_'+currentYear+'.csv');
+    }
+
+    else if(condition === 'approve'){
+    const csvContent = this.convertToCSV(this.approveOwnerList,condition);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'Occupant'+currentMonth+'_'+currentYear+'.csv');
+    }
+
+    else if(condition === 'reject'){
+    const csvContent = this.convertToCSV(this.rejectOwnerList,condition);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'Room'+currentMonth+'_'+currentYear+'.csv');
+    }
+  }
+
+  exportToCSVR(condition:any) {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns a zero-based index
+    const currentYear = currentDate.getFullYear();
+
+    if(condition === 'pending'){
+    const csvContent = this.convertToCSVR(this.pendingRoomList,condition);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'Records'+currentMonth+'_'+currentYear+'.csv');
+    }
+
+    else if(condition === 'approve'){
+    const csvContent = this.convertToCSVR(this.approveRoomList,condition);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'Occupant'+currentMonth+'_'+currentYear+'.csv');
+    }
+
+    else if(condition === 'reject'){
+    const csvContent = this.convertToCSVR(this.rejectRoomList,condition);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'Room'+currentMonth+'_'+currentYear+'.csv');
+    }
+  }
+//
+//
+  convertToCSV(all: any[], condition:any): any {
+    if(condition === 'pending'){
+    const headers = [
+      'Owner Name',
+      'Email',
+      'Phone Number',
+      'Address',
+    ];
+    const rows = [];
+
+    for (const data of all) {
+          const rowData = [
+            data.FName + ' ' + data.LName,
+            data.Email,
+            data.PhoneNum,
+            data.Address,
+          ];
+
+          rows.push(rowData);
+    }
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+    return csvContent;
+  }
+  else if(condition === 'approve'){
+    const headers = [
+      'Owner Name',
+      'Email',
+      'Phone Number',
+      'Address',
+    ];
+    const rows = [];
+
+    for (const data of all) {
+          const rowData = [
+            data.FName + ' ' + data.LName,
+            data.Email,
+            data.PhoneNum,
+            data.Address,
+          ];
+          rows.push(rowData);
+    }
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+    return csvContent;
+  }
+  else if(condition === 'reject'){
+    const headers = [
+      'Property',
+      'Room Type',
+      'Rent',
+      'Beds',
+      'Address',
+      'Price',
+      'Amenities',
+      'Details',
+    ];
+    const rows = [];
+
+    for (const data of all) {
+      const headers = [
+        'Owner Name',
+        'Email',
+        'Phone Number',
+        'Address',
+      ];
+      const rows = [];
+
+      for (const data of all) {
+            const rowData = [
+              data.FName + ' ' + data.LName,
+              data.Email,
+              data.PhoneNum,
+              data.Address,
+            ];
+          rows.push(rowData);
+  }
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+    return csvContent;
+  }
+}
+  }
+  convertToCSVR(all: any[], condition:any): any {
+    if(condition === 'pending'){
+      const headers = [
+        'Property',
+        'Room Type',
+        'Rent',
+        'Beds',
+        'Address',
+        'Price',
+        'Amenities',
+        'Details',
+      ];
+      const rows = [];
+
+      for (const data of all) {
+        const address = `${data.Street}, ${data.Barangay}, ${data.City}, ${data.Province}, ${data.ZIP}`
+        const bed = data.Bed.map((bed:any) =>'B'+bed.id+'-'+bed.status === 'up'
+              ? 'TOP BUNK' : 'BOTTOM BUNK').join(', ');
+        const amenities = data.Amenities.join(', ');
+            const rowData = [
+              data.Title,
+              data.RoomType,
+              data.Rent,
+              bed,
+              address,
+              data.Price,
+              amenities,
+              data.Details,
+            ];
+
+            rows.push(rowData);
+    }
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+    return csvContent;
+  }
+  else if(condition === 'approve'){
+    const headers = [
+      'Property',
+      'Room Type',
+      'Rent',
+      'Beds',
+      'Address',
+      'Price',
+      'Amenities',
+      'Details',
+    ];
+    const rows = [];
+
+    for (const data of all) {
+      const address = `${data.Street}, ${data.Barangay}, ${data.City}, ${data.Province}, ${data.ZIP}`
+      const bed = data.Bed.map((bed:any) =>'B'+bed.id+'-'+bed.status === 'up'
+            ? 'TOP BUNK' : 'BOTTOM BUNK').join(', ');
+      const amenities = data.Amenities.join(', ');
+          const rowData = [
+            data.Title,
+            data.RoomType,
+            data.Rent,
+            bed,
+            address,
+            data.Price,
+            amenities,
+            data.Details,
+          ];
+
+          rows.push(rowData);
+  }
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+    return csvContent;
+  }
+  else if(condition === 'reject'){
+    const headers = [
+      'Property',
+      'Room Type',
+      'Rent',
+      'Beds',
+      'Address',
+      'Price',
+      'Amenities',
+      'Details',
+    ];
+    const rows = [];
+
+    for (const data of all) {
+      const address = `${data.Street}, ${data.Barangay}, ${data.City}, ${data.Province}, ${data.ZIP}`
+      const bed = data.Bed.map((bed:any) =>'B'+bed.id+'-'+bed.status === 'up'
+            ? 'TOP BUNK' : 'BOTTOM BUNK').join(', ');
+      const amenities = data.Amenities.join(', ');
+          const rowData = [
+            data.Title,
+            data.RoomType,
+            data.Rent,
+            bed,
+            address,
+            data.Price,
+            amenities,
+            data.Details,
+          ];
+
+          rows.push(rowData);
+  }
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+    return csvContent;
+  }
+}
+//
+//
+generatePDF(condition:any) {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns a zero-based index
+  const currentYear = currentDate.getFullYear();
+  if(condition === 'pending'){
+  const doc = new jsPDF();
+
+  const recordsPDFElement = this.ownerPDF.nativeElement;
+
+  const options = {
+    width: recordsPDFElement.offsetWidth,
+    height: recordsPDFElement.offsetHeight,
+    style: {
+      margin: '20px', // Adjust the margin value as per your requirement
+    },
+  };
+
+  domtoimage.toPng(recordsPDFElement, options).then((dataUrl) => {
+    const imgWidth = doc.internal.pageSize.getWidth() - 40;
+    const imgHeight =
+      (recordsPDFElement.offsetHeight / recordsPDFElement.offsetWidth) * imgWidth;
+
+    doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
+    doc.save('Pending_Owner_'+currentMonth+'_'+currentYear+'.pdf');
+  });
+}
+else if (condition === 'approve') {
+    const doc = new jsPDF();
+    const recordsPDFElement = this.ownerPDF.nativeElement;
+
+    const options = {
+      width: recordsPDFElement.offsetWidth,
+      height: recordsPDFElement.offsetHeight,
+      style: {
+        margin: '20px', // Adjust the margin value as per your requirement
+      },
+    };
+
+    domtoimage.toPng(recordsPDFElement, options).then((dataUrl) => {
+      const imgWidth = doc.internal.pageSize.getWidth() - 40;
+      const imgHeight =
+        (recordsPDFElement.offsetHeight / recordsPDFElement.offsetWidth) * imgWidth;
+
+      doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
+      doc.save('Approved_Owner_'+currentMonth+'_'+currentYear+'.pdf');
+    });
+  }
+
+  else if (condition === 'reject') {
+    const doc = new jsPDF();
+    const recordsPDFElement = this.ownerPDF.nativeElement;
+
+    const options = {
+      width: recordsPDFElement.offsetWidth,
+      height: recordsPDFElement.offsetHeight,
+      style: {
+        margin: '20px', // Adjust the margin value as per your requirement
+      },
+    };
+
+    domtoimage.toPng(recordsPDFElement, options).then((dataUrl) => {
+      const imgWidth = doc.internal.pageSize.getWidth() - 40;
+      const imgHeight =
+        (recordsPDFElement.offsetHeight / recordsPDFElement.offsetWidth) * imgWidth;
+
+      doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
+      doc.save('Rejected_Owner_'+currentMonth+'_'+currentYear+'.pdf');
+    });
+  }
+}
+
+generatePDFR(condition:any) {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns a zero-based index
+  const currentYear = currentDate.getFullYear();
+  if(condition === 'pending'){
+  const doc = new jsPDF();
+
+  const recordsPDFElement = this.roomPDF.nativeElement;
+
+  const options = {
+    width: recordsPDFElement.offsetWidth,
+    height: recordsPDFElement.offsetHeight,
+    style: {
+      margin: '20px', // Adjust the margin value as per your requirement
+    },
+  };
+
+  domtoimage.toPng(recordsPDFElement, options).then((dataUrl) => {
+    const imgWidth = doc.internal.pageSize.getWidth() - 40;
+    const imgHeight =
+      (recordsPDFElement.offsetHeight / recordsPDFElement.offsetWidth) * imgWidth;
+
+    doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
+    doc.save('Pending_Room_'+currentMonth+'_'+currentYear+'.pdf');
+  });
+}
+else if (condition === 'approve') {
+  const doc = new jsPDF();
+  const recordsPDFElement = this.roomPDF.nativeElement;
+
+  const options = {
+    width: recordsPDFElement.offsetWidth,
+    height: recordsPDFElement.offsetHeight,
+    style: {
+      margin: '20px', // Adjust the margin value as per your requirement
+    },
+  };
+
+  domtoimage.toPng(recordsPDFElement, options).then((dataUrl) => {
+    const imgWidth = doc.internal.pageSize.getWidth() - 40;
+    const imgHeight =
+      (recordsPDFElement.offsetHeight / recordsPDFElement.offsetWidth) * imgWidth;
+
+    doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
+      doc.save('Approved_Room_'+currentMonth+'_'+currentYear+'.pdf');
+    });
+  }
+  else if (condition === 'reject') {
+    const doc = new jsPDF();
+    const recordsPDFElement = this.roomPDF.nativeElement;
+
+    const options = {
+      width: recordsPDFElement.offsetWidth,
+      height: recordsPDFElement.offsetHeight,
+      style: {
+        margin: '20px', // Adjust the margin value as per your requirement
+      },
+    };
+
+    domtoimage.toPng(recordsPDFElement, options).then((dataUrl) => {
+      const imgWidth = doc.internal.pageSize.getWidth() - 40;
+      const imgHeight =
+        (recordsPDFElement.offsetHeight / recordsPDFElement.offsetWidth) * imgWidth;
+
+      doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
+    doc.save('Rejected_Room'+currentMonth+'_'+currentYear+'.pdf');
+  });
+}
+}
+//
 }
