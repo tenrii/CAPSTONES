@@ -76,6 +76,12 @@
   }
 }
 
+.password-reset-modal {
+  &::part(content) {
+    height: 250px;
+  }
+}
+
 .text-danger {
   color: #dc3545;
 }

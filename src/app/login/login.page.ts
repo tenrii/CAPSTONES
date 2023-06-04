@@ -6,6 +6,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { VerifyComponent } from './verify/verify.component';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { PasswordResetPage } from '../password-reset/password-reset.page';
 
 @Component({
   selector: 'app-login',
@@ -116,4 +117,16 @@ export class LoginPage implements OnInit {
     this.isModalOpen = true;
     return await modalInstance.present();
   }
+
+  async openResetPassword() {
+    const modal = await this.m.create({
+      component: PasswordResetPage,
+      cssClass: 'password-reset-modal',
+      componentProps: {
+        openAsModal: true,
+      }
+    });
+    modal.present();
+  }
+
 }

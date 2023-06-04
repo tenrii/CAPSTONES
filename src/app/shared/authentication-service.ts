@@ -9,7 +9,7 @@ import {
 } from '@angular/fire/compat/firestore';
 import { ModalController } from '@ionic/angular';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
-import { Observable, finalize, lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
 import { FirebaseService } from '../services/firebase.service';
 @Injectable({
   providedIn: 'root',
@@ -147,15 +147,7 @@ export class AuthenticationService {
   // Recover password
   PasswordRecover(passwordResetEmail: any) {
     return this.ngFireAuth
-      .sendPasswordResetEmail(passwordResetEmail)
-      .then(() => {
-        window.alert(
-          'Password reset email has been sent, please check your inbox.'
-        );
-      })
-      .catch((error) => {
-        window.alert(error);
-      });
+      .sendPasswordResetEmail(passwordResetEmail);
   }
   // Returns true when user is looged in
   get isLoggedIn(): boolean {
