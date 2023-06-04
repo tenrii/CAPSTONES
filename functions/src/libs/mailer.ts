@@ -112,6 +112,60 @@ export const overdueMonthlyEmailTemplate = (propertyName: string, roomName: stri
   return {subject, html};
 }
 
+export const ownerAcceptedByAdmin = (owner: string) => {
+  const subject = 'Account Activation and Listing Confirmation - Spot a Home Search and Reservation System';
+  const html = `
+    <p>Dear ${owner},</p>
+    <p>We are pleased to inform you that your registration account as a boarding house owner on our Spot a Home Search and Reservation System with Cashless Payments in Science City of Munoz has been successfully accepted and activated!</p>
+    <p>Congratulations! You can now proceed to log in to your account and start listing your available rooms for potential tenants to discover and book. We appreciate your patience throughout the registration process, and we are excited to have you as part of our platform.</p>
+    <p>Thank you for choosing our Spot a Home Search and Reservation System. We appreciate your trust in our services and wish you great success in renting out your rooms to satisfied tenants.</p>
+    <p>Yours truly,<br>
+    Spot-a-Home Team</p>
+  `;
+  return {subject, html};
+}
+
+export const ownerRejectedByAdmin = (owner: string, reason: string) => {
+  const subject = 'Rejection of Registration Account - Spot a Home Search and Reservation System';
+  const html = `
+    <p>Dear ${owner},</p>
+    <p>We regret to inform you that your registration account as a boarding house owner on our Spot a Home Search and Reservation System with Cashless Payments in Science City of Munoz has been rejected.</p>
+    <p>After a thorough review of your application, we have determined that you ${reason}. We understand your interest in joining our system, and we appreciate your efforts in completing the registration process.</p>
+    <p>To proceed with your registration, we kindly request you to submit the following necessary documents.</p>
+    <p>Thank you!</p>
+    <p>Yours truly,<br>
+    Spot-a-Home Team</p>
+  `;
+  return {subject, html};
+}
+
+export const roomAcceptedByAdmin = (owner: string, roomName: string) => {
+  const subject = 'Room Listing Approval - Spot a Home Search and Reservation System';
+  const html = `
+    <p>Dear ${owner},</p>
+    <p>Congratulations!<br>
+    We are pleased to inform you that your room listing ${roomName} on our Spot a Home Search and Reservation System has been approved!</p>
+    <p>Your room is now visible to potential tenants, and they can start booking it through our platform.</p>
+    <p>Thank you for choosing our system to showcase your boarding house. We wish you great success in finding suitable tenants and generating positive experiences through our platform.</p>
+    <p>Best regards,<br></p>
+    Spot-a-Home Team</p>
+  `;
+  return {subject, html};
+}
+
+export const roomRejectedByAdmin = (owner: string, roomName: string, reason: string) => {
+  const subject = 'Room Listing Rejection - Spot a Home Search and Reservation System';
+  const html = `
+    <p>Dear ${owner},</p>
+    <p>Congratulations!<br>
+    <p>We regret to inform you that your room listing ${roomName} on our Spot a Home Search and Reservation System has been rejected. We understand that this news may be disappointing, but we have carefully reviewed your submission and due to ${reason}.</p>
+    <p>Thank you for your understanding. We appreciate your commitment to providing quality listings, and we look forward to the possibility of reviewing your revised submission in the future.</p>
+    <p>Yours truly,<br></p>
+    Spot-a-Home Team</p>
+  `;
+  return {subject, html};
+}
+
 // END OF OWNER EMAILS
 // TENANT EMAILS
 

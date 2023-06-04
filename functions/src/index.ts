@@ -1,4 +1,5 @@
 import * as functions from 'firebase-functions';
+// import {onDocumentUpdated} from 'firebase-functions/v2/firestore';
 import * as admin from 'firebase-admin';
 import * as express from 'express';
 import * as cookieParser from 'cookie-parser';
@@ -10,6 +11,8 @@ import {
   monthlyBillingPaidBedspaceTenant,
   monthlyBillingPaidRoomTenant,
   monthlyBillingRoomTenant,
+  ownerAcceptedByAdmin,
+  ownerRejectedByAdmin,
   paidBedspaceMailTemplate,
   paidBedspaceMailTemplateTenant,
   paidMonthlyEmailTemplate,
@@ -19,6 +22,8 @@ import {
   pendingBedspaceMailTemplateTenant,
   pendingRoomMailTemplate,
   pendingRoomMailTemplateTenant,
+  roomAcceptedByAdmin,
+  roomRejectedByAdmin,
   sendMail,
 } from './libs/mailer';
 import * as moment from 'moment-timezone';
@@ -77,9 +82,12 @@ const TENANT_COLLECTION = 'Tenant';
 const OWNER_COLLECTION = 'Owner';
 const TENANT_RESERVATION_COLLECTION = 'Reservations';
 const ACTIVE_PAYMENT_COLLECTION = 'ActivePaymentSessions';
+const PAYMENT_WEBHOOK_URL = 'https://us-central1-cpstn-acb50.cloudfunctions.net/verifyPayment';
 
 // TODO paste your secret here, also this can be saved in firestore
 const PAYMONGO_SECRET = 'sk_test_uDLWbhz9AwSXP9vmyDqLLAVp'; // TODO secure this
+
+const paymongoSecretToken = (secretKey: string) => `Basic ${ Buffer.from(`${secretKey}:`).toString('base64') }`;
 
 app.use(cors({ origin: true}));
 app.use(cookieParser());
@@ -164,13 +172,15 @@ app.use('/',
       functions.logger.log('request headers', request.headers);
       const roomUrl = type === 'monthly-bill' ? `${request.headers.origin}/tenant-panel` : `${request.headers.origin}/room/${roomId}`;
       functions.logger.log('roomUrl', roomUrl);
+      const owner: any = (await admin.firestore().collection(OWNER_COLLECTION).doc(room!.ownerId).get()).data();
 
       const options = {
         method: 'POST',
         headers: {
           'accept': 'application/json',
           'Content-Type': 'application/json',
-          'authorization': `Basic ${Buffer.from(`${PAYMONGO_SECRET}:`).toString('base64')}`
+          'authorization': paymongoSecretToken(owner.SecretKey?.length ? owner.SecretKey : PAYMONGO_SECRET), // fallback to default secret key
+          // 'authorization': `Basic ${Buffer.from(`${PAYMONGO_SECRET}:`).toString('base64')}`
           //'authorization': `Basic c2tfdGVzdF91RExXYmh6OUF3U1hQOXZteURxTExBVnA6` remove
         },
         body: JSON.stringify({
@@ -232,7 +242,6 @@ app.use('/',
 
       const tenantData = (await admin.firestore().collection(TENANT_COLLECTION).doc(userId).get()).data()
       const tenantEmail = tenantData?.email || tenantData?.Email || '';
-      const owner: any = (await admin.firestore().collection(OWNER_COLLECTION).doc(room!.ownerId).get()).data();
       const ownerEmail = owner?.email || owner?.Email || '';
       const timestamp = moment().tz(timezone).format(dateTimeFormat);
       const amount = `P${lineItems.reduce((acc: any, item: any) => {
@@ -641,9 +650,11 @@ export const deleteExpiredPaymentSessions = functions.pubsub.schedule('0 * * * *
         await admin.firestore().collection(ACTIVE_PAYMENT_COLLECTION).doc(session.paymentIntentId).update({
           status: 'expired',
         });
+        const roomData: any = (await admin.firestore().collection(ROOM_COLLECTION).doc(session.roomId).get()).data();
+        const ownerData: any = (await admin.firestore().collection(OWNER_COLLECTION).doc(roomData.ownerId).get()).data();
         // delete occupied status of the bed
         if (session.type === 'bedspace-reservation') {
-          const roomBeds = (await admin.firestore().collection(ROOM_COLLECTION).doc(session.roomId).get()).data()?.Bed;
+          const roomBeds = roomData.Bed;
           await admin.firestore().collection(ROOM_COLLECTION).doc(session.roomId).update({
             Bed: roomBeds.map((bed: any) => {
               const bedFromLineItems = session.lineItems.find((item: any) => item.uid === bed.uid);
@@ -666,7 +677,7 @@ export const deleteExpiredPaymentSessions = functions.pubsub.schedule('0 * * * *
             method: 'POST',
             headers: {
               'accept': 'application/json',
-              'authorization': `Basic ${Buffer.from(`${PAYMONGO_SECRET}:`).toString('base64')}`
+              'authorization': paymongoSecretToken(ownerData.SecretKey?.length ? ownerData.secretKey : PAYMONGO_SECRET),
             },
           });
         } catch(e) {
@@ -751,5 +762,128 @@ export const sendBillingReminders = functions
     functions.logger.log('end sendBillingReminders');
 });
 
+// function db hook to create and delete paymongo webhook, upon updating SDK secret key
+// export const ownerCollectionHook = onDocumentUpdated('Owner/{ownerId}', async (event) => { <- v2
+export const ownerCollectionHook = functions.runWith({secrets: ['MAIL_PASS']}).firestore.document('Owner/{ownerId}').onUpdate(async (change, _context) => {
+  // const beforeData: any = event.data?.before.data();
+  // const afterData: any = event.data?.after.data();
+  const beforeData: any = change.before.data();
+  const afterData: any = change?.after.data();
 
-// TODO function db hook to create and delete paymongo webhook, upon updating SDK secret key
+  if (beforeData?.SecretKey !== afterData?.SecretKey) {
+    // secret key changed
+    try {
+      if (beforeData?.SecretKey === PAYMONGO_SECRET || afterData?.SecretKey === PAYMONGO_SECRET) {
+        // do nothing when our default secret key is changed
+        return;
+      }
+      // list all webhooks
+      const response = await fetch(`https://api.paymongo.com/v1/webhooks`,{
+        method: 'GET',
+        headers: {
+          'accept': 'application/json',
+          'authorization': paymongoSecretToken(beforeData.SecretKey),
+        },
+      });
+      const responseJson = await response.json();
+
+      // disable all webhooks with url PAYMENT_WEBHOOK_URL
+      await Promise.all(responseJson.data.map(async (webhook: any) => {
+        if (webhook.attributes.url === PAYMENT_WEBHOOK_URL && webhook.attributes.status === 'enabled') {
+          try {
+            await fetch(`https://api.paymongo.com/v1/webhooks/${responseJson.id}/disable`,{
+              method: 'POST',
+              headers: {
+                'accept': 'application/json',
+                'authorization': paymongoSecretToken(beforeData.SecretKey),
+              },
+            });
+          } catch (e) {
+            functions.logger.log('error disabling paymongo webhook', e);
+          }
+        }
+      }));
+
+      if (afterData?.SecretKey === '') {
+        functions.logger.log('No new secret key, skipping webhook creation');
+        return;
+      }
+
+      // create new webhook
+      const createResponse = await fetch(`https://api.paymongo.com/v1/webhooks`,{
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'content-type': 'application/json',
+          'authorization': paymongoSecretToken(beforeData.SecretKey),
+        },
+        body: JSON.stringify({
+          data: {
+            attributes: {
+              url: PAYMENT_WEBHOOK_URL,
+              events: ['payment.paid'],
+            },
+          },
+        })
+      });
+
+      const createResponseJson = await createResponse.json();
+      functions.logger.log('createResponseJson', createResponseJson);
+
+      functions.logger.log('secret update done');
+    } catch(e) {
+      functions.logger.log('error creating paymongo webhook', e);
+    }
+  } else if (beforeData?.Permitted !== afterData?.Permitted) {
+    // if permitted attribute changed
+    try {
+      if (afterData.Permitted === 'true') {
+        const { subject: subject, html: html} = ownerAcceptedByAdmin(
+          `${afterData.FName} ${afterData.LName}`,
+        );
+        await sendMail(afterData.Email, subject, html);
+        functions.logger.log('Acceptance email sent.');
+      } else if (afterData.Permitted === 'false') {
+        const { subject: subject, html: html} = ownerRejectedByAdmin(
+          `${afterData.FName} ${afterData.LName}`,
+          afterData.Reason,
+        );
+        await sendMail(afterData.Email, subject, html);
+        functions.logger.log('Rejection email sent.');
+      }
+    } catch(e) {
+      functions.logger.log('failed to send emails.', e);
+    }
+  }
+
+});
+
+export const roomCollectionHook = functions.runWith({secrets: ['MAIL_PASS']}).firestore.document('Room/{roomId}').onUpdate(async (change, _context) => {
+  const beforeData: any = change.before.data();
+  const afterData: any = change?.after.data();
+
+  if (beforeData?.Permitted !== afterData?.Permitted) {
+    // if permitted attribute changed
+    try {
+      const owner: any = (await admin.firestore().collection(OWNER_COLLECTION).doc(afterData!.ownerId).get()).data();
+      if (afterData.Permitted === 'true') {
+        const { subject: subject, html: html} = roomAcceptedByAdmin(
+          `${owner.FName} ${owner.LName}`,
+          `${afterData.Title}: ${afterData.RoomName}`
+        );
+        await sendMail(afterData.Email, subject, html);
+        functions.logger.log('Acceptance email sent.');
+      } else if (afterData.Permitted === 'false') {
+        const { subject: subject, html: html} = roomRejectedByAdmin(
+          `${owner.FName} ${owner.LName}`,
+          `${afterData.Title}: ${afterData.RoomName}`,
+          afterData.Reason,
+        );
+        await sendMail(afterData.Email, subject, html);
+        functions.logger.log('Rejection email sent.');
+      }
+    } catch(e) {
+      functions.logger.log('failed to send emails.', e);
+    }
+  }
+});
