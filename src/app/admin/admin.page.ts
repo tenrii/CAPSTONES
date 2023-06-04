@@ -3,6 +3,7 @@ import { FirebaseService } from '../services/firebase.service';
 import { BehaviorSubject } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AuthenticationService } from '../shared/authentication-service';
+import { AlertController, ToastController } from '@ionic/angular';
 
 interface OwnerData{
 FName: string;
@@ -38,10 +39,9 @@ export class AdminPage implements OnInit {
     private firebaseService: FirebaseService,
     private firestore: AngularFirestore,
     public authService: AuthenticationService,
-  ) {
-    this.ownerData = {} as OwnerData;
-
-}
+    private alertController: AlertController,
+    private toastController: ToastController
+  ) {this.ownerData = {} as OwnerData}
 
   ngOnInit() {
 
@@ -326,20 +326,110 @@ export class AdminPage implements OnInit {
   }
 //
 
-  ApproveOwner(a: any) {
+  async ApproveOwner(a: any) {
     this.firestore.collection('Owner').doc(a).update({ Permitted: "true" });
+    const toast = await this.toastController.create({
+      message: 'Owner Approved',
+      duration: 3000,
+      color: 'success',
+    });
+    toast.present();
   }
 
-  RejectOwner(a: any) {
-    this.firestore.collection('Owner').doc(a).update({ Permitted: "false" });
+  async RejectOwner(a: any) {
+    const alert = await this.alertController.create({
+      header: 'Reject owner with reason',
+      inputs: [
+        {
+          placeholder: 'Reason',
+          name: 'reason',
+          type: 'textarea'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }, {
+          text: 'Reject',
+          handler: async (alertData) => {
+            if (alertData.reason.trim().length === 0) {
+              const toast = await this.toastController.create({
+                message: 'Please input reason',
+                duration: 3000,
+                color: 'danger',
+              });
+              toast.present();
+              return false;
+            } else {
+              await this.firestore.collection('Owner').doc(a).update({ Permitted: "false", Reason: alertData.reason });
+              const toast = await this.toastController.create({
+                message: 'Owner has been rejected.',
+                duration: 3000,
+                color: 'success',
+              });
+              toast.present();
+              return true;
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+    // this.firestore.collection('Owner').doc(a).update({ Permitted: "false" });
   }
 
-  ApproveRoom(a: any) {
+  async ApproveRoom(a: any) {
     this.firestore.collection('Room').doc(a).update({ Permitted: "true" });
+    const toast = await this.toastController.create({
+      message: 'Room Approved',
+      duration: 3000,
+      color: 'success',
+    });
+    toast.present();
   }
 
-  RejectRoom(a: any) {
-    this.firestore.collection('Room').doc(a).update({ Permitted: "false" });
+  async RejectRoom(a: any) {
+    const alert = await this.alertController.create({
+      header: 'Reject room with reason',
+      inputs: [
+        {
+          placeholder: 'Reason',
+          name: 'reason',
+          type: 'textarea'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+        }, {
+          text: 'Reject',
+          handler: async (alertData) => {
+            if (alertData.reason.trim().length === 0) {
+              const toast = await this.toastController.create({
+                message: 'Please input reason',
+                duration: 3000,
+                color: 'danger',
+              });
+              toast.present();
+              return false;
+            } else {
+              await this.firestore.collection('Room').doc(a).update({ Permitted: "false", Reason: alertData.reason });
+              const toast = await this.toastController.create({
+                message: 'Room has been rejected.',
+                duration: 3000,
+                color: 'success',
+              });
+              toast.present();
+              return true;
+            }
+          }
+        }
+      ]
+    });
+    alert.present();
+    // this.firestore.collection('Room').doc(a).update({ Permitted: "false" });
   }
 
 }
