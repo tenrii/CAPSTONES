@@ -1,7 +1,7 @@
 <ion-content>
   <app-site-header></app-site-header>
   <ion-grid style="padding: 0; margin:0;">
-    <ion-row style="padding: 0; margin: 0; margin-top: 50px;">
+    <ion-row class="ion-row" style="padding: 0; margin: 0; margin-top: 50px;">
       <ion-col class="side" style="padding: 0; margin:0;">
         <div class="sidebar">
           <h1>Owner Panel</h1>
@@ -11,6 +11,7 @@
             <span *ngIf="!owner?.profpic"><img  src="assets/user2.png"></span>
             <div class="owner-name">{{owner?.FName}} {{owner?.LName}}</div>
           </span>
+          <div class="side_btn">
           <a type="button" (click)="gotoEditOwnerProfile()">Edit Profile</a>
           <a type="button" (click)="gotoModal1()">Create Room</a>
           <a type="button" onclick="
@@ -20,6 +21,7 @@
           document.getElementById('room').style.display='none';
           document.getElementById('record').style.display='block';">Records</a>
           <a type="button" (click)="gotoGateaway()">Payment Gateway</a>
+          </div>
         </div>
       </ion-col>
       <ion-col style="padding: 0; margin:0;">
@@ -30,25 +32,96 @@
               <ion-row>
                 <ion-col>
                   <div type="button-list" onclick="
+          document.getElementById('listed').style.display='none';
+          document.getElementById('unlisted').style.display='none';
+          document.getElementById('all').style.display='block';
+          document.getElementById('occupant').style.display='none';">All Room</div>
+                </ion-col>
+                <ion-col>
+                  <div type="button-list" onclick="
           document.getElementById('listed').style.display='block';
           document.getElementById('unlisted').style.display='none';
+          document.getElementById('all').style.display='none';
           document.getElementById('occupant').style.display='none';">Listed Room</div>
                 </ion-col>
                 <ion-col>
                   <div type="button-list" onclick="
           document.getElementById('listed').style.display='none';
           document.getElementById('unlisted').style.display='block';
+          document.getElementById('all').style.display='none';
           document.getElementById('occupant').style.display='none';">Unlisted Room</div>
                 </ion-col>
                 <ion-col>
                   <div type="button-list" onclick="
           document.getElementById('listed').style.display='none';
           document.getElementById('unlisted').style.display='none';
+          document.getElementById('all').style.display='none';
           document.getElementById('occupant').style.display='block';">Occupant</div>
                 </ion-col>
               </ion-row>
             </ion-grid>
-            <div id="listed" style="display:block;">
+            <div id="all" style="display:block;">
+              <div class="room" #roomsPDF>
+                <ion-grid>
+                  <ion-row class="row-header">
+                    <ion-col>Property</ion-col>
+                    <ion-col>Room Type</ion-col>
+                    <ion-col>Rent</ion-col>
+                    <ion-col>Beds</ion-col>
+                    <ion-col>Address</ion-col>
+                    <ion-col>Price</ion-col>
+                    <ion-col>Amenities</ion-col>
+                    <ion-col>Images</ion-col>
+                    <ion-col>Details</ion-col>
+                  </ion-row>
+
+                  <ion-row *ngIf="listed === 0 || !listed">
+                    <ion-card style="width: 100%;">
+                      <ion-card-header>
+                        <ion-card-title><ion-icon name="search"></ion-icon></ion-card-title>
+                      </ion-card-header>
+
+                      <ion-card-content>
+                        You don't have rooms yet,<br />
+                        Go to create room to upload your property room
+                      </ion-card-content>
+                    </ion-card>
+                  </ion-row>
+
+                  <span *ngFor="let data of room.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)">
+                    <ion-row class="row-body">
+                      <ion-col><a target="_blank" [href]="'/room/' + data.id">{{data.Title}}</a></ion-col>
+                      <ion-col>{{data.RoomType}}</ion-col>
+                      <ion-col>{{data.Rent}}</ion-col>
+                      <ion-col><span *ngFor="let bed of data.Bed">B{{bed.id}}-{{bed.status}}<br /></span></ion-col>
+                      <ion-col>{{data.Street}}, {{data.Barangay}}, {{data.City}}, {{data.Province}},
+                        {{data.ZIP}}</ion-col>
+                      <ion-col>{{data.Price}}</ion-col>
+                      <ion-col><span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span></ion-col>
+                      <ion-col gallerize="{{data.id}}" selector="span">
+                        <span *ngFor="let img of data.Images; let i = index" [attr.imageSrc]="img" [attr.thumbSrc]="img">
+                          Image {{i+1}}<br/>
+                        </span>
+                      </ion-col>
+                      <ion-col>{{data.Details}}</ion-col>
+                    </ion-row>
+                  </span>
+                  <ion-footer>
+
+                  </ion-footer>
+                </ion-grid>
+              </div>
+              <div class="pagination">
+                <ion-button ion-button (click)="previousPage()"
+                  [disabled]="currentPage === 1">Previous</ion-button>
+                <div class="pages">Page {{currentPage}} of {{totalPages}}</div>
+                <ion-button ion-button (click)="nextPage()"
+                  [disabled]="currentPage === getTotalPages()">Next</ion-button>
+              </div>
+              <ion-button (click)="generatePDF('rooms')">Export into PDF</ion-button>
+              <ion-button (click)="exportToCSV('rooms')">Export to CSV</ion-button>
+            </div>
+            <div id="listed" style="display:none;">
               <div class="room">
                 <ion-grid>
                   <ion-row class="row-header">
@@ -234,13 +307,14 @@
                   </span>
                 </ion-grid>
               </div>
-              <ion-button (click)="generatePDF('occupants')">Export into PDF</ion-button>
+              <ion-button class="pdf" (click)="generatePDF('occupants')">Export into PDF</ion-button>
+              <ion-button (click)="exportToCSV('occupants')">Export to CSV</ion-button>
             </div>
           </div>
 
           <div id="record" style="display:none;">
             <div class="room" #recordsPDF>
-              <ion-grid>
+              <ion-grid class="filter">
                 <ion-row class="top">
                   <ion-col>
                     <div class="title" style="max-width: 145px;">Records</div>
@@ -310,7 +384,7 @@
               </ion-grid>
             </div>
             <ion-button (click)="generatePDF('records')">Export into PDF</ion-button>
-            <ion-button (click)="exportToCSV()">Export to CSV</ion-button>
+            <ion-button (click)="exportToCSV('records')">Export to CSV</ion-button>
 
           </div>
         </div>

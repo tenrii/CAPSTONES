@@ -38,10 +38,12 @@ export class AdminPage implements OnInit {
     private firebaseService: FirebaseService,
     private firestore: AngularFirestore,
     public authService: AuthenticationService,
-  ) {this.ownerData = {} as OwnerData}
+  ) {
+    this.ownerData = {} as OwnerData;
+
+}
 
   ngOnInit() {
-    this.firestore.collection('Admin').get()
 
     this.firebaseService.read_owner().subscribe((data) => {
       this.ownerList = data;

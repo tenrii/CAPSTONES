@@ -17,7 +17,6 @@ export class AdminLogPage implements OnInit {
     private alert: AlertController,
     public adminGuard: AdminGuardService,
   ) {
-   this.adminGuard.adminUid;
   }
 
   ngOnInit() {

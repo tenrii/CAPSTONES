@@ -1,7 +1,7 @@
 <ion-content>
   <app-site-header></app-site-header>
-  <ion-grid style="padding: 0; margin:0;">
-    <ion-row style="padding: 0; margin:0;">
+  <ion-grid class="ion-body">
+    <ion-row class="ion-row" style="padding: 0; margin:0; height: 100%;">
       <ion-col class="side" style="padding: 0; margin:0;">
         <div class="sidebar">
           <h1>Tenant Panel</h1>
@@ -10,13 +10,14 @@
             <span *ngIf="!tenant?.profpic"><img  src="assets/user2.png"></span>
             <div>{{tenant?.FName}} {{tenant?.LName}}</div>
           </span>
+          <div class="side_btn">
           <a type="button" (click)="gotoEditProfile()">Edit Profile</a>
-
           <a type="button" (click)="page.next('bills')">Bills</a>
           <a type="button" (click)="page.next('records')">Records</a>
         </div>
+        </div>
       </ion-col>
-      <ion-col style="padding: 0; margin:0;">
+      <ion-col class="edis" style="padding: 0; margin:0;">
 
         <div class="body">
 
@@ -123,7 +124,7 @@
           </div>
 
           <div *ngIf="(page | async) === 'records'" id="transaction" style="margin-top:50px">
-            <div class="room">
+            <div class="room" #recordsPDF>
               <ion-grid>
                 <ion-row class="row-header">
                   <ion-col>Boarding House Name</ion-col>
@@ -155,6 +156,8 @@
                 </ion-row>
               </ion-grid>
             </div>
+            <ion-button (click)="generatePDF()">Export into PDF</ion-button>
+            <ion-button (click)="exportToCSV()">Export to CSV</ion-button>
           </div>
 
         </div>

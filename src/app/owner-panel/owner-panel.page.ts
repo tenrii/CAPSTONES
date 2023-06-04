@@ -276,7 +276,7 @@ export class OwnerPanelPage implements OnInit {
       isUnlisted: 'false',
     });
   }
-
+//
   generatePDF(condition:any) {
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns a zero-based index
@@ -350,16 +350,58 @@ export class OwnerPanelPage implements OnInit {
         });
       });
     }
+    else if (condition === 'rooms') {
+      const doc = new jsPDF();
+
+    const recordsPDFElement = this.roomsPDF.nativeElement;
+
+    const options = {
+      width: recordsPDFElement.offsetWidth,
+      height: recordsPDFElement.offsetHeight,
+      style: {
+        margin: '20px', // Adjust the margin value as per your requirement
+      },
+    };
+
+    domtoimage.toPng(recordsPDFElement, options).then((dataUrl) => {
+      const imgWidth = doc.internal.pageSize.getWidth() - 40;
+      const imgHeight =
+        (recordsPDFElement.offsetHeight / recordsPDFElement.offsetWidth) * imgWidth;
+
+      doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
+      doc.save('Room'+currentMonth+'_'+currentYear+'.pdf');
+    });
   }
+}
+//
+//
+  exportToCSV(condition:any) {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns a zero-based index
+    const currentYear = currentDate.getFullYear();
 
-
-  exportToCSV() {
-    const csvContent = this.convertToCSV(this.filteredRecord);
+    if(condition === 'records'){
+    const csvContent = this.convertToCSV(this.filteredRecord,condition);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    saveAs(blob, 'data_export.csv');
-  }
+    saveAs(blob, 'Records'+currentMonth+'_'+currentYear+'.csv');
+    }
 
-  convertToCSV(room: any[]): string {
+    else if(condition === 'occupants'){
+    const csvContent = this.convertToCSV(this.occupant,condition);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'Occupant'+currentMonth+'_'+currentYear+'.csv');
+    }
+
+    else if(condition === 'rooms'){
+    const csvContent = this.convertToCSV(this.room,condition);
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    saveAs(blob, 'Room'+currentMonth+'_'+currentYear+'.csv');
+    }
+  }
+//
+//
+  convertToCSV(all: any[], condition:any): any {
+    if(condition === 'records'){
     const headers = [
       'Tenant Name',
       'Room/Bedspace Placement',
@@ -368,7 +410,7 @@ export class OwnerPanelPage implements OnInit {
     ];
     const rows = [];
 
-    for (const data of room) {
+    for (const data of all) {
           const rowData = [
             data.FName + ' ' + data.LName,
             `${data.RoomName} / Bed${data.id} ${data.bed}`,
@@ -388,7 +430,72 @@ export class OwnerPanelPage implements OnInit {
     ].join('\n');
     return csvContent;
   }
+  else if(condition === 'occupants'){
+    const headers = [
+      'Tenant Name',
+      'Property',
+      'Room',
+      'Bed Position',
+    ];
+    const rows = [];
 
+    for (const data of all) {
+      if(data.paymentStatus === 'paidPayment'){
+          const rowData = [
+            data.FName + ' ' + data.LName,
+            data.Title,
+            data.RoomName,
+            `Bed${data.id}-`+data.bed === 'up'
+            ? `TOP BUNK` : `BOTTOM BUNK`,
+          ];
+          rows.push(rowData);
+        }
+    }
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+    return csvContent;
+  }
+  else if(condition === 'rooms'){
+    const headers = [
+      'Property',
+      'Room Type',
+      'Rent',
+      'Beds',
+      'Address',
+      'Price',
+      'Amenities',
+      'Details',
+    ];
+    const rows = [];
+
+    for (const data of all) {
+      const address = `${data.Street}, ${data.Barangay}, ${data.City}, ${data.Province}, ${data.ZIP}`
+      const bed = data.Bed.map((bed:any) =>'B'+bed.id+'-'+bed.status === 'up'
+            ? 'TOP BUNK' : 'BOTTOM BUNK').join(', ');
+      const amenities = data.Amenities.join(', ');
+          const rowData = [
+            data.Title,
+            data.RoomType,
+            data.Rent,
+            bed,
+            address,
+            data.Price,
+            amenities,
+            data.Details,
+          ];
+
+          rows.push(rowData);
+  }
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+    return csvContent;
+  }
+  }
+//
   async gotoModal1() {
     if (this.isButtonDisabled) {
       return;

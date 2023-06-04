@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { FirebaseService } from '../services/firebase.service';
 import { BehaviorSubject, combineLatest, map } from 'rxjs';
@@ -7,6 +7,9 @@ import { ModalController } from '@ionic/angular';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import moment from 'moment';
 import { PaymentService } from '../services/payment.service';
+import domtoimage from 'dom-to-image';
+import { jsPDF } from 'jspdf';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-tenant-panel',
@@ -14,6 +17,7 @@ import { PaymentService } from '../services/payment.service';
   styleUrls: ['./tenant-panel.page.scss'],
 })
 export class TenantPanelPage implements OnInit {
+  @ViewChild('recordsPDF', { static: false }) recordsPDF!: ElementRef;
   tenantUid: any = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   public tenant: any;
   public page = new BehaviorSubject('bills');
@@ -138,5 +142,74 @@ export class TenantPanelPage implements OnInit {
 
     return await modalInstance.present();
   }
+  generatePDF() {
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns a zero-based index
+    const currentYear = currentDate.getFullYear();
 
+    const doc = new jsPDF();
+
+    const recordsPDFElement = this.recordsPDF.nativeElement;
+
+    const options = {
+      width: recordsPDFElement.offsetWidth,
+      height: recordsPDFElement.offsetHeight,
+      style: {
+        margin: '20px', // Adjust the margin value as per your requirement
+      },
+    };
+
+    domtoimage.toPng(recordsPDFElement, options).then((dataUrl) => {
+      const imgWidth = doc.internal.pageSize.getWidth() - 40;
+      const imgHeight =
+        (recordsPDFElement.offsetHeight / recordsPDFElement.offsetWidth) * imgWidth;
+
+      doc.addImage(dataUrl, 'PNG', 20, 20, imgWidth, imgHeight);
+      doc.save('Records_'+currentMonth+'_'+currentYear+'.pdf');
+    })
+
+
+}
+exportToCSV() {
+  const currentDate = new Date();
+  const currentMonth = currentDate.getMonth() + 1; // Adding 1 because getMonth() returns a zero-based index
+  const currentYear = currentDate.getFullYear();
+  const csvContent = this.convertToCSV(this.transaction);
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+  saveAs(blob, 'Records'+currentMonth+'_'+currentYear+'.csv');
+  }
+
+  convertToCSV(all: any[]): any {
+    const headers = [
+      'Boarding House Name',
+      'Bedspace Placement',
+      'Payment Amount',
+      'Payment Status',
+      'Reference',
+      'Date of Payment',
+    ];
+    const rows = [];
+
+    for (const data of all) {
+          const rowData = [
+            data.roomData?.Title,
+            data.lineItems.map((a:any)=> a.name),
+            data.lineItems.map((a:any)=> a.amount),
+            data.status === 'paidPayment'
+              ? `Paid in Full / ${data.Price}`
+              : `Pending / ${data.Price}`,
+            data.id,
+            new Date(data.dateCreated).toLocaleString('en-US', {
+              dateStyle: 'short',
+            }),
+          ];
+
+          rows.push(rowData);
+    }
+    const csvContent = [
+      headers.join(','),
+      ...rows.map((row) => row.join(',')),
+    ].join('\n');
+    return csvContent;
+  }
 }

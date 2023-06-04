@@ -22,7 +22,7 @@ export class FirebaseService {
   collectionOwner = 'Owner';
   public tenantUid: any[] = [];
   public ownerUid: any[] = [];
-
+  public adminUid:any[]=[];
   rooms: any = new BehaviorSubject([]);
   tenants: any = new BehaviorSubject([]);
   owners: any = new BehaviorSubject([]);
@@ -53,6 +53,15 @@ export class FirebaseService {
           this.ownerUid.push(doc.id);
         });
       });
+
+    this.firestore
+    .collection('Admin')
+    .get()
+    .subscribe((querySnapshot) => {
+      querySnapshot.forEach((doc: any) => {
+        this.adminUid.push(doc.id);
+      });
+    });
 
   }
 
