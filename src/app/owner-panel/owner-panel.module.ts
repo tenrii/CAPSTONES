@@ -30,6 +30,7 @@ import { GateawayComponent } from '../components/gateaway/gateaway.component';
 import { KeyComponent } from '../components/gateaway/key/key.component';
 import { GalleryModule } from 'ng-gallery';
 import { LightboxModule } from 'ng-gallery/lightbox';
+import { BillRecordComponent } from './bill-record/bill-record.component';
 
 @NgModule({
   imports: [
@@ -66,6 +67,7 @@ import { LightboxModule } from 'ng-gallery/lightbox';
     EditOwnerProfileComponent,
     GateawayComponent,
     KeyComponent,
+    BillRecordComponent,
   ],
 })
 export class OwnerPanelPageModule {}

@@ -172,9 +172,10 @@
                     </div>
                   </td>
                 </tr>
+                <ion-button (click)="generatePDF('pending')">Export into PDF</ion-button>
+                <ion-button (click)="exportToCSV('pending')">Export to CSV</ion-button>
               </tbody>
-              <ion-button (click)="generatePDF('pending')">Export into PDF</ion-button>
-              <ion-button (click)="exportToCSV('pending')">Export to CSV</ion-button>
+
               <!--Pending-->
 
               <!--Approve-->
@@ -441,7 +442,6 @@
 
               <!--Reject-->
               <tbody *ngIf="(status | async) === 'rejected'">
-                <span>
                   <tr *ngFor="let data of rejectRoomList | async">
                     <td>
                       <div style="font-size: 17px;">{{data.Title}}</div>
@@ -470,14 +470,13 @@
                     <td>
                       <span *ngFor="let amenities of data.Amenities">{{amenities}}<br /></span>
                     </td>
-                    <td>+
+                    <td>
                       <div class="actions">
                         <ion-icon type="button" (click)="ApproveRoom(data.id)"
                           name="shield-checkmark-outline"></ion-icon>
                       </div>
                     </td>
                   </tr>
-                </span>
                 <ion-button (click)="generatePDFR('reject')">Export into PDF</ion-button>
                 <ion-button (click)="exportToCSVR('reject')">Export to CSV</ion-button>
               </tbody>

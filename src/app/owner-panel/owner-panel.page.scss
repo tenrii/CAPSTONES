@@ -531,3 +531,17 @@ body {
     height: 70px;
   }
 }
+
+@media (max-width: 500px){
+  .side{
+    max-height: 31%;
+  }
+
+  .sidebar{
+    height: 31%;
+  }
+
+.body{
+  top: 110px;
+}
+}

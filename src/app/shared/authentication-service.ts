@@ -160,6 +160,11 @@ export class AuthenticationService {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     return user.emailVerified !== false ? true : false;
   }
+
+  get user(){
+    const user = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
+    return user
+  }
   // Sign in with Gmail
   GoogleAuth() {
     return this.AuthLogin(new auth.GoogleAuthProvider());
@@ -214,6 +219,7 @@ export class AuthenticationService {
     return this.ngFireAuth.signOut().then(() => {
       localStorage.removeItem('user');
       if (redirect) {
+        window.location.reload();
       this.router.navigate(['admin-log']).then(() => {
         window.location.reload();
       });

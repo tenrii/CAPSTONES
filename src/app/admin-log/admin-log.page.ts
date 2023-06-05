@@ -11,6 +11,8 @@ import { AdminGuardService } from '../shared/admin-guard.service';
   styleUrls: ['./admin-log.page.scss'],
 })
 export class AdminLogPage implements OnInit {
+  isAdmin: boolean = false;
+  user = JSON.parse(localStorage.getItem('user') || '{}')['uid'];
   constructor(
     private authService: AuthenticationService,
     private router: Router,
@@ -20,27 +22,31 @@ export class AdminLogPage implements OnInit {
   }
 
   ngOnInit() {
-
+    if(this.user === 'SDnrpKCCR2PeoNye2q1Bh44VryF3'){
+      this.isAdmin = true;
+    }
   }
 
-  async logIn(email:any, password:any){
+  logIn(email:any, password:any){
     this.authService
     .SignInAdmin(email.value, password.value)
     .then(async (res) => {
       window.location.reload();
-      if (this.authService.isEmailVerified) {
-        this.router.navigate(['admin']).then(() => {
+        this.router.navigate(['admin']).then(()=>{
           window.location.reload();
-        });
-      } else {
-        const alert = await this.alert.create({
-          header: 'Error',
-          message: 'Email is not an Admin',
-          buttons: ['OK'],
-        });
-        await alert.present();
-        return false;
-    }
+        })
   })
+  .catch(async (error) => {
+    let message = error.message;
+    if (message.toLowerCase().includes('firebase:')) {
+      message = message.split('Firebase: ')[1].split(' (')[0];
+    }
+    const alert = await this.alert.create({
+      header: 'Error',
+      message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  });
   }
 }

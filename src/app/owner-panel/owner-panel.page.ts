@@ -14,6 +14,8 @@ import { saveAs } from 'file-saver';
 import { EditOwnerProfileComponent } from './edit-owner-profile/edit-owner-profile.component';
 import firebase from 'firebase/compat/app';
 import { GateawayComponent } from '../components/gateaway/gateaway.component';
+import { BillRecordComponent } from './bill-record/bill-record.component';
+import moment from 'moment';
 
 @Component({
   selector: 'app-owner-panel',
@@ -45,6 +47,11 @@ export class OwnerPanelPage implements OnInit {
   itemsPerPage: number = 5;
   unlisted:any;
   listed:any;
+  public tenantBill: any [] = [];
+  public page = new BehaviorSubject('bills');
+  public billsPage = new BehaviorSubject('unpaid');
+  public bills: any[] = [];
+  public paidBills: any[] = [];
 
   public notifBtn = new BehaviorSubject('bedspace');
   constructor(
@@ -126,6 +133,7 @@ export class OwnerPanelPage implements OnInit {
         this.sortedBed();
         this.sortedRoom();
         this.sortedTenant();
+        this.sortedBill();
 
       });
 
@@ -260,6 +268,56 @@ export class OwnerPanelPage implements OnInit {
       return 0;
      });
   }
+
+sortedBill(){
+  this.room.map((z:any)=>{
+  z.Bed?.map((bed:any)=> {
+  if (z.occupied || bed.occupied) {
+  const tenant = z.tenantData.filter((x:any)=>{
+  return (z.occupied?.userId === x.uid) || (bed.occupied?.userId === x.uid)
+  });
+
+    combineLatest([
+    this.firestore.collection('Tenant').doc(tenant.map((data:any)=> data.id).join(', ')).collection('Reservations').valueChanges(),
+    this.firebaseService.read_room(),
+    ])
+    .pipe(
+    map(([reservations, rooms]) => {
+    return reservations
+      .filter((a: any) =>  a.status === 'active' && z.id === a.roomId)
+      .map((reservation: any) => {
+        const reservationRoom = rooms.find((a: any) => a.id == reservation.roomId);
+        const tenantdata = z.tenantData.find((a:any) => a.id == tenant.map((data:any)=> data.id))
+        console.log('tenant',z.tenantData.find((a:any) => a.id == tenant.map((data:any)=> data.id)));
+        reservation.roomData = reservationRoom;
+        reservation.lastPaymentMonth = reservation?.payments?.length > 0 ? reservation?.payments.sort((a: any, b: any) => b.monthDate - a.monthDate)[reservation?.payments?.length - 1].monthDate : reservation?.dateCreated;
+        reservation.nextPaymentMonth = moment(reservation.lastPaymentMonth).add(1, 'month').toDate();
+        reservation.tenantData = tenantdata;
+          return reservation;
+              })
+          })
+        )
+        .subscribe((d: any) => {
+          // TODO optimize
+          this.bills.push(d);
+
+          this.paidBills = [];
+            this.bills.map((a:any)=>{
+            a.forEach((bill: any) => {
+              this.paidBills.push(...bill.payments.map((payment: any) => {
+                payment.tenantData = bill.tenantData;
+                payment.roomData = bill.roomData;
+                return payment;
+              }))
+            });
+          })
+            this.paidBills = this.paidBills.sort((a: any, b: any) => b.dateCreated - a.dateCreated);
+            console.log(this.paidBills)
+          });
+      }
+    })
+      })
+    }
 
   RemoveRecord(rowID: any) {
     this.firebaseService.delete_room(rowID);
@@ -521,6 +579,26 @@ export class OwnerPanelPage implements OnInit {
       cssClass: 'create-modal',
       componentProps: {
         record,
+      },
+    });
+    modalInstance.onDidDismiss().then(() => {
+      this.isButtonDisabled = false;
+    });
+
+    return await modalInstance.present();
+  }
+
+  async gotoBill() {
+    if (this.isButtonDisabled) {
+      return;
+    }
+    this.isButtonDisabled = true;
+
+    const modalInstance = await this.m.create({
+      component: BillRecordComponent,
+      cssClass: 'create-modal',
+      componentProps: {
+
       },
     });
     modalInstance.onDidDismiss().then(() => {
