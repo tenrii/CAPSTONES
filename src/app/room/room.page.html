@@ -5,8 +5,7 @@
 
     <ion-grid class="ion-padding" style="padding:40px">
       <ion-row>
-        <ion-col size-lg="8" size-md="12" size-sm="12" class="ion-padding-horizontal"
-          style="margin-bottom: 50px; margin-top: 100px;">
+        <ion-col size-lg="8" size-md="12" size-sm="12" class="ion-padding-horizontal col-left">
           <ng-container *ngTemplateOutlet="carousel"></ng-container>
           <div class="detail">
             <div class="room-title">{{data?.Title}}</div>
@@ -104,8 +103,8 @@
           </div>
         </ion-col>
 
-        <ion-col size-lg="4" size-md="12" size-sm="12" class="ion-no-padding">
-          <div class="map_container">
+        <ion-col size-lg="4" size-md="12" size-sm="12" class="ion-no-padding col-right">
+          <div class="map-container">
             <div id="map"></div>
           </div>
 
@@ -115,33 +114,33 @@
       </ion-row>
     </ion-grid>
 
-    <div class="p-4 p-md-5 text-center text-lg-start shadow-1-strong rounded">
-      <div class="reviews">
-        <h2>Reviews</h2>
-      </div>
-      <div *ngFor="let data of review" class="row d-flex" style="margin-left: 30px">
-        <div class="col-md-6">
-          <div class="card review-card">
-            <div class="card-body m-3">
-              <div class="row align-items-center">
-                <div class="col-lg-4 mb-4">
-                  <div class="profile-pic-container">
-                    <div class="profile-pic-wrapper">
-                      <img [src]="data?.profpic" class="rounded-circle img-fluid shadow-1 profile-pic"
-                        alt="Profile Picture" />
+    <div class="shadow-1-strong rounded">
+      <div class="review-container">
+        <h2 class="text-center text-lg-start">Reviews</h2>
+        <div *ngFor="let data of review" class="row d-flex">
+          <div class="col-lg-6 col-sm-12 px-0">
+            <div class="card review-card">
+              <div class="card-body m-3">
+                <div class="row align-items-center">
+                  <div class="col-xs-12 col-md-3">
+                    <div class="profile-pic-container">
+                      <div class="profile-pic-wrapper">
+                        <img [src]="data?.profpic" class="rounded-circle img-fluid shadow-1 profile-pic"
+                          alt="Profile Picture" />
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div class="col-lg-8">
-                  <div class="rating-container">
-                    <ion-icon class="rating-star" *ngFor="let i of [1,2,3,4,5]"
-                      [name]="i <= data.Rating ? 'star' : 'star-outline'"></ion-icon>
+                  <div class="col-xs-12 col-md-9">
+                    <div class="rating-container">
+                      <ion-icon class="rating-star" *ngFor="let i of [1,2,3,4,5]"
+                        [name]="i <= data.Rating ? 'star' : 'star-outline'"></ion-icon>
+                    </div>
+                    <p class="text-muted fw-light mb-4 review-text">
+                      {{ data?.Review }}
+                    </p>
+                    <p class="lead mb-2 reviewer-name">{{ data?.Name }}</p>
+                    <p class="text-muted mb-0 role">Tenant</p>
                   </div>
-                  <p class="text-muted fw-light mb-4 review-text">
-                    {{ data?.Review }}
-                  </p>
-                  <p class="lead mb-2 reviewer-name">{{ data?.Name }}</p>
-                  <p class="text-muted mb-0 role">Tenant</p>
                 </div>
               </div>
             </div>
@@ -151,23 +150,21 @@
     </div>
 
     <div class="rating-review" *ngIf="filterTenant()===true">
-      <div class="review-title">
-        <h2>Leave a Review</h2>
+      <h2 class="text-center text-lg-start">Leave a Review</h2>
+      <div class="row">
+        <div class="col-lg-6 col-md-12 px-0">
+          <form [formGroup]="reviewForm">
+            <div class="rating-container">
+              <ion-icon class="rating-star" *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= star ? 'star' : 'star-outline'"
+                (click)="Rate(i)"></ion-icon>
+            </div>
+            <div class="form-group">
+              <textarea class="form-control" id="review" rows="3" formControlName="Review"></textarea>
+            </div>
+            <button class="reviewBTN btn btn-primary" (click)="addReview()">Submit</button>
+          </form>
+        </div>
       </div>
-      <form [formGroup]="reviewForm">
-
-        <div class="rating-container">
-          <ion-icon class="rating-star" *ngFor="let i of [1, 2, 3, 4, 5]" [name]="i <= star ? 'star' : 'star-outline'"
-            (click)="Rate(i)"></ion-icon>
-        </div>
-
-        <div class="form-group">
-          <textarea class="form-control" id="review" rows="3" formControlName="Review"></textarea>
-        </div>
-
-        <button class="reviewBTN btn btn-primary" (click)="addReview()">Submit</button>
-
-      </form>
     </div>
 
   </ng-container>
@@ -225,7 +222,6 @@
 <ng-template #roomNotFoundMessage>
   <ion-row>
     <ion-col class="ion-text-center ion-padding ion-margin">
-      <!--TODO put image or something here-->
       <div style="height: 500px; margin-top: 20px; margin-bottom: 200px;">
         <img src="assets/notfound.png">
       </div>
