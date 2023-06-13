@@ -278,6 +278,7 @@ export class AdminPage implements OnInit {
       }
     })
     this.rejectOwnerList.next(filtering);
+    console.log(this.rejectOwnerList.value)
   }
 //
 
@@ -436,6 +437,7 @@ export class AdminPage implements OnInit {
     alert.present();
     // this.firestore.collection('Room').doc(a).update({ Permitted: "false" });
   }
+
 //
   exportToCSV(condition:any) {
     const currentDate = new Date();
@@ -443,19 +445,19 @@ export class AdminPage implements OnInit {
     const currentYear = currentDate.getFullYear();
 
     if(condition === 'pending'){
-    const csvContent = this.convertToCSV(this.pendingOwnerList,condition);
+    const csvContent = this.convertToCSV(this.pendingOwnerList.value,condition);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'Records'+currentMonth+'_'+currentYear+'.csv');
     }
 
     else if(condition === 'approve'){
-    const csvContent = this.convertToCSV(this.approveOwnerList,condition);
+    const csvContent = this.convertToCSV(this.approveOwnerList.value,condition);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'Occupant'+currentMonth+'_'+currentYear+'.csv');
     }
 
     else if(condition === 'reject'){
-    const csvContent = this.convertToCSV(this.rejectOwnerList,condition);
+    const csvContent = this.convertToCSV(this.rejectOwnerList.value,condition);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'Room'+currentMonth+'_'+currentYear+'.csv');
     }
@@ -467,26 +469,26 @@ export class AdminPage implements OnInit {
     const currentYear = currentDate.getFullYear();
 
     if(condition === 'pending'){
-    const csvContent = this.convertToCSVR(this.pendingRoomList,condition);
+    const csvContent = this.convertToCSVR(this.pendingRoomList.value,condition);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'Records'+currentMonth+'_'+currentYear+'.csv');
     }
 
     else if(condition === 'approve'){
-    const csvContent = this.convertToCSVR(this.approveRoomList,condition);
+    const csvContent = this.convertToCSVR(this.approveRoomList.value,condition);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'Occupant'+currentMonth+'_'+currentYear+'.csv');
     }
 
     else if(condition === 'reject'){
-    const csvContent = this.convertToCSVR(this.rejectRoomList,condition);
+    const csvContent = this.convertToCSVR(this.rejectRoomList.value,condition);
     const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
     saveAs(blob, 'Room'+currentMonth+'_'+currentYear+'.csv');
     }
   }
 //
 //
-  convertToCSV(all: any[], condition:any): any {
+  convertToCSV(all: any, condition:any): any {
     if(condition === 'pending'){
     const headers = [
       'Owner Name',
@@ -575,7 +577,7 @@ export class AdminPage implements OnInit {
   }
 }
   }
-  convertToCSVR(all: any[], condition:any): any {
+  convertToCSVR(all: any, condition:any): any {
     if(condition === 'pending'){
       const headers = [
         'Property',

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../shared/authentication-service';
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AdminGuardService } from '../shared/admin-guard.service';
 
@@ -18,6 +18,7 @@ export class AdminLogPage implements OnInit {
     private router: Router,
     private alert: AlertController,
     public adminGuard: AdminGuardService,
+    private loadingCtrl: LoadingController,
   ) {
   }
 
@@ -27,11 +28,16 @@ export class AdminLogPage implements OnInit {
     }
   }
 
-  logIn(email:any, password:any){
+  async logIn(email:any, password:any){
     this.authService
     .SignInAdmin(email.value, password.value)
     .then(async (res) => {
-      window.location.reload();
+      const loading = await this.loadingCtrl.create({
+        message: 'Dismissing after 2 seconds...',
+        duration: 2000,
+      });
+
+      loading.present();
         this.router.navigate(['admin']).then(()=>{
           window.location.reload();
         })
